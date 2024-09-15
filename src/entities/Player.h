@@ -47,15 +47,49 @@ class Player : public BaseEntity, public BaseStack {
             switch (this->getStance()) {
 
                 case Stance::Man_BK_Start ... Stance::Man_BK_End:
+                case Stance::Man_Rope_Start_LH_01 ... Stance::Man_Rope_Start_LH_06:
+                case Stance::Man_Rope_End_LH_01 ... Stance::Man_Rope_End_LH_06:
+                case Stance::Man_Rope_Start_RH_01 ... Stance::Man_Rope_Start_RH_06:
+                case Stance::Man_Rope_End_RH_01 ... Stance::Man_Rope_End_RH_06:
                     return Direction::Backward;
 
-                case Stance::Man_RH_Start ... Stance::Man_RH_End:
+                case Stance::Man_Walk_RH_00 ... Stance::Man_Walk_RH_04:
+                case Stance::Man_ClimbStairs_RH_01 ... Stance::Man_ClimbStairs_RH_08:
+                case Stance::Man_DescendStairs_RH_01 ... Stance::Man_DescendStairs_RH_08:
+                case Stance::Man_Walk_FallDown_RH_01 ... Stance::Man_Walk_FallDown_RH_06:
+                case Stance::Man_Walk_FallMore_RH_01 ... Stance::Man_Walk_FallMore_RH_02:
+                case Stance::Man_Walk_FallLand_RH_01 ... Stance::Man_Walk_FallLand_RH_04:
+                case Stance::Man_StandingJump_RH_01 ... Stance::Man_StandingJump_RH_07:
+                case Stance::Man_StandingJump_Small_RH_01 ... Stance::Man_StandingJump_Small_RH_03:
+                case Stance::Man_StandingJump_RH_UP_01 ... Stance::Man_StandingJump_RH_UP_06:
+                case Stance::Man_StandingJump_RH_UPandOver_01 ... Stance::Man_StandingJump_RH_UPandOver_06:
+                case Stance::Man_WalkingJump_RH_01 ... Stance::Man_WalkingJump_RH_08:
+                case Stance::Man_WalkingJump_RH_2_01 ... Stance::Man_WalkingJump_RH_2_08:
+                case Stance::Man_WalkingJump_RH_25_01 ... Stance::Man_WalkingJump_RH_25_11:
+                case Stance::Man_WalkingJump_RH_1D_25_01 ... Stance::Man_WalkingJump_RH_1D_25_11:
+                case Stance::Man_WalkingJump_RH_UP_01 ... Stance::Man_WalkingJump_RH_UP_05:
+                case Stance::Man_Die_RH_01 ... Stance::Man_Die_RH_04:
                     return Direction::Right;
 
                 case Stance::Man_FW_Start ... Stance::Man_FW_End:
                     return Direction::Forward;
 
-                case Stance::Man_LH_Start ... Stance::Man_LH_End:
+                case Stance::Man_Walk_LH_00 ... Stance::Man_Walk_LH_04:
+                case Stance::Man_ClimbStairs_LH_01 ... Stance::Man_ClimbStairs_LH_08:
+                case Stance::Man_DescendStairs_LH_01 ... Stance::Man_DescendStairs_LH_08:
+                case Stance::Man_Walk_FallDown_LH_01 ... Stance::Man_Walk_FallDown_LH_06:
+                case Stance::Man_Walk_FallMore_LH_01 ... Stance::Man_Walk_FallMore_LH_02:
+                case Stance::Man_Walk_FallLand_LH_01 ... Stance::Man_Walk_FallLand_LH_04:
+                case Stance::Man_StandingJump_LH_01 ... Stance::Man_StandingJump_LH_07:
+                case Stance::Man_StandingJump_Small_LH_01 ... Stance::Man_StandingJump_Small_LH_03:
+                case Stance::Man_StandingJump_LH_UP_01 ... Stance::Man_StandingJump_LH_UP_06:
+                case Stance::Man_StandingJump_LH_UPandOver_01 ... Stance::Man_StandingJump_LH_UPandOver_06:
+                case Stance::Man_WalkingJump_LH_01 ... Stance::Man_WalkingJump_LH_08:
+                case Stance::Man_WalkingJump_LH_2_01 ... Stance::Man_WalkingJump_LH_2_08:
+                case Stance::Man_WalkingJump_LH_25_01 ... Stance::Man_WalkingJump_LH_25_11:
+                case Stance::Man_WalkingJump_LH_1D_25_01 ... Stance::Man_WalkingJump_LH_1D_25_11:
+                case Stance::Man_WalkingJump_LH_UP_01 ... Stance::Man_WalkingJump_LH_UP_05:
+                case Stance::Man_Die_LH_01 ... Stance::Man_Die_LH_04:
                     return Direction::Left;                    
 
             }

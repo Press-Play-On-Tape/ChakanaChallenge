@@ -160,4 +160,7 @@ convert_header(IMAGES + 'Crate_13.png',                                         
 convert_header(IMAGES + 'Crate_14.png',                                                        BASE + 'Images.hpp', 'Crate_14', 4, maskImage=True)
 convert_header(IMAGES + 'Crate_15.png',                                                        BASE + 'Images.hpp', 'Crate_15', 4, maskImage=True)
 convert_header(IMAGES + 'Crate_16.png',                                                        BASE + 'Images.hpp', 'Crate_16', 4, maskImage=True)
+convert_header(IMAGES + 'Crate_17.png',                                                        BASE + 'Images.hpp', 'Crate_17', 4, maskImage=True)
+convert_header(IMAGES + 'Crate_18.png',                                                        BASE + 'Images.hpp', 'Crate_18', 4, maskImage=True)
+convert_header(IMAGES + 'Crate_19.png',                                                        BASE + 'Images.hpp', 'Crate_19', 4, maskImage=True)
 convert_header(IMAGES + 'Spikes.png',                                                          BASE + 'Images.hpp', 'Spikes', 4, maskImage=True)

@@ -460,7 +460,7 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile) {
 
-            return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/;
+            return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || tile == 14 /*reop rh*/;
             
         }
 
@@ -539,6 +539,18 @@ struct World {
         bool isLadderTile_Upper(uint8_t tile) {
 
             return tile == 8;
+            
+        }
+
+        bool isRopeSupport(uint8_t tile) {
+
+            return tile == 13 || tile == 14;
+            
+        }
+
+        bool isRopeTile(uint8_t tile) {
+
+            return tile == 15;
             
         }
 
