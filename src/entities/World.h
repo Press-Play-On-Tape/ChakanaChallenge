@@ -460,7 +460,8 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile) {
 
-            return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || tile == 14 /*reop rh*/;
+            return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || 
+                   tile == 14 /*reop rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/;
             
         }
 
@@ -551,6 +552,12 @@ struct World {
         bool isRopeTile(uint8_t tile) {
 
             return tile == 15;
+            
+        }
+
+        bool isSpringTile(uint8_t tile) {
+
+            return tile == 16 || tile == 17;
             
         }
 
