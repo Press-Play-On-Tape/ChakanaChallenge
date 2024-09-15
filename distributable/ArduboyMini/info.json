@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 3,
+  "binaries": [
+    {
+      "title": "TexasHoldEmMini",
+      "filename": "TexasHoldEmMiniMini.hex",
+      "flashdata": "TexasHoldEmMiniMini-data.bin",
+      "flashsave": "TexasHoldEmMiniMini-save.bin",
+      "device": "ArduboyMini"
+    }
+  ]
+}
