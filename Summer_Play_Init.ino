@@ -198,6 +198,7 @@ void playGame_Update() {
 
                             }
                             else if (player.getStance() == Stance::Man_Rope_Start_RH_07 || player.getStance() == Stance::Man_Rope_Start_LH_07) {
+Serial.println("Fall A");                                
                                 player.setFalls(0);
                                 player.push(Stance::Man_Walk_FallMore_BK_02);
                             }
@@ -342,6 +343,7 @@ void playGame_Update() {
                                     else {
 
                                         player.setFalls(0);
+Serial.println("Fall B");                                
                                         player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
 
                                     }
@@ -515,11 +517,6 @@ Serial.println("ddddddd");
                                         player.pushSequence(Stance::Man_WalkingJump_RH_1D_25_01, Stance::Man_WalkingJump_RH_1D_25_11);
 
                                     }                     
-                                    // else if (world.isSpringTile(tile)) {     
-
-                                    //     player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_08);
-
-                                    // }                     
               
                                 }
                                 else {
@@ -536,6 +533,8 @@ Serial.println("ddddddd");
                                     else {
 
                                         player.setFalls(0);
+Serial.println("Fall C");                                
+
                                         player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
 
                                     }
@@ -586,11 +585,7 @@ Serial.println("xx1");
                                             player.pushSequence(Stance::Man_StandingJump_RH_UPandOver_01, Stance::Man_StandingJump_RH_UPandOver_06);
 
                                         }          
-                                        // else if (world.isSpringTile(tile)) {     
-
-                                        //     player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_08);
-
-                                        // }                 
+            
 
                                     }
                                     else if (world.isStairTile_R1(tile_R) || world.isStairTile_R3(tile_R)) {
@@ -692,7 +687,7 @@ Serial.println("xx1");
                                 }
                                 else if (world.isSpringTile(tile)) {     
 
-                                    player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_32);
+                                    player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_34);
 
                                 }   
                                 else {
@@ -731,10 +726,19 @@ Serial.println("xx1");
                             if (world.isEmptyTile(tile_U)) {
 
                                 if (world.canJumpUpOntoTile(tile)) {
+
                                     player.pushSequence(Stance::Man_StandingJump_LH_UP_01, Stance::Man_StandingJump_LH_UP_06); 
+
                                 }
+                                else if (world.isSpringTile(tile)) {     
+
+                                    player.pushSequence(Stance::Man_BounceJump_LH_01, Stance::Man_BounceJump_LH_34);
+
+                                }                                   
                                 else {
+
                                     player.pushSequence(Stance::Man_StandingJump_LH_01, Stance::Man_StandingJump_LH_07); 
+
                                 }
 
                             }
@@ -820,29 +824,40 @@ Serial.println("xx1");
 
                         uint8_t tile_D = world.getTile(player, 0, -1);
                         uint8_t tile_D2 = world.getTile(player, 0, -2);
-
-                        if (world.isEmptyTile(tile_D)) {
+  
+                        if (world.isEmptyTile(tile_D) || world.isSpringTile(tile_D)) {
 
                             player.incFalls();
 
-                            if (player.getFalls() < 3) {
+                            if (world.isEmptyTile(tile_D2) || world.isSpringTile(tile_D2)) {    
+                            
+                                player.pushSequence(Stance::Man_Walk_FallMore_BK_01, Stance::Man_Walk_FallMore_BK_02); 
 
-                                if (world.isEmptyTile(tile_D2)) {                                    
-                                    player.pushSequence(Stance::Man_Walk_FallMore_BK_01, Stance::Man_Walk_FallMore_BK_02); 
-                                }
-                                else {
-                                    if (world.isSpikeTile(tile_D)) {
-                                        player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
+                            }
+                            else {
+
+                                if (player.getFalls() >= 3) {
+
+                                    if (world.isSpringTile(tile_D)) {
                                         player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
                                     }
                                     else {
+                                        player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
                                         player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
-                                    } 
+                                    }
+
                                 }
-                            }
-                            else {
-                                player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
-                                player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
+                                else if (world.isSpikeTile(tile_D)) {
+
+                                    player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
+                                    player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+
+                                }
+                                else {
+
+                                    player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+                                } 
+
                             }
 
                         }
@@ -870,21 +885,30 @@ Serial.println("xx1");
                             if (player.getFalls() < 3) {
 
                                 if (world.isEmptyTile(tile_D2)) {                                    
+                               
                                     player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
+
                                 }
                                 else {
+
                                     if (world.isSpikeTile(tile_D)) {
+                         
                                         player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
                                         player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
+
                                     }
                                     else {
+                       
                                         player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
+
                                     } 
                                 }
                             }
                             else {
+                             
                                 player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
                                 player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
+
                             }
 
                         }
@@ -911,16 +935,23 @@ Serial.println("xx1");
                             if (player.getFalls() < 3) {
 
                                 if (world.isEmptyTile(tile_D2)) {
+
                                     player.pushSequence(Stance::Man_Walk_FallMore_LH_01, Stance::Man_Walk_FallMore_LH_02); 
+
                                 }
                                 else {
                                     if (world.isSpikeTile(tile_D)) {
+
                                         player.pushSequence(Stance::Man_Die_LH_01, Stance::Man_Die_LH_04); 
                                         player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
+
                                     }
                                     else {
+
                                         player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
+
                                     }
+
                                 }
 
                             }
@@ -955,7 +986,6 @@ Serial.println("xx1");
             }
 
         }
-
 
     }
 
@@ -1128,8 +1158,26 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 
 
-    uint8_t stanceImg = pgm_read_byte(&Constants::StanceImgIdx[static_cast<uint16_t>(player.getStance())]);
-    SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+
+    switch (player.getStance()) {
+
+        case Stance::Man_BounceJump_RH_03:
+        case Stance::Man_BounceJump_RH_11:
+        case Stance::Man_BounceJump_RH_25:
+        case Stance::Man_BounceJump_LH_03:
+        case Stance::Man_BounceJump_LH_11:
+        case Stance::Man_BounceJump_LH_25:
+            SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
+            break;
+
+        default:
+            {
+                uint8_t stanceImg = pgm_read_byte(&Constants::StanceImgIdx[static_cast<uint16_t>(player.getStance())]);
+                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+            }
+            break;
+        
+    }
     // SpritesU::drawPlusMaskFX(enemy, yOffset, Images::Enemy2, currentPlane);
 
 // Serial.print(world.getWaveIdx());

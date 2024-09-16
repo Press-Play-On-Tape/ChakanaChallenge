@@ -132,6 +132,7 @@ convert_header(IMAGES + 'Palm6.png',                                            
 convert_header(IMAGES + 'Background.png',                                                            BASE + 'Images.hpp', 'Background', 4)
 convert_header(IMAGES + 'Background_Above.png',                                                            BASE + 'Images.hpp', 'Background_Above', 4)
 convert_header(IMAGES + 'Player.png',                                                            BASE + 'Images.hpp', 'Player', 4, 16, 16)
+convert_header(IMAGES + 'Player_Bounce.png',                                                     BASE + 'Images.hpp', 'Player_Bounce', 4, 16, 24)
 convert_header(IMAGES + 'Waves.png',                                                            BASE + 'Images.hpp', 'Waves', 4, 128, 8)
 convert_header(IMAGES + 'Enemy.png',                                                            BASE + 'Images.hpp', 'Enemy', 4, 16, 16)
 convert_header(IMAGES + 'Enemy2.png',                                                            BASE + 'Images.hpp', 'Enemy2', 4)
