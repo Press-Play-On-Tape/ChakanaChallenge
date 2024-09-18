@@ -562,4 +562,18 @@ struct World {
             
         }
 
+        bool isSpringTile_LH(uint8_t tile) {
+
+            return tile == 16;
+            
+        }
+
+        bool isSpringTile_RH(uint8_t tile) {
+
+            return tile == 17;
+            
+        }
+
+        
+
 };

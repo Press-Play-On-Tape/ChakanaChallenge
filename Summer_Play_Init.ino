@@ -1200,8 +1200,12 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 uint8_t tile = world.getTile(player, 0, 0);
                 Serial.print("Tile ");   
                 Serial.println(tile);  
-                if (world.is)
-                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
+                if (world.isSpringTile_LH(tile)) {
+                    SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
+                }
+                else {
+                    SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, 3 + currentPlane);
+                }
             }
             break;
 
