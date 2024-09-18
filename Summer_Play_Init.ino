@@ -421,13 +421,24 @@ Serial.println("Fall B");
                             uint8_t tile_LU = world.getTile(player, -1, 1);
                             uint8_t tile_L2U = world.getTile(player, -2, 1);
                             uint8_t tile_R2U = world.getTile(player, 2, 1);
+Serial.println("L----------------------------------");
+Serial.println(tile_L2U);
+Serial.println(tile_LU);
+Serial.println(tile_U);
+Serial.println(!world.canWalkPastTile(tile_LU));
+Serial.println(world.isRopeTile(tile_U));
 
-                            if (world.isRopeTile(tile_U) && world.isRopeTile(tile_LU) && world.isRopeSupport(tile_L2U)) {
+                            if (!world.canWalkPastTile(tile_LU) && !world.isRopeTile(tile_LU) && world.isRopeTile(tile_U)) {
+
+                                // Do nothing ..
+
+                            }   
+                            else if (world.isRopeTile(tile_U) && world.isRopeTile(tile_LU) && world.isRopeSupport(tile_L2U)) {
 
                                 player.pushSequence(Stance::Man_Rope_End_LH_01, Stance::Man_Rope_End_LH_06);
 
                             }   
-                            else if (world.isRopeTile(tile_RU) && world.isRopeTile(tile_U)) {
+                            else if (!world.isRopeSupport(tile_LU) && world.isRopeTile(tile_U)/* && world.isRopeTile(tile_RU)*/) {
 
                                 player.pushSequence(Stance::Man_Rope_Start_LH_04, Stance::Man_Rope_Start_LH_07);
 
@@ -619,19 +630,29 @@ Serial.println("xx1");
                             uint8_t tile_LU = world.getTile(player, -1, 1);
                             uint8_t tile_L2U = world.getTile(player, -2, 1);
                             uint8_t tile_R2U = world.getTile(player, 2, 1);
+Serial.println("R----------------------------------");
+Serial.println(tile_R2U);
+Serial.println(tile_RU);
+Serial.println(tile_U);
+Serial.println(!world.canWalkPastTile(tile_RU));
+Serial.println(world.isRopeTile(tile_U));
+                            if (!world.canWalkPastTile(tile_RU) && !world.isRopeTile(tile_RU) && world.isRopeTile(tile_U)) {
 
-                            if (world.isRopeTile(tile_U) && world.isRopeTile(tile_RU) && world.isRopeSupport(tile_R2U)) {
+                                // Do nothing ..
+
+                            }   
+                            else if (world.isRopeTile(tile_U) && world.isRopeTile(tile_RU) && world.isRopeSupport(tile_R2U)) {
 
                                 player.pushSequence(Stance::Man_Rope_End_RH_01, Stance::Man_Rope_End_RH_06);
 
                             }  
-                            else if (world.isRopeTile(tile_LU) && world.isRopeTile(tile_U)) {
+                            else if (world.isRopeTile(tile_U) && world.isRopeTile(tile_RU)) {
 
                                 player.pushSequence(Stance::Man_Rope_Start_RH_04, Stance::Man_Rope_Start_RH_07);
 
                             }                                                                 
                             else {
-
+Serial.println("aa");
                                 player.push(Stance::Man_Walk_RH_00);
 
                             } 
@@ -839,7 +860,8 @@ Serial.println("xx1");
                                 if (player.getFalls() >= 3) {
 
                                     if (world.isSpringTile(tile_D)) {
-                                        player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+Serial.println("saadas");                                        
+                                        player.pushSequence(Stance::Man_Walk_FallLandSpring_BK_01, Stance::Man_Walk_FallLandSpring_BK_28);
                                     }
                                     else {
                                         player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
@@ -1070,6 +1092,9 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             if (tile00 == 2 && tile01 == 2 & tile10 == 1 & tile11 == 1) {
                 SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_01, currentPlane);
             }
+            if (tile00 == 18 && tile01 == 18 & tile10 == 18 & tile11 == 18) {
+                SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_22, currentPlane);
+            }
             if (tile00 == 2 && tile01 == 1 & tile10 == 1 & tile11 == 0) {
                 SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_02, currentPlane);
             }
@@ -1167,7 +1192,17 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         case Stance::Man_BounceJump_LH_03:
         case Stance::Man_BounceJump_LH_11:
         case Stance::Man_BounceJump_LH_25:
-            SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
+        case Stance::Man_Walk_FallLandSpring_BK_03:
+        case Stance::Man_Walk_FallLandSpring_BK_15:
+        case Stance::Man_Walk_FallLandSpring_BK_23:
+        case Stance::Man_Walk_FallLandSpring_BK_24:
+            {
+                uint8_t tile = world.getTile(player, 0, 0);
+                Serial.print("Tile ");   
+                Serial.println(tile);  
+                if (world.is)
+                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
+            }
             break;
 
         default:

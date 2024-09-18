@@ -458,10 +458,11 @@ struct World {
 
         }
 
+
         bool canWalkPastTile(uint8_t tile) {
 
             return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || 
-                   tile == 14 /*reop rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/;
+                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/;
             
         }
 
