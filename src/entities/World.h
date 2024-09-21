@@ -496,7 +496,7 @@ struct World {
             
         }
 
-        bool isStairTile_R3(uint8_t tile) {
+        bool isStairTile_R_Half(uint8_t tile) {
 
             return tile == 6;
             
@@ -514,7 +514,7 @@ struct World {
             
         }
 
-        bool isStairTile_L3(uint8_t tile) {
+        bool isStairTile_L_Half(uint8_t tile) {
 
             return tile == 11;
             

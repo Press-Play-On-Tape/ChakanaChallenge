@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xfce7;
-constexpr uint24_t FX_DATA_BYTES = 198734;
+constexpr uint16_t FX_DATA_PAGE  = 0xfce3;
+constexpr uint24_t FX_DATA_BYTES = 199898;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -87,17 +87,23 @@ namespace Images
   constexpr uint24_t Crate_09 = 0x02FD50;
   constexpr uint24_t Crate_10 = 0x02FE12;
   constexpr uint24_t Crate_11 = 0x02FED4;
-  constexpr uint24_t Crate_12 = 0x02FF96;
-  constexpr uint24_t Crate_13 = 0x030058;
-  constexpr uint24_t Crate_14 = 0x03011A;
-  constexpr uint24_t Crate_15 = 0x0301DC;
-  constexpr uint24_t Crate_16 = 0x03029E;
-  constexpr uint24_t Crate_17 = 0x030360;
-  constexpr uint24_t Crate_18 = 0x030422;
-  constexpr uint24_t Crate_19 = 0x0304E4;
-  constexpr uint24_t Crate_20 = 0x0305A6;
-  constexpr uint24_t Crate_21 = 0x030668;
-  constexpr uint24_t Crate_22 = 0x03072A;
-  constexpr uint24_t Spikes = 0x0307EC;
+  constexpr uint24_t Crate_11a = 0x02FF96;
+  constexpr uint24_t Crate_12 = 0x030058;
+  constexpr uint24_t Crate_13 = 0x03011A;
+  constexpr uint24_t Crate_14 = 0x0301DC;
+  constexpr uint24_t Crate_15 = 0x03029E;
+  constexpr uint24_t Crate_16 = 0x030360;
+  constexpr uint24_t Crate_17 = 0x030422;
+  constexpr uint24_t Crate_18 = 0x0304E4;
+  constexpr uint24_t Crate_19 = 0x0305A6;
+  constexpr uint24_t Crate_20 = 0x030668;
+  constexpr uint24_t Crate_21 = 0x03072A;
+  constexpr uint24_t Crate_22 = 0x0307EC;
+  constexpr uint24_t Crate_23 = 0x0308AE;
+  constexpr uint24_t Crate_24 = 0x030970;
+  constexpr uint24_t Crate_25 = 0x030A32;
+  constexpr uint24_t Crate_26 = 0x030AF4;
+  constexpr uint24_t Crate_27 = 0x030BB6;
+  constexpr uint24_t Spikes = 0x030C78;
 }
 
