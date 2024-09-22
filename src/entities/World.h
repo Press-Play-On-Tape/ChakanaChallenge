@@ -556,6 +556,8 @@ struct World {
             
         }
 
+        // Spring ----------------------------------
+
         bool isSpringTile(uint8_t tile) {
 
             return tile == 16 || tile == 17;
@@ -574,6 +576,30 @@ struct World {
             
         }
 
+        // Slides ----------------------------------
         
+        bool isSlideTile_LH(uint8_t tile) {
+
+            return tile == 19;
+            
+        }
+
+        bool isSlideTile_Full_LH(uint8_t tile) {
+
+            return tile == 20;
+            
+        }
+        
+        bool isSlideTile_RH(uint8_t tile) {
+
+            return tile == 21;
+            
+        }
+
+        bool isSlideTile_Full_RH(uint8_t tile) {
+
+            return tile == 22;
+            
+        }
 
 };
