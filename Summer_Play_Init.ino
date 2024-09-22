@@ -342,19 +342,19 @@ void playGame_Update() {
 
 
                                 if (world.isSlideTile_Full_RH(tile_LD) && world.canWalkOnTile(tile_L3D2)) {
-Serial.println("B1");
+
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_LH_Full_Land_01, Stance::Man_Slide_LH_Full_Land_13);
 
                                 }
                                 else if (world.isSlideTile_Full_RH(tile_LD) && !world.canWalkOnTile(tile_L3D2)) {
-Serial.println("B2");
+
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_LH_Full_01, Stance::Man_Slide_LH_Full_13);
 
                                 }
                                 else if (world.isSlideTile_RH(tile_LD)) {
-Serial.println("B3");
+
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_LH_01, Stance::Man_Slide_LH_11);
 
@@ -476,7 +476,7 @@ Serial.println("B3");
                             uint8_t tile_RD = world.getTile(player, 1, -1);
 
                             if (world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R)) {
-Serial.println("A");
+
                                 if (justPressed & A_BUTTON || pressed & A_BUTTON) { 
 
                                     uint8_t tile_R2 = world.getTile(player, 2, 0);
@@ -534,7 +534,6 @@ Serial.println("A");
 
                             }
                             else {
-Serial.println("B");
 
                                 uint8_t tile_R2 = world.getTile(player, 2, 0);
                                 uint8_t tile = world.getTile(player, 0, 0);
@@ -549,19 +548,19 @@ Serial.println("B");
 
 
                                 if (world.isSlideTile_Full_LH(tile_RD) && world.canWalkOnTile(tile_R3D2)) {
-Serial.println("B1");
+
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_RH_Full_Land_01, Stance::Man_Slide_RH_Full_Land_13);
 
                                 }
                                 else if (world.isSlideTile_Full_LH(tile_RD) && !world.canWalkOnTile(tile_R3D2)) {
-Serial.println("B2");
+
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_RH_Full_01, Stance::Man_Slide_RH_Full_13);
 
                                 }
                                 else if (world.isSlideTile_LH(tile_RD)) {
-Serial.println("B3");
+
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_RH_01, Stance::Man_Slide_RH_11);
 
@@ -947,33 +946,21 @@ Serial.println("B3");
                             if (player.getFalls() < 3) {
 
                                 if (world.isEmptyTile(tile_D2)) {                                    
-Serial.println("fall more a");
+
                                     player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
 
                                 }
                                 else {
 
                                     if (world.isSpikeTile(tile_D)) {
-Serial.println("fall more b");
 
                                         player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
                                         player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
 
                                     }
                                     else {
-Serial.println("fall more c");
-Serial.println(tile_D);
-Serial.println(tile_D2);
-Serial.println((Constants::GroundY - player.getY()) % 8);
-//                                         if ((Constants::GroundY - player.getY()) % 8 == 4) {
-// Serial.println("fall more 1");
-// //                                             player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
-//                                            player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
-//                                         }
-//                                         else {
-Serial.println("fall more 2");
-                                            player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
-                                        // }
+
+                                        player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
 
                                     } 
 
@@ -981,7 +968,6 @@ Serial.println("fall more 2");
 
                             }
                             else {
-Serial.println("fall more d");
                              
                                 player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
                                 player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
