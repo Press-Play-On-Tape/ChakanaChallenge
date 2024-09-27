@@ -35,6 +35,20 @@ enum class Direction : uint8_t {
     None,
 };
 
+enum class ItemType : uint8_t {
+    Key1 = 50,
+    WoddenBarrier,
+    Puff,
+    None = 99,
+};
+
+
+enum class ItemAction : uint8_t {
+    None,
+    Remove,
+    Remove_AddToInventory,
+};
+
 
 enum Stance : uint16_t {
 

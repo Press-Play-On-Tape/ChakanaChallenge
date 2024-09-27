@@ -142,7 +142,9 @@ convert_header(IMAGES + 'Beach_LH.png',                                         
 convert_header(IMAGES + 'Boat.png',                                                            BASE + 'Images.hpp', 'Boat', 4)
 convert_header(IMAGES + 'Boat_Small.png',                                                            BASE + 'Images.hpp', 'Boat_Small', 4, 10, 16)
 
-convert_header(IMAGES + 'Items.png',                                                            BASE + 'Images.hpp', 'Items', 4, 16, 16)
+convert_header(IMAGES + 'Item_00.png',                                                            BASE + 'Images.hpp', 'Item_00', 4, 16, 16)
+convert_header(IMAGES + 'Item_01.png',                                                            BASE + 'Images.hpp', 'Item_01', 4, 16, 16)
+convert_header(IMAGES + 'Item_02.png',                                                            BASE + 'Images.hpp', 'Item_02', 4, 16, 16)
 
 convert_header(IMAGES + 'Map.png',                                                            BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Scroll.png',                                                            BASE + 'Images.hpp', 'Scroll', 4, maskImage=True)

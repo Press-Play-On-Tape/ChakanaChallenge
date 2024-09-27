@@ -7,6 +7,13 @@
 #include "src/utils/SpritesU.hpp"
 
 int16_t enemy = -20;
+bool collide(Rect rect1, Rect rect2)
+ {
+   return !(rect2.x                >= rect1.x + rect1.width  ||
+            rect2.x + rect2.width  <= rect1.x                ||
+            rect2.y                >= rect1.y + rect1.height ||
+            rect2.y + rect2.height <= rect1.y);
+ }
 
 void playGame_Init() {
 
@@ -28,6 +35,27 @@ void playGame_Init() {
     world.setPalm8(-80);
 
     world.setBackground(0);
+
+
+    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+        Item &item = world.getItem(i);
+        if (i == 1) {
+            item.setItemType(ItemType::Puff);
+            item.setX(128 + 16);
+            item.setY(16);  
+            item.setFrame(255);           
+        }
+        else if (i == 0) {
+            item.setItemType(ItemType::Key1);
+            item.setX(128 + 16);
+            item.setY(16);            
+        }
+        else {
+            item.setItemType(ItemType::None);
+
+        }
+    }
 
         // uint16_t waveCount = 0;
         // uint16_t background = 0;
@@ -757,7 +785,6 @@ void playGame_Update() {
                         break;
 
                     case Direction::Left:
-                        
                         {
                             uint8_t tile = world.getTile(player, 0, 0);
                             uint8_t tile_U = world.getTile(player, 0, 2);
@@ -867,6 +894,58 @@ void playGame_Update() {
             world.incForeground(pgm_read_byte(&Constants::xForeground[static_cast<uint16_t>(player.getStance())]));
             world.incMiddleground(pgm_read_byte(&Constants::xMiddleground[static_cast<uint16_t>(player.getStance())]));
             world.incBackground(pgm_read_byte(&Constants::xBackground[static_cast<uint16_t>(player.getStance())]));
+
+
+
+            // Has the player collided with an item?
+
+            uint8_t yOffset = Constants::GroundY;
+            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+
+            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                
+                Item &item = world.getItem(i);
+
+
+                // If the item is the 'puff' then we are at the last of the items, stop iterating ..
+
+                if (item.getItemType() == ItemType::Puff) break;
+
+
+                // Otherwise check if we have collided ..
+
+                Rect itemRect = { world.getItem(0).getX() + world.getMiddleground() - 4, yOffset - world.getItem(0).getY(), 16, 16 };
+
+                if (collide(playerRect, itemRect)) {
+
+                    Item &item = world.getItem(i);
+                    Item &puff = world.getItem(world.getItem_Puff());
+
+                    switch (item.getItemType()) {
+
+                        case ItemType::Key1:
+
+                            puff.setX(item.getX());
+                            puff.setY(item.getY());
+                            puff.setFrame(0);
+                            item.setCounter(3);
+                            break;
+
+                        default:
+                            break;
+
+                    }
+
+                    break;
+
+                }
+
+            }
+
+
+
+            // Handle falling and other special actions ..
 
             switch (static_cast<Stance>(newStance)) {
 
@@ -1062,11 +1141,7 @@ void playGame_Update() {
 
 void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
-    // waveCount++;
-    // if (waveCount >= 7 * 64) waveCount = 0;
-
     if (a.needsUpdate()) playGame_Update();
-
 
     uint8_t yOffset = Constants::GroundY;
 
@@ -1243,13 +1318,30 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             if (tile00 == 22 && tile01 == 2 & tile10 == 0 & tile11 == 22) {
                 SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_31, currentPlane);
             }
+
         }
 
     }
 
 
+    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
+        Item &item = world.getItem(i);
+        if (item.getItemType() == ItemType::None) break;
 
+        if (item.getItemType() == ItemType::Key1) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_00, (item.getFrame() / 16 * 3) +  currentPlane);
+
+        }
+
+        if (item.getItemType() == ItemType::Puff && item.getFrame() < Constants::Puff_Max) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (item.getFrame() / 16 * 3) +  currentPlane);
+
+        }
+
+    }
 
 
     switch (player.getStance()) {
@@ -1286,6 +1378,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         
     }
 
+
     if (world.getWaveIdx() != Constants::NoWaves) {
         // SpritesU::drawOverwriteFX(world.getWave() - 128, 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
         SpritesU::drawOverwriteFX(world.getWave(), 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
@@ -1303,8 +1396,20 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     // SpritesU::drawPlusMaskFX(world.getPalm4() / 2, 10 + yOffset - Constants::GroundY, Images::Palm4, currentPlane);
 
 
-    world.update(true);
 
+
+
+
+                    // a.drawRect(56 + 3, yOffset - Constants::GroundY + player.getY(), 10,16, WHITE);
+                    // a.drawRect(world.getItem(0).getX() + world.getMiddleground() - 4, yOffset - world.getItem(0).getY(), 16,16, WHITE);
+
+
+
+// Serial.print("update ");
+
+// Serial.println(world.getItem(0).getFrame());
+    world.update(true);
 
 }
 
+//76 77

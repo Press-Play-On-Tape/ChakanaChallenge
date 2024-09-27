@@ -3,10 +3,13 @@
 #include "Boat.h"
 #include "../utils/Constants.h"
 #include "Player.h"
+#include "Item.h"
 
 struct World {
 
     private:
+
+        Item items[10];
 
         uint16_t xMap = 0;
         uint16_t yMap = 0;
@@ -37,6 +40,7 @@ struct World {
 
     public:
 
+        Item &getItem(uint8_t idx)               { return this->items[idx]; }
         uint16_t getXMap()                       { return this->xMap; }
         uint16_t getYMap()                       { return this->yMap; }
         uint16_t getXBoat()                      { return this->xBoat; }
@@ -406,6 +410,34 @@ struct World {
 
         void update(bool completeWaves) {
 
+            uint8_t removeItemIdx = 255;
+
+            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+                Item &item = this->items[i];
+                if (item.getItemType() == ItemType::None) break;
+                
+                ItemAction action = item.update();
+
+                switch (action) {
+
+                    case ItemAction::Remove:
+                        removeItemIdx = i;
+                        break;
+
+                    case ItemAction::Remove_AddToInventory:
+                        // player.addItem(item);
+                        removeItemIdx = i;
+                        break;
+
+                }
+
+            }
+
+            if (removeItemIdx != 255) {
+                this->removeItem(removeItemIdx);
+            }
+
             if (this->waveIdx == Constants::NoWaves) return;
 
             this->waveIdx++;
@@ -418,20 +450,76 @@ struct World {
 
             }
 
+
         }
+
+        void removeItem(uint8_t itemIdx) {
+
+            for (uint8_t i = itemIdx; i < Constants::ItemCount - 1; i++) {
+
+                this->items[i].setItemType(items[i + 1].getItemType());
+                this->items[i].setFrame(items[i + 1].getFrame());
+                this->items[i].setX(items[i + 1].getX());
+                this->items[i].setY(items[i + 1].getY());
+
+            }
+
+            this->items[Constants::ItemCount - 1].setItemType(ItemType::None);
+
+        }
+
+        uint8_t getItem_Puff() {
+
+            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+                if (this->items[i].getItemType() == ItemType::Puff) return i;
+
+            }
+
+            return 0;
+
+        }
+
+        uint8_t getItem(uint16_t xOffset, int8_t yOffset) {
+
+            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+                if (this->items[i].getItemType() == ItemType::None) return 255;
+
+                if (this->items[i].getItemType() != ItemType::None && this->items[i].getX() == xOffset && this->items[y].getY() == yOffset) {
+                    return i;
+                }
+            }
+
+            return 255;
+
+        };
 
         uint8_t getTile(int8_t xOffset, int8_t yOffset) {
 
             // #ifdef DEBUG
 
-            //     DEBUG_PRINT(F("getTile(xOffset,yOffset) "));
-            //     DEBUG_PRINT(xOffset);
-            //     DEBUG_PRINT(" ");
-            //     DEBUG_PRINT(yOffset);
-            //     DEBUG_PRINT(" = ");
-            //     DEBUG_PRINTLN(mapData[player.getLevel() + yOffset][tileIdx]);
+                // DEBUG_PRINT(F("getTile(xOffset,yOffset) "));
+                // DEBUG_PRINT(xOffset);
+                // DEBUG_PRINT(" ");
+                // DEBUG_PRINT(yOffset);
+                // DEBUG_PRINT(" = ");
+                // DEBUG_PRINTLN(mapData[yOffset][xOffset]);
                     
             // #endif
+
+            // for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+            //     if (this->items[i].getItemType() != ItemType::None && this->items[i].getX() / 8 == xOffset && this->items[y].getY() / 8 == yOffset) {
+            //         Serial.print((uint8_t)items[i].getItemType());
+            //         Serial.print(" ");
+            //         Serial.print(items[i].getX());
+            //         Serial.print(" ");
+            //         Serial.print(items[i].getY());
+            //         Serial.print(" ");
+            //         Serial.println(xOffset);
+            //     }
+            // }
 
             return mapData[yOffset][xOffset];
 

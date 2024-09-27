@@ -6,3 +6,4 @@
 #include "Game.h"
 #include "Cookie.h"
 #include "Player.h"
+#include "Item.h"

@@ -3,13 +3,15 @@
 #include <Arduboy2.h>   
 #include "../utils/Constants.h"
 #include "../utils/Stack.h"
-#include "BaseStack.h"
+#include "Item.h"
 
-class Player : public BaseStack {
+class Player {
 
     private:
 
         Stance stance = Stance::Man_Walk_BK_01;
+        Stack <Stance, Constants::StackSize>  *stack;
+        Item items[Constants::ItemCount];
 
         uint8_t xSeq = 0;
         uint8_t ySeq = 0;
@@ -20,30 +22,71 @@ class Player : public BaseStack {
 
     public:
 
-        Stance getStance()                          { return this->stance; }
-        uint8_t getXSeq()                           { return this->xSeq; }
-        uint8_t getYSeq()                           { return this->ySeq; }
-        uint8_t getFalling()                        { return this->falling; }
-        int8_t getY()                               { return this->y; }
-        uint8_t getFalls()                          { return this->falls; }
-        uint8_t getLevel()                          { return (37 - y)/8; } //this->level; }
+        Stack <Stance, Constants::StackSize>  * getStack()              { return this->stack; }
+        void setStack(Stack <Stance, Constants::StackSize>  *val)       { this->stack = val; }
 
-        void setStance(Stance val)                  { this->stance = val; }
-        void setXSeq(uint8_t val)                   { this->xSeq = val; }
-        void setYSeq(uint8_t val)                   { this->ySeq = val; }
-        void setFalling(uint8_t val)                { this->falling = val; }
-        void incFalling()                           { this->falling++; }
-        void setY(int8_t val)                       { this->y = val; }
-        void setFalls(uint8_t val)                  { this->falls = val; }
-        // void setLevel(uint8_t val)                  { this->level = val; }
+        Stance getStance()                                  { return this->stance; }
 
+        uint8_t getXSeq()                                   { return this->xSeq; }
+        uint8_t getYSeq()                                   { return this->ySeq; }
+        uint8_t getFalling()                                { return this->falling; }
+        int8_t getY()                                       { return this->y; }
+        uint8_t getFalls()                                  { return this->falls; }
+        uint8_t getLevel()                                  { return (37 - y) / 8; }
 
-        void incY(int8_t val)                       { this->y = this->y + val; }
-        void incFalls()                             { this->falls++; }
+        void setStance(Stance val)                          { this->stance = val; }
+
+        void setXSeq(uint8_t val)                           { this->xSeq = val; }
+        void setYSeq(uint8_t val)                           { this->ySeq = val; }
+        void setFalling(uint8_t val)                        { this->falling = val; }
+        void incFalling()                                   { this->falling++; }
+        void setY(int8_t val)                               { this->y = val; }
+        void setFalls(uint8_t val)                          { this->falls = val; }
+
+        void incY(int8_t val)                               { this->y = this->y + val; }
+        void incFalls()                                     { this->falls++; }
 
         void init() {
 
         }
+
+
+        // Invetory Methods ---------------------------------------
+
+        void removeItem(uint8_t itemIdx) {
+
+            for (uint8_t i = itemIdx; i < Constants::ItemCount - 1; i++) {
+
+                this->items[i].setItemType(items[i + 1].getItemType());
+                this->items[i].setFrame(items[i + 1].getFrame());
+                this->items[i].setX(items[i + 1].getX());
+                this->items[i].setY(items[i + 1].getY());
+
+            }
+
+            this->items[Constants::ItemCount - 1].setItemType(ItemType::None);
+
+        }
+
+        void addItem(Item &item) {
+
+            for (uint8_t i = 0; i < Constants::ItemCount - 1; i++) {
+
+                if (this->items[i].getItemType() == ItemType::None) {
+
+                    this->items[i].setItemType(item.getItemType());
+                    this->items[i].setFrame(item.getFrame());
+                    this->items[i].setX(item.getX());
+                    this->items[i].setY(item.getY());
+                    
+                }
+
+            }
+
+        }
+
+
+        // Other Utils ..
 
         Direction getDirection() {
 
@@ -82,22 +125,6 @@ class Player : public BaseStack {
 
         }
 
-        void pushSequence(uint16_t fromStance, uint16_t toStance) {
-
-            BaseStack::pushSequence(fromStance, toStance, Stance::None);
-
-        }
-
-        void pushSequence(uint16_t fromStance, uint16_t toStance, uint16_t finalStance) {
-
-            BaseStack::pushSequence(fromStance, toStance, finalStance);
-
-        }
-
-        void printStack() {
-            this->stack->print();
-        }
-
 
         bool canMoveLeft() {
 
@@ -132,4 +159,117 @@ class Player : public BaseStack {
         }
 
 
+
+        // Stack methods --------------------------------------------------------
+
+        void printStack() {
+            this->stack->print();
+        }
+
+        Stance & peek(void) {
+            return this->stack->peek();
+        }
+
+        const Stance & peek(void) const {
+            return this->stack->peek();
+        }
+
+        bool insert(const Stance & item) {
+            return this->stack->insert(item);
+        }
+
+        bool push(Stance item) {
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F("Stack count "));
+            DEBUG_PRINTLN(this->stack->getCount());
+            #endif
+
+            return this->stack->push(static_cast<uint16_t>(item));
+        }
+
+        void pushSequence(uint16_t fromStance, uint16_t toStance) {
+
+            pushSequence(fromStance, toStance, Stance::None);
+
+        }
+
+        void pushSequence(Stance fromStance, Stance toStance, Stance finalStance) {
+
+            if (finalStance != Stance::None) {
+
+                #if defined(DEBUG) && defined(DEBUG_STACK)
+                DEBUG_PRINT(F("Final "));
+                DEBUG_PRINT(finalStance);
+                #endif
+
+                this->stack->push(static_cast<uint16_t>(finalStance));
+            }
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F("Seq "));
+            DEBUG_PRINT(toStance);
+            DEBUG_PRINT(F(" to "));
+            DEBUG_PRINT(fromStance);
+            DEBUG_PRINT(F(" - "));  
+            #endif
+            
+            if (fromStance < toStance) {
+
+                for (uint16_t x = toStance; x >= fromStance; x--) {
+
+                    #if defined(DEBUG) && defined(DEBUG_STACK)
+                    DEBUG_PRINT(x); 
+                    DEBUG_PRINT(" ");        
+                    #endif
+
+                    this->stack->push(static_cast<uint16_t>(x));
+
+                }
+
+            }
+            else {
+
+                for (uint16_t x = toStance; x <= fromStance; x++) {
+
+                    #if defined(DEBUG) && defined(DEBUG_STACK)
+                    DEBUG_PRINT(x); 
+                    DEBUG_PRINT(" ");                         
+                    #endif
+
+                    this->stack->push(static_cast<uint16_t>(-x));
+                }
+
+            }
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F(", count "));
+            DEBUG_PRINTLN(this->stack->getCount());
+            #endif
+
+        }
+
+        Stance pop(void) {
+            return this->stack->pop();
+        }
+
+        bool isEmpty(void) {
+            return this->stack->isEmpty();
+        }
+
+    	bool isFull(void) {
+            return this->stack->isFull();
+        }
+
+    	void clear(void) {
+            this->stack->clear();
+        }
+
+    	bool contains(const Stance & item) {
+            return this->stack->contains(item);
+        }
+
+      	uint8_t getCount(void) {
+            return this->stack->getCount();
+        }
 };
