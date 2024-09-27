@@ -3,13 +3,14 @@
 #include <Arduboy2.h>   
 #include "../utils/Constants.h"
 #include "../utils/Stack.h"
-#include "BaseEntity.h"
 #include "BaseStack.h"
 
-class Player : public BaseEntity, public BaseStack {
+class Player : public BaseStack {
 
     private:
-        
+
+        Stance stance = Stance::Man_Walk_BK_01;
+
         uint8_t xSeq = 0;
         uint8_t ySeq = 0;
         uint8_t falling = 0;
@@ -19,6 +20,7 @@ class Player : public BaseEntity, public BaseStack {
 
     public:
 
+        Stance getStance()                          { return this->stance; }
         uint8_t getXSeq()                           { return this->xSeq; }
         uint8_t getYSeq()                           { return this->ySeq; }
         uint8_t getFalling()                        { return this->falling; }
@@ -26,6 +28,7 @@ class Player : public BaseEntity, public BaseStack {
         uint8_t getFalls()                          { return this->falls; }
         uint8_t getLevel()                          { return (37 - y)/8; } //this->level; }
 
+        void setStance(Stance val)                  { this->stance = val; }
         void setXSeq(uint8_t val)                   { this->xSeq = val; }
         void setYSeq(uint8_t val)                   { this->ySeq = val; }
         void setFalling(uint8_t val)                { this->falling = val; }
