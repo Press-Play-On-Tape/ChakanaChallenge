@@ -48,13 +48,14 @@ void play_Init() {
 
 void play_Update() {
 
-    uint8_t pressed = getPressedButtons();
-    uint8_t justPressed = getJustPressedButtons();
+
     Player &player = world.getPlayer();
 
     frameCount++;
     if (frameCount % 4 == 0) {
 
+    uint8_t pressed = getPressedButtons();
+    uint8_t justPressed = getJustPressedButtons();
     
     switch (gameState) {
 
@@ -143,7 +144,7 @@ void play_Update() {
 
 
     }
-
+    
 }
 
 

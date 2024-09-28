@@ -10,7 +10,6 @@
 uint8_t getJustPressedButtons() {
 
     a.pollButtons();
-
     return a.justPressedButtons();
 
 }

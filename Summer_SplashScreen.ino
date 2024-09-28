@@ -22,7 +22,7 @@ void splashScreen_Update() {
         gameState = GameState::Title_Init; 
 
     }
-
+    
 }
 
 

@@ -428,7 +428,7 @@ struct World {
                         break;
 
                     case ItemAction::Remove_AddToInventory:
-                        player.addInventoryItem(item);
+                        player.addInventoryItem(item.getItemType());
                         removeItemIdx = i;
                         break;
 
@@ -470,15 +470,15 @@ struct World {
 
         }
 
-        uint8_t getItem_Puff() {
+        uint8_t getItem(ItemType itemType) {
 
             for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
-                if (this->items[i].getItemType() == ItemType::Puff) return i;
+                if (this->items[i].getItemType() == itemType) return i;
 
             }
 
-            return 0;
+            return 255;
 
         }
 
@@ -558,8 +558,8 @@ struct World {
                     Item &item = this->items[i];
 
                     if (item.getItemType() == ItemType::WoodenBarrier) {
-                        Serial.println("FoundBarrier");
-                        return false;
+                        
+                        return item.getCounter() == (7 * 32) - 1;
 
                     }
 
@@ -719,6 +719,12 @@ struct World {
         bool isWoodenBarrier(uint8_t tile) {
 
             return tile == 24;
+            
+        }
+
+        bool isMysteryCrate(uint8_t tile) {
+
+            return tile == 25;
             
         }
 

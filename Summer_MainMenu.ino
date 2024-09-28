@@ -282,7 +282,7 @@ void title_Update() {
     }
 
     if (titleCounter < 72) titleCounter++;
-      
+
 }
 
 void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {

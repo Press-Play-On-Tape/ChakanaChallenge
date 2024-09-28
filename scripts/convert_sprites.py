@@ -142,12 +142,19 @@ convert_header(IMAGES + 'Beach_LH.png',                                         
 convert_header(IMAGES + 'Boat.png',                                                            BASE + 'Images.hpp', 'Boat', 4)
 convert_header(IMAGES + 'Boat_Small.png',                                                            BASE + 'Images.hpp', 'Boat_Small', 4, 10, 16)
 
+convert_header(IMAGES + 'InventoryPanel.png',                                                            BASE + 'Images.hpp', 'InventoryPanel', 4, 32, 64)
+convert_header(IMAGES + 'Cursor_00.png',                                                            BASE + 'Images.hpp', 'Cursor_00', 4)
+convert_header(IMAGES + 'Cursor_01.png',                                                            BASE + 'Images.hpp', 'Cursor_01', 4)
+
 convert_header(IMAGES + 'Item_00.png',                                                            BASE + 'Images.hpp', 'Item_00', 4, 16, 16)
 convert_header(IMAGES + 'Item_01.png',                                                            BASE + 'Images.hpp', 'Item_01', 4, 16, 16)
 convert_header(IMAGES + 'Item_02.png',                                                            BASE + 'Images.hpp', 'Item_02', 4, 16, 16)
 convert_header(IMAGES + 'Item_03.png',                                                            BASE + 'Images.hpp', 'Item_03', 4, 16, 16)
 convert_header(IMAGES + 'Item_04.png',                                                            BASE + 'Images.hpp', 'Item_04', 4, 16, 16)
 convert_header(IMAGES + 'Item_05.png',                                                            BASE + 'Images.hpp', 'Item_05', 4, 16, 16)
+convert_header(IMAGES + 'Item_06.png',                                                            BASE + 'Images.hpp', 'Item_06', 4, 16, 16)
+convert_header(IMAGES + 'Item_07.png',                                                            BASE + 'Images.hpp', 'Item_07', 4, 16, 16)
+convert_header(IMAGES + 'Item_08.png',                                                            BASE + 'Images.hpp', 'Item_08', 4, 16, 16)
 
 convert_header(IMAGES + 'Map.png',                                                            BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Scroll.png',                                                            BASE + 'Images.hpp', 'Scroll', 4, maskImage=True)

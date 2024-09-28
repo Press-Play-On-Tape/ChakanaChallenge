@@ -17,8 +17,8 @@ class Player {
         uint8_t ySeq = 0;
         uint8_t falling = 0;
         int8_t y = 37;
-        // uint8_t level = 0;
         uint8_t falls = 0;
+        uint8_t itemCount = 0;
 
     public:
 
@@ -34,6 +34,7 @@ class Player {
         int8_t getY()                                       { return this->y; }
         uint8_t getFalls()                                  { return this->falls; }
         uint8_t getLevel()                                  { return (37 - y) / 8; }
+        uint8_t getItemCount()                              { return this->itemCount; }
 
         void setStance(Stance val)                          { this->stance = val; }
 
@@ -43,6 +44,7 @@ class Player {
         void incFalling()                                   { this->falling++; }
         void setY(int8_t val)                               { this->y = val; }
         void setFalls(uint8_t val)                          { this->falls = val; }
+        void setItemCount(uint8_t val)                      { this->itemCount = val; }
 
         void incY(int8_t val)                               { this->y = this->y + val; }
         void incFalls()                                     { this->falls++; }
@@ -63,21 +65,24 @@ class Player {
             }
 
             this->items[Constants::ItemCount - 1].setItemType(ItemType::None);
+            this->itemCount--;
 
         }
 
-        void addInventoryItem(InventoryItem &item) {
+        void addInventoryItem(ItemType itemType) {
 
             for (uint8_t i = 0; i < Constants::ItemCount - 1; i++) {
 
                 if (this->items[i].getItemType() == ItemType::None) {
 
-                    this->items[i].setItemType(item.getItemType());
+                    this->items[i].setItemType(itemType);
                     break;
                     
                 }
 
             }
+
+            this->itemCount++;
 
         }
 

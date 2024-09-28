@@ -46,16 +46,21 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 2) {
+        if (i == 3) {
             item.setItemType(ItemType::Puff);
             item.setX(128 + 16);
             item.setY(16);  
             item.setFrame(255);           
         }
         else if (i == 1) {
-            item.setItemType(ItemType::WoodenBarrier);
+            item.setItemType(ItemType::MysteryCrate);
             item.setX(128 + 64 + 48);
             item.setY(16);            
+        }
+        else if (i == 2) {
+            item.setItemType(ItemType::PinchBar);
+            item.setX(128 - 32);
+            item.setY(32);            
         }
         else if (i == 0) {
             item.setItemType(ItemType::Hammer);
@@ -71,24 +76,147 @@ void playGame_Init() {
 
     }
 
+        player.getItem(0).setItemType(ItemType::Hammer);
+        player.getItem(1).setItemType(ItemType::PinchBar);
+        player.getItem(2).setItemType(ItemType::Amulet);
+        player.getItem(3).setItemType(ItemType::Hammer);
+        player.getItem(4).setItemType(ItemType::Key1);
+        player.getItem(5).setItemType(ItemType::Amulet);
+
+        player.setItemCount(6);
+
+
         // uint16_t waveCount = 0;
         // uint16_t background = 0;
 
 }
 
+uint8_t invMenuX = 128;
+uint8_t invMenuY = 0;
+uint8_t invMenu_Top = 0;
+Direction invMenu = Direction::None;
+
 void playGame_Update() {
     
     Player &player = world.getPlayer();
-    uint8_t pressed = getPressedButtons();
-    uint8_t justPressed = getJustPressedButtons();
 
     frameCount++;
         
     if (frameCount % 4 == 0) {
+    
+        uint8_t pressed = getPressedButtons();
+        uint8_t justPressed = getJustPressedButtons();
 
         if (player.isEmpty()) {
 
-            if (justPressed & UP_BUTTON || pressed & UP_BUTTON) {
+            if (justPressed & B_BUTTON || pressed & B_BUTTON) {
+                           
+                if (invMenuX == 128) {
+                    gameState = GameState::Inventory_Open;
+                    invMenu = Direction::Left;
+                }
+                else if (invMenuX == 128 - 32) {
+                    gameState = GameState::Inventory_Open;
+                    invMenu = Direction::Right;
+                }
+
+            }
+            else if (gameState == GameState::Inventory_Open && (justPressed & A_BUTTON || pressed & A_BUTTON)) {
+
+                if (player.getItemCount() != 0) {
+                        
+                    switch (player.getDirection()) {
+
+                        case Direction::Right:
+                            {
+                                uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
+
+                                if (world.isWoodenBarrier(tile_R) && player.getItem(invMenuY).getItemType() == ItemType::Hammer) {
+
+                                    player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
+                                    uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
+                                    world.getItem(woodenBarrier).setCounter(1);     
+                                    invMenu = Direction::Right;
+                                    player.removeInventoryItem(invMenuY);
+
+                                }
+
+                                if (world.isMysteryCrate(tile_R) && player.getItem(invMenuY).getItemType() == ItemType::PinchBar) {
+
+                                    player.pushSequence(Stance::Man_Levering_RH_00, Stance::Man_Levering_RH_10);
+                                    uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
+                                    world.getItem(mysteryCrate).setCounter(1);     
+                                    invMenu = Direction::Right;
+                                    player.removeInventoryItem(invMenuY);
+
+                                }
+
+                            }
+
+                            break;
+
+                    }
+
+                }
+
+            }
+            else if (gameState == GameState::Inventory_Open && (justPressed & UP_BUTTON)) {
+
+                // Showing top 3 items and can not move up ..
+                if (invMenu_Top == 0 && invMenuY == 0) { }
+
+                // Showing top 3 items and can move up .. 
+                else if (invMenu_Top == 0 && invMenuY > 0 && invMenuY < player.getItemCount()) {
+                    invMenuY--;
+                }
+
+                // Showing bottomn 3 items and bottom item is selected ..
+                else if (invMenu_Top == player.getItemCount() - 3 && invMenuY == player.getItemCount() - 1) {
+                    invMenuY--;
+                }
+
+                // Otherwise scroll top and selected up ..
+                else {
+                    invMenu_Top--;
+                    invMenuY--;
+                }
+                
+            }
+            else if (gameState == GameState::Inventory_Open && (justPressed & DOWN_BUTTON)) {
+
+                // Bottom item is already selected and cannot move ..
+                if (invMenuY == player.getItemCount() - 1) { }
+
+                // Showing top 3 items and top row is selected, move down ..
+                else if (invMenu_Top == 0 && invMenuY == 0 && invMenuY < player.getItemCount()) {
+                    invMenuY++;
+                }
+
+                // Showing all 3 items ..
+                else if (invMenu_Top == 0 && invMenuY < player.getItemCount() - 1 && player.getItemCount() == 3) {
+                    invMenuY++;
+                }
+
+                // Showing top 3 items and top row is selected, move down ..
+                else if (invMenu_Top == 0 && invMenuY < player.getItemCount()) {
+                    invMenu_Top++;
+                    invMenuY++;
+                }
+
+                // Showing bottom 3 items and bottom 
+                else if (invMenu_Top == player.getItemCount() - 3) {
+                    invMenuY++;
+                }
+
+                // Otherwise scroll top and selected down ..
+                else {
+                    invMenu_Top++;
+                    invMenuY++;
+                }
+
+            }
+
+            else if (gameState == GameState::PlayGame && (justPressed & UP_BUTTON || pressed & UP_BUTTON)) {
 
                 switch (player.getDirection()) {
 
@@ -192,7 +320,7 @@ void playGame_Update() {
 
             }
 
-            else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
+            else if (gameState == GameState::PlayGame && (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON)) {
 
                 switch (player.getDirection()) {
 
@@ -303,7 +431,7 @@ void playGame_Update() {
 
             }
 
-            else if ((justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && player.canMoveLeft()) {
+            else if (gameState == GameState::PlayGame && (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && player.canMoveLeft()) {
 
                 switch (player.getDirection()) {
 
@@ -323,15 +451,14 @@ void playGame_Update() {
                                     uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -1);                                
 
                                     if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
+
                                         world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.canWalkOnTile(tile_L3D)) {     
-Serial.println("A");
                                         player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
 
                                     }                     
                                     else if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
-                                        world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
-Serial.println("B");
 
+                                        world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
                                         player.setFalls(0);
                                         player.pushSequence(Stance::Man_WalkingJump_LH_1D_25_01, Stance::Man_WalkingJump_LH_1D_25_11);
 
@@ -356,7 +483,7 @@ Serial.println("B");
 
                                     }
                                     else if (world.canWalkOnTile(tile_L2D) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L2U) && world.isEmptyTile(tile_U)) {
-Serial.println("C");
+
                                         player.pushSequence(Stance::Man_WalkingJump_LH_2_01, Stance::Man_WalkingJump_LH_2_08);
 
                                     }
@@ -511,7 +638,7 @@ Serial.println("C");
 
             }
 
-            else if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && player.canMoveRight()) {
+            else if (gameState == GameState::PlayGame && (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && player.canMoveRight()) {
 
                 switch (player.getDirection()) {
 
@@ -717,7 +844,7 @@ Serial.println("C");
 
             }
 
-            else if (justPressed & A_BUTTON || pressed & A_BUTTON) {
+            else if (gameState == GameState::PlayGame && (justPressed & A_BUTTON || pressed & A_BUTTON)) {
 
                 switch (player.getDirection()) {
 
@@ -882,17 +1009,22 @@ Serial.println("C");
                             uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
 
                             if (world.canJumpUpOntoTile(tile_L)) {
+
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_LH_UP_01, Stance::Man_WalkingJump_LH_UP_05); 
+
                             }
                             else if (world.isPunjiTile(tile_L)) {
+
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_LH_25_02, Stance::Man_WalkingJump_LH_25_11); 
+
                             }
                             else {
-Serial.println("A");
+
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_LH_01, Stance::Man_WalkingJump_LH_08); 
+
                             }
 
                         }
@@ -931,7 +1063,7 @@ Serial.println("A");
             Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
 
             for (uint8_t i = 0; i < Constants::ItemCount; i++) {
-                
+              
                 Item &item = world.getItem(i);
 
 
@@ -942,17 +1074,18 @@ Serial.println("A");
 
                 // Otherwise check if we have collided ..
 
-                Rect itemRect = { world.getItem(0).getX() + world.getMiddleground() - 4 + 1, yOffset - world.getItem(0).getY() + 1, 14, 14 };
+                Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };
 
                 if (collide(playerRect, itemRect)) {
-// Serial.println("Collide");
-                    Item &item = world.getItem(i);
-                    Item &puff = world.getItem(world.getItem_Puff());
+
+                    Item &puff = world.getItem(world.getItem(ItemType::Puff));
 
                     switch (item.getItemType()) {
 
                         case ItemType::Key1:
+                        case ItemType::PinchBar:
                         case ItemType::Hammer:
+                        case ItemType::Amulet:
 
                             if (item.getCounter() == 0) {
 
@@ -1208,8 +1341,36 @@ Serial.println("A");
 
     }
 
+
+    switch (invMenu) {
+
+        case Direction::Left:
+
+            if (invMenuX > 128 - 32) {
+                invMenuX = invMenuX - 2;
+            }
+            else {
+                invMenu = Direction::None;
+            }
+
+            break;
+
+
+        case Direction::Right:
+
+            if (invMenuX < 128) {
+                invMenuX = invMenuX + 2;
+            }
+            else {
+                invMenu = Direction::None;
+                gameState = GameState::PlayGame;
+            }
+
+            break;
+    }
+
+
     player.update(0, 0);
-    
 
 }
 
@@ -1412,9 +1573,21 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         }
 
+        if (item.getItemType() == ItemType::PinchBar) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_08, (item.getFrame() / 16 * 3) +  currentPlane);
+
+        }
+
         if (item.getItemType() == ItemType::WoodenBarrier) {
 
-            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_01, (item.getFrame() / 16 * 3) +  currentPlane);
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_01, (item.getFrame() * 3) +  currentPlane);
+
+        }
+
+        if (item.getItemType() == ItemType::MysteryCrate) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_07, (item.getFrame() * 3) +  currentPlane);
 
         }
 
@@ -1446,6 +1619,21 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         }
 
+        if (item.getItemType() == ItemType::Amulet) {
+
+            switch (item.getFrame()) {
+
+                case 3 ... 21:
+                    SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_06, ((item.getFrame() / 3) * 3) +  currentPlane);
+                    break;
+
+                default:
+                    SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_06, currentPlane);
+                    break;
+
+            }
+
+        }
         // if (item.getItemType() == ItemType::Puff && item.getFrame() < Constants::Puff_Max) {
 
         //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (item.getFrame() / 16 * 3) +  currentPlane);
@@ -1492,7 +1680,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     // Render a puff ?
 
-    Item &item = world.getItem(world.getItem_Puff());
+    Item &item = world.getItem(world.getItem(ItemType::Puff));
 
     if (item.getFrame() < Constants::Puff_Max) {
 
@@ -1527,6 +1715,74 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     // a.drawRect(56 + 3, yOffset - Constants::GroundY + player.getY(), 10,16, WHITE);
                     // a.drawRect(world.getItem(0).getX() + world.getMiddleground() - 4 + 1, yOffset - world.getItem(0).getY() + 1, 14, 14, WHITE);
+
+
+
+    if (invMenuX != 128) {
+
+        uint8_t frame = player.getItemCount() > 0 ? 0 : 4;
+
+        if (player.getItemCount() > 3) {
+
+            if (invMenu_Top + 3 == player.getItemCount()) {
+                frame = 2;
+            }
+            else if (invMenu_Top == 0 ) {
+                frame = 1;
+            }
+            else {
+                frame = 3;
+            }
+
+        }
+
+        SpritesU::drawPlusMaskFX(invMenuX, 0,  Images::InventoryPanel, (frame * 3) + currentPlane);
+
+        for (uint8_t i = invMenu_Top; i < invMenu_Top + 3; i++) {
+
+            InventoryItem &item = player.getItem(i);
+            if (item.getItemType() == ItemType::None)   break;
+
+            //if (i != invMenuY || frameCount % 64 < 32) {
+
+                switch (item.getItemType()) {
+
+                    case ItemType::Key1:
+                        SpritesU::drawPlusMaskFX(invMenuX + 13, 6 + ((i - invMenu_Top) * 18), Images::Item_00, currentPlane);
+                        break;
+
+                    case ItemType::PinchBar:
+                        SpritesU::drawPlusMaskFX(invMenuX + 13, 6 + ((i - invMenu_Top) * 18), Images::Item_08, currentPlane);
+                        break;
+
+                    case ItemType::Hammer:
+                        SpritesU::drawPlusMaskFX(invMenuX + 13, 6 + ((i - invMenu_Top) * 18), Images::Item_05, currentPlane);
+                        break;
+
+                    case ItemType::Amulet:
+                        SpritesU::drawPlusMaskFX(invMenuX + 13, 6 + ((i - invMenu_Top) * 18), Images::Item_06, currentPlane);
+                        break;
+
+                    default:
+                        SpritesU::drawPlusMaskFX(invMenuX + 13, 6 + ((i - invMenu_Top) * 18), Images::Item_05, currentPlane);
+                        break;
+
+                }
+
+            //}
+            // a.drawRect(invMenuX + 13, 6 + ((i - invMenu_Top) * 18), 16, 16, LIGHT_GRAY);
+
+        }
+
+        if (frameCount % 64 < 32) {
+            // SpritesU::drawPlusMaskFX(invMenuX + 12, 5 + ((invMenuY - invMenu_Top) * 18), Images::Cursor, currentPlane);
+            SpritesU::drawPlusMaskFX(invMenuX + 12, 5 + ((invMenuY - invMenu_Top) * 18), Images::Cursor_00, currentPlane);
+            SpritesU::drawPlusMaskFX(invMenuX + 27, 5 + ((invMenuY - invMenu_Top) * 18), Images::Cursor_01, currentPlane);
+        }
+
+
+    }
+
 
 
 

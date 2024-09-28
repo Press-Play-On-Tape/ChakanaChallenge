@@ -5,10 +5,12 @@
 #include "../utils/Constants.h"
 #include "../utils/Enums.h"
 
-class Item : public InventoryItem {
+// class Item : public InventoryItem {
+class Item {
 
     private:
 
+        ItemType itemType;
         uint16_t x;
         int8_t y;
         uint8_t frame;
@@ -20,7 +22,9 @@ class Item : public InventoryItem {
         int8_t getY()                                   { return this->y; }
         uint8_t getFrame()                              { return this->frame; }
         uint8_t getCounter()                            { return this->counter; }
+        ItemType getItemType()                          { return this->itemType; }
 
+        void setItemType(ItemType val)                  { this->itemType = val; }
         void setX(uint16_t val)                         { this->x = val; }
         void setY(int8_t val)                           { this->y = val; }
         void setFrame(uint8_t val)                      { this->frame = val; }
@@ -31,6 +35,7 @@ class Item : public InventoryItem {
             switch (this->getItemType()) {
 
                 case ItemType::Key1:
+                case ItemType::PinchBar:
 
                     this->frame++;
                     if (this->frame == 128) this->frame = 0;
@@ -59,6 +64,7 @@ class Item : public InventoryItem {
                     break;
                 
                 case ItemType::Hammer:
+                case ItemType::Amulet:
 
                     this->frame++;
 
@@ -73,7 +79,29 @@ class Item : public InventoryItem {
                     }
 
                     break;
+
+                case ItemType::WoodenBarrier:
+
+                    if (this->counter > 0 && this->counter < (7 * 32) - 1) {
+
+                        this->counter++;
+                        this->frame = this->counter / 32;
+
+                    }
                     
+                    break;
+
+                case ItemType::MysteryCrate:
+
+                    if (this->counter > 0 && this->counter < (5 * 32) - 1) {
+
+                        this->counter++;
+                        this->frame = this->counter / 32;
+
+                    }
+                    
+                    break;
+
                 case ItemType::Puff:
                     if (this->frame < Constants::Puff_Max) this->frame++;
                     break;

@@ -135,6 +135,7 @@ void loop() {
             [[fallthrough]];
 
         case GameState::PlayGame:
+        case GameState::Inventory_Open:
             playGame(a);
             break;
 
