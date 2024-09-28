@@ -48,23 +48,23 @@ void playGame_Init() {
         Item &item = world.getItem(i);
         if (i == 3) {
             item.setItemType(ItemType::Puff);
-            item.setX(128 + 16);
+            item.setX(128 + 16 - 32);
             item.setY(16);  
             item.setFrame(255);           
         }
         else if (i == 1) {
-            item.setItemType(ItemType::MysteryCrate);
-            item.setX(128 + 64 + 48);
+            item.setItemType(ItemType::WoodenBarrier);
+            item.setX(128 + 64 + 48 - 32);
             item.setY(16);            
         }
         else if (i == 2) {
             item.setItemType(ItemType::PinchBar);
-            item.setX(128 - 32);
+            item.setX(128 - 32 - 32);
             item.setY(32);            
         }
         else if (i == 0) {
             item.setItemType(ItemType::Hammer);
-            item.setX(128 + 16 + 16 - 16);
+            item.setX(128 + 16 + 16 - 16 - 32);
             item.setY(16);            
         }
         else {
@@ -155,6 +155,33 @@ void playGame_Update() {
 
                             break;
 
+                        case Direction::Left:
+                            {
+                                uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+
+                                if (world.isWoodenBarrier(tile_L) && player.getItem(invMenuY).getItemType() == ItemType::Hammer) {
+
+                                    player.pushSequence(Stance::Man_Hammering_LH_00, Stance::Man_Hammering_LH_10);
+                                    uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
+                                    world.getItem(woodenBarrier).setCounter(1);     
+                                    invMenu = Direction::Right;
+                                    player.removeInventoryItem(invMenuY);
+
+                                }
+
+                                if (world.isMysteryCrate(tile_L) && player.getItem(invMenuY).getItemType() == ItemType::PinchBar) {
+
+                                    player.pushSequence(Stance::Man_Levering_LH_00, Stance::Man_Levering_LH_10);
+                                    uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
+                                    world.getItem(mysteryCrate).setCounter(1);     
+                                    invMenu = Direction::Right;
+                                    player.removeInventoryItem(invMenuY);
+
+                                }
+
+                            }
+
+                            break;
                     }
 
                 }
