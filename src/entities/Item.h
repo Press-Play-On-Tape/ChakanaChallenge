@@ -5,11 +5,10 @@
 #include "../utils/Constants.h"
 #include "../utils/Enums.h"
 
-struct Item {
+class Item : public InventoryItem {
 
     private:
 
-        ItemType itemType;
         uint16_t x;
         int8_t y;
         uint8_t frame;
@@ -17,13 +16,11 @@ struct Item {
 
     public:
 
-        ItemType getItemType()                          { return this->itemType; }
         uint16_t getX()                                 { return this->x; }
         int8_t getY()                                   { return this->y; }
         uint8_t getFrame()                              { return this->frame; }
         uint8_t getCounter()                            { return this->counter; }
 
-        void setItemType(ItemType val)                  { this->itemType = val; }
         void setX(uint16_t val)                         { this->x = val; }
         void setY(int8_t val)                           { this->y = val; }
         void setFrame(uint8_t val)                      { this->frame = val; }
@@ -31,7 +28,7 @@ struct Item {
 
         ItemAction update() {
 
-            switch (this->itemType) {
+            switch (this->getItemType()) {
 
                 case ItemType::Key1:
 
@@ -49,7 +46,34 @@ struct Item {
                     }
 
                     break;
+                
+                case ItemType::Punji:
 
+                    if (this->counter > 0 && this->counter < (3 * 8) - 1) {
+
+                        this->counter++;
+                        this->frame = this->counter / 8;
+
+                    }
+                    
+                    break;
+                
+                case ItemType::Hammer:
+
+                    this->frame++;
+
+                    if (this->counter > 0 && this->frame % 8 == 0) {
+
+                        this->counter--;
+
+                        if (this->counter == 0) {
+                            return ItemAction::Remove_AddToInventory;
+                        }
+
+                    }
+
+                    break;
+                    
                 case ItemType::Puff:
                     if (this->frame < Constants::Puff_Max) this->frame++;
                     break;

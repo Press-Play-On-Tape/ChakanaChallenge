@@ -66,7 +66,6 @@ Stance stanceOld = Stance::Man_Walk_RH_01;
 uint16_t seed = 72;
 #endif
 
-Player player;
 Stack <Stance, Constants::StackSize> princeStack;
 
 
@@ -82,7 +81,7 @@ void setup() {
     setAudioOn();
     #endif
 
-    player.setStack(&princeStack);
+    world.getPlayer().setStack(&princeStack);
 
 }
 
@@ -91,6 +90,8 @@ void loop() {
     FX::enableOLED();
     a.waitForNextPlane(BLACK);
     FX::disableOLED();
+
+    Player &player = world.getPlayer();
 
     #ifdef DEBUG
 
@@ -157,6 +158,9 @@ void loop() {
 
 
 void printDetails() {
+    
+    Player &player = world.getPlayer();
+
     DEBUG_PRINT("S");
     DEBUG_PRINT(player.getStance());
     DEBUG_PRINT(" X");
@@ -174,34 +178,34 @@ void printDetails() {
     DEBUG_PRINT(") D");
     DEBUG_PRINT((uint8_t)player.getDirection());
     DEBUG_PRINT(" 1) ");
-    DEBUG_PRINT(world.getTile(player, -2, 1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, 1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, -1, 1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, 1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 0, 1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(0, 1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 1, 1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(1, 1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 2, 1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(2, 1));
     DEBUG_PRINT(" - 0) ");
-    DEBUG_PRINT(world.getTile(player, -2, 0));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, 0));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, -1, 0));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, 0));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 0, 0));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(0, 0));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 1, 0));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(1, 0));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 2, 0));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(2, 0));
     DEBUG_PRINT(" - -1) ");
-    DEBUG_PRINT(world.getTile(player, -2, -1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, -1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, -1, -1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, -1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 0, -1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(0, -1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 1, -1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(1, -1));
     DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile(player, 2, -1));
+    DEBUG_PRINT(world.getTile_RelativeToPlayer(2, -1));
     DEBUG_PRINTLN(" ");
 }

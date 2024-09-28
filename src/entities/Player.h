@@ -3,7 +3,7 @@
 #include <Arduboy2.h>   
 #include "../utils/Constants.h"
 #include "../utils/Stack.h"
-#include "Item.h"
+#include "InventoryItem.h"
 
 class Player {
 
@@ -11,7 +11,7 @@ class Player {
 
         Stance stance = Stance::Man_Walk_BK_01;
         Stack <Stance, Constants::StackSize>  *stack;
-        Item items[Constants::ItemCount];
+        InventoryItem items[Constants::ItemCount];
 
         uint8_t xSeq = 0;
         uint8_t ySeq = 0;
@@ -26,6 +26,7 @@ class Player {
         void setStack(Stack <Stance, Constants::StackSize>  *val)       { this->stack = val; }
 
         Stance getStance()                                  { return this->stance; }
+        InventoryItem &getItem(uint8_t idx)                 { return this->items[idx]; }
 
         uint8_t getXSeq()                                   { return this->xSeq; }
         uint8_t getYSeq()                                   { return this->ySeq; }
@@ -53,14 +54,11 @@ class Player {
 
         // Invetory Methods ---------------------------------------
 
-        void removeItem(uint8_t itemIdx) {
+        void removeInventoryItem(uint8_t itemIdx) {
 
             for (uint8_t i = itemIdx; i < Constants::ItemCount - 1; i++) {
 
                 this->items[i].setItemType(items[i + 1].getItemType());
-                this->items[i].setFrame(items[i + 1].getFrame());
-                this->items[i].setX(items[i + 1].getX());
-                this->items[i].setY(items[i + 1].getY());
 
             }
 
@@ -68,16 +66,14 @@ class Player {
 
         }
 
-        void addItem(Item &item) {
+        void addInventoryItem(InventoryItem &item) {
 
             for (uint8_t i = 0; i < Constants::ItemCount - 1; i++) {
 
                 if (this->items[i].getItemType() == ItemType::None) {
 
                     this->items[i].setItemType(item.getItemType());
-                    this->items[i].setFrame(item.getFrame());
-                    this->items[i].setX(item.getX());
-                    this->items[i].setY(item.getY());
+                    break;
                     
                 }
 

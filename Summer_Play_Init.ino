@@ -14,9 +14,15 @@ bool collide(Rect rect1, Rect rect2)
             rect2.y                >= rect1.y + rect1.height ||
             rect2.y + rect2.height <= rect1.y);
  }
+ 
+inline void debug_break()
+{
+    asm volatile("break\n");
+}
 
 void playGame_Init() {
 
+    Player &player = world.getPlayer();
     gameState = GameState::PlayGame;
     frameCount = 0;
 
@@ -40,21 +46,29 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 1) {
+        if (i == 2) {
             item.setItemType(ItemType::Puff);
             item.setX(128 + 16);
             item.setY(16);  
             item.setFrame(255);           
         }
+        else if (i == 1) {
+            item.setItemType(ItemType::WoodenBarrier);
+            item.setX(128 + 64 + 48);
+            item.setY(16);            
+        }
         else if (i == 0) {
-            item.setItemType(ItemType::Key1);
-            item.setX(128 + 16);
+            item.setItemType(ItemType::Hammer);
+            item.setX(128 + 16 + 16 - 16);
             item.setY(16);            
         }
         else {
             item.setItemType(ItemType::None);
 
         }
+
+        player.getItem(i).setItemType(ItemType::None);
+
     }
 
         // uint16_t waveCount = 0;
@@ -63,7 +77,8 @@ void playGame_Init() {
 }
 
 void playGame_Update() {
-
+    
+    Player &player = world.getPlayer();
     uint8_t pressed = getPressedButtons();
     uint8_t justPressed = getJustPressedButtons();
 
@@ -79,8 +94,8 @@ void playGame_Update() {
 
                     case Direction::Backward:
                         {
-                            uint8_t tile = world.getTile(player, 0, 0);
-                            uint8_t tile_R = world.getTile(player, 1, 0);
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
                             if (world.isLadderTile_Upper(tile) && world.isLadderTile_Upper(tile_R)) {
 
@@ -127,8 +142,8 @@ void playGame_Update() {
 
                     case Direction::Right:
                         {
-                            uint8_t tile = world.getTile(player, 0, 0);
-                            uint8_t tile_R = world.getTile(player, 1, 0);
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
                             if (world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_R)) {
 
@@ -141,8 +156,8 @@ void playGame_Update() {
 
                     case Direction::Left:
                         {
-                            uint8_t tile = world.getTile(player, 0, 0);
-                            uint8_t tile_L = world.getTile(player, -1, 0);
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
 
                             if (world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_L)) {
 
@@ -155,9 +170,9 @@ void playGame_Update() {
 
                     case Direction::Forward:
                         {
-                            uint8_t tile_L = world.getTile(player, -1, 0);
-                            uint8_t tile = world.getTile(player, 0, 0);
-                            uint8_t tile_R = world.getTile(player, 1, 0);
+                            uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
                             if (world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_R)) {
 
@@ -183,10 +198,10 @@ void playGame_Update() {
 
                     case Direction::Backward:
                         {
-                            uint8_t tile = world.getTile(player, 0, 0);
-                            uint8_t tile_R = world.getTile(player, 1, 0);
-                            uint8_t tile_D = world.getTile(player, 0, -1);
-                            uint8_t tile_RD = world.getTile(player, 1, -1);
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
+                            uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                            uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
                             if (world.isLadderTile_Lower(tile_D) && world.isLadderTile_Lower(tile_RD)) {
 
@@ -237,8 +252,8 @@ void playGame_Update() {
 
                     case Direction::Right:
                         {
-                            uint8_t tile_D = world.getTile(player, 0, -1);
-                            uint8_t tile_RD = world.getTile(player, 1, -1);
+                            uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                            uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
                             if (world.isLadderTile_Upper(tile_D) && world.isLadderTile_Upper(tile_RD)) {
 
@@ -251,8 +266,8 @@ void playGame_Update() {
 
                     case Direction::Left:
                         {
-                            uint8_t tile_D = world.getTile(player, 0, -1);
-                            uint8_t tile_LD = world.getTile(player, -1, -1);
+                            uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                            uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
 
                             if (world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) {
 
@@ -265,9 +280,9 @@ void playGame_Update() {
 
                     case Direction::Forward:
                         {
-                            uint8_t tile_LD = world.getTile(player, -1, -1);
-                            uint8_t tile_D = world.getTile(player, 0, -1);
-                            uint8_t tile_RD = world.getTile(player, 1, -1);
+                            uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
+                            uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                            uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
                             if (world.isLadderTile_Upper(tile_D) && world.isLadderTile_Upper(tile_RD)) {
 
@@ -294,27 +309,29 @@ void playGame_Update() {
 
                     case Direction::Left:
                         {
-                            uint8_t tile_L = world.getTile(player, -1, 0);
-                            uint8_t tile_LD = world.getTile(player, -1, -1);
+                           
+                            uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+                            uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
 
                             if (world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L)) {
 
                                 if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
-                                    uint8_t tile_L2 = world.getTile(player, -2, 0);
-                                    uint8_t tile_L3 = world.getTile(player, -3, 0);
-                                    uint8_t tile_L2D = world.getTile(player, -2, -1);
-                                    uint8_t tile_L3D = world.getTile(player, -3, -1);                                
+                                    uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
+                                    uint8_t tile_L3 = world.getTile_RelativeToPlayer(-3, 0);
+                                    uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
+                                    uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -1);                                
 
                                     if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
                                         world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.canWalkOnTile(tile_L3D)) {     
-
+Serial.println("A");
                                         player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
 
                                     }                     
                                     else if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
-
                                         world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
+Serial.println("B");
+
                                         player.setFalls(0);
                                         player.pushSequence(Stance::Man_WalkingJump_LH_1D_25_01, Stance::Man_WalkingJump_LH_1D_25_11);
 
@@ -323,15 +340,15 @@ void playGame_Update() {
                                 }
                                 else {
 
-                                    uint8_t tile_L2 = world.getTile(player, -2, 0);
-                                    uint8_t tile_L3 = world.getTile(player, -3, 0);
-                                    uint8_t tile_L2D = world.getTile(player, -2, -1);
-                                    uint8_t tile_L3D = world.getTile(player, -3, -1);   
-                                    uint8_t tile_D = world.getTile(player, 0, -1);
-                                    uint8_t tile_RU = world.getTile(player, 1, 1);
-                                    uint8_t tile_U = world.getTile(player, 0, 1);
-                                    uint8_t tile_LU = world.getTile(player, -1, 1);
-                                    uint8_t tile_L2U = world.getTile(player, -2, 1);
+                                    uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
+                                    uint8_t tile_L3 = world.getTile_RelativeToPlayer(-3, 0);
+                                    uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
+                                    uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -1);   
+                                    uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                                    uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
+                                    uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                                    uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
+                                    uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
 
                                     if (world.isStairTile_R_Half(tile_D) ) {
 
@@ -339,7 +356,7 @@ void playGame_Update() {
 
                                     }
                                     else if (world.canWalkOnTile(tile_L2D) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L2U) && world.isEmptyTile(tile_U)) {
-
+Serial.println("C");
                                         player.pushSequence(Stance::Man_WalkingJump_LH_2_01, Stance::Man_WalkingJump_LH_2_08);
 
                                     }
@@ -360,13 +377,13 @@ void playGame_Update() {
                             }
                             else {
 
-                                uint8_t tile = world.getTile(player, 0, 0);
-                                uint8_t tile_U = world.getTile(player, 0, 1);
-                                uint8_t tile_R1 = world.getTile(player, 1, 0);
-                                uint8_t tile_L1 = world.getTile(player, -1, 0);
-                                uint8_t tile_LU = world.getTile(player, -1, 1);
-                                uint8_t tile_L2U = world.getTile(player, -2, 1);
-                                uint8_t tile_L3D2 = world.getTile(player, -3, -2);
+                                uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                                uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                                uint8_t tile_R1 = world.getTile_RelativeToPlayer(1, 0);
+                                uint8_t tile_L1 = world.getTile_RelativeToPlayer(-1, 0);
+                                uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
+                                uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
+                                uint8_t tile_L3D2 = world.getTile_RelativeToPlayer(-3, -2);
 
 
                                 if (world.isSlideTile_Full_RH(tile_LD) && world.canWalkOnTile(tile_L3D2)) {
@@ -457,9 +474,9 @@ void playGame_Update() {
 
                     case Direction::Backward:
                         {
-                            uint8_t tile_U = world.getTile(player, 0, 1);
-                            uint8_t tile_LU = world.getTile(player, -1, 1);
-                            uint8_t tile_L2U = world.getTile(player, -2, 1);
+                            uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                            uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
+                            uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
 
                             if (!world.canWalkPastTile(tile_LU) && !world.isRopeTile(tile_LU) && world.isRopeTile(tile_U)) {
 
@@ -500,17 +517,17 @@ void playGame_Update() {
 
                     case Direction::Right:
                         {
-                            uint8_t tile_R = world.getTile(player, 1, 0);
-                            uint8_t tile_RD = world.getTile(player, 1, -1);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
+                            uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
                             if (world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R)) {
 
                                 if (justPressed & A_BUTTON || pressed & A_BUTTON) { 
 
-                                    uint8_t tile_R2 = world.getTile(player, 2, 0);
-                                    uint8_t tile_R3 = world.getTile(player, 3, 0);
-                                    uint8_t tile_R2D = world.getTile(player, 2, -1);
-                                    uint8_t tile_R3D = world.getTile(player, 3, -1);
+                                    uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
+                                    uint8_t tile_R3 = world.getTile_RelativeToPlayer(3, 0);
+                                    uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
+                                    uint8_t tile_R3D = world.getTile_RelativeToPlayer(3, -1);
 
                                     if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) 
                                        && world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.canWalkOnTile(tile_R3D)) {     
@@ -529,12 +546,12 @@ void playGame_Update() {
                                 }
                                 else {
                                     
-                                    uint8_t tile_U = world.getTile(player, 0, 1);
-                                    uint8_t tile_D = world.getTile(player, 0, -1);
-                                    uint8_t tile_LU = world.getTile(player, -1, 1);
-                                    uint8_t tile_R2U = world.getTile(player, 2, 1);
-                                    uint8_t tile_R2 = world.getTile(player, 2, 0);
-                                    uint8_t tile_R2D = world.getTile(player, 2, -1);
+                                    uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                                    uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                                    uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
+                                    uint8_t tile_R2U = world.getTile_RelativeToPlayer(2, 1);
+                                    uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
+                                    uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
 
                                     if (world.isStairTile_L_Half(tile_D) ) {
 
@@ -544,13 +561,13 @@ void playGame_Update() {
                                     else if (world.canWalkOnTile(tile_R2D) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R2U) && world.isEmptyTile(tile_U)) {
 
                                         player.pushSequence(Stance::Man_WalkingJump_RH_2_01, Stance::Man_WalkingJump_RH_2_08);
+
                                     }
                                     else if (world.isRopeSupport(tile_LU) && world.isRopeTile(tile_U)) {
 
                                         player.pushSequence(Stance::Man_Rope_Start_RH_01, Stance::Man_Rope_Start_RH_07);
 
                                     } 
-
                                     else {
 
                                         player.setFalls(0);
@@ -563,16 +580,16 @@ void playGame_Update() {
                             }
                             else {
 
-                                uint8_t tile_R2 = world.getTile(player, 2, 0);
-                                uint8_t tile = world.getTile(player, 0, 0);
-                                uint8_t tile_L = world.getTile(player, -1, 0);
-                                uint8_t tile_LU = world.getTile(player, -1, 1);
-                                uint8_t tile_RU = world.getTile(player, 1, 1);
-                                uint8_t tile_R2U = world.getTile(player, 2, 1);
-                                uint8_t tile_D = world.getTile(player, 0, -1);
-                                uint8_t tile_RD = world.getTile(player, 1, -1);
-                                uint8_t tile_R2D = world.getTile(player, 2, -1);
-                                uint8_t tile_R3D2 = world.getTile(player, 3, -2);
+                                uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
+                                uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                                uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+                                uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
+                                uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
+                                uint8_t tile_R2U = world.getTile_RelativeToPlayer(2, 1);
+                                uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                                uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
+                                uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
+                                uint8_t tile_R3D2 = world.getTile_RelativeToPlayer(3, -2);
 
 
                                 if (world.isSlideTile_Full_LH(tile_RD) && world.canWalkOnTile(tile_R3D2)) {
@@ -664,9 +681,9 @@ void playGame_Update() {
 
                     case Direction::Backward:
                         {
-                            uint8_t tile_U = world.getTile(player, 0, 1);
-                            uint8_t tile_RU = world.getTile(player, 1, 1);
-                            uint8_t tile_R2U = world.getTile(player, 2, 1);
+                            uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                            uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
+                            uint8_t tile_R2U = world.getTile_RelativeToPlayer(2, 1);
 
                             if (!world.canWalkPastTile(tile_RU) && !world.isRopeTile(tile_RU) && world.isRopeTile(tile_U)) {
 
@@ -728,8 +745,8 @@ void playGame_Update() {
 
                     case Direction::Right:
                         {
-                            uint8_t tile = world.getTile(player, 0, 0);
-                            uint8_t tile_U = world.getTile(player, 0, 2);
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_U = world.getTile_RelativeToPlayer(0, 2);
 
                             if (world.isEmptyTile(tile_U)) {
 
@@ -740,8 +757,8 @@ void playGame_Update() {
                                 }
                                 else if (world.isSpringTile(tile)) {    
 
-                                    uint8_t tile_3U = world.getTile(player, 0, 3);
-                                    uint8_t tile_4U = world.getTile(player, 0, 4);
+                                    uint8_t tile_3U = world.getTile_RelativeToPlayer(0, 3);
+                                    uint8_t tile_4U = world.getTile_RelativeToPlayer(0, 4);
 
                                     if (world.isRopeTile(tile_3U)) {
 
@@ -773,7 +790,7 @@ void playGame_Update() {
 
                     case Direction::Forward:
                         {
-                            uint8_t tile = world.getTile(player, 0, 0);
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
 
                             if (tile == 0) {
                                 player.pushSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
@@ -786,8 +803,9 @@ void playGame_Update() {
 
                     case Direction::Left:
                         {
-                            uint8_t tile = world.getTile(player, 0, 0);
-                            uint8_t tile_U = world.getTile(player, 0, 2);
+
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_U = world.getTile_RelativeToPlayer(0, 2);
 
                             if (world.isEmptyTile(tile_U)) {
 
@@ -797,8 +815,8 @@ void playGame_Update() {
 
                                 }
                                 else if (world.isSpringTile(tile)) {     
-                                    uint8_t tile_3U = world.getTile(player, 0, 3);
-                                    uint8_t tile_4U = world.getTile(player, 0, 4);
+                                    uint8_t tile_3U = world.getTile_RelativeToPlayer(0, 3);
+                                    uint8_t tile_4U = world.getTile_RelativeToPlayer(0, 4);
 
                                     if (world.isRopeTile(tile_3U)) {
 
@@ -840,12 +858,16 @@ void playGame_Update() {
 
                     case Stance::Man_Walk_RH_01:
                         {
-                            uint8_t tile_R = world.getTile(player, 1, 0);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
-                            if (tile_R == 1) {
+                            if (world.canJumpUpOntoTile(tile_R)) {
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_RH_UP_01, Stance::Man_WalkingJump_RH_UP_05); 
                             }
+                            else if (world.isPunjiTile(tile_R)) {
+                                player.clear();
+                                player.pushSequence(Stance::Man_WalkingJump_RH_25_02, Stance::Man_WalkingJump_RH_25_11); 
+                            }                            
                             else {
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_RH_2_01, Stance::Man_WalkingJump_RH_2_08); 
@@ -857,13 +879,18 @@ void playGame_Update() {
                     case Stance::Man_Walk_LH_01:
                         {
                             
-                            uint8_t tile_L = world.getTile(player, -1, 0);
+                            uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
 
-                            if (tile_L == 3) {
+                            if (world.canJumpUpOntoTile(tile_L)) {
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_LH_UP_01, Stance::Man_WalkingJump_LH_UP_05); 
                             }
+                            else if (world.isPunjiTile(tile_L)) {
+                                player.clear();
+                                player.pushSequence(Stance::Man_WalkingJump_LH_25_02, Stance::Man_WalkingJump_LH_25_11); 
+                            }
                             else {
+Serial.println("A");
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_LH_01, Stance::Man_WalkingJump_LH_08); 
                             }
@@ -915,21 +942,69 @@ void playGame_Update() {
 
                 // Otherwise check if we have collided ..
 
-                Rect itemRect = { world.getItem(0).getX() + world.getMiddleground() - 4, yOffset - world.getItem(0).getY(), 16, 16 };
+                Rect itemRect = { world.getItem(0).getX() + world.getMiddleground() - 4 + 1, yOffset - world.getItem(0).getY() + 1, 14, 14 };
 
                 if (collide(playerRect, itemRect)) {
-
+// Serial.println("Collide");
                     Item &item = world.getItem(i);
                     Item &puff = world.getItem(world.getItem_Puff());
 
                     switch (item.getItemType()) {
 
                         case ItemType::Key1:
+                        case ItemType::Hammer:
 
-                            puff.setX(item.getX());
-                            puff.setY(item.getY());
-                            puff.setFrame(0);
-                            item.setCounter(3);
+                            if (item.getCounter() == 0) {
+
+                                puff.setX(item.getX());
+                                puff.setY(item.getY());
+                                puff.setFrame(0);
+                                item.setCounter(3);
+
+                            }
+                            break;
+
+                        case ItemType::Punji:
+
+                            if (item.getCounter() == 0) {
+                                    
+                                switch (player.getDirection()) {
+
+                                    case Direction::Left:
+                                        playerRect.width = 4;
+                                        break;
+
+                                    case Direction::Right:
+                                        playerRect.x = playerRect.x + 8;
+                                        playerRect.width = playerRect.width - 8;
+                                        break;
+
+                                }
+
+                                itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+
+                                if (collide(playerRect, itemRect)) {
+
+                                    item.setCounter(1);
+
+                                    switch (player.getDirection()) {
+
+                                        case Direction::Left:
+                                            player.clear();
+                                            player.pushSequence(Stance::Man_Die_LH_01, Stance::Man_Die_LH_04);
+                                            break;
+
+                                        case Direction::Right:
+                                            player.clear();
+                                            player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04);
+                                            break;
+
+                                    }
+
+                                }
+
+                            }
+
                             break;
 
                         default:
@@ -952,8 +1027,8 @@ void playGame_Update() {
                 case Stance::Man_Walk_FallMore_BK_02:
                     {
 
-                        uint8_t tile_D = world.getTile(player, 0, -1);
-                        uint8_t tile_D2 = world.getTile(player, 0, -2);
+                        uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                        uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
   
                         if (world.isEmptyTile(tile_D) || world.isSpringTile(tile_D)) {
 
@@ -1015,8 +1090,8 @@ void playGame_Update() {
                 case Stance::Man_Slide_RH_Full_13:
                     {
 
-                        uint8_t tile_D = world.getTile(player, 0, -1);
-                        uint8_t tile_D2 = world.getTile(player, 0, -2);
+                        uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                        uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
 
                         if (world.isEmptyTile(tile_D)) {
 
@@ -1069,8 +1144,8 @@ void playGame_Update() {
                 case Stance::Man_Slide_LH_11:
                 case Stance::Man_Slide_LH_Full_13:                
                     {
-                        uint8_t tile_D = world.getTile(player, 0, -1);
-                        uint8_t tile_D2 = world.getTile(player, 0, -2);
+                        uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                        uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
 
                         if (world.isEmptyTile(tile_D)) {
 
@@ -1140,6 +1215,8 @@ void playGame_Update() {
 
 
 void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
+
+    Player &player = world.getPlayer();
 
     if (a.needsUpdate()) playGame_Update();
 
@@ -1335,11 +1412,45 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         }
 
-        if (item.getItemType() == ItemType::Puff && item.getFrame() < Constants::Puff_Max) {
+        if (item.getItemType() == ItemType::WoodenBarrier) {
 
-            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (item.getFrame() / 16 * 3) +  currentPlane);
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_01, (item.getFrame() / 16 * 3) +  currentPlane);
 
         }
+
+        if (item.getItemType() == ItemType::TrapDoor) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_03, (item.getFrame() / 16 * 3) +  currentPlane);
+
+        }
+
+        if (item.getItemType() == ItemType::Punji) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_04, (item.getFrame() * 3) +  currentPlane);
+
+        }
+
+        if (item.getItemType() == ItemType::Hammer) {
+
+            switch (item.getFrame()) {
+
+                case 3 ... 21:
+                    SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_05, ((item.getFrame() / 3) * 3) +  currentPlane);
+                    break;
+
+                default:
+                    SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_05, currentPlane);
+                    break;
+
+            }
+
+        }
+
+        // if (item.getItemType() == ItemType::Puff && item.getFrame() < Constants::Puff_Max) {
+
+        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (item.getFrame() / 16 * 3) +  currentPlane);
+
+        // }
 
     }
 
@@ -1357,7 +1468,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         case Stance::Man_Walk_FallLandSpring_BK_23:
         case Stance::Man_Walk_FallLandSpring_BK_24:
             {
-                uint8_t tile = world.getTile(player, 0, 0);
+                uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
 
                 if (world.isSpringTile_LH(tile)) {
                     SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
@@ -1378,6 +1489,20 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         
     }
 
+
+    // Render a puff ?
+
+    Item &item = world.getItem(world.getItem_Puff());
+
+    if (item.getFrame() < Constants::Puff_Max) {
+
+        SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (item.getFrame() / 16 * 3) +  currentPlane);
+
+    }
+
+
+
+    // Render waves and foreground ..
 
     if (world.getWaveIdx() != Constants::NoWaves) {
         // SpritesU::drawOverwriteFX(world.getWave() - 128, 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
@@ -1401,7 +1526,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 
                     // a.drawRect(56 + 3, yOffset - Constants::GroundY + player.getY(), 10,16, WHITE);
-                    // a.drawRect(world.getItem(0).getX() + world.getMiddleground() - 4, yOffset - world.getItem(0).getY(), 16,16, WHITE);
+                    // a.drawRect(world.getItem(0).getX() + world.getMiddleground() - 4 + 1, yOffset - world.getItem(0).getY() + 1, 14, 14, WHITE);
 
 
 

@@ -7,3 +7,4 @@
 #include "Cookie.h"
 #include "Player.h"
 #include "Item.h"
+#include "InventoryItem.h"

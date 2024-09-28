@@ -16,6 +16,7 @@
 
 void play_Init() {
 
+    Player &player = world.getPlayer();
     gameState = GameState::Play_BoatEnters;
     frameCount = 0;
 
@@ -49,6 +50,7 @@ void play_Update() {
 
     uint8_t pressed = getPressedButtons();
     uint8_t justPressed = getJustPressedButtons();
+    Player &player = world.getPlayer();
 
     frameCount++;
     if (frameCount % 4 == 0) {
@@ -147,6 +149,7 @@ void play_Update() {
 
 void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
+    Player &player = world.getPlayer();
     if (a.needsUpdate()) play_Update();
 
     uint8_t currentPlane = a.currentPlane();

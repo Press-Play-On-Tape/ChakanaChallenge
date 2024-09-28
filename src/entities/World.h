@@ -9,6 +9,7 @@ struct World {
 
     private:
 
+        Player player;
         Item items[10];
 
         uint16_t xMap = 0;
@@ -41,6 +42,7 @@ struct World {
     public:
 
         Item &getItem(uint8_t idx)               { return this->items[idx]; }
+        Player &getPlayer()                      { return this->player; }
         uint16_t getXMap()                       { return this->xMap; }
         uint16_t getYMap()                       { return this->yMap; }
         uint16_t getXBoat()                      { return this->xBoat; }
@@ -426,7 +428,7 @@ struct World {
                         break;
 
                     case ItemAction::Remove_AddToInventory:
-                        // player.addItem(item);
+                        player.addInventoryItem(item);
                         removeItemIdx = i;
                         break;
 
@@ -525,7 +527,7 @@ struct World {
 
         }
 
-        uint8_t getTile(Player &player, int8_t xOffset, int8_t yOffset) {
+        uint8_t getTile_RelativeToPlayer(int8_t xOffset, int8_t yOffset) {
 
             if (player.getLevel() + yOffset < 0) return 1;
 
@@ -542,21 +544,45 @@ struct World {
                     
             // #endif
 
-            return mapData[player.getLevel() + yOffset][tileIdx];
+            return mapData[this->player.getLevel() + yOffset][tileIdx];
 
         }
 
 
         bool canWalkPastTile(uint8_t tile) {
 
+            if (tile == 24) { 
+
+                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                    
+                    Item &item = this->items[i];
+
+                    if (item.getItemType() == ItemType::WoodenBarrier) {
+                        Serial.println("FoundBarrier");
+                        return false;
+
+                    }
+
+                }
+
+                return false; 
+                
+            }
+
             return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || 
-                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/;
+                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == 23 /*Punji Invisible*/;
             
         }
 
         bool canWalkOnTile(uint8_t tile) {
 
             return tile == 1 || tile == 2 || tile == 9;
+            
+        }
+
+        bool isPunjiTile(uint8_t tile) {
+
+            return tile == 23;
             
         }
 
@@ -687,6 +713,12 @@ struct World {
         bool isSlideTile_Full_RH(uint8_t tile) {
 
             return tile == 22;
+            
+        }
+
+        bool isWoodenBarrier(uint8_t tile) {
+
+            return tile == 24;
             
         }
 
