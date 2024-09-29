@@ -461,26 +461,34 @@ void playGame_Update() {
 
                             if (world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L)) {
 
-                                if (justPressed & A_BUTTON || pressed & A_BUTTON) {
+                                if (justPressed & A_BUTTON || pressed & A_BUTTON) { 
 
                                     uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
                                     uint8_t tile_L3 = world.getTile_RelativeToPlayer(-3, 0);
                                     uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
-                                    uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -1);                                
+                                    uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -1);
+                                    uint8_t tile_L3D2 = world.getTile_RelativeToPlayer(-3, -2);
 
-                                    if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
+                                    if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) 
+                                       && world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.canWalkOnTile(tile_L3D)) {     
 
-                                        world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.canWalkOnTile(tile_L3D)) {     
                                         player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
 
-                                    }                     
+                                    }    
                                     else if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
+                                        world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D) && !world.isEmptyTile(tile_L3D2)) {     
 
-                                        world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
                                         player.setFalls(0);
                                         player.pushSequence(Stance::Man_WalkingJump_LH_1D_25_01, Stance::Man_WalkingJump_LH_1D_25_11);
 
                                     }                     
+                                    else if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
+                                        world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
+
+                                        player.setFalls(0);
+                                        player.pushSequence(Stance::Man_WalkingJump_LH_2D_25_01, Stance::Man_WalkingJump_LH_2D_25_11);
+
+                                    }    
 
                                 }
                                 else {
@@ -673,6 +681,7 @@ void playGame_Update() {
                                     uint8_t tile_R3 = world.getTile_RelativeToPlayer(3, 0);
                                     uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
                                     uint8_t tile_R3D = world.getTile_RelativeToPlayer(3, -1);
+                                    uint8_t tile_R3D2 = world.getTile_RelativeToPlayer(3, -2);
 
                                     if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) 
                                        && world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.canWalkOnTile(tile_R3D)) {     
@@ -681,10 +690,17 @@ void playGame_Update() {
 
                                     }    
                                     else if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
-                                        world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.isEmptyTile(tile_R3D)) {     
+                                        world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.isEmptyTile(tile_R3D) && !world.isEmptyTile(tile_R3D2)) {     
 
                                         player.setFalls(0);
                                         player.pushSequence(Stance::Man_WalkingJump_RH_1D_25_01, Stance::Man_WalkingJump_RH_1D_25_11);
+
+                                    }                     
+                                    else if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
+                                        world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.isEmptyTile(tile_R3D)) {     
+
+                                        player.setFalls(0);
+                                        player.pushSequence(Stance::Man_WalkingJump_RH_2D_25_01, Stance::Man_WalkingJump_RH_2D_25_11);
 
                                     }                     
               
@@ -704,7 +720,8 @@ void playGame_Update() {
 
                                     }
                                     else if (world.canWalkOnTile(tile_R2D) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R2U) && world.isEmptyTile(tile_U)) {
-
+Serial.println("RH_2_1");
+DEBUG_BREAK
                                         player.pushSequence(Stance::Man_WalkingJump_RH_2_01, Stance::Man_WalkingJump_RH_2_08);
 
                                     }
@@ -1004,27 +1021,42 @@ void playGame_Update() {
                     case Stance::Man_Walk_RH_01:
                         {
                             uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
+                            uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
+                            uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
 
                             if (world.canJumpUpOntoTile(tile_R)) {
+
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_RH_UP_01, Stance::Man_WalkingJump_RH_UP_05); 
+
                             }
                             else if (world.isPunjiTile(tile_R)) {
+
                                 player.clear();
                                 player.pushSequence(Stance::Man_WalkingJump_RH_25_02, Stance::Man_WalkingJump_RH_25_11); 
-                            }                            
-                            else {
+
+                            }     
+                            else if (world.canWalkPastTile(tile_R) && world.canWalkOnTile(tile_R2D)) {
+ 
                                 player.clear();
-                                player.pushSequence(Stance::Man_WalkingJump_RH_2_01, Stance::Man_WalkingJump_RH_2_08); 
+                                player.pushSequence(Stance::Man_WalkingJump_RH_2_02, Stance::Man_WalkingJump_RH_2_08); 
+
+                            }
+                            else {
+
+                                player.clear();
+                                player.pushSequence(Stance::Man_WalkingJump_RH_02, Stance::Man_WalkingJump_RH_08); 
+
                             }
 
                         }
                         break;
 
                     case Stance::Man_Walk_LH_01:
-                        {
-                            
+                        {                            
                             uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+                            uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
+                            uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
 
                             if (world.canJumpUpOntoTile(tile_L)) {
 
@@ -1038,12 +1070,19 @@ void playGame_Update() {
                                 player.pushSequence(Stance::Man_WalkingJump_LH_25_02, Stance::Man_WalkingJump_LH_25_11); 
 
                             }
+                            else if (world.canWalkPastTile(tile_L) && world.canWalkOnTile(tile_L2D)) {
+
+                                player.clear();
+                                player.pushSequence(Stance::Man_WalkingJump_LH_2_02, Stance::Man_WalkingJump_LH_2_08); 
+
+                            }
                             else {
 
                                 player.clear();
-                                player.pushSequence(Stance::Man_WalkingJump_LH_01, Stance::Man_WalkingJump_LH_08); 
+                                player.pushSequence(Stance::Man_WalkingJump_LH_02, Stance::Man_WalkingJump_LH_08); 
 
                             }
+
 
                         }
                         
