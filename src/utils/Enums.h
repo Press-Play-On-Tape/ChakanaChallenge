@@ -37,12 +37,16 @@ enum class Direction : uint8_t {
 
 enum class ItemType : uint8_t {
     Key1 = 50,
+    Key1_Hidden,
     WoodenBarrier,
     TrapDoor,
     Punji,
     Hammer,
+    Hammer_Hidden,
     Amulet,
+    Amulet_Hidden,
     PinchBar,
+    PinchBar_Hidden,
     MysteryCrate,
     Puff,
     None = 99,
@@ -53,6 +57,7 @@ enum class ItemAction : uint8_t {
     None,
     Remove,
     Remove_AddToInventory,
+    HideCrate_ShowItem,
 };
 
 

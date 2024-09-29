@@ -93,10 +93,14 @@ class Item {
 
                 case ItemType::MysteryCrate:
 
-                    if (this->counter > 0 && this->counter < (5 * 32) - 1) {
+                    if (this->counter > 0 && this->counter < (8 * 24)) {
 
                         this->counter++;
-                        this->frame = this->counter / 32;
+                        this->frame = this->counter / 24;
+
+                        if (this->counter == (8 * 24)) {
+                            return ItemAction::HideCrate_ShowItem;
+                        }
 
                     }
                     

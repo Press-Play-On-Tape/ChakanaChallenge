@@ -424,10 +424,20 @@ struct World {
                 switch (action) {
 
                     case ItemAction::Remove:
+Serial.print("ItemAction::Remove ");            
+Serial.println(i);        
                         removeItemIdx = i;
                         break;
 
+                    case ItemAction::HideCrate_ShowItem:
+                        this->items[i + 1].setItemType(static_cast<ItemType>(static_cast<uint8_t>(this->items[i + 1].getItemType()) - 1));
+                        break;
+
                     case ItemAction::Remove_AddToInventory:
+Serial.print("ItemAction::Remove_AddToInventory ");                    
+Serial.print((uint8_t)item.getItemType());                    
+Serial.print(" ");                    
+Serial.println(i);        
                         player.addInventoryItem(item.getItemType());
                         removeItemIdx = i;
                         break;
@@ -438,6 +448,7 @@ struct World {
 
             if (removeItemIdx != 255) {
                 this->removeItem(removeItemIdx);
+                this->items[removeItemIdx].setItemType(static_cast<ItemType>(static_cast<uint8_t>(this->items[removeItemIdx].getItemType()) - 1));
             }
 
             if (this->waveIdx == Constants::NoWaves) return;
@@ -456,13 +467,15 @@ struct World {
         }
 
         void removeItem(uint8_t itemIdx) {
-
+Serial.print("revmoveitem ");
+Serial.println(itemIdx);
             for (uint8_t i = itemIdx; i < Constants::ItemCount - 1; i++) {
 
                 this->items[i].setItemType(items[i + 1].getItemType());
                 this->items[i].setFrame(items[i + 1].getFrame());
                 this->items[i].setX(items[i + 1].getX());
                 this->items[i].setY(items[i + 1].getY());
+                this->items[i].setCounter(0);
 
             }
 
@@ -560,6 +573,24 @@ struct World {
                     if (item.getItemType() == ItemType::WoodenBarrier) {
                         
                         return item.getCounter() == (7 * 32) - 1;
+
+                    }
+
+                }
+
+                return false; 
+                
+            }
+
+            if (tile == 25) { 
+
+                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                    
+                    Item &item = this->items[i];
+
+                    if (item.getItemType() == ItemType::MysteryCrate) {
+                        
+                        return item.getFrame() == 8;
 
                     }
 
