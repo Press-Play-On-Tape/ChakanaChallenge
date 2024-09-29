@@ -187,10 +187,10 @@ void renderWorld(uint8_t currentPlane) {
 
     }
 
-
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
+
         if (item.getItemType() == ItemType::None) break;
 
         if (item.getItemType() == ItemType::Key1) {

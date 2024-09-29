@@ -1084,6 +1084,12 @@ void playGame_Update() {
               
                 Item &item = world.getItem(i);
 
+                
+                // Can we skip this one?
+
+                if (item.getItemType() == ItemType::MysteryCrate && item.getFrame() == 8) continue;
+
+
 
                 // If the item is the 'puff' then we are at the last of the items, stop iterating ..
 
@@ -1406,7 +1412,9 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     uint8_t currentPlane = a.currentPlane();
 
     renderWorld(currentPlane);
+
     world.update(true);
+
 
 }
 
