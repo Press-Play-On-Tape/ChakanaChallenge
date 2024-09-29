@@ -42,7 +42,7 @@ void playGame_Init() {
             item.setFrame(255);           
         }
         else if (i == 1) {
-            item.setItemType(ItemType::MysteryCrate);
+            item.setItemType(ItemType::LockedDoor);
             item.setX(128 + 64 + 48 - 32);
             item.setY(16);            
         }
@@ -54,7 +54,7 @@ void playGame_Init() {
             item.setY(16);                        
         }
         else if (i == 0) {
-            item.setItemType(ItemType::Hammer);
+            item.setItemType(ItemType::Potion);
             item.setX(128 + 16 + 16 - 16 - 32);
             item.setY(16);            
         }
@@ -62,6 +62,21 @@ void playGame_Init() {
             item.setItemType(ItemType::None);
 
         }
+
+        player.getItem(i).setItemType(ItemType::None);
+
+
+        // Item &item = world.getItem(i);
+        // if (i == 0) {
+        //     item.setItemType(ItemType::Puff);
+        //     item.setX(128 + 16 - 32);
+        //     item.setY(16);  
+        //     item.setFrame(255);           
+        // }
+        // else {
+        //     item.setItemType(ItemType::None);
+
+        // }
 
         player.getItem(i).setItemType(ItemType::None);
 
@@ -82,10 +97,6 @@ void playGame_Init() {
 
 }
 
-uint8_t invMenuX = 128;
-uint8_t invMenuY = 0;
-uint8_t invMenu_Top = 0;
-Direction invMenu = Direction::None;
 
 void playGame_Update() {
     
@@ -102,13 +113,13 @@ void playGame_Update() {
 
             if (justPressed & B_BUTTON || pressed & B_BUTTON) {
                            
-                if (invMenuX == 128) {
+                if (menu.getX() == 128) {
                     gameState = GameState::Inventory_Open;
-                    invMenu = Direction::Left;
+                    menu.setDirection(Direction::Left);
                 }
-                else if (invMenuX == 128 - 32) {
+                else if (menu.getX() == 128 - 32) {
                     gameState = GameState::Inventory_Open;
-                    invMenu = Direction::Right;
+                    menu.setDirection(Direction::Right);
                 }
 
             }
@@ -122,23 +133,23 @@ void playGame_Update() {
                             {
                                 uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
-                                if (world.isWoodenBarrier(tile_R) && player.getItem(invMenuY).getItemType() == ItemType::Hammer) {
+                                if (world.isWoodenBarrier(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
 
                                     player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
                                     uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
                                     world.getItem(woodenBarrier).setCounter(1);     
-                                    invMenu = Direction::Right;
-                                    player.removeInventoryItem(invMenuY);
+                                    menu.setDirection(Direction::Right);
+                                    player.removeInventoryItem(menu.getY());
 
                                 }
 
-                                if (world.isMysteryCrate(tile_R) && player.getItem(invMenuY).getItemType() == ItemType::PinchBar) {
+                                if (world.isMysteryCrate(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
 
                                     player.pushSequence(Stance::Man_Levering_RH_00, Stance::Man_Levering_RH_10);
                                     uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
                                     world.getItem(mysteryCrate).setCounter(1);     
-                                    invMenu = Direction::Right;
-                                    player.removeInventoryItem(invMenuY);
+                                    menu.setDirection(Direction::Right);
+                                    player.removeInventoryItem(menu.getY());
 
                                 }
 
@@ -150,23 +161,23 @@ void playGame_Update() {
                             {
                                 uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
 
-                                if (world.isWoodenBarrier(tile_L) && player.getItem(invMenuY).getItemType() == ItemType::Hammer) {
+                                if (world.isWoodenBarrier(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
 
                                     player.pushSequence(Stance::Man_Hammering_LH_00, Stance::Man_Hammering_LH_10);
                                     uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
                                     world.getItem(woodenBarrier).setCounter(1);     
-                                    invMenu = Direction::Right;
-                                    player.removeInventoryItem(invMenuY);
+                                    menu.setDirection(Direction::Right);
+                                    player.removeInventoryItem(menu.getY());
 
                                 }
 
-                                if (world.isMysteryCrate(tile_L) && player.getItem(invMenuY).getItemType() == ItemType::PinchBar) {
+                                if (world.isMysteryCrate(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
 
                                     player.pushSequence(Stance::Man_Levering_LH_00, Stance::Man_Levering_LH_10);
                                     uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
                                     world.getItem(mysteryCrate).setCounter(1);     
-                                    invMenu = Direction::Right;
-                                    player.removeInventoryItem(invMenuY);
+                                    menu.setDirection(Direction::Right);
+                                    player.removeInventoryItem(menu.getY());
 
                                 }
 
@@ -181,55 +192,55 @@ void playGame_Update() {
             else if (gameState == GameState::Inventory_Open && (justPressed & UP_BUTTON)) {
 
                 // Showing top 3 items and can not move up ..
-                if (invMenu_Top == 0 && invMenuY == 0) { }
+                if (menu.getTop() == 0 && menu.getY() == 0) { }
 
                 // Showing top 3 items and can move up .. 
-                else if (invMenu_Top == 0 && invMenuY > 0 && invMenuY < player.getItemCount()) {
-                    invMenuY--;
+                else if (menu.getTop() == 0 && menu.getY() > 0 && menu.getY() < player.getItemCount()) {
+                    menu.setY(menu.getY() - 1);
                 }
 
                 // Showing bottomn 3 items and bottom item is selected ..
-                else if (invMenu_Top == player.getItemCount() - 3 && invMenuY == player.getItemCount() - 1) {
-                    invMenuY--;
+                else if (menu.getTop() == player.getItemCount() - 3 && menu.getY() == player.getItemCount() - 1) {
+                    menu.setY(menu.getY() - 1);
                 }
 
                 // Otherwise scroll top and selected up ..
                 else {
-                    invMenu_Top--;
-                    invMenuY--;
+                    menu.setTop(menu.getTop() - 1);
+                    menu.setY(menu.getY() - 1);
                 }
                 
             }
             else if (gameState == GameState::Inventory_Open && (justPressed & DOWN_BUTTON)) {
 
                 // Bottom item is already selected and cannot move ..
-                if (invMenuY == player.getItemCount() - 1) { }
+                if (menu.getY() == player.getItemCount() - 1) { }
 
                 // Showing top 3 items and top row is selected, move down ..
-                else if (invMenu_Top == 0 && invMenuY == 0 && invMenuY < player.getItemCount()) {
-                    invMenuY++;
+                else if (menu.getTop() == 0 && menu.getY() == 0 && menu.getY() < player.getItemCount()) {
+                    menu.setY(menu.getY() + 1);
                 }
 
                 // Showing all 3 items ..
-                else if (invMenu_Top == 0 && invMenuY < player.getItemCount() - 1 && player.getItemCount() == 3) {
-                    invMenuY++;
+                else if (menu.getTop() == 0 && menu.getY() < player.getItemCount() - 1 && player.getItemCount() == 3) {
+                    menu.setY(menu.getY() + 1);
                 }
 
                 // Showing top 3 items and top row is selected, move down ..
-                else if (invMenu_Top == 0 && invMenuY < player.getItemCount()) {
-                    invMenu_Top++;
-                    invMenuY++;
+                else if (menu.getTop() == 0 && menu.getY() < player.getItemCount()) {
+                    menu.setTop(menu.getTop() + 1);
+                    menu.setY(menu.getY() + 1);
                 }
 
                 // Showing bottom 3 items and bottom 
-                else if (invMenu_Top == player.getItemCount() - 3) {
-                    invMenuY++;
+                else if (menu.getTop() == player.getItemCount() - 3) {
+                    menu.setY(menu.getY() + 1);
                 }
 
                 // Otherwise scroll top and selected down ..
                 else {
-                    invMenu_Top++;
-                    invMenuY++;
+                    menu.setTop(menu.getTop() + 1);
+                    menu.setY(menu.getY() + 1);
                 }
 
             }
@@ -720,8 +731,7 @@ void playGame_Update() {
 
                                     }
                                     else if (world.canWalkOnTile(tile_R2D) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R2U) && world.isEmptyTile(tile_U)) {
-Serial.println("RH_2_1");
-DEBUG_BREAK
+
                                         player.pushSequence(Stance::Man_WalkingJump_RH_2_01, Stance::Man_WalkingJump_RH_2_08);
 
                                     }
@@ -1149,6 +1159,7 @@ DEBUG_BREAK
                         case ItemType::PinchBar:
                         case ItemType::Hammer:
                         case ItemType::Amulet:
+                        case ItemType::Potion:
 
                             if (item.getCounter() == 0) {
 
@@ -1405,15 +1416,15 @@ DEBUG_BREAK
     }
 
 
-    switch (invMenu) {
+    switch (menu.getDirection()) {
 
         case Direction::Left:
 
-            if (invMenuX > 128 - 32) {
-                invMenuX = invMenuX - 2;
+            if (menu.getX() > 128 - 32) {
+                menu.setX(menu.getX() - 2);
             }
             else {
-                invMenu = Direction::None;
+                menu.setDirection(Direction::None);
             }
 
             break;
@@ -1421,19 +1432,22 @@ DEBUG_BREAK
 
         case Direction::Right:
 
-            if (invMenuX < 128) {
-                invMenuX = invMenuX + 2;
+            if (menu.getX() < 128) {
+                menu.setX(menu.getX() + 2);
             }
             else {
-                invMenu = Direction::None;
+                menu.setDirection(Direction::None);
                 gameState = GameState::PlayGame;
             }
 
             break;
+
+        default:
+            break;
     }
 
 
-    player.update(0, 0);
+    // player.update(0, 0);
 
 }
 

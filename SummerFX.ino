@@ -57,6 +57,7 @@ uint16_t bButton = 0;
 uint16_t raiseBy = 50;
 uint8_t pressCount = 0;
 World world;
+Menu menu;
 
 
 Stance stanceOld = Stance::Man_Walk_RH_01;
@@ -76,6 +77,7 @@ void setup() {
     
     FX::begin(FX_DATA_PAGE, FX_SAVE_PAGE);
     FX::loadGameState((uint8_t*)&cookie, sizeof(cookie));
+
     #ifndef DEBUG_SOUND
     audioInit();
     setAudioOn();
@@ -160,55 +162,55 @@ void loop() {
 
 void printDetails() {
     
-    Player &player = world.getPlayer();
+    // Player &player = world.getPlayer();
 
-    DEBUG_PRINT("S");
-    DEBUG_PRINT(player.getStance());
-    DEBUG_PRINT(" X");
-    DEBUG_PRINT(world.getX());
-    DEBUG_PRINT(" y");
-    DEBUG_PRINT(Constants::GroundY - player.getY());
-    DEBUG_PRINT(" (");
-    DEBUG_PRINT((Constants::GroundY - player.getY()) % 8);
-    DEBUG_PRINT(") B");
-    DEBUG_PRINT(world.getBackground());
-    DEBUG_PRINT(" M");
-    DEBUG_PRINT(world.getMiddleground());
-    DEBUG_PRINT(" (");
-    DEBUG_PRINT(world.getMiddleground() % 8);
-    DEBUG_PRINT(") D");
-    DEBUG_PRINT((uint8_t)player.getDirection());
-    DEBUG_PRINT(" 1) ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, 1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, 1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(0, 1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(1, 1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(2, 1));
-    DEBUG_PRINT(" - 0) ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, 0));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, 0));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(0, 0));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(1, 0));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(2, 0));
-    DEBUG_PRINT(" - -1) ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, -1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, -1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(0, -1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(1, -1));
-    DEBUG_PRINT(" ");
-    DEBUG_PRINT(world.getTile_RelativeToPlayer(2, -1));
-    DEBUG_PRINTLN(" ");
+    // DEBUG_PRINT("S");
+    // DEBUG_PRINT(player.getStance());
+    // DEBUG_PRINT(" X");
+    // DEBUG_PRINT(world.getX());
+    // DEBUG_PRINT(" y");
+    // DEBUG_PRINT(Constants::GroundY - player.getY());
+    // DEBUG_PRINT(" (");
+    // DEBUG_PRINT((Constants::GroundY - player.getY()) % 8);
+    // DEBUG_PRINT(") B");
+    // DEBUG_PRINT(world.getBackground());
+    // DEBUG_PRINT(" M");
+    // DEBUG_PRINT(world.getMiddleground());
+    // DEBUG_PRINT(" (");
+    // DEBUG_PRINT(world.getMiddleground() % 8);
+    // DEBUG_PRINT(") D");
+    // DEBUG_PRINT((uint8_t)player.getDirection());
+    // DEBUG_PRINT(" 1) ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, 1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, 1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(0, 1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(1, 1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(2, 1));
+    // DEBUG_PRINT(" - 0) ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, 0));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, 0));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(0, 0));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(1, 0));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(2, 0));
+    // DEBUG_PRINT(" - -1) ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(-2, -1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(-1, -1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(0, -1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(1, -1));
+    // DEBUG_PRINT(" ");
+    // DEBUG_PRINT(world.getTile_RelativeToPlayer(2, -1));
+    // DEBUG_PRINTLN(" ");
 
 
     // if (player.isEmpty()) {

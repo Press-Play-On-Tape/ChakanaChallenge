@@ -48,6 +48,10 @@ enum class ItemType : uint8_t {
     PinchBar,
     PinchBar_Hidden,
     MysteryCrate,
+    Potion,
+    Potion_Hidden,
+    LockedDoor,
+    LockedDoor_Hidden,
     Puff,
     None = 99,
 };

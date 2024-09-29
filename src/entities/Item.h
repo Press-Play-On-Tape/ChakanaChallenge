@@ -36,6 +36,7 @@ class Item {
 
                 case ItemType::Key1:
                 case ItemType::PinchBar:
+                case ItemType::Potion:
 
                     this->frame++;
                     if (this->frame == 128) this->frame = 0;
