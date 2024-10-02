@@ -37,6 +37,7 @@ class Item {
                 case ItemType::Key1:
                 case ItemType::PinchBar:
                 case ItemType::Potion:
+                case ItemType::Anchor:
 
                     this->frame++;
                     if (this->frame == 128) this->frame = 0;
@@ -102,6 +103,17 @@ class Item {
                         if (this->counter == (8 * 24)) {
                             return ItemAction::HideCrate_ShowItem;
                         }
+
+                    }
+                    
+                    break;
+
+                case ItemType::LockedDoor:
+
+                    if (this->counter > 0 && this->counter < (5 * 32) - 1) {
+
+                        this->counter++;
+                        this->frame = this->counter / 32;
 
                     }
                     

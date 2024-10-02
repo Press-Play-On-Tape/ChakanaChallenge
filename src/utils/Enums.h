@@ -52,6 +52,8 @@ enum class ItemType : uint8_t {
     Potion_Hidden,
     LockedDoor,
     LockedDoor_Hidden,
+    Anchor,
+    Anchor_Hidden,
     Puff,
     None = 99,
 };
@@ -445,6 +447,22 @@ enum Stance : uint16_t {
             Man_Levering_RH_09,
             Man_Levering_RH_10,
 
+            Man_Rollers_RH_01,
+            Man_Rollers_RH_02,
+            Man_Rollers_RH_03,
+            Man_Rollers_RH_04,
+
+            Man_Rollers_Stand_RH_01,
+            Man_Rollers_Stand_RH_02,
+            Man_Rollers_Stand_RH_03,
+            Man_Rollers_Stand_RH_04,
+
+            Man_Rollers_Fall_RH_01,
+            Man_Rollers_Fall_RH_02,
+            Man_Rollers_Fall_RH_03,
+            Man_Rollers_Fall_RH_04,
+            Man_Rollers_Fall_RH_05,
+
             Man_Die_RH_01,
             Man_Die_RH_02,
             Man_Die_RH_03,
@@ -730,6 +748,22 @@ enum Stance : uint16_t {
             Man_Levering_LH_08,
             Man_Levering_LH_09,
             Man_Levering_LH_10,
+
+            Man_Rollers_LH_01,
+            Man_Rollers_LH_02,
+            Man_Rollers_LH_03,
+            Man_Rollers_LH_04,
+
+            Man_Rollers_Stand_LH_01,
+            Man_Rollers_Stand_LH_02,
+            Man_Rollers_Stand_LH_03,
+            Man_Rollers_Stand_LH_04,
+
+            Man_Rollers_Fall_LH_01,
+            Man_Rollers_Fall_LH_02,
+            Man_Rollers_Fall_LH_03,
+            Man_Rollers_Fall_LH_04,
+            Man_Rollers_Fall_LH_05,
 
             Man_Die_LH_01,
             Man_Die_LH_02,

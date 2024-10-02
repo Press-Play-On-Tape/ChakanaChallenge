@@ -184,57 +184,80 @@ void renderWorld(uint8_t currentPlane) {
 
             uint24_t imgTile = 0;
 
-            if (tile00 == 1 && tile01 == 1 & tile10 == 0 & tile11 == 0)         imgTile = Images::Crate_10;
-            if (tile00 == 1 && tile01 == 1 & tile10 == 16 & tile11 == 0)        imgTile = Images::Crate_20;
-            if (tile00 == 1 && tile01 == 1 & tile10 == 0 & tile11 == 17)        imgTile = Images::Crate_21;
-            if (tile00 == 1 && tile01 == 1 & tile10 == 0 & tile11 == 1)         imgTile = Images::Crate_00;
-            if (tile00 == 1 && tile01 == 2 & tile10 == 0 & tile11 == 2)         imgTile = Images::Crate_00;
-            if (tile00 == 2 && tile01 == 2 & tile10 == 0 & tile11 == 2)         imgTile = Images::Crate_09;
-            if (tile00 == 1 && tile01 == 2 & tile10 == 0 & tile11 == 2)         imgTile = Images::Crate_03;
-            if (tile00 == 1 && tile01 == 1 & tile10 == 1 & tile11 == 1)         imgTile = Images::Crate_05;
-            if (tile00 == 2 && tile01 == 2 & tile10 == 1 & tile11 == 1)         imgTile = Images::Crate_01;
-            if (tile00 == 18 && tile01 == 18 & tile10 == 18 & tile11 == 18)     imgTile = Images::Crate_22;
-            if (tile00 == 2 && tile01 == 1 & tile10 == 1 & tile11 == 0)         imgTile = Images::Crate_02;
-            if (tile00 == 1 && tile01 == 1 & tile10 == 1 & tile11 == 0)         imgTile = Images::Crate_02;
-            if (tile00 == 1 && tile01 == 1 & tile10 == 2 & tile11 == 0)         imgTile = Images::Crate_04;
-            if (tile00 == 2 && tile01 == 0 & tile10 == 2 & tile11 == 0)         imgTile = Images::Crate_06;
-            if (tile00 == 0 && tile01 == 2 & tile10 == 0 & tile11 == 2)         imgTile = Images::Crate_07;
-            if (tile00 == 3 && tile01 == 3 & tile10 == 0 & tile11 == 0)         imgTile = Images::Spikes;
-            if (tile00 == 2 && tile01 == 2 & tile10 == 4 & tile11 == 5)         imgTile = Images::Crate_08;
-            if (tile00 == 6 && tile01 == 5 & tile10 == 0 & tile11 == 0)         imgTile = Images::Crate_11;
-            if (tile00 == 0 && tile01 == 6 & tile10 == 0 & tile11 == 0)         imgTile = Images::Crate_11;
-            if (tile00 == 11 && tile01 == 0 & tile10 == 0 & tile11 == 0)        imgTile = Images::Crate_11a;
+            if (tile00 == 1 && tile01 == 1 && tile10 == 0 && tile11 == 0)         imgTile = Images::Crate_10;
+            if (tile00 == 1 && tile01 == 1 && tile10 == 16 && tile11 == 0)        imgTile = Images::Crate_20;
+            if (tile00 == 1 && tile01 == 1 && tile10 == 0 && tile11 == 17)        imgTile = Images::Crate_21;
+            if (tile00 == 1 && tile01 == 1 && tile10 == 0 && tile11 == 1)         imgTile = Images::Crate_00;
+            if (tile00 == 1 && tile01 == 2 && tile10 == 0 && tile11 == 2)         imgTile = Images::Crate_00;
+            if (tile00 == 2 && tile01 == 2 && tile10 == 0 && tile11 == 2)         imgTile = Images::Crate_09;
+            if (tile00 == 1 && tile01 == 2 && tile10 == 0 && tile11 == 2)         imgTile = Images::Crate_03;
+            if (tile00 == 1 && tile01 == 1 && tile10 == 1 && tile11 == 1)         imgTile = Images::Crate_05;
+            if (tile00 == 2 && tile01 == 2 && tile10 == 1 && tile11 == 1)         imgTile = Images::Crate_01;
+            if (tile00 == 18 && tile01 == 18 && tile10 == 18 && tile11 == 18)     imgTile = Images::Crate_22;
+            if (tile00 == 2 && tile01 == 1 && tile10 == 1 && tile11 == 0)         imgTile = Images::Crate_02;
+            if (tile00 == 1 && tile01 == 1 && tile10 == 1 && tile11 == 0)         imgTile = Images::Crate_02;
+            if (tile00 == 1 && tile01 == 1 && tile10 == 2 && tile11 == 0)         imgTile = Images::Crate_04;
+            if (tile00 == 2 && tile01 == 0 && tile10 == 2 && tile11 == 0)         imgTile = Images::Crate_06;
+            if (tile00 == 0 && tile01 == 2 && tile10 == 0 && tile11 == 2)         imgTile = Images::Crate_07;
+            if (tile00 == 3 && tile01 == 3 && tile10 == 0 && tile11 == 0)         imgTile = Images::Spikes;
+            if (tile00 == 2 && tile01 == 2 && tile10 == 4 && tile11 == 5)         imgTile = Images::Crate_08;
+            if (tile00 == 6 && tile01 == 5 && tile10 == 0 && tile11 == 0)         imgTile = Images::Crate_11;
+            if (tile00 == 0 && tile01 == 6 && tile10 == 0 && tile11 == 0)         imgTile = Images::Crate_11;
+            if (tile00 == 11 && tile01 == 0 && tile10 == 0 && tile11 == 0)        imgTile = Images::Crate_11a;
 
 
             // ladders
 
-            if (tile00 == 7 && tile01 == 7 & tile10 == 8 & tile11 == 8)         imgTile = Images::Crate_13;
-            if (tile00 == 7 && tile01 == 7 & tile10 == 12 & tile11 == 12)       imgTile = Images::Crate_14;
-            if (tile00 == 12 && tile01 == 12 & tile10 == 8 & tile11 == 8)       imgTile = Images::Crate_15;
-            if (tile00 == 12 && tile01 == 12 & tile10 == 12 & tile11 == 12)     imgTile = Images::Crate_16;
+            if (tile00 == 7 && tile01 == 7 && tile10 == 8 && tile11 == 8)         imgTile = Images::Crate_13;
+            if (tile00 == 7 && tile01 == 7 && tile10 == 12 && tile11 == 12)       imgTile = Images::Crate_14;
+            if (tile00 == 12 && tile01 == 12 && tile10 == 8 && tile11 == 8)       imgTile = Images::Crate_15;
+            if (tile00 == 12 && tile01 == 12 && tile10 == 12 && tile11 == 12)     imgTile = Images::Crate_16;
 
 
             // Rope
 
-            if (tile00 == 13 && tile01 == 0 & tile10 == 13 & tile11 == 15)      imgTile = Images::Crate_17;
-            if (tile00 == 0 && tile01 == 14 & tile10 == 15 & tile11 == 14)      imgTile = Images::Crate_18;
-            if (tile00 == 0 && tile01 == 0 & tile10 == 15 & tile11 == 15)       imgTile = Images::Crate_19;
-            if (tile00 == 15 && tile01 == 15 & tile10 == 0 & tile11 == 0)       imgTile = Images::Crate_23;
+            if (tile00 == 13 && tile01 == 0 && tile10 == 13 && tile11 == 15)      imgTile = Images::Crate_17;
+            if (tile00 == 0 && tile01 == 14 && tile10 == 15 && tile11 == 14)      imgTile = Images::Crate_18;
+            if (tile00 == 0 && tile01 == 0 && tile10 == 15 && tile11 == 15)       imgTile = Images::Crate_19;
+            if (tile00 == 15 && tile01 == 15 && tile10 == 0 && tile11 == 0)       imgTile = Images::Crate_23;
 
 
             // Stairs
 
-            if (tile00 == 2 && tile01 == 2 & tile10 == 9 & tile11 == 10)        imgTile = Images::Crate_12;
+            if (tile00 == 2 && tile01 == 2 && tile10 == 9 && tile11 == 10)        imgTile = Images::Crate_12;
 
 
             // Slide
 
-            if (tile00 == 2 && tile01 == 0 & tile10 == 19 & tile11 == 0)        imgTile = Images::Crate_24;
-            if (tile00 == 2 && tile01 == 2 & tile10 == 1 & tile11 == 19)        imgTile = Images::Crate_28;
-            if (tile00 == 2 && tile01 == 20 & tile10 == 20 & tile11 == 0)       imgTile = Images::Crate_29;
-            if (tile00 == 0 && tile01 == 2 & tile10 == 0 & tile11 == 21)        imgTile = Images::Crate_25;
-            if (tile00 == 2 && tile01 == 2 & tile10 == 21 & tile11 == 1)        imgTile = Images::Crate_30;
-            if (tile00 == 22 && tile01 == 2 & tile10 == 0 & tile11 == 22)       imgTile = Images::Crate_31;
+            if (tile00 == 2 && tile01 == 0 && tile10 == 19 && tile11 == 0)        imgTile = Images::Crate_24;
+            if (tile00 == 2 && tile01 == 2 && tile10 == 1 && tile11 == 19)        imgTile = Images::Crate_28;
+            if (tile00 == 2 && tile01 == 20 && tile10 == 20 && tile11 == 0)       imgTile = Images::Crate_29;
+            if (tile00 == 0 && tile01 == 2 && tile10 == 0 && tile11 == 21)        imgTile = Images::Crate_25;
+            if (tile00 == 2 && tile01 == 2 && tile10 == 21 && tile11 == 1)        imgTile = Images::Crate_30;
+            if (tile00 == 22 && tile01 == 2 && tile10 == 0 && tile11 == 22)       imgTile = Images::Crate_31;
+
+
+            // Rollers R then L
+
+            if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == 0 && tile11 == 0) {
+                SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_32, ((frameCount % 24) / 6 * 3) + currentPlane);
+            }
+
+            if (tile00 == 2 && tile01 == 2 && world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
+                SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_34, ((frameCount % 24) / 6 * 3) + currentPlane);
+            }
+
+            if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) && tile10 == 0 && tile11 == 0) {
+                SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_33, ((frameCount % 24) / 6 * 3) + currentPlane);
+            }
+
+            if (tile00 == 2 && tile01 == 2 && world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
+                SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_35, ((frameCount % 24) / 6 * 3) + currentPlane);
+            }
+
+
+
+            // Render image?
 
             if (imgTile != 0) {
                 SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), imgTile, currentPlane);
@@ -253,6 +276,12 @@ void renderWorld(uint8_t currentPlane) {
         if (item.getItemType() == ItemType::Key1) {
 
             SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_00, (item.getFrame() / 16 * 3) + currentPlane);
+
+        }
+
+        if (item.getItemType() == ItemType::Anchor) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_11, (item.getFrame() / 16 * 3) + currentPlane);
 
         }
 
@@ -289,6 +318,12 @@ void renderWorld(uint8_t currentPlane) {
         if (item.getItemType() == ItemType::Potion) {
 
             SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_10, (item.getFrame() / 16 * 3) + currentPlane);
+
+        }
+
+        if (item.getItemType() == ItemType::LockedDoor) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_09, (item.getFrame() * 3) + currentPlane);
 
         }
 
@@ -379,6 +414,19 @@ void renderWorld(uint8_t currentPlane) {
 
     }
 
+    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+        Item &item = world.getItem(i);
+
+        if (item.getItemType() == ItemType::None) break;
+
+        if (item.getItemType() == ItemType::LockedDoor && item.getFrame() == 4) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4 + 11, yOffset - item.getY(), Images::Item_09a, currentPlane);
+
+        }
+
+    }
 
 
     // Render waves and foreground ..
@@ -434,34 +482,6 @@ void renderWorld(uint8_t currentPlane) {
             InventoryItem &item = player.getItem(i);
             if (item.getItemType() == ItemType::None)   break;
 
-            // switch (item.getItemType()) {
-
-            //     case ItemType::Key1:
-            //         SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), Images::Item_00, currentPlane);
-            //         break;
-
-            //     case ItemType::PinchBar:
-            //         SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), Images::Item_08, currentPlane);
-            //         break;
-
-            //     case ItemType::Hammer:
-            //         SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), Images::Item_05, currentPlane);
-            //         break;
-
-            //     case ItemType::Amulet:
-            //         SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), Images::Item_06, currentPlane);
-            //         break;
-
-            //     case ItemType::Potion:
-            //         SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), Images::Item_10, (3 * 8) + currentPlane);
-            //         break;
-
-            //     default:
-            //         SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), Images::Item_05, currentPlane);
-            //         break;
-
-            // }
-
             uint24_t imgIndex = 0;
             uint24_t imgFrame = 0;
 
@@ -486,6 +506,10 @@ void renderWorld(uint8_t currentPlane) {
                 case ItemType::Potion:
                     imgIndex = Images::Item_10;
                     imgFrame = 24;
+                    break;
+
+                case ItemType::Anchor:
+                    imgIndex = Images::Item_11;
                     break;
 
             }

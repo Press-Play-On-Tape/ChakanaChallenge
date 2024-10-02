@@ -592,6 +592,24 @@ struct World {
                 
             }
 
+            if (tile == 26) { 
+
+                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                    
+                    Item &item = this->items[i];
+
+                    if (item.getItemType() == ItemType::LockedDoor) {
+                        
+                        return item.getFrame() == 4;
+
+                    }
+
+                }
+
+                return false; 
+                
+            }
+
             return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || 
                    tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == 23 /*Punji Invisible*/;
             
@@ -611,7 +629,7 @@ struct World {
 
         bool canJumpUpOntoTile(uint8_t tile) {
 
-            return tile == 1;
+            return tile == 1 || tile == 2;
             
         }
 
@@ -751,4 +769,21 @@ struct World {
             
         }
 
+        bool isLockedDoor(uint8_t tile) {
+
+            return tile == 26;
+            
+        }
+
+        bool isRollerTile_RH(uint8_t tile) {
+
+            return tile == 27;
+            
+        }
+
+        bool isRollerTile_LH(uint8_t tile) {
+
+            return tile == 28;
+            
+        }        
 };
