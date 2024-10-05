@@ -876,31 +876,7 @@ void playGame_Update() {
                                 else {
 
                                     if (justPressed & A_BUTTON || pressed & A_BUTTON) {
-// Serial.print(tile_R);                                        
-// Serial.println("bb");
 
-//                                         if (world.isVineTile_LH(tile_R) && (player.getStance() < Stance::Man_Vine_RH_01 || player.getStance() > Stance::Man_Vine_RH_16)) {
-// Serial.println("isVine");                                            
-//                                             Item &item = world.getItem(world.getItem(ItemType::Vine));
-// Serial.print("Frame ");
-// Serial.println(item.getFrame());
-// Serial.print("Counter ");
-// Serial.println(item.getCounter());
-
-//                                             if ((item.getCounter() >= 0 && item.getCounter() < 32) || (item.getCounter() >= 320 && item.getCounter() < 352)) {
-
-//                                                 item.setCounter(0);
-
-//                                                 Serial.println("woohoo");
-//                                                 player.pushSequence(Stance::Man_Vine_RH_01, Stance::Man_Vine_RH_16);
-
-//                                             }     
-//                                             else {
-//                                                 player.pushSequence(Stance::Man_WalkingJump_RH_01, Stance::Man_WalkingJump_RH_08);
-
-//                                             }
-//                                         }
-//                                         else 
                                         if (!world.canWalkPastTile(tile_R)) {     
                         
                                             player.pushSequence(Stance::Man_StandingJump_RH_UPandOver_01, Stance::Man_StandingJump_RH_UPandOver_06);
@@ -1127,12 +1103,6 @@ void playGame_Update() {
                                 player.pushSequence(Stance::Man_WalkingJump_RH_25_02, Stance::Man_WalkingJump_RH_25_11); 
 
                             }     
-//                             else if (!world.canWalkPastTile(tile_R) && world.canWalkOnTile(tile_R)) {
-//  Serial.println("here");
-//                                 player.clear();
-//                                 player.pushSequence(Stance::Man_WalkingJump_RH_UP_01, Stance::Man_WalkingJump_RH_UP_05); 
-
-//                             }
                             else if (world.canWalkPastTile(tile_R) && world.canWalkOnTile(tile_R2D)) {
  
                                 player.clear();
@@ -1249,15 +1219,28 @@ void playGame_Update() {
             Point offset;
 
             uint16_t newStance = player.pop();
+
             player.setStance(newStance);
 
-            int8_t stanceY = pgm_read_byte(&Constants::StanceY[static_cast<uint16_t>(player.getStance())]);
+            FX::seekData(Constants::StanceY + static_cast<uint16_t>(player.getStance()));
+            int8_t stanceY = FX::readPendingUInt8();
             player.setY(player.getY() - stanceY);
+            FX::readEnd();
 
-            world.incForeground(pgm_read_byte(&Constants::xForeground[static_cast<uint16_t>(player.getStance())]));
-            world.incMiddleground(pgm_read_byte(&Constants::xMiddleground[static_cast<uint16_t>(player.getStance())]));
-            world.incBackground(pgm_read_byte(&Constants::xBackground[static_cast<uint16_t>(player.getStance())]));
+            FX::seekData(Constants::xForeground + static_cast<uint16_t>(player.getStance()));
+            int8_t b = FX::readPendingUInt8();
+            world.incForeground(b);
+            FX::readEnd();
 
+            FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(player.getStance()));
+            b = FX::readPendingUInt8();
+            world.incMiddleground(b);
+            FX::readEnd();
+
+            FX::seekData(Constants::xBackground + static_cast<uint16_t>(player.getStance()));
+            b = FX::readPendingUInt8();
+            world.incBackground(b);
+            FX::readEnd();
 
 
             // Has the player collided with an item?
@@ -1336,12 +1319,12 @@ void playGame_Update() {
 
                                         case Direction::Left:
                                             player.clear();
-                                            player.pushSequence(Stance::Man_Die_LH_01, Stance::Man_Die_LH_04);
+                                            player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04);
                                             break;
 
                                         case Direction::Right:
                                             player.clear();
-                                            player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04);
+                                            player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04);
                                             break;
 
                                     }
@@ -1353,18 +1336,92 @@ void playGame_Update() {
                             break;
 
                         case ItemType::Flame:
+                            
+                         // itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };                            
+                            itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
 
-                            switch (player.getDirection()) {
+                            if (collide(playerRect, itemRect)) {
 
-                                case Direction::Left:
-                                    player.clear();
-                                    player.pushSequence(Stance::Man_Die_LH_01, Stance::Man_Die_LH_04);
-                                    break;
+                                switch (player.getDirection()) {
 
-                                case Direction::Right:
-                                    player.clear();
-                                    player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04);
-                                    break;
+                                    case Direction::Left:
+
+                                        switch (player.getStance()) {
+
+                                            case Stance::Man_WalkingJump_LH_2_08:
+                                                {
+                                                    uint8_t xPos = item.getX() + world.getMiddleground();
+
+                                                    if (xPos == 56) {
+
+                                                        player.clear();
+                                                        player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12);
+                                                        player.push(Stance::Man_Die_Fire_Adj_LH_02);
+
+                                                    }
+                                                    else if (xPos == 64) {
+
+                                                        player.clear();
+                                                        player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12);
+                                                        player.push(Stance::Man_Die_Fire_Adj_LH_01);
+
+                                                    }
+
+                                                }
+                                                break;
+
+                                            case Stance::Man_Walk_LH_02:
+
+                                                player.clear();
+                                                player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12);
+                                                player.pushSequence(Man_Walk_LH_03, Stance::Man_Walk_LH_06);
+
+                                                break;
+
+
+                                        }
+
+                                        break;
+
+                                    case Direction::Right:
+
+                                        switch (player.getStance()) {
+
+                                            case Stance::Man_WalkingJump_RH_2_08:
+                                                {
+                                                    uint8_t xPos = item.getX() + world.getMiddleground();
+
+                                                    if (xPos == 56) {
+
+                                                        player.clear();
+                                                        player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12);
+                                                        player.push(Stance::Man_Die_Fire_Adj_RH_01);
+
+                                                    }
+                                                    else if (xPos == 64) {
+
+                                                        player.clear();
+                                                        player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12);
+                                                        player.push(Stance::Man_Die_Fire_Adj_RH_02);
+
+                                                    }
+
+                                                }
+                                                break;
+
+                                            case Stance::Man_Walk_RH_03:
+
+                                                player.clear();
+                                                player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12);
+                                                player.pushSequence(Man_Walk_RH_04, Stance::Man_Walk_RH_06);
+
+                                                break;
+
+                                        }
+
+                                        break;
+
+                                }
 
                             }
 
@@ -1382,7 +1439,6 @@ void playGame_Update() {
             }
 
 
-
             // Handle falling and other special actions ..
 
             switch (static_cast<Stance>(newStance)) {
@@ -1398,6 +1454,7 @@ void playGame_Update() {
                 case Stance::Man_WalkingJump_LH_2_08:
                 case Stance::Man_WalkingJump_RH_2_08:
                     {
+                  
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
                         uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
@@ -1430,6 +1487,7 @@ void playGame_Update() {
 
                 case Stance::Man_Walk_FallMore_BK_02:
                     {
+                           
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
   
@@ -1452,7 +1510,7 @@ void playGame_Update() {
                                     }
                                     else {
 
-                                        player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
+                                        player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
                                         player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
 
                                     }
@@ -1465,7 +1523,7 @@ void playGame_Update() {
                                 }                                
                                 else if (world.isSpikeTile(tile_D)) {
 
-                                    player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
+                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
                                     player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
 
                                 }
@@ -1493,7 +1551,7 @@ void playGame_Update() {
                 case Stance::Man_Slide_RH_Full_13:
                 case Stance::Man_Rollers_Fall_RH_04:
                     {
-
+  
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
 
@@ -1512,7 +1570,7 @@ void playGame_Update() {
 
                                     if (world.isSpikeTile(tile_D)) {
 
-                                        player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
+                                        player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
                                         player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
 
                                     }
@@ -1527,7 +1585,7 @@ void playGame_Update() {
                             }
                             else {
                              
-                                player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04); 
+                                player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
                                 player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
 
                             }
@@ -1549,6 +1607,7 @@ void playGame_Update() {
                 case Stance::Man_Slide_LH_Full_13:       
                 case Stance::Man_Rollers_Fall_LH_04:
                     {
+                           
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
 
@@ -1566,7 +1625,7 @@ void playGame_Update() {
                                 else {
                                     if (world.isSpikeTile(tile_D)) {
 
-                                        player.pushSequence(Stance::Man_Die_LH_01, Stance::Man_Die_LH_04); 
+                                        player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04); 
                                         player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
 
                                     }
@@ -1581,7 +1640,7 @@ void playGame_Update() {
                             }
                             else {
 
-                                player.pushSequence(Stance::Man_Die_LH_01, Stance::Man_Die_LH_04); 
+                                player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04); 
                                 player.pushSequence(Stance::Man_Walk_FallMore_LH_01, Stance::Man_Walk_FallMore_LH_02); 
 
                             }
@@ -1598,7 +1657,9 @@ void playGame_Update() {
 
                 default:
                     {
-                        uint16_t subsituteStance = pgm_read_word(&Constants::subsititueStance[player.getStance()]);
+                        FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(player.getStance()) * 2));
+                        uint16_t subsituteStance = FX::readPendingUInt16();
+                        FX::readEnd();
 
                         if (subsituteStance != 65535) {
                             player.setStance(subsituteStance);
@@ -1612,7 +1673,6 @@ void playGame_Update() {
         }
 
     }
-
 
     switch (menu.getDirection()) {
 
@@ -1645,8 +1705,6 @@ void playGame_Update() {
     }
 
 
-    // player.update(0, 0);
-
 }
 
 
@@ -1668,5 +1726,3 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 
 }
-
-//76 77

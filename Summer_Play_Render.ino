@@ -398,18 +398,21 @@ void renderWorld(uint8_t currentPlane) {
             }
             break;
 
+        case Stance::Man_Die_Fire_LH_12:
+        case Stance::Man_Die_Fire_RH_12:
+            // Do nothing
+            break;
+
         default:
             {
-                uint8_t stanceImg = pgm_read_byte(&Constants::StanceImgIdx[static_cast<uint16_t>(player.getStance())]);
+                FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
+                uint8_t stanceImg = FX::readPendingUInt8();
+                FX::readEnd();
+
                 SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
 
                 // SpritesU::drawPlusMaskFX(0,0, Images::Player, ((stanceImg + 10) * 3) + currentPlane);
 
-
-
-
-                // Serial.println(stanceImg);
-                // DEBUG_BREAK
             }
             break;
         

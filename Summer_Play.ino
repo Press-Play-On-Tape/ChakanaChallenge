@@ -163,8 +163,13 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     SpritesU::drawPlusMaskFX(world.getPalm7(), 20, Images::Palm5, currentPlane);
     SpritesU::drawPlusMaskFX(world.getPalm8(), 20, Images::Palm6, currentPlane);
 
-    uint8_t stanceImg = pgm_read_byte(&Constants::StanceImgIdx[static_cast<uint16_t>(player.getStance())]);
-    int8_t stanceY = pgm_read_byte(&Constants::StanceY[static_cast<uint16_t>(player.getStance())]);
+    FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
+    uint8_t stanceImg = FX::readPendingUInt8();
+    FX::readEnd();
+
+    FX::seekData(Constants::StanceY + static_cast<uint16_t>(player.getStance()));
+    uint8_t stanceY = FX::readPendingUInt8();
+    FX::readEnd();
 
     SpritesU::drawOverwriteFX(world.getWave(), 55, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
     SpritesU::drawOverwriteFX(world.getWave() + 128, 55, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
