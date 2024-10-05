@@ -56,6 +56,8 @@ enum class ItemType : uint8_t {
     Anchor_Hidden,
     Vine,
     Vine_Hidden,
+    Flame,
+    Flane_Hidden,
     Puff,
     None = 99,
 };

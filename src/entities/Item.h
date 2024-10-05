@@ -53,7 +53,16 @@ class Item {
                     }
 
                     break;
-                
+
+                case ItemType::Flame:
+
+                    this->counter++;
+                    if (this->counter == (6 * 8))   this->counter = 0;
+
+                    this->frame = this->counter / 8;
+
+                    break;
+
                 case ItemType::Punji:
 
                     if (this->counter > 0 && this->counter < (3 * 8) - 1) {

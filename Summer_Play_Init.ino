@@ -35,17 +35,17 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 1) {
+        if (i == 2) {
             item.setItemType(ItemType::Puff);
             item.setX(128 + 16 - 32);
             item.setY(16);  
             item.setFrame(255);           
         }
-        // // else if (i == 1) {
-        // //     item.setItemType(ItemType::LockedDoor);
-        // //     item.setX(128 + 64 + 48 - 32);
-        // //     item.setY(16);            
-        // // }
+        else if (i == 1) {
+            item.setItemType(ItemType::Flame);
+            item.setX(128);
+            item.setY(16);            
+        }
         // else if (i == 2) {
         //     item.setItemType(ItemType::PinchBar_Hidden);
         //     // item.setX(128 - 32 - 32);
@@ -510,7 +510,8 @@ void playGame_Update() {
 
                                         }     
                                         else {
-
+                                            
+                                            player.setFalls(0);
                                             player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
 
                                         }
@@ -743,6 +744,7 @@ void playGame_Update() {
                                         }     
                                         else {
 
+                                            player.setFalls(0);
                                             player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
 
                                         }
@@ -1345,6 +1347,24 @@ void playGame_Update() {
                                     }
 
                                 }
+
+                            }
+
+                            break;
+
+                        case ItemType::Flame:
+
+                            switch (player.getDirection()) {
+
+                                case Direction::Left:
+                                    player.clear();
+                                    player.pushSequence(Stance::Man_Die_LH_01, Stance::Man_Die_LH_04);
+                                    break;
+
+                                case Direction::Right:
+                                    player.clear();
+                                    player.pushSequence(Stance::Man_Die_RH_01, Stance::Man_Die_RH_04);
+                                    break;
 
                             }
 

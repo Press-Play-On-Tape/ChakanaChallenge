@@ -349,6 +349,12 @@ void renderWorld(uint8_t currentPlane) {
 
         }
 
+        if (item.getItemType() == ItemType::Flame) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_13, (item.getFrame() * 3) + currentPlane);
+
+        }
+
         if (item.getItemType() == ItemType::Amulet) {
 
             switch (item.getFrame()) {
