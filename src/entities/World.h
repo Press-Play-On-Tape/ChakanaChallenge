@@ -611,7 +611,8 @@ struct World {
             }
 
             return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || 
-                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == 23 /*Punji Invisible*/;
+                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == 23 /*Punji Invisible*/ ||
+                   tile == 29 || tile == 30;
             
         }
 
@@ -635,7 +636,7 @@ struct World {
 
         bool isEmptyTile(uint8_t tile) {
 
-            return tile == 0 || tile == 3;
+            return tile == 0 || tile == 3 || tile == 29 || tile == 30;
             
         }
 
@@ -784,6 +785,18 @@ struct World {
         bool isRollerTile_LH(uint8_t tile) {
 
             return tile == 28;
+            
+        }        
+
+        bool isVineTile_LH(uint8_t tile) {
+
+            return tile == 29;
+            
+        }        
+
+        bool isVineTile_RH(uint8_t tile) {
+
+            return tile == 30;
             
         }        
 };

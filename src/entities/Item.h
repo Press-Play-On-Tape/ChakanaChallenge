@@ -125,23 +125,31 @@ class Item {
 
                 case ItemType::Vine:
 
-                    if (this->counter < (14 * 32) - 1) {
+                    if (this->counter < (22 * 16) - 1) {
 
                         this->counter++;
 
-                        if (this->counter == (7 * 32)) {
-                            this->frame = 6;
+                        if (this->counter == (11 * 16)) {
+
+                            this->frame = 10;
+
                         }
-                        else if (this->counter >= (7 * 32)) {
-                            this->frame = ((14 * 32) - this->counter) / 32;
+                        else if (this->counter >= (11 * 16)) {
+
+                            this->frame = ((22 * 16) - this->counter) / 16;
+
                         }
                         else {
-                            this->frame = this->counter / 32;
+
+                            this->frame = this->counter / 16;
+
                         }
 
                     }
                     else {
+
                         this->counter = 0;
+
                     }                    
                     break;
 
