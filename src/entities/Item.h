@@ -125,44 +125,19 @@ class Item {
 
                 case ItemType::Vine:
 
-Serial.print("Vine ");
-
-
-//                     if (this->counter < (14 * 16) - 1) {
-
-//                         this->counter++;
-// Serial.print(this->counter);
-// Serial.print(" ");
-//                         if (this->counter > (7*16)) {
-//                             this->frame = ((14 * 16) - this->counter) / 16;
-//                         }
-//                         else {
-//                             this->frame = this->counter / 16;
-//                         }
-// Serial.println(this->frame);
-
-//                     }
-//                     else {
-//                         this->counter = 0;
-//                     }
-
                     if (this->counter < (14 * 32) - 1) {
 
                         this->counter++;
-Serial.print(this->counter);
+
                         if (this->counter == (7 * 32)) {
-Serial.print(" a ");
                             this->frame = 6;
                         }
                         else if (this->counter >= (7 * 32)) {
-Serial.print(" a ");
                             this->frame = ((14 * 32) - this->counter) / 32;
                         }
                         else {
-Serial.print(" b ");
                             this->frame = this->counter / 32;
                         }
-Serial.println(this->frame);
 
                     }
                     else {
