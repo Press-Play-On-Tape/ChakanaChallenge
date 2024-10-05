@@ -4,13 +4,13 @@
 #include "../utils/Constants.h"
 #include "../utils/Stack.h"
 #include "InventoryItem.h"
+#include "BaseStack.h"
 
-class Player {
+class Player : public BaseStack {
 
     private:
 
         Stance stance = Stance::Man_Walk_BK_01;
-        Stack <Stance, Constants::StackSize>  *stack;
         InventoryItem items[Constants::ItemCount];
 
         uint8_t xSeq = 0;
@@ -21,9 +21,6 @@ class Player {
         uint8_t itemCount = 0;
 
     public:
-
-        Stack <Stance, Constants::StackSize>  * getStack()              { return this->stack; }
-        void setStack(Stack <Stance, Constants::StackSize>  *val)       { this->stack = val; }
 
         Stance getStance()                                  { return this->stance; }
         InventoryItem &getItem(uint8_t idx)                 { return this->items[idx]; }
@@ -159,118 +156,4 @@ class Player {
             
         }
 
-
-
-        // Stack methods --------------------------------------------------------
-
-        void printStack() {
-            this->stack->print();
-        }
-
-        Stance & peek(void) {
-            return this->stack->peek();
-        }
-
-        const Stance & peek(void) const {
-            return this->stack->peek();
-        }
-
-        bool insert(const Stance & item) {
-            return this->stack->insert(item);
-        }
-
-        bool push(Stance item) {
-
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F("Stack count "));
-            DEBUG_PRINTLN(this->stack->getCount());
-            #endif
-
-            return this->stack->push(static_cast<uint16_t>(item));
-        }
-
-        void pushSequence(uint16_t fromStance, uint16_t toStance) {
-
-            pushSequence(fromStance, toStance, Stance::None);
-
-        }
-
-        void pushSequence(Stance fromStance, Stance toStance, Stance finalStance) {
-
-            if (finalStance != Stance::None) {
-
-                #if defined(DEBUG) && defined(DEBUG_STACK)
-                DEBUG_PRINT(F("Final "));
-                DEBUG_PRINT(finalStance);
-                #endif
-
-                this->stack->push(static_cast<uint16_t>(finalStance));
-            }
-
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F("Seq "));
-            DEBUG_PRINT(toStance);
-            DEBUG_PRINT(F(" to "));
-            DEBUG_PRINT(fromStance);
-            DEBUG_PRINT(F(" - "));  
-            #endif
-            
-            if (fromStance < toStance) {
-
-                for (uint16_t x = toStance; x >= fromStance; x--) {
-
-                    #if defined(DEBUG) && defined(DEBUG_STACK)
-                    DEBUG_PRINT(x); 
-                    DEBUG_PRINT(" ");        
-                    #endif
-
-                    this->stack->push(static_cast<uint16_t>(x));
-
-                }
-
-            }
-            else {
-
-                for (uint16_t x = toStance; x <= fromStance; x++) {
-
-                    #if defined(DEBUG) && defined(DEBUG_STACK)
-                    DEBUG_PRINT(x); 
-                    DEBUG_PRINT(" ");                         
-                    #endif
-
-                    this->stack->push(static_cast<uint16_t>(-x));
-                }
-
-            }
-
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F(", count "));
-            DEBUG_PRINTLN(this->stack->getCount());
-            #endif
-
-        }
-
-        Stance pop(void) {
-            return this->stack->pop();
-        }
-
-        bool isEmpty(void) {
-            return this->stack->isEmpty();
-        }
-
-    	bool isFull(void) {
-            return this->stack->isFull();
-        }
-
-    	void clear(void) {
-            this->stack->clear();
-        }
-
-    	bool contains(const Stance & item) {
-            return this->stack->contains(item);
-        }
-
-      	uint8_t getCount(void) {
-            return this->stack->getCount();
-        }
 };
