@@ -617,7 +617,7 @@ struct World {
 
         bool canWalkOnTile(uint8_t tile) {
 
-            return tile == 1 || tile == 2 || tile == 9;
+            return tile == 1 || tile == 2 || tile == 9 || tile == 27 || tile == 28;
             
         }
 

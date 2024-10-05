@@ -343,6 +343,12 @@ void renderWorld(uint8_t currentPlane) {
 
         }
 
+        if (item.getItemType() == ItemType::Vine) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_12, (item.getFrame() * 3) + currentPlane);
+
+        }
+
         if (item.getItemType() == ItemType::Amulet) {
 
             switch (item.getFrame()) {

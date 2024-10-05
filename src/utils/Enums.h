@@ -54,6 +54,8 @@ enum class ItemType : uint8_t {
     LockedDoor_Hidden,
     Anchor,
     Anchor_Hidden,
+    Vine,
+    Vine_Hidden,
     Puff,
     None = 99,
 };
