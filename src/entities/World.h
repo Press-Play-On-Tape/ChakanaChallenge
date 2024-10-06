@@ -3,6 +3,7 @@
 #include "Boat.h"
 #include "../utils/Constants.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Item.h"
 
 struct World {
@@ -10,6 +11,7 @@ struct World {
     private:
 
         Player player;
+        Enemy enemy[Constants::EnemyCount];
         Item items[10];
 
         uint16_t xMap = 0;
@@ -43,6 +45,7 @@ struct World {
 
         Item &getItem(uint8_t idx)               { return this->items[idx]; }
         Player &getPlayer()                      { return this->player; }
+        Enemy &getEnemy(uint8_t idx)             { return this->enemy[idx]; }
         uint16_t getXMap()                       { return this->xMap; }
         uint16_t getYMap()                       { return this->yMap; }
         uint16_t getXBoat()                      { return this->xBoat; }
@@ -798,5 +801,28 @@ struct World {
 
             return tile == 30;
             
-        }        
+        }       
+
+
+        void updateEnemies() {
+
+            for (uint8_t i  = 0; i < Constants::EnemyCount; i++) {
+
+                Enemy &enemy = this->getEnemy(i);
+
+                if (enemy.getX() == 0) continue;
+
+                if (enemy.getCount() == 0 && random(0, 120) == 0) {
+
+                    enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
+
+                }
+
+                if (enemy.getItem().getItemType() != ItemType::None) {
+                    enemy.getItem().update();
+                }
+
+            }
+
+        } 
 };

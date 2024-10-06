@@ -58,6 +58,10 @@ enum class ItemType : uint8_t {
     Vine_Hidden,
     Flame,
     Flane_Hidden,
+    Arrow_LH,
+    Arrow_LH_Hidden,
+    Arrow_RH,
+    Arrow_RH_Hidden,
     Puff,
     None = 99,
 };
@@ -69,6 +73,7 @@ enum class ItemAction : uint8_t {
     Remove_AddToInventory,
     HideCrate_ShowItem,
 };
+
 
 
 enum Stance : uint16_t {
@@ -879,7 +884,69 @@ enum Stance : uint16_t {
         Man_StandingJumpDown_RH_09,
 
     Man_End = Man_StandingJumpDown_RH_09,
-    None = 255,
+
+    Enemy_Start = Man_End + 1,
+
+        Enemy_RH_Start = Enemy_Start,
+
+            Enemy_Walk_RH_00 = Enemy_RH_Start,
+            Enemy_Walk_RH_01,
+            Enemy_Walk_RH_02,
+            Enemy_Walk_RH_03,
+
+            Enemy_Walk_Bow_RH_00,
+            Enemy_Walk_Bow_RH_01,
+            Enemy_Walk_Bow_RH_02,
+            Enemy_Walk_Bow_RH_03,
+
+            Enemy_Fire_RH_00,
+            Enemy_Fire_RH_01,
+            Enemy_Fire_RH_02,
+            Enemy_Fire_RH_03,
+            Enemy_Fire_RH_04,
+            Enemy_Fire_RH_05,
+            Enemy_Fire_RH_06,
+            Enemy_Fire_RH_07,
+            Enemy_Fire_RH_08,
+            Enemy_Fire_RH_09,
+            Enemy_Fire_RH_10,
+            Enemy_Fire_RH_11,
+            Enemy_Fire_RH_12,
+
+        Enemy_RH_End = Enemy_Fire_RH_12,
+
+        Enemy_LH_Start = Enemy_RH_End + 1,
+
+            Enemy_Walk_LH_00 = Enemy_LH_Start,
+            Enemy_Walk_LH_01,
+            Enemy_Walk_LH_02,
+            Enemy_Walk_LH_03,
+
+            Enemy_Walk_Bow_LH_00,
+            Enemy_Walk_Bow_LH_01,
+            Enemy_Walk_Bow_LH_02,
+            Enemy_Walk_Bow_LH_03,
+
+            Enemy_Fire_LH_00,
+            Enemy_Fire_LH_01,
+            Enemy_Fire_LH_02,
+            Enemy_Fire_LH_03,
+            Enemy_Fire_LH_04,
+            Enemy_Fire_LH_05,
+            Enemy_Fire_LH_06,
+            Enemy_Fire_LH_07,
+            Enemy_Fire_LH_08,
+            Enemy_Fire_LH_09,
+            Enemy_Fire_LH_10,
+            Enemy_Fire_LH_11,
+            Enemy_Fire_LH_12,
+
+        Enemy_LH_End = Enemy_Fire_LH_12,
+
+    Enemy_End,
+
+    None,
+
 };
 
 inline Stance &operator++(Stance &c) {

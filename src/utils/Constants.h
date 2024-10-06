@@ -350,8 +350,10 @@ namespace Constants {
     constexpr uint8_t Bet_Default = 50;
     constexpr uint8_t Bet_Increment = Bet_Default / 2;
 
+    constexpr uint8_t EnemyCount = 4;
 
-    constexpr uint8_t StackSize = 40;
+    constexpr uint8_t StackSize = 30;
+//    constexpr uint8_t StackSize_Enemy = 20;
     constexpr uint8_t Animation_NumberOfFrames = 15;
     constexpr uint16_t NoWaves = 29999;
 

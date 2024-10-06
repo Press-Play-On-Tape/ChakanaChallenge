@@ -162,6 +162,28 @@ class Item {
                     }                    
                     break;
 
+                case ItemType::Arrow_LH:
+
+                    this->setCounter(this->getCounter() - 4);
+                    this->setX(this->getX() - 4);
+
+                    if (this->getCounter() == 0) {
+                        this->itemType = ItemType::None;
+                    }
+
+                    break;
+
+                case ItemType::Arrow_RH:
+
+                    this->setCounter(this->getCounter() + 4);
+                    this->setX(this->getX() + 4);
+
+                    if (this->getCounter() == 0) {
+                        this->itemType = ItemType::None;
+                    }
+
+                    break;
+
             }
 
             return ItemAction::None;

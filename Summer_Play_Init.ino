@@ -95,6 +95,13 @@ void playGame_Init() {
         // uint16_t waveCount = 0;
         // uint16_t background = 0;
 
+
+    Enemy &enemy = world.getEnemy(0);
+    enemy.setX(128 + 16);
+    // enemy.setX(32);
+    enemy.setY(16);
+    enemy.setStance(Stance::Enemy_Walk_Bow_LH_00);
+
 }
 
 
@@ -1672,6 +1679,71 @@ void playGame_Update() {
 
         }
 
+
+        for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
+
+            Enemy &enemy = world.getEnemy(i);
+
+            if (enemy.getX() == 0) continue;
+                
+            if (!enemy.isEmpty()) {
+
+                Point offset;
+
+                uint16_t newStance = enemy.pop();
+
+                enemy.setStance(newStance);
+
+                FX::seekData(Constants::StanceY + static_cast<uint16_t>(enemy.getStance()));
+                int8_t stanceY = FX::readPendingUInt8();
+                enemy.setY(enemy.getY() - stanceY);
+                FX::readEnd();
+               
+
+                FX::seekData(Constants::xForeground + static_cast<uint16_t>(enemy.getStance()));
+                int8_t b = FX::readPendingUInt8();
+                world.incForeground(b);
+                FX::readEnd();
+
+                FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(enemy.getStance()));
+                b = FX::readPendingUInt8();
+                world.incMiddleground(b);
+                FX::readEnd();
+
+                FX::seekData(Constants::xBackground + static_cast<uint16_t>(enemy.getStance()));
+                b = FX::readPendingUInt8();
+                world.incBackground(b);
+                FX::readEnd();
+
+
+                switch (newStance) {
+
+                    case Stance::Enemy_Fire_LH_07:
+                        {
+                            Item &item = enemy.getItem();
+                            item.setItemType(ItemType::Arrow_LH);
+                            item.setCounter(25 * 4);
+                            item.setX(enemy.getX());
+                            item.setY(enemy.getY() - 7);
+                        }
+                        break;
+
+                    case Stance::Enemy_Fire_RH_07:
+                        {
+                            Item &item = enemy.getItem();
+                            item.setItemType(ItemType::Arrow_RH);
+                            item.setCounter(25 * 4);
+                            item.setX(enemy.getX());
+                            item.setY(enemy.getY() - 7);
+                        }
+                        break;
+
+                }
+
+            }
+
+        }
+
     }
 
     switch (menu.getDirection()) {
@@ -1704,6 +1776,8 @@ void playGame_Update() {
             break;
     }
 
+
+    world.updateEnemies();
 
 }
 
