@@ -497,6 +497,24 @@ enum Stance : uint16_t {
             Man_Vine_RH_19,
             Man_Vine_RH_20,
 
+            Man_Vine_Exit_RH_01,
+            Man_Vine_Exit_RH_02,
+            Man_Vine_Exit_RH_03,
+            Man_Vine_Exit_RH_04,
+            Man_Vine_Exit_RH_05,
+            Man_Vine_Exit_RH_06,
+            Man_Vine_Exit_RH_07,
+            Man_Vine_Exit_RH_08,
+
+            Man_Vine_Exit_Lvl_RH_01,
+            Man_Vine_Exit_Lvl_RH_02,
+            Man_Vine_Exit_Lvl_RH_03,
+            Man_Vine_Exit_Lvl_RH_04,
+            Man_Vine_Exit_Lvl_RH_05,
+            Man_Vine_Exit_Lvl_RH_06,
+            Man_Vine_Exit_Lvl_RH_07,
+            Man_Vine_Exit_Lvl_RH_08,
+
             Man_Die_Fire_RH_01,
             Man_Die_Fire_RH_02,
             Man_Die_Fire_RH_03,
@@ -512,6 +530,16 @@ enum Stance : uint16_t {
 
             Man_Die_Fire_Adj_RH_01,
             Man_Die_Fire_Adj_RH_02,
+
+            Man_Die_Arrow_FallForward_RH_01,
+            Man_Die_Arrow_FallForward_RH_02,
+            Man_Die_Arrow_FallForward_RH_03,
+            Man_Die_Arrow_FallForward_RH_04,
+
+            Man_Die_Arrow_FallBackward_RH_01,
+            Man_Die_Arrow_FallBackward_RH_02,
+            Man_Die_Arrow_FallBackward_RH_03,
+            Man_Die_Arrow_FallBackward_RH_04,
 
             Man_Die_Fall_RH_01,
             Man_Die_Fall_RH_02,
@@ -845,6 +873,24 @@ enum Stance : uint16_t {
             Man_Vine_LH_19,
             Man_Vine_LH_20,
 
+            Man_Vine_Exit_LH_01,
+            Man_Vine_Exit_LH_02,
+            Man_Vine_Exit_LH_03,
+            Man_Vine_Exit_LH_04,
+            Man_Vine_Exit_LH_05,
+            Man_Vine_Exit_LH_06,
+            Man_Vine_Exit_LH_07,
+            Man_Vine_Exit_LH_08,
+
+            Man_Vine_Exit_Lvl_LH_01,
+            Man_Vine_Exit_Lvl_LH_02,
+            Man_Vine_Exit_Lvl_LH_03,
+            Man_Vine_Exit_Lvl_LH_04,
+            Man_Vine_Exit_Lvl_LH_05,
+            Man_Vine_Exit_Lvl_LH_06,
+            Man_Vine_Exit_Lvl_LH_07,
+            Man_Vine_Exit_Lvl_LH_08,
+            
             Man_Die_Fire_LH_01,
             Man_Die_Fire_LH_02,
             Man_Die_Fire_LH_03,
@@ -860,6 +906,16 @@ enum Stance : uint16_t {
 
             Man_Die_Fire_Adj_LH_01,
             Man_Die_Fire_Adj_LH_02,
+
+            Man_Die_Arrow_FallForward_LH_01,
+            Man_Die_Arrow_FallForward_LH_02,
+            Man_Die_Arrow_FallForward_LH_03,
+            Man_Die_Arrow_FallForward_LH_04,
+
+            Man_Die_Arrow_FallBackward_LH_01,
+            Man_Die_Arrow_FallBackward_LH_02,
+            Man_Die_Arrow_FallBackward_LH_03,
+            Man_Die_Arrow_FallBackward_LH_04,
 
             Man_Die_Fall_LH_01,
             Man_Die_Fall_LH_02,

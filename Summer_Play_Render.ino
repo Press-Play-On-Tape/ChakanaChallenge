@@ -236,6 +236,12 @@ void renderWorld(uint8_t currentPlane) {
             if (tile00 == 2 && tile01 == 2 && tile10 == 21 && tile11 == 1)        imgTile = Images::Crate_30;
             if (tile00 == 22 && tile01 == 2 && tile10 == 0 && tile11 == 22)       imgTile = Images::Crate_31;
 
+            // Vertical Vines
+
+            if (tile00 == 31 && tile01 == 31 && tile10 == 31 && tile11 == 31)     imgTile = Images::Crate_36;
+            if (tile00 == 32 && tile01 == 32 && tile10 == 31 && tile11 == 31)     imgTile = Images::Crate_37;
+            if (tile00 == 33 && tile01 == 33 && tile10 == 33 && tile11 == 33)     imgTile = Images::Crate_36;
+
 
             // Rollers R then L
 
@@ -426,49 +432,13 @@ void renderWorld(uint8_t currentPlane) {
 
             switch (enemy.getStance()) {
 
-                // case Stance::Man_BounceJump_RH_03:
-                // case Stance::Man_BounceJump_RH_11:
-                // case Stance::Man_BounceJump_RH_25:
-                // case Stance::Man_BounceJump_LH_03:
-                // case Stance::Man_BounceJump_LH_11:
-                // case Stance::Man_BounceJump_LH_25:
-                // case Stance::Man_Walk_FallLandSpring_BK_03:
-                // case Stance::Man_Walk_FallLandSpring_BK_15:
-                // case Stance::Man_Walk_FallLandSpring_BK_23:
-                // case Stance::Man_Walk_FallLandSpring_BK_24:
-                //     {
-                //         uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-
-                //         if (world.isSpringTile_LH(tile)) {
-                //             SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
-                //         }
-                //         else {
-                //             SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, 3 + currentPlane);
-                //         }
-
-                //     }
-                //     break;
-
-                // case Stance::Man_Die_Fire_LH_12:
-                // case Stance::Man_Die_Fire_RH_12:
-                //     // Do nothing
-                //     break;
-
                 default:
                     {
                         FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
                         uint8_t stanceImg = FX::readPendingUInt8();
                         FX::readEnd();
-// Serial.print(stanceImg);//yOffset - item.getY()
-// Serial.print(" ");
-// Serial.print(enemy.getX() + world.getMiddleground() - 4);
-// Serial.print(" ");
-// Serial.println(yOffset - Constants::GroundY + enemy.getY() + 5);
+
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - Constants::GroundY + enemy.getY() + 5, Images::Enemy, currentPlane);
-
-                        // SpritesU::drawPlusMaskFX(0,0, Images::Player, ((stanceImg + 10) * 3) + currentPlane);
-
 
                         if (enemy.getItem().getItemType() == ItemType::Arrow_RH) {
 

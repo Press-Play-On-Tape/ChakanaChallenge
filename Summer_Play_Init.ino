@@ -35,33 +35,33 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 2) {
+        if (i == 0) {
             item.setItemType(ItemType::Puff);
             item.setX(128 + 16 - 32);
             item.setY(16);  
             item.setFrame(255);           
         }
-        else if (i == 1) {
-            item.setItemType(ItemType::Flame);
-            item.setX(128);
-            item.setY(16);            
-        }
-        // else if (i == 2) {
-        //     item.setItemType(ItemType::PinchBar_Hidden);
-        //     // item.setX(128 - 32 - 32);
-        //     // item.setY(32);
-        //     item.setX(128 + 64 + 48 - 32);
-        //     item.setY(16);                        
+        // else if (i == 1) {
+        //     item.setItemType(ItemType::Flame);
+        //     item.setX(128);
+        //     item.setY(16);            
         // }
-        else if (i == 0) {
-            item.setItemType(ItemType::Vine);
-            item.setX(128 + 16 + 16  );
-            item.setY(32);            
-        }
-        else {
-            item.setItemType(ItemType::None);
+        // // else if (i == 2) {
+        // //     item.setItemType(ItemType::PinchBar_Hidden);
+        // //     // item.setX(128 - 32 - 32);
+        // //     // item.setY(32);
+        // //     item.setX(128 + 64 + 48 - 32);
+        // //     item.setY(16);                        
+        // // }
+        // else if (i == 0) {
+        //     item.setItemType(ItemType::Vine);
+        //     item.setX(128 + 16 + 16  );
+        //     item.setY(32);            
+        // }
+        // else {
+        //     item.setItemType(ItemType::None);
 
-        }
+        // }
 
         player.getItem(i).setItemType(ItemType::None);
 
@@ -277,7 +277,11 @@ void playGame_Update() {
                     case Direction::Backward:
                         {
                             uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
                             uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
+                            uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
+                            uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                            uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
 
                             if (world.isLadderTile_Upper(tile) && world.isLadderTile_Upper(tile_R)) {
 
@@ -298,7 +302,41 @@ void playGame_Update() {
                                 }
 
                             }
-                            else if (world.isLadderTile_Middle(tile) && world.isLadderTile_Middle(tile_R)) {
+                            else if (world.isVerticalVine_Upper(tile_U) && world.isVerticalVine_Upper(tile_RU)) {
+
+                                if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && world.canWalkOnTile(tile_R2)) {
+                                    player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
+                                }
+
+                                else if ((justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && world.canWalkOnTile(tile_L)) {
+                                    player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
+                                }
+
+                                else if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+
+                                    if (world.canWalkOnTile(tile_R2)) {
+                                        player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
+                                    }
+                                    else {
+                                        player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
+                                    }
+
+                                }
+
+                                else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+
+                                    if (world.canWalkOnTile(tile_L)) {
+                                        player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
+                                    }
+                                    else {
+                                        player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
+                                    }
+
+                                }
+
+                            }
+                            else if ((world.isLadderTile_Middle(tile) && world.isLadderTile_Middle(tile_R)) ||
+                                     (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R))) {
 
                                 // Climb further up ..
                                 if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
@@ -315,9 +353,7 @@ void playGame_Update() {
                                     
                                 }
 
-
                             }
-
 
                         }
                         break;
@@ -327,7 +363,8 @@ void playGame_Update() {
                             uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                             uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
-                            if (world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_R)) {
+                            if ((world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_R)) ||
+                                (world.isVerticalVine_Lower(tile) && world.isVerticalVine_Lower(tile_R))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_01, Stance::Man_ClimbLadder_BK_RH_UP_07);
 
@@ -341,7 +378,8 @@ void playGame_Update() {
                             uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                             uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
 
-                            if (world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_L)) {
+                            if ((world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_L)) ||
+                                 (world.isVerticalVine_Lower(tile) && world.isVerticalVine_Lower(tile_L))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_01, Stance::Man_ClimbLadder_BK_LH_UP_07);
 
@@ -356,13 +394,14 @@ void playGame_Update() {
                             uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                             uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
-                            if (world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_R)) {
+                            if ((world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_R)) ||
+                                (world.isVerticalVine_Lower(tile) && world.isVerticalVine_Lower(tile_R))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_01, Stance::Man_ClimbLadder_BK_RH_UP_07);
 
                             }
-
-                            else if (world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_L)) {
+                            else if ((world.isLadderTile_Lower(tile) && world.isLadderTile_Lower(tile_L)) ||
+                                     (world.isVerticalVine_Lower(tile) && world.isVerticalVine_Lower(tile_L))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_01, Stance::Man_ClimbLadder_BK_LH_UP_07);
 
@@ -385,7 +424,8 @@ void playGame_Update() {
                             uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                             uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
-                            if (world.isLadderTile_Lower(tile_D) && world.isLadderTile_Lower(tile_RD)) {
+                            if ((world.isLadderTile_Lower(tile_D) && world.isLadderTile_Lower(tile_RD)) ||
+                                (world.isVerticalVine_Lower(tile_D) && world.isVerticalVine_Lower(tile_RD))) {
 
                                 if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
                                     player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
@@ -405,7 +445,8 @@ void playGame_Update() {
                                 
 
                             }
-                            else if (world.isLadderTile_Middle(tile_D) && world.isLadderTile_Middle(tile_RD)) {
+                            else if ((world.isLadderTile_Middle(tile_D) && world.isLadderTile_Middle(tile_RD)) ||
+                                     (world.isVerticalVine_Middle(tile_D) && world.isVerticalVine_Middle(tile_RD))) {
   
                                 if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
 
@@ -437,7 +478,8 @@ void playGame_Update() {
                             uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                             uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
-                            if (world.isLadderTile_Upper(tile_D) && world.isLadderTile_Upper(tile_RD)) {
+                            if ((world.isLadderTile_Upper(tile_D) && world.isLadderTile_Upper(tile_RD)) ||
+                                (world.isVerticalVine_Upper(tile_D) && world.isVerticalVine_Upper(tile_RD))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_01, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
 
@@ -451,7 +493,8 @@ void playGame_Update() {
                             uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                             uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
 
-                            if (world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) {
+                            if ((world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) ||
+                                (world.isVerticalVine_Upper(tile_LD) && world.isVerticalVine_Upper(tile_D))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_01, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
 
@@ -466,13 +509,15 @@ void playGame_Update() {
                             uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                             uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
-                            if (world.isLadderTile_Upper(tile_D) && world.isLadderTile_Upper(tile_RD)) {
+                            if ((world.isLadderTile_Upper(tile_D) && world.isLadderTile_Upper(tile_RD)) ||
+                                (world.isVerticalVine_Upper(tile_D) && world.isVerticalVine_Upper(tile_RD))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_01, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
 
                             }
 
-                            if (world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) {
+                            if ((world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) ||
+                                (world.isVerticalVine_Upper(tile_LD) && world.isVerticalVine_Upper(tile_D))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_01, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
 
@@ -485,7 +530,8 @@ void playGame_Update() {
 
             }
 
-            else if (gameState == GameState::PlayGame && (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && player.canMoveLeft()) {
+//            else if (gameState == GameState::PlayGame && (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && player.canMoveLeft()) {
+            else if (gameState == GameState::PlayGame && (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON)) {
 
                 switch (player.getDirection()) {
 
@@ -589,10 +635,10 @@ void playGame_Update() {
                                 uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
                                 uint8_t tile_R1 = world.getTile_RelativeToPlayer(1, 0);
                                 uint8_t tile_L1 = world.getTile_RelativeToPlayer(-1, 0);
+                                uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
                                 uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
                                 uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
                                 uint8_t tile_L3D2 = world.getTile_RelativeToPlayer(-3, -2);
-
 
                                 if (world.isSlideTile_Full_RH(tile_LD) && world.canWalkOnTile(tile_L3D2)) {
 
@@ -682,15 +728,30 @@ void playGame_Update() {
 
                     case Direction::Backward:
                         {
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                             uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
-                            uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
+                            uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+                            uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
+                            uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
+                            uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
                             uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
+                            uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
                             if (!world.canWalkPastTile(tile_LU) && !world.isRopeTile(tile_LU) && world.isRopeTile(tile_U)) {
 
                                 // Do nothing ..
 
                             }   
+                            else if (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R)) {
+
+                                if (world.isEmptyTile(tile_L)) {//} && world.canWalkOnTile(tile_LD)) {
+                                    player.setFalls(0);
+                                    player.pushSequence(Stance::Man_Vine_Exit_Lvl_LH_01, Stance::Man_Vine_Exit_Lvl_LH_08);
+                                }
+                                else { /* Do nothing, prevents a turn */}
+
+                            }                            
                             else if (world.isRopeTile(tile_U) && world.isRopeTile(tile_LU) && world.isRopeSupport(tile_L2U)) {
 
                                 player.pushSequence(Stance::Man_Rope_End_LH_01, Stance::Man_Rope_End_LH_06);
@@ -719,7 +780,8 @@ void playGame_Update() {
 
             }
 
-            else if (gameState == GameState::PlayGame && (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && player.canMoveRight()) {
+            // else if (gameState == GameState::PlayGame && (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && player.canMoveRight()) {
+            else if (gameState == GameState::PlayGame && (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON)) {
 
                 switch (player.getDirection()) {
 
@@ -826,7 +888,6 @@ void playGame_Update() {
                                 uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
                                 uint8_t tile_R3D2 = world.getTile_RelativeToPlayer(3, -2);
 
-
                                 if (world.isSlideTile_Full_LH(tile_RD) && world.canWalkOnTile(tile_R3D2)) {
 
                                     player.setFalls(0);
@@ -916,15 +977,28 @@ void playGame_Update() {
 
                     case Direction::Backward:
                         {
+                            uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                            uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                             uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
                             uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
+                            uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                             uint8_t tile_R2U = world.getTile_RelativeToPlayer(2, 1);
+                            uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
 
                             if (!world.canWalkPastTile(tile_RU) && !world.isRopeTile(tile_RU) && world.isRopeTile(tile_U)) {
 
                                 // Do nothing ..
 
                             }   
+                            else if (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R)) {
+
+                                if (world.isEmptyTile(tile_R2)) {// && world.canWalkOnTile(tile_R2D)) {
+                                    player.setFalls(0);
+                                    player.pushSequence(Stance::Man_Vine_Exit_Lvl_RH_01, Stance::Man_Vine_Exit_Lvl_RH_08);
+                                }
+                                else { /* Do nothing, prevents a turn */}
+
+                            }
                             else if (world.isRopeTile(tile_U) && world.isRopeTile(tile_RU) && world.isRopeSupport(tile_R2U)) {
 
                                 player.pushSequence(Stance::Man_Rope_End_RH_01, Stance::Man_Rope_End_RH_06);
@@ -936,7 +1010,7 @@ void playGame_Update() {
 
                             }                                                                 
                             else {
-
+                  
                                 player.push(Stance::Man_Walk_RH_00);
 
                             } 
@@ -1557,6 +1631,8 @@ void playGame_Update() {
                 case Stance::Man_Slide_RH_11:
                 case Stance::Man_Slide_RH_Full_13:
                 case Stance::Man_Rollers_Fall_RH_04:
+                case Stance::Man_Vine_Exit_Lvl_RH_08:
+                case Stance::Man_Vine_Exit_Lvl_LH_08:
                     {
   
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);

@@ -70,7 +70,7 @@ bool collide(Rect rect1, Rect rect2) {
             rect2.y                >= rect1.y + rect1.height ||
             rect2.y + rect2.height <= rect1.y);
 
- }
+}
  
 inline void debug_break() {
 

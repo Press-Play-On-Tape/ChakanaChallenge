@@ -518,19 +518,6 @@ struct World {
                     
             // #endif
 
-            // for (uint8_t i = 0; i < Constants::ItemCount; i++) {
-
-            //     if (this->items[i].getItemType() != ItemType::None && this->items[i].getX() / 8 == xOffset && this->items[y].getY() / 8 == yOffset) {
-            //         Serial.print((uint8_t)items[i].getItemType());
-            //         Serial.print(" ");
-            //         Serial.print(items[i].getX());
-            //         Serial.print(" ");
-            //         Serial.print(items[i].getY());
-            //         Serial.print(" ");
-            //         Serial.println(xOffset);
-            //     }
-            // }
-
             return mapData[yOffset][xOffset];
 
         }
@@ -709,6 +696,26 @@ struct World {
             
         }
 
+        // Vertical vine ---------------------------
+
+        bool isVerticalVine_Lower(uint8_t tile) {
+
+            return tile == 32;
+            
+        }
+
+        bool isVerticalVine_Middle(uint8_t tile) {
+
+            return tile == 31;
+            
+        }
+
+        bool isVerticalVine_Upper(uint8_t tile) {
+
+            return tile == 33;
+            
+        }
+
         bool isRopeTile(uint8_t tile) {
 
             return tile == 15;
@@ -814,15 +821,102 @@ struct World {
 
                 if (enemy.getCount() == 0 && random(0, 120) == 0) {
 
-                    enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
+                    switch (enemy.getDirection()) {
+
+                        case Direction::Left:
+                            enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
+                            break;
+
+                        case Direction::Right:
+                            enemy.pushSequence(Stance::Enemy_Fire_RH_00, Stance::Enemy_Fire_RH_12);
+                            break;
+
+                    }
 
                 }
 
-                if (enemy.getItem().getItemType() != ItemType::None) {
-                    enemy.getItem().update();
+                switch (enemy.getItem().getItemType()) {
+
+                    case ItemType::Arrow_LH:
+                        {
+                            enemy.getItem().update();
+
+                            uint8_t yOffset = Constants::GroundY;
+                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                            Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+                            
+                            if (collide(playerRect, arrowRect)) {
+
+                                enemy.getItem().setItemType(ItemType::None);
+
+                                switch (this->player.getDirection()) {
+
+                                    case Direction::Right:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04);
+                                        break;
+
+                                    case Direction::Left:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04);
+                                        break;
+                                        
+                                }
+
+                            }
+
+                        }
+
+                        break;
+
+                    case ItemType::Arrow_RH:
+                        {
+                            enemy.getItem().update();
+
+                            uint8_t yOffset = Constants::GroundY;
+                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                            Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+                            
+                            if (collide(playerRect, arrowRect)) {
+
+                                enemy.getItem().setItemType(ItemType::None);
+
+                                switch (this->player.getDirection()) {
+
+                                    case Direction::Right:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04);
+                                        break;
+
+                                    case Direction::Left:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04);
+                                        break;
+                                        
+                                }
+
+                            }
+
+                        }
+
+                        break;
+
                 }
 
             }
 
         } 
+
+        bool collide(Rect rect1, Rect rect2) {
+
+        return !(rect2.x                >= rect1.x + rect1.width  ||
+                    rect2.x + rect2.width  <= rect1.x                ||
+                    rect2.y                >= rect1.y + rect1.height ||
+                    rect2.y + rect2.height <= rect1.y);
+
+        }
 };

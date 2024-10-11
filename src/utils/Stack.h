@@ -52,50 +52,10 @@ class Stack {
 };
 
 
-//
-// Definition
-//
-// template< typename Type, uint8_t Capacity >
-// void Stack< Type, Capacity >::print() {
-
-// Serial.print(this->getCount());
-// Serial.print(">>>");
-// 	for (uint8_t i = 0; i < this->getCapacity(); i++) {
-// 		if (i < this->getCount()) {
-// 			Serial.print(this->items[i]);
-// 		}
-// 		else {
-// 			Serial.print(Stance::Man_Start);
-// 		}
-// 		Serial.print(" ");
-// 	}
-// }
-
-
 template< typename Type, uint8_t Capacity >
 Stack< Type, Capacity >::Stack(void)
 	: items(), next(0) {
 }
-
-// template< typename Type, uint8_t Capacity >
-// void Stack< Type, Capacity >::update() {
-// 	if (this->frame != 0) {
-// 		this->frame--;
-// 	}
-// 	else {
-// 		this->frame = Constants::Animation_NumberOfFrames;
-// 	}
-// }
-
-// template< typename Type, uint8_t Capacity >
-// uint8_t Stack< Type, Capacity >::getFrame() const {
-// 	return this->frame;
-// }
-
-// template< typename Type, uint8_t Capacity >
-// void Stack< Type, Capacity >::setFrame(uint8_t val) {
-// 	this->frame = val;
-// }
 
 template< typename Type, uint8_t Capacity >
 bool Stack< Type, Capacity >::isEmpty(void) const {   
