@@ -36,7 +36,7 @@ enum class Direction : uint8_t {
 };
 
 enum class ItemType : uint8_t {
-    Key1 = 50,
+    Key1 = 0,
     Key1_Hidden,
     WoodenBarrier,
     TrapDoor,
