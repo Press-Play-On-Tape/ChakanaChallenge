@@ -62,6 +62,16 @@ enum class ItemType : uint8_t {
     Arrow_LH_Hidden,
     Arrow_RH,
     Arrow_RH_Hidden,
+    Trebochet_Left,
+    Trebochet_Right,
+    Trebochet_Ball_Left_1, // 6
+    Trebochet_Ball_Left_2, // 5, 6
+    Trebochet_Ball_Left_3, // 5
+    Trebochet_Ball_Left_Hidden,
+    Trebochet_Ball_Right_1, // 6
+    Trebochet_Ball_Right_2, // 5, 6
+    Trebochet_Ball_Right_3, // 5
+    Trebochet_Ball_Right_Hidden,
     Puff,
     None = 99,
 };
@@ -497,23 +507,27 @@ enum Stance : uint16_t {
             Man_Vine_RH_19,
             Man_Vine_RH_20,
 
-            Man_Vine_Exit_RH_01,
-            Man_Vine_Exit_RH_02,
-            Man_Vine_Exit_RH_03,
-            Man_Vine_Exit_RH_04,
-            Man_Vine_Exit_RH_05,
-            Man_Vine_Exit_RH_06,
-            Man_Vine_Exit_RH_07,
-            Man_Vine_Exit_RH_08,
+            Man_Vine_Start_RH,
 
-            Man_Vine_Exit_Lvl_RH_01,
-            Man_Vine_Exit_Lvl_RH_02,
-            Man_Vine_Exit_Lvl_RH_03,
-            Man_Vine_Exit_Lvl_RH_04,
-            Man_Vine_Exit_Lvl_RH_05,
-            Man_Vine_Exit_Lvl_RH_06,
-            Man_Vine_Exit_Lvl_RH_07,
-            Man_Vine_Exit_Lvl_RH_08,
+                Man_Vine_Exit_RH_01 = Man_Vine_Start_RH,
+                Man_Vine_Exit_RH_02,
+                Man_Vine_Exit_RH_03,
+                Man_Vine_Exit_RH_04,
+                Man_Vine_Exit_RH_05,
+                Man_Vine_Exit_RH_06,
+                Man_Vine_Exit_RH_07,
+                Man_Vine_Exit_RH_08,
+                
+                Man_Vine_Entry_RH_01,
+                Man_Vine_Entry_RH_02,
+                Man_Vine_Entry_RH_03,
+                Man_Vine_Entry_RH_04,
+                Man_Vine_Entry_RH_05,
+                Man_Vine_Entry_RH_06,
+                Man_Vine_Entry_RH_07,
+                Man_Vine_Entry_RH_08,
+
+            Man_Vine_End_RH = Man_Vine_Entry_RH_08,
 
             Man_Die_Fire_RH_01,
             Man_Die_Fire_RH_02,
@@ -546,12 +560,17 @@ enum Stance : uint16_t {
             Man_Die_Fall_RH_03,
             Man_Die_Fall_RH_04,
 
-            Man_Die_RH_01,
-            Man_Die_RH_02,
-            Man_Die_RH_03,
-            Man_Die_RH_04,
+            Man_Die_FWD_RH_01,
+            Man_Die_FWD_RH_02,
+            Man_Die_FWD_RH_03,
+            Man_Die_FWD_RH_04,
 
-        Man_RH_End = Man_Die_RH_04,
+            Man_Die_BWD_RH_01,
+            Man_Die_BWD_RH_02,
+            Man_Die_BWD_RH_03,
+            Man_Die_BWD_RH_04,
+
+        Man_RH_End = Man_Die_BWD_RH_04,
         
         Man_FW_Start,
             
@@ -873,24 +892,28 @@ enum Stance : uint16_t {
             Man_Vine_LH_19,
             Man_Vine_LH_20,
 
-            Man_Vine_Exit_LH_01,
-            Man_Vine_Exit_LH_02,
-            Man_Vine_Exit_LH_03,
-            Man_Vine_Exit_LH_04,
-            Man_Vine_Exit_LH_05,
-            Man_Vine_Exit_LH_06,
-            Man_Vine_Exit_LH_07,
-            Man_Vine_Exit_LH_08,
+            Man_Vine_Start_LH,
 
-            Man_Vine_Exit_Lvl_LH_01,
-            Man_Vine_Exit_Lvl_LH_02,
-            Man_Vine_Exit_Lvl_LH_03,
-            Man_Vine_Exit_Lvl_LH_04,
-            Man_Vine_Exit_Lvl_LH_05,
-            Man_Vine_Exit_Lvl_LH_06,
-            Man_Vine_Exit_Lvl_LH_07,
-            Man_Vine_Exit_Lvl_LH_08,
-            
+                Man_Vine_Exit_LH_01 = Man_Vine_Start_LH,
+                Man_Vine_Exit_LH_02,
+                Man_Vine_Exit_LH_03,
+                Man_Vine_Exit_LH_04,
+                Man_Vine_Exit_LH_05,
+                Man_Vine_Exit_LH_06,
+                Man_Vine_Exit_LH_07,
+                Man_Vine_Exit_LH_08,
+                
+                Man_Vine_Entry_LH_01,
+                Man_Vine_Entry_LH_02,
+                Man_Vine_Entry_LH_03,
+                Man_Vine_Entry_LH_04,
+                Man_Vine_Entry_LH_05,
+                Man_Vine_Entry_LH_06,
+                Man_Vine_Entry_LH_07,
+                Man_Vine_Entry_LH_08,
+
+            Man_Vine_End_LH = Man_Vine_Entry_LH_08,
+
             Man_Die_Fire_LH_01,
             Man_Die_Fire_LH_02,
             Man_Die_Fire_LH_03,
@@ -922,12 +945,17 @@ enum Stance : uint16_t {
             Man_Die_Fall_LH_03,
             Man_Die_Fall_LH_04,
 
-            Man_Die_LH_01,
-            Man_Die_LH_02,
-            Man_Die_LH_03,
-            Man_Die_LH_04,
+            Man_Die_FWD_LH_01,
+            Man_Die_FWD_LH_02,
+            Man_Die_FWD_LH_03,
+            Man_Die_FWD_LH_04,
 
-        Man_LH_End = Man_Die_LH_04,
+            Man_Die_BWD_LH_01,
+            Man_Die_BWD_LH_02,
+            Man_Die_BWD_LH_03,
+            Man_Die_BWD_LH_04,
+
+        Man_LH_End = Man_Die_BWD_LH_04,
     
         Man_StandingJumpDown_RH_01,
         Man_StandingJumpDown_RH_02,
@@ -969,7 +997,22 @@ enum Stance : uint16_t {
             Enemy_Fire_RH_11,
             Enemy_Fire_RH_12,
 
-        Enemy_RH_End = Enemy_Fire_RH_12,
+            Enemy_Trebochet_Release_RH_01,
+            Enemy_Trebochet_Release_RH_02,
+            Enemy_Trebochet_Release_RH_03,
+            Enemy_Trebochet_Release_RH_04,
+            Enemy_Trebochet_Release_RH_05,
+            Enemy_Trebochet_Release_RH_06,
+            Enemy_Trebochet_Release_RH_07,
+            Enemy_Trebochet_Release_RH_08,
+            Enemy_Trebochet_Release_RH_09,
+            Enemy_Trebochet_Release_RH_10,
+            Enemy_Trebochet_Release_RH_11,
+            Enemy_Trebochet_Release_RH_12,
+            Enemy_Trebochet_Release_RH_13,
+            Enemy_Trebochet_Release_RH_14,
+
+        Enemy_RH_End = Enemy_Trebochet_Release_RH_14,
 
         Enemy_LH_Start = Enemy_RH_End + 1,
 
@@ -997,7 +1040,22 @@ enum Stance : uint16_t {
             Enemy_Fire_LH_11,
             Enemy_Fire_LH_12,
 
-        Enemy_LH_End = Enemy_Fire_LH_12,
+            Enemy_Trebochet_Release_LH_01,
+            Enemy_Trebochet_Release_LH_02,
+            Enemy_Trebochet_Release_LH_03,
+            Enemy_Trebochet_Release_LH_04,
+            Enemy_Trebochet_Release_LH_05,
+            Enemy_Trebochet_Release_LH_06,
+            Enemy_Trebochet_Release_LH_07,
+            Enemy_Trebochet_Release_LH_08,
+            Enemy_Trebochet_Release_LH_09,
+            Enemy_Trebochet_Release_LH_10,
+            Enemy_Trebochet_Release_LH_11,
+            Enemy_Trebochet_Release_LH_12,
+            Enemy_Trebochet_Release_LH_13,
+            Enemy_Trebochet_Release_LH_14,
+
+        Enemy_LH_End = Enemy_Trebochet_Release_LH_14,
 
     Enemy_End,
 

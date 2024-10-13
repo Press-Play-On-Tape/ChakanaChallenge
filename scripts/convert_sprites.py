@@ -161,6 +161,8 @@ convert_header(IMAGES + 'Item_10.png',                                          
 convert_header(IMAGES + 'Item_11.png',                                                            BASE + 'Images.hpp', 'Item_11', 4, 16, 16)
 convert_header(IMAGES + 'Item_12.png',                                                            BASE + 'Images.hpp', 'Item_12', 4, 48, 32)
 convert_header(IMAGES + 'Item_13.png',                                                            BASE + 'Images.hpp', 'Item_13', 4, 16, 16)
+convert_header(IMAGES + 'Item_14.png',                                                            BASE + 'Images.hpp', 'Item_14', 4, 32, 32)
+convert_header(IMAGES + 'Item_15.png',                                                            BASE + 'Images.hpp', 'Item_15', 4, 32, 32)
 
 convert_header(IMAGES + 'Map.png',                                                            BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Scroll.png',                                                            BASE + 'Images.hpp', 'Scroll', 4, maskImage=True)
@@ -203,4 +205,6 @@ convert_header(IMAGES + 'Crate_34.png',                                         
 convert_header(IMAGES + 'Crate_35.png',                                                        BASE + 'Images.hpp', 'Crate_35', 4, 16, 16, maskImage=True)
 convert_header(IMAGES + 'Crate_36.png',                                                        BASE + 'Images.hpp', 'Crate_36', 4, maskImage=True)
 convert_header(IMAGES + 'Crate_37.png',                                                        BASE + 'Images.hpp', 'Crate_37', 4, maskImage=True)
+convert_header(IMAGES + 'Crate_38.png',                                                        BASE + 'Images.hpp', 'Crate_38', 4, maskImage=True)
 convert_header(IMAGES + 'Spikes.png',                                                          BASE + 'Images.hpp', 'Spikes', 4, maskImage=True)
+convert_header(IMAGES + 'Trebochet_Ball.png',                                                   BASE + 'Images.hpp', 'Trebochet_Ball', 4, 16, 16, maskImage=True)

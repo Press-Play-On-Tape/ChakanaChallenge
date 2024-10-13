@@ -51,6 +51,7 @@ class Enemy : public BaseStack {
                 case Stance::Enemy_Walk_RH_00 ... Stance::Enemy_Walk_RH_03:
                 case Stance::Enemy_Walk_Bow_RH_00 ... Stance::Enemy_Walk_Bow_RH_03:
                 case Stance::Enemy_Fire_RH_00 ... Stance::Enemy_Fire_RH_12:
+                case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_14:
                     return Direction::Right;
 
                 // case Stance::Man_FW_Start ... Stance::Man_FW_End:
@@ -59,6 +60,7 @@ class Enemy : public BaseStack {
                 case Stance::Enemy_Walk_LH_00 ... Stance::Enemy_Walk_LH_03:
                 case Stance::Enemy_Walk_Bow_LH_00 ... Stance::Enemy_Walk_Bow_LH_03:
                 case Stance::Enemy_Fire_LH_00 ... Stance::Enemy_Fire_LH_12:
+                case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_14:
                     return Direction::Left;         
 
                 default:

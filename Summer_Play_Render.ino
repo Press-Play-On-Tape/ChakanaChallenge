@@ -240,7 +240,7 @@ void renderWorld(uint8_t currentPlane) {
 
             if (tile00 == 31 && tile01 == 31 && tile10 == 31 && tile11 == 31)     imgTile = Images::Crate_36;
             if (tile00 == 32 && tile01 == 32 && tile10 == 31 && tile11 == 31)     imgTile = Images::Crate_37;
-            if (tile00 == 33 && tile01 == 33 && tile10 == 33 && tile11 == 33)     imgTile = Images::Crate_36;
+            if (tile00 == 31 && tile01 == 31 && tile10 == 33 && tile11 == 33)     imgTile = Images::Crate_38;
 
 
             // Rollers R then L
@@ -361,6 +361,18 @@ void renderWorld(uint8_t currentPlane) {
 
         }
 
+        if (item.getItemType() == ItemType::Trebochet_Left) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_14, (item.getFrame() * 3) + currentPlane);
+
+        }
+
+        if (item.getItemType() == ItemType::Trebochet_Right) {
+
+            SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_15, (item.getFrame() * 3) + currentPlane);
+
+        }
+
         if (item.getItemType() == ItemType::Amulet) {
 
             switch (item.getFrame()) {
@@ -452,6 +464,19 @@ void renderWorld(uint8_t currentPlane) {
 
                         }
 
+
+                        if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
+                            (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
+
+// Serial.print(enemy.getItem().getX() + world.getMiddleground() - 4);
+// Serial.print(" ");
+// Serial.println(yOffset - enemy.getItem().getY());
+// Serial.print("a ");
+// Serial.println(enemy.getItem().getFrame() );
+                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
+
+                        }
+                        
                     }
                     break;
                 

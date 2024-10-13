@@ -5,7 +5,10 @@
 #include "../utils/Constants.h"
 #include "../utils/Enums.h"
 
-// class Item : public InventoryItem {
+constexpr uint8_t ball_X[20] = { 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
+// constexpr int8_t ball_Y[20] = { 0, -6, -5, -4,         -4,  -3,  -3, -3, -1, 0, 0, 1,    2,  2, 3,   4,  5, 5, 7, 8 };
+constexpr int8_t ball_Y[20] = { 0, -8, -6, -5,         -4,  -3,  -2, -1, 0, 0, 0, 0,    0,  0, 1,   2,  3, 4, 4, 5 };
+
 class Item {
 
     private:
@@ -184,6 +187,90 @@ class Item {
 
                     break;
 
+                case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
+
+                    if (this->counter > 0) {
+
+                        this->setCounter(this->getCounter() - 1);
+                        this->setY(this->getY() + ball_Y[this->getCounter()]);
+
+                        switch (this->itemType) {
+
+                            case ItemType::Trebochet_Ball_Left_1:
+                                this->setX(this->getX() - 6);
+                                break;
+
+                            case ItemType::Trebochet_Ball_Left_2:
+                                this->setX(this->getX() - 6 - (this->counter % 2));
+                                break;
+
+                            case ItemType::Trebochet_Ball_Left_3:
+                                this->setX(this->getX() - 5);
+                                break;
+                                
+                        }
+
+                        if (this->counter == 0) {
+                            this->setX(this->getX() - 12);
+                        }
+
+                    }
+
+                    if (this->counter == 0) {
+
+                        this->frame++;
+
+                        if (this->frame == 9) {
+                            this->itemType = ItemType::Trebochet_Ball_Left_Hidden;
+                            this->frame = 0;
+                        }
+
+                    }
+
+                    break;
+
+                case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
+
+                    if (this->counter > 0) {
+
+                        this->setCounter(this->getCounter() - 1);
+                        this->setY(this->getY() + ball_Y[this->getCounter()]);
+
+                        switch (this->itemType) {
+
+                            case ItemType::Trebochet_Ball_Right_1:
+                                this->setX(this->getX() + 6);
+                                break;
+
+                            case ItemType::Trebochet_Ball_Right_2:
+                                this->setX(this->getX() + 6 + (this->counter % 2));
+                                break;
+
+                            case ItemType::Trebochet_Ball_Right_3:
+                                this->setX(this->getX() + 5);
+                                break;
+                                
+                        }
+
+                        if (this->counter == 0) {
+                            this->setX(this->getX() + 4);
+                            this->frame = 8;
+                        }
+
+                    }
+
+                    if (this->counter == 0) {
+
+                        this->frame++;
+
+                        if (this->frame == 17) {
+                            this->itemType = ItemType::Trebochet_Ball_Right_Hidden;
+                            this->frame = 0;
+                        }
+
+                    }
+
+                    break;
             }
 
             return ItemAction::None;

@@ -8,7 +8,6 @@
 
 int16_t enemy = -20;
 
-
 void playGame_Init() {
 
     Player &player = world.getPlayer();
@@ -31,13 +30,34 @@ void playGame_Init() {
 
     world.setBackground(0);
 
+/* Trebochet_Left 
+
+        else if (i == 0) {
+            item.setItemType(ItemType::Trebochet_Left);
+            item.setX(208);
+            item.setY(16);            
+        }
+        else if (i == 1) {
+            item.setItemType(ItemType::Trebochet_Ball_Left_Hidden);
+            item.setX(208);
+            item.setY(16);            
+        }
+
+    Enemy &enemy = world.getEnemy(0);
+    enemy.setX(208 + 28);
+    enemy.setY(0);
+    enemy.setStance(Stance::Enemy_Trebochet_Release_LH_01);
+    enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
+*/
+
+
 
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 0) {
+        if (i == 2) {
             item.setItemType(ItemType::Puff);
-            item.setX(128 + 16 - 32);
+            item.setX(128);
             item.setY(16);  
             item.setFrame(255);           
         }
@@ -53,30 +73,25 @@ void playGame_Init() {
         // //     item.setX(128 + 64 + 48 - 32);
         // //     item.setY(16);                        
         // // }
-        // else if (i == 0) {
-        //     item.setItemType(ItemType::Vine);
-        //     item.setX(128 + 16 + 16  );
-        //     item.setY(32);            
-        // }
-        // else {
-        //     item.setItemType(ItemType::None);
+        else if (i == 0) {
+            item.setItemType(ItemType::Trebochet_Right);
+            item.setX(128);
+            item.setY(16);            
+        }
+        else if (i == 1) {
+            item.setItemType(ItemType::Trebochet_Ball_Right_Hidden);
+            item.setX(128);
+            item.setY(16);            
+        }
+        else {
+            item.setItemType(ItemType::None);
 
-        // }
+        }
 
         player.getItem(i).setItemType(ItemType::None);
 
 
-        // Item &item = world.getItem(i);
-        // if (i == 0) {
-        //     item.setItemType(ItemType::Puff);
-        //     item.setX(128 + 16 - 32);
-        //     item.setY(16);  
-        //     item.setFrame(255);           
-        // }
-        // else {
-        //     item.setItemType(ItemType::None);
 
-        // }
 
         player.getItem(i).setItemType(ItemType::None);
 
@@ -97,10 +112,11 @@ void playGame_Init() {
 
 
     Enemy &enemy = world.getEnemy(0);
-    enemy.setX(128 + 16);
-    // enemy.setX(32);
-    enemy.setY(16);
-    enemy.setStance(Stance::Enemy_Walk_Bow_LH_00);
+    enemy.setX(128 - 14);
+    enemy.setY(0);
+    // enemy.setCounter(0);
+    enemy.setStance(Stance::Enemy_Trebochet_Release_RH_01);
+    enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
 
 }
 
@@ -281,7 +297,9 @@ void playGame_Update() {
                             uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                             uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                             uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                            uint8_t tile_U2 = world.getTile_RelativeToPlayer(0, 2);
                             uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
+                            uint8_t tile_RU2 = world.getTile_RelativeToPlayer(1, 2);
 
                             if (world.isLadderTile_Upper(tile) && world.isLadderTile_Upper(tile_R)) {
 
@@ -304,35 +322,21 @@ void playGame_Update() {
                             }
                             else if (world.isVerticalVine_Upper(tile_U) && world.isVerticalVine_Upper(tile_RU)) {
 
-                                if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && world.canWalkOnTile(tile_R2)) {
-                                    player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
-                                }
-
-                                else if ((justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && world.canWalkOnTile(tile_L)) {
+                                if ((justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
+                                    player.setFalls(0);
                                     player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
                                 }
 
-                                else if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
-
-                                    if (world.canWalkOnTile(tile_R2)) {
-                                        player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
-                                    }
-                                    else {
-                                        player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
-                                    }
-
+                                if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
+                                    player.setFalls(0);
+                                    player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
                                 }
 
-                                else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                            }
+                            else if (world.isVerticalVine_Upper(tile_U2) && world.isVerticalVine_Upper(tile_RU2)) {
 
-                                    if (world.canWalkOnTile(tile_L)) {
-                                        player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
-                                    }
-                                    else {
-                                        player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
-                                    }
-
-                                }
+                                player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
+                                player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
 
                             }
                             else if ((world.isLadderTile_Middle(tile) && world.isLadderTile_Middle(tile_R)) ||
@@ -422,10 +426,10 @@ void playGame_Update() {
                             uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                             uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                             uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                            uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                             uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
-                            if ((world.isLadderTile_Lower(tile_D) && world.isLadderTile_Lower(tile_RD)) ||
-                                (world.isVerticalVine_Lower(tile_D) && world.isVerticalVine_Lower(tile_RD))) {
+                            if (world.isLadderTile_Lower(tile_D) && world.isLadderTile_Lower(tile_RD)) {
 
                                 if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
                                     player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
@@ -445,6 +449,34 @@ void playGame_Update() {
                                 
 
                             }
+                            else if (world.isVerticalVine_Lower(tile_D) && world.isVerticalVine_Lower(tile_RD)) {
+
+                                if (world.isEmptyTile(tile_D2)) {
+                                    player.setFalls(0);
+                                    player.pushSequence(Stance::Man_Walk_FallMore_BK_01, Stance::Man_Walk_FallMore_BK_02);
+                                }
+                                else {
+                                        
+                                    if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
+                                        player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
+                                    }
+
+                                    else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
+                                        player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
+                                    }
+
+                                    else if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                                        player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
+                                    }
+
+                                    else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                                        player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
+                                    }
+
+                                }
+                                
+
+                            }                            
                             else if ((world.isLadderTile_Middle(tile_D) && world.isLadderTile_Middle(tile_RD)) ||
                                      (world.isVerticalVine_Middle(tile_D) && world.isVerticalVine_Middle(tile_RD))) {
   
@@ -464,7 +496,7 @@ void playGame_Update() {
 
                             }
                             else if (player.getStance() == Stance::Man_Rope_Start_RH_07 || player.getStance() == Stance::Man_Rope_Start_LH_07) {
-                            
+                          
                                 player.setFalls(0);
                                 player.push(Stance::Man_Walk_FallMore_BK_02);
 
@@ -640,7 +672,14 @@ void playGame_Update() {
                                 uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
                                 uint8_t tile_L3D2 = world.getTile_RelativeToPlayer(-3, -2);
 
-                                if (world.isSlideTile_Full_RH(tile_LD) && world.canWalkOnTile(tile_L3D2)) {
+
+                                if (world.isVerticalVine_Upper(tile_L) || world.isVerticalVine_Middle(tile_L)) {
+                                    
+                                    player.setFalls(0);
+                                    player.pushSequence(Stance::Man_Vine_Entry_LH_01, Stance::Man_Vine_Entry_LH_08);
+
+                                }
+                                else if (world.isSlideTile_Full_RH(tile_LD) && world.canWalkOnTile(tile_L3D2)) {
 
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_LH_Full_Land_01, Stance::Man_Slide_LH_Full_Land_13);
@@ -743,11 +782,15 @@ void playGame_Update() {
                                 // Do nothing ..
 
                             }   
-                            else if (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R)) {
+                            // else if ((world.isVerticalVine_Upper(tile) && world.isVerticalVine_Upper(tile_R)) ||
+                            //          (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R)) ||
+                            //          (world.isVerticalVine_Lower(tile) && world.isVerticalVine_Lower(tile_R))) {
+                            else if ((world.isVerticalVine_Upper(tile) && world.isVerticalVine_Upper(tile_R)) ||
+                                     (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R))) {
 
-                                if (world.isEmptyTile(tile_L)) {//} && world.canWalkOnTile(tile_LD)) {
+                                if (world.isEmptyTile(tile_L)) {
                                     player.setFalls(0);
-                                    player.pushSequence(Stance::Man_Vine_Exit_Lvl_LH_01, Stance::Man_Vine_Exit_Lvl_LH_08);
+                                    player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
                                 }
                                 else { /* Do nothing, prevents a turn */}
 
@@ -888,7 +931,13 @@ void playGame_Update() {
                                 uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
                                 uint8_t tile_R3D2 = world.getTile_RelativeToPlayer(3, -2);
 
-                                if (world.isSlideTile_Full_LH(tile_RD) && world.canWalkOnTile(tile_R3D2)) {
+                                if (world.isVerticalVine_Upper(tile_R) || world.isVerticalVine_Middle(tile_R)) {
+
+                                    player.setFalls(0);
+                                    player.pushSequence(Stance::Man_Vine_Entry_RH_01, Stance::Man_Vine_Entry_RH_08);
+
+                                }
+                                else if (world.isSlideTile_Full_LH(tile_RD) && world.canWalkOnTile(tile_R3D2)) {
 
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Slide_RH_Full_Land_01, Stance::Man_Slide_RH_Full_Land_13);
@@ -990,11 +1039,15 @@ void playGame_Update() {
                                 // Do nothing ..
 
                             }   
-                            else if (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R)) {
+                            // else if ((world.isVerticalVine_Upper(tile) && world.isVerticalVine_Upper(tile_R)) ||
+                            //          (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R)) ||
+                            //          (world.isVerticalVine_Lower(tile) && world.isVerticalVine_Lower(tile_R))) {
+                            else if ((world.isVerticalVine_Upper(tile) && world.isVerticalVine_Upper(tile_R)) ||
+                                     (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R))) {
 
-                                if (world.isEmptyTile(tile_R2)) {// && world.canWalkOnTile(tile_R2D)) {
+                                if (world.isEmptyTile(tile_R2)) {
                                     player.setFalls(0);
-                                    player.pushSequence(Stance::Man_Vine_Exit_Lvl_RH_01, Stance::Man_Vine_Exit_Lvl_RH_08);
+                                    player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
                                 }
                                 else { /* Do nothing, prevents a turn */}
 
@@ -1418,7 +1471,6 @@ void playGame_Update() {
 
                         case ItemType::Flame:
                             
-                         // itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };                            
                             itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
 
                             if (collide(playerRect, itemRect)) {
@@ -1610,7 +1662,14 @@ void playGame_Update() {
                                 }
                                 else {
 
+                                    if (world.getMiddleground() % 8 == 4 || world.getMiddleground() % 8 == -4) {
+
+                                        player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
+
+                                    }
+
                                     player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+    
                                 } 
 
                             }
@@ -1631,8 +1690,7 @@ void playGame_Update() {
                 case Stance::Man_Slide_RH_11:
                 case Stance::Man_Slide_RH_Full_13:
                 case Stance::Man_Rollers_Fall_RH_04:
-                case Stance::Man_Vine_Exit_Lvl_RH_08:
-                case Stance::Man_Vine_Exit_Lvl_LH_08:
+                case Stance::Man_Vine_Exit_RH_08:
                     {
   
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
@@ -1689,6 +1747,7 @@ void playGame_Update() {
                 case Stance::Man_Slide_LH_11:
                 case Stance::Man_Slide_LH_Full_13:       
                 case Stance::Man_Rollers_Fall_LH_04:
+                case Stance::Man_Vine_Exit_LH_08:
                     {
                            
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
@@ -1765,7 +1824,6 @@ void playGame_Update() {
             if (!enemy.isEmpty()) {
 
                 Point offset;
-
                 uint16_t newStance = enemy.pop();
 
                 enemy.setStance(newStance);
@@ -1775,7 +1833,6 @@ void playGame_Update() {
                 enemy.setY(enemy.getY() - stanceY);
                 FX::readEnd();
                
-
                 FX::seekData(Constants::xForeground + static_cast<uint16_t>(enemy.getStance()));
                 int8_t b = FX::readPendingUInt8();
                 world.incForeground(b);
@@ -1811,6 +1868,80 @@ void playGame_Update() {
                             item.setCounter(25 * 4);
                             item.setX(enemy.getX());
                             item.setY(enemy.getY() - 7);
+                        }
+                        break;
+
+                    case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_04:
+                    case Stance::Enemy_Trebochet_Release_LH_06 ... Stance::Enemy_Trebochet_Release_LH_14:
+                        {
+                            uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
+                            FX::seekData(Constants::TrebochetImgs + idx);
+                            uint8_t frame = FX::readPendingUInt8();
+                            FX::readEnd();
+
+                            idx = world.getItem(ItemType::Trebochet_Left);
+                            Item &item = world.getItem(idx);
+                            item.setFrame(frame);
+                            
+                        }
+                        break;
+
+                    case Stance::Enemy_Trebochet_Release_LH_05:
+                        {
+
+                            uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
+                            FX::seekData(Constants::TrebochetImgs + idx);
+                            uint8_t frame = FX::readPendingUInt8();
+                            FX::readEnd();
+
+                            idx = world.getItem(ItemType::Trebochet_Left);
+                            Item &trebochet = world.getItem(idx);
+                            trebochet.setFrame(frame);
+
+                            Item &item = enemy.getItem();
+                            uint8_t r = random(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+                            item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Left_1) + r));
+                            item.setCounter(20);
+                            item.setX(enemy.getX() - 16);
+                            item.setY(enemy.getY() + 10);
+
+                        }
+                        break;
+
+                    case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_04:
+                    case Stance::Enemy_Trebochet_Release_RH_06 ... Stance::Enemy_Trebochet_Release_RH_14:
+                        {
+                            uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
+                            FX::seekData(Constants::TrebochetImgs + idx);
+                            uint8_t frame = FX::readPendingUInt8();
+                            FX::readEnd();
+
+                            idx = world.getItem(ItemType::Trebochet_Right);
+                            Item &item = world.getItem(idx);
+                            item.setFrame(frame);
+                            
+                        }
+                        break;
+
+                    case Stance::Enemy_Trebochet_Release_RH_05:
+                        {
+
+                            uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
+                            FX::seekData(Constants::TrebochetImgs + idx);
+                            uint8_t frame = FX::readPendingUInt8();
+                            FX::readEnd();
+
+                            idx = world.getItem(ItemType::Trebochet_Right);
+                            Item &trebochet = world.getItem(idx);
+                            trebochet.setFrame(frame);
+
+                            Item &item = enemy.getItem();
+                            uint8_t r = random(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+                            item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Right_1) + r));
+                            item.setCounter(20);
+                            item.setX(enemy.getX() + 28);
+                            item.setY(enemy.getY() + 10);
+
                         }
                         break;
 

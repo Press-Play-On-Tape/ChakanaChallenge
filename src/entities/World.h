@@ -819,19 +819,49 @@ struct World {
 
                 if (enemy.getX() == 0) continue;
 
-                if (enemy.getCount() == 0 && random(0, 120) == 0) {
+                Item &item = enemy.getItem();
 
-                    switch (enemy.getDirection()) {
+                switch (item.getItemType()) {
 
-                        case Direction::Left:
-                            enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
-                            break;
+                    case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
 
-                        case Direction::Right:
-                            enemy.pushSequence(Stance::Enemy_Fire_RH_00, Stance::Enemy_Fire_RH_12);
-                            break;
+                        if (enemy.getCount() == 0 && random(0, 120) == 0) {
 
-                    }
+                            switch (enemy.getDirection()) {
+
+                                case Direction::Left:
+                                    enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
+                                    break;
+
+                                case Direction::Right:
+                                    enemy.pushSequence(Stance::Enemy_Fire_RH_00, Stance::Enemy_Fire_RH_12);
+                                    break;
+
+                            }
+
+                        }
+
+                        break;
+
+                    case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
+
+                        if (enemy.getCount() == 0 && random(0, 120) == 0) {
+
+                            switch (enemy.getDirection()) {
+
+                                case Direction::Left:
+                                    enemy.pushSequence(Stance::Enemy_Trebochet_Release_LH_01, Stance::Enemy_Trebochet_Release_LH_14);
+                                    break;
+
+                                case Direction::Right:
+                                    enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01, Stance::Enemy_Trebochet_Release_RH_14);
+                                    break;
+
+                            }
+
+                        }
+
+                        break;
 
                 }
 
@@ -904,6 +934,88 @@ struct World {
                         }
 
                         break;
+                    
+                    case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
+                    // case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
+                        {
+                            enemy.getItem().update(); 
+
+                            uint8_t yOffset = Constants::GroundY;
+                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                            
+                            if (collide(playerRect, trebochetRect)) {
+
+                                enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
+                                enemy.getItem().setFrame(0);
+
+                                Item &puff = this->getItem(this->getItem(ItemType::Puff));
+                                puff.setX(item.getX());
+                                puff.setY(item.getY());
+                                puff.setFrame(0);
+                                item.setCounter(3);
+
+                                switch (this->player.getDirection()) {
+
+                                    case Direction::Right:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                        break;
+
+                                    case Direction::Left:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
+                                        break;
+                                        
+                                }
+
+                            }                            
+
+                        }
+                        break;   
+
+                    // case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
+                    case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
+                        {
+                            enemy.getItem().update(); 
+
+                            uint8_t yOffset = Constants::GroundY;
+                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                            
+                            if (collide(playerRect, trebochetRect)) {
+
+                                enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
+                                enemy.getItem().setFrame(0);
+
+                                Item &puff = this->getItem(this->getItem(ItemType::Puff));
+                                puff.setX(item.getX());
+                                puff.setY(item.getY());
+                                puff.setFrame(0);
+                                item.setCounter(3);
+
+                                switch (this->player.getDirection()) {
+
+                                    case Direction::Right:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                        break;
+
+                                    case Direction::Left:
+                                        this->player.clear();
+                                        this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
+                                        break;
+                                        
+                                }
+
+                            }                            
+
+                        }
+                        break;  
 
                 }
 
