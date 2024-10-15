@@ -72,6 +72,9 @@ enum class ItemType : uint8_t {
     Trebochet_Ball_Right_2, // 5, 6
     Trebochet_Ball_Right_3, // 5
     Trebochet_Ball_Right_Hidden,
+    SwingyThing,
+    SwingyThing_2,
+    SwingyThing_Hidden,
     Puff,
     None = 99,
 };

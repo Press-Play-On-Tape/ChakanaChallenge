@@ -169,18 +169,18 @@ void printDetails() {
     
     Player &player = world.getPlayer();
 
-    DEBUG_PRINT("S");
-    DEBUG_PRINT(player.getStance());
-    DEBUG_PRINT(" y");
-    DEBUG_PRINT(Constants::GroundY - player.getY());
-    DEBUG_PRINT(" (");
-    DEBUG_PRINT((Constants::GroundY - player.getY()) % 8);
-    DEBUG_PRINT(") M");
-    DEBUG_PRINT(world.getMiddleground());
-    DEBUG_PRINT(" (");
-    DEBUG_PRINT(world.getMiddleground() % 8);
-    DEBUG_PRINT(")");
-    DEBUG_PRINTLN(" ");
+    // DEBUG_PRINT("S");
+    // DEBUG_PRINT(player.getStance());
+    // DEBUG_PRINT(" y");
+    // DEBUG_PRINT(Constants::GroundY - player.getY());
+    // DEBUG_PRINT(" (");
+    // DEBUG_PRINT((Constants::GroundY - player.getY()) % 8);
+    // DEBUG_PRINT(") M");
+    // DEBUG_PRINT(world.getMiddleground());
+    // DEBUG_PRINT(" (");
+    // DEBUG_PRINT(world.getMiddleground() % 8);
+    // DEBUG_PRINT(")");
+    // DEBUG_PRINTLN(" ");
 
 
     // DEBUG_PRINT("S");

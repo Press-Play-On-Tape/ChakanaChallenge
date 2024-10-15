@@ -30,7 +30,7 @@ void playGame_Init() {
 
     world.setBackground(0);
 
-/* Trebochet_Left 
+/* Trebochet_Left ----------------------------------------------- 
 
         else if (i == 0) {
             item.setItemType(ItemType::Trebochet_Left);
@@ -50,29 +50,8 @@ void playGame_Init() {
     enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
 */
 
+/* Trebochet_Right -----------------------------------------------
 
-
-    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
-
-        Item &item = world.getItem(i);
-        if (i == 2) {
-            item.setItemType(ItemType::Puff);
-            item.setX(128);
-            item.setY(16);  
-            item.setFrame(255);           
-        }
-        // else if (i == 1) {
-        //     item.setItemType(ItemType::Flame);
-        //     item.setX(128);
-        //     item.setY(16);            
-        // }
-        // // else if (i == 2) {
-        // //     item.setItemType(ItemType::PinchBar_Hidden);
-        // //     // item.setX(128 - 32 - 32);
-        // //     // item.setY(32);
-        // //     item.setX(128 + 64 + 48 - 32);
-        // //     item.setY(16);                        
-        // // }
         else if (i == 0) {
             item.setItemType(ItemType::Trebochet_Right);
             item.setX(128);
@@ -83,6 +62,57 @@ void playGame_Init() {
             item.setX(128);
             item.setY(16);            
         }
+
+    Enemy &enemy = world.getEnemy(0);
+    enemy.setX(128 - 14);
+    enemy.setY(0);
+    enemy.setStance(Stance::Enemy_Trebochet_Release_RH_01);
+    enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
+*/
+
+
+/* Swingy Thingy -----------------------------------------------
+
+        else if (i == 0) {
+            item.setItemType(ItemType::SwingyThing);
+            item.setX(94 + 34 + 32);
+            item.setY(16);            
+        }
+
+*/
+
+
+    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+        Item &item = world.getItem(i);
+        if (i == 1) {
+            item.setItemType(ItemType::Puff);
+            item.setX(128);
+            item.setY(16);  
+            item.setFrame(255);           
+        }
+        else if (i == 0) {
+            item.setItemType(ItemType::SwingyThing);
+            item.setX(94 + 34 + 32);
+            item.setY(16);            
+        }
+        // // else if (i == 2) {
+        // //     item.setItemType(ItemType::PinchBar_Hidden);
+        // //     // item.setX(128 - 32 - 32);
+        // //     // item.setY(32);
+        // //     item.setX(128 + 64 + 48 - 32);
+        // //     item.setY(16);                        
+        // // }
+        // else if (i == 0) {
+        //     item.setItemType(ItemType::Trebochet_Right);
+        //     item.setX(128);
+        //     item.setY(16);            
+        // }
+        // else if (i == 1) {
+        //     item.setItemType(ItemType::Trebochet_Ball_Right_Hidden);
+        //     item.setX(128);
+        //     item.setY(16);            
+        // }
         else {
             item.setItemType(ItemType::None);
 
@@ -111,12 +141,12 @@ void playGame_Init() {
         // uint16_t background = 0;
 
 
-    Enemy &enemy = world.getEnemy(0);
-    enemy.setX(128 - 14);
-    enemy.setY(0);
-    // enemy.setCounter(0);
-    enemy.setStance(Stance::Enemy_Trebochet_Release_RH_01);
-    enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
+    // Enemy &enemy = world.getEnemy(0);
+    // enemy.setX(128 - 14);
+    // enemy.setY(0);
+    // // enemy.setCounter(0);
+    // enemy.setStance(Stance::Enemy_Trebochet_Release_RH_01);
+    // enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
 
 }
 
@@ -159,29 +189,32 @@ void playGame_Update() {
                                 if (world.isWoodenBarrier(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
 
                                     player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
-                                    uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
-                                    world.getItem(woodenBarrier).setCounter(1);     
-                                    menu.setDirection(Direction::Right);
-                                    player.removeInventoryItem(menu.getY());
+                                    // uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
+                                    // world.getItem(woodenBarrier).setCounter(1);     
+                                    // menu.setDirection(Direction::Right);
+                                    // player.removeInventoryItem(menu.getY());
+                                    removeInventoryItem(ItemType::WoodenBarrier);
 
                                 }
 
-                                if (world.isMysteryCrate(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
+                                else if (world.isMysteryCrate(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
 
                                     player.pushSequence(Stance::Man_Levering_RH_00, Stance::Man_Levering_RH_10);
-                                    uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
-                                    world.getItem(mysteryCrate).setCounter(1);     
-                                    menu.setDirection(Direction::Right);
-                                    player.removeInventoryItem(menu.getY());
+                                    // uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
+                                    // world.getItem(mysteryCrate).setCounter(1);     
+                                    // menu.setDirection(Direction::Right);
+                                    // player.removeInventoryItem(menu.getY());
+                                    removeInventoryItem(ItemType::MysteryCrate);
 
                                 }
 
-                                if (world.isLockedDoor(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::Key1) {
+                                else if (world.isLockedDoor(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::Key1) {
 
-                                    uint8_t lockedDoor = world.getItem(ItemType::LockedDoor);
-                                    world.getItem(lockedDoor).setCounter(1);     
-                                    menu.setDirection(Direction::Right);
-                                    player.removeInventoryItem(menu.getY());
+                                    // uint8_t lockedDoor = world.getItem(ItemType::LockedDoor);
+                                    // world.getItem(lockedDoor).setCounter(1);     
+                                    // menu.setDirection(Direction::Right);
+                                    // player.removeInventoryItem(menu.getY());
+                                    removeInventoryItem(ItemType::LockedDoor);
 
                                 }
 
@@ -196,29 +229,32 @@ void playGame_Update() {
                                 if (world.isWoodenBarrier(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
 
                                     player.pushSequence(Stance::Man_Hammering_LH_00, Stance::Man_Hammering_LH_10);
-                                    uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
-                                    world.getItem(woodenBarrier).setCounter(1);     
-                                    menu.setDirection(Direction::Right);
-                                    player.removeInventoryItem(menu.getY());
+                                    // uint8_t woodenBarrier = world.getItem(ItemType::WoodenBarrier);
+                                    // world.getItem(woodenBarrier).setCounter(1);     
+                                    // menu.setDirection(Direction::Right);
+                                    // player.removeInventoryItem(menu.getY());
+                                    removeInventoryItem(ItemType::WoodenBarrier);
 
                                 }
 
-                                if (world.isMysteryCrate(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
+                                else if (world.isMysteryCrate(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
 
                                     player.pushSequence(Stance::Man_Levering_LH_00, Stance::Man_Levering_LH_10);
-                                    uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
-                                    world.getItem(mysteryCrate).setCounter(1);     
-                                    menu.setDirection(Direction::Right);
-                                    player.removeInventoryItem(menu.getY());
+                                    // uint8_t mysteryCrate = world.getItem(ItemType::MysteryCrate);
+                                    // world.getItem(mysteryCrate).setCounter(1);     
+                                    // menu.setDirection(Direction::Right);
+                                    // player.removeInventoryItem(menu.getY());
+                                    removeInventoryItem(ItemType::MysteryCrate);
 
                                 }
 
-                                if (world.isLockedDoor(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::Key1) {
+                                else if (world.isLockedDoor(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::Key1) {
 
-                                    uint8_t lockedDoor = world.getItem(ItemType::LockedDoor);
-                                    world.getItem(lockedDoor).setCounter(1);     
-                                    menu.setDirection(Direction::Right);
-                                    player.removeInventoryItem(menu.getY());
+                                    // uint8_t lockedDoor = world.getItem(ItemType::LockedDoor);
+                                    // world.getItem(lockedDoor).setCounter(1);     
+                                    // menu.setDirection(Direction::Right);
+                                    // player.removeInventoryItem(menu.getY());
+                                    removeInventoryItem(ItemType::LockedDoor);
 
                                 }
 
@@ -327,7 +363,7 @@ void playGame_Update() {
                                     player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
                                 }
 
-                                if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
+                                else if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
                                 }
@@ -350,7 +386,7 @@ void playGame_Update() {
                                     
                                 }
                                 
-                                if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                                else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
 
                                     player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_06, Stance::Man_ClimbLadder_BK_LH_UP_07);
                                     player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_06, Stance::Man_ClimbLadder_BK_LH_UP_07);
@@ -487,7 +523,7 @@ void playGame_Update() {
                                     
                                 }
                                 
-                                if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                                else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
 
                                     player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_06, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
                                     player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_06, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
@@ -548,7 +584,7 @@ void playGame_Update() {
 
                             }
 
-                            if ((world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) ||
+                            else if ((world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) ||
                                 (world.isVerticalVine_Upper(tile_LD) && world.isVerticalVine_Upper(tile_D))) {
 
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_01, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
@@ -999,8 +1035,7 @@ void playGame_Update() {
                                             player.pushSequence(Stance::Man_StandingJump_RH_UPandOver_01, Stance::Man_StandingJump_RH_UPandOver_06);
 
                                         }          
-            
-
+           
                                     }
                                     else if (world.isStairTile_R1(tile_R) || world.isStairTile_R_Half(tile_R)) {
 
@@ -1403,7 +1438,7 @@ void playGame_Update() {
 
                 Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };
 
-                if (collide(playerRect, itemRect)) {
+                // if (collide(playerRect, itemRect)) {
 
                     Item &puff = world.getItem(world.getItem(ItemType::Puff));
 
@@ -1416,52 +1451,52 @@ void playGame_Update() {
                         case ItemType::Potion:
                         case ItemType::Anchor:
 
-                            if (item.getCounter() == 0) {
+                            if (collide(playerRect, itemRect)) {
 
-                                puff.setX(item.getX());
-                                puff.setY(item.getY());
-                                puff.setFrame(0);
-                                item.setCounter(3);
+                                if (item.getCounter() == 0) {
+
+                                    puff.setX(item.getX());
+                                    puff.setY(item.getY());
+                                    puff.setFrame(0);
+                                    item.setCounter(3);
+
+                                }
 
                             }
                             break;
 
                         case ItemType::Punji:
-
-                            if (item.getCounter() == 0) {
                                     
+                            switch (player.getDirection()) {
+
+                                case Direction::Left:
+                                    playerRect.width = 4;
+                                    break;
+
+                                case Direction::Right:
+                                    playerRect.x = playerRect.x + 8;
+                                    playerRect.width = playerRect.width - 8;
+                                    break;
+
+                            }
+
+                            itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+
+                            if (item.getCounter() == 0 && collide(playerRect, itemRect)) {
+
+                                item.setCounter(1);
+
                                 switch (player.getDirection()) {
 
                                     case Direction::Left:
-                                        playerRect.width = 4;
+                                        player.clear();
+                                        player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04);
                                         break;
 
                                     case Direction::Right:
-                                        playerRect.x = playerRect.x + 8;
-                                        playerRect.width = playerRect.width - 8;
+                                        player.clear();
+                                        player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04);
                                         break;
-
-                                }
-
-                                itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
-
-                                if (collide(playerRect, itemRect)) {
-
-                                    item.setCounter(1);
-
-                                    switch (player.getDirection()) {
-
-                                        case Direction::Left:
-                                            player.clear();
-                                            player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04);
-                                            break;
-
-                                        case Direction::Right:
-                                            player.clear();
-                                            player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04);
-                                            break;
-
-                                    }
 
                                 }
 
@@ -1567,7 +1602,7 @@ void playGame_Update() {
 
                     break;
 
-                }
+                // }
 
             }
 
@@ -2005,5 +2040,14 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     world.update(true);
 
+
+}
+
+void removeInventoryItem(ItemType itemType) {
+
+    uint8_t item = world.getItem(itemType);
+    world.getItem(item).setCounter(1);     
+    menu.setDirection(Direction::Right);
+    world.getPlayer().removeInventoryItem(menu.getY());
 
 }

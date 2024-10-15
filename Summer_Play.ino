@@ -97,18 +97,21 @@ void play_Update() {
                 gameState = GameState::Play_PlayerCenters;
                 player.setXSeq(16);
                 player.setYSeq(Constants::GroundY);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                for (uint8_t i = 0l; i < 12; i++) {
+                    player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                }
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
             }
 

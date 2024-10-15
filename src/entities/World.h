@@ -441,6 +441,83 @@ struct World {
 
                 }
 
+                uint8_t yOffset = Constants::GroundY;
+                if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+                Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                
+                switch (item.getItemType()) {
+
+                    case ItemType::SwingyThing:
+                        {  
+                            int16_t itemX = item.getX() + 6 + 2 + Constants::swingyThing_X[item.getFrame()];
+                            int8_t itemY = yOffset - item.getY() + Constants::swingyThing_Y[item.getFrame()] + 11;
+
+                            Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
+
+                            if (collide(playerRect, itemRect)) {
+
+                                switch (player.getDirection()) {
+
+                                    case Direction::Left:
+                                        {
+                                            switch (item.getFrame()) {
+
+                                                case 0 ... 8:
+                                     
+                                                    initPuff(itemX - 8, itemY - 16);
+                                                    player.clear();
+                                                    player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
+                                                    break;
+
+                                                default:
+                                         
+                                                    initPuff(itemX - 8 + itemRect.width, itemY - 16);
+                                                    player.clear();
+                                                    player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
+                                                    break;
+                                                    
+                                            }
+
+                                        }
+
+                                        break;
+
+                                    case Direction::Right:
+                                        {                                                
+                                            item.setItemType(ItemType::SwingyThing_2);
+
+                                            switch (item.getFrame()) {
+
+                                                case 0 ... 8:
+                                 
+                                                    initPuff(itemX - 8, itemY - 16);
+                                                    player.clear();
+                                                    player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                                    break;
+
+                                                default:
+                                           
+                                                    initPuff(itemX - 8 + itemRect.width, itemY - 16);
+                                                    player.clear();
+                                                    player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                                    break;
+                                                    
+                                            }
+
+                                        }
+
+                                        break;
+
+                                }
+
+                            }
+
+                        }
+
+                        break;
+
+                }
+
             }
 
             if (removeItemIdx != 255) {
@@ -950,12 +1027,9 @@ struct World {
 
                                 enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
                                 enemy.getItem().setFrame(0);
-
-                                Item &puff = this->getItem(this->getItem(ItemType::Puff));
-                                puff.setX(item.getX());
-                                puff.setY(item.getY());
-                                puff.setFrame(0);
                                 item.setCounter(3);
+
+                                this->initPuff(item.getX(), item.getY());
 
                                 switch (this->player.getDirection()) {
 
@@ -991,12 +1065,9 @@ struct World {
 
                                 enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
                                 enemy.getItem().setFrame(0);
-
-                                Item &puff = this->getItem(this->getItem(ItemType::Puff));
-                                puff.setX(item.getX());
-                                puff.setY(item.getY());
-                                puff.setFrame(0);
                                 item.setCounter(3);
+
+                                this->initPuff(item.getX(), item.getY());
 
                                 switch (this->player.getDirection()) {
 
@@ -1025,10 +1096,18 @@ struct World {
 
         bool collide(Rect rect1, Rect rect2) {
 
-        return !(rect2.x                >= rect1.x + rect1.width  ||
-                    rect2.x + rect2.width  <= rect1.x                ||
-                    rect2.y                >= rect1.y + rect1.height ||
-                    rect2.y + rect2.height <= rect1.y);
+            return !(rect2.x                >= rect1.x + rect1.width  ||
+                        rect2.x + rect2.width  <= rect1.x                ||
+                        rect2.y                >= rect1.y + rect1.height ||
+                        rect2.y + rect2.height <= rect1.y);
 
+        }
+
+        bool initPuff(uint16_t x, int8_t y) {
+
+            Item &puff = this->getItem(this->getItem(ItemType::Puff));
+            puff.setX(x);
+            puff.setY(y);
+            puff.setFrame(0);
         }
 };

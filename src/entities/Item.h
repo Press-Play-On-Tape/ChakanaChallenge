@@ -271,6 +271,21 @@ class Item {
                     }
 
                     break;
+
+
+                case ItemType::SwingyThing:
+                case ItemType::SwingyThing_2:
+
+                    this->counter++;
+
+                    if (this->counter == 16) {
+                        this->counter = 0;
+                        this->frame++;
+                        if (this->frame == 16) this->frame = 0;
+                    }
+                    
+                    break;
+
             }
 
             return ItemAction::None;

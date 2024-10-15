@@ -42,146 +42,6 @@ void renderWorld(uint8_t currentPlane) {
             uint8_t tile10 = world.getTile(i, y + 1);
             uint8_t tile11 = world.getTile(i + 1, y + 1);
 
-            // if (tile00 == 1 && tile01 == 1 & tile10 == 0 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_10, currentPlane);
-            // }
-
-            // if (tile00 == 1 && tile01 == 1 & tile10 == 16 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_20, currentPlane);
-            // }
-
-            // if (tile00 == 1 && tile01 == 1 & tile10 == 0 & tile11 == 17) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_21, currentPlane);
-            // }
-
-            // if (tile00 == 1 && tile01 == 1 & tile10 == 0 & tile11 == 1) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_00, currentPlane);
-            // }
-            // if (tile00 == 1 && tile01 == 2 & tile10 == 0 & tile11 == 2) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_00, currentPlane);
-            // }
-            // if (tile00 == 2 && tile01 == 2 & tile10 == 0 & tile11 == 2) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_09, currentPlane);
-            // }
-
-            // if (tile00 == 1 && tile01 == 2 & tile10 == 0 & tile11 == 2) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_03, currentPlane);
-            // }
-            // if (tile00 == 1 && tile01 == 1 & tile10 == 1 & tile11 == 1) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_05, currentPlane);
-            // }
-            // if (tile00 == 2 && tile01 == 2 & tile10 == 1 & tile11 == 1) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_01, currentPlane);
-            // }
-            // if (tile00 == 18 && tile01 == 18 & tile10 == 18 & tile11 == 18) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_22, currentPlane);
-            // }
-            // if (tile00 == 2 && tile01 == 1 & tile10 == 1 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_02, currentPlane);
-            // }
-            // if (tile00 == 1 && tile01 == 1 & tile10 == 1 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_02, currentPlane);
-            // }
-            // if (tile00 == 1 && tile01 == 1 & tile10 == 2 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_04, currentPlane);
-            // }
-            // if (tile00 == 2 && tile01 == 0 & tile10 == 2 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_06, currentPlane);
-            // }
-            // if (tile00 == 0 && tile01 == 2 & tile10 == 0 & tile11 == 2) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_07, currentPlane);
-            // }
-
-            // if (tile00 == 3 && tile01 == 3 & tile10 == 0 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8) + 8, Images::Spikes, currentPlane);
-            // }
-
-            // if (tile00 == 2 && tile01 == 2 & tile10 == 4 & tile11 == 5) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_08, currentPlane);
-            // }
-
-            // if (tile00 == 6 && tile01 == 5 & tile10 == 0 & tile11 == 0) {//mnot sure
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_11, currentPlane);
-            // }
-
-            // if (tile00 == 0 && tile01 == 6 & tile10 == 0 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_11, currentPlane);
-            // }
-
-            // if (tile00 == 11 && tile01 == 0 & tile10 == 0 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_11a, currentPlane);
-            // }
-
-
-            // // ladders
-
-            // if (tile00 == 7 && tile01 == 7 & tile10 == 8 & tile11 == 8) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_13, currentPlane);
-            // }
-
-            // if (tile00 == 7 && tile01 == 7 & tile10 == 12 & tile11 == 12) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_14, currentPlane);
-            // }
-
-            // if (tile00 == 12 && tile01 == 12 & tile10 == 8 & tile11 == 8) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_15, currentPlane);
-            // }
-
-            // if (tile00 == 12 && tile01 == 12 & tile10 == 12 & tile11 == 12) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_16, currentPlane);
-            // }
-
-            // // Rope
-
-            // if (tile00 == 13 && tile01 == 0 & tile10 == 13 & tile11 == 15) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_17, currentPlane);
-            // }
-
-            // if (tile00 == 0 && tile01 == 14 & tile10 == 15 & tile11 == 14) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_18, currentPlane);
-            // }
-
-            // if (tile00 == 0 && tile01 == 0 & tile10 == 15 & tile11 == 15) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_19, currentPlane);
-            // }
-
-            // if (tile00 == 15 && tile01 == 15 & tile10 == 0 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_23, currentPlane);
-            // }
-
-
-            // // Stairs
-
-            // if (tile00 == 2 && tile01 == 2 & tile10 == 9 & tile11 == 10) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_12, currentPlane);
-            // }
-
-            // // Slide
-
-            // if (tile00 == 2 && tile01 == 0 & tile10 == 19 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_24, currentPlane);
-            // }
-
-            // if (tile00 == 2 && tile01 == 2 & tile10 == 1 & tile11 == 19) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_28, currentPlane);
-            // }
-
-            // if (tile00 == 2 && tile01 == 20 & tile10 == 20 & tile11 == 0) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_29, currentPlane);
-            // }
-
-            // if (tile00 == 0 && tile01 == 2 & tile10 == 0 & tile11 == 21) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_25, currentPlane);
-            // }
-
-            // if (tile00 == 2 && tile01 == 2 & tile10 == 21 & tile11 == 1) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_30, currentPlane);
-            // }
-
-            // if (tile00 == 22 && tile01 == 2 & tile10 == 0 & tile11 == 22) {
-            //     SpritesU::drawPlusMaskFX((i*8) + world.getMiddleground() - 4, yOffset - (y * 8), Images::Crate_31, currentPlane);
-            // }
-
             uint24_t imgTile = 0;
 
             if (tile00 == 1 && tile01 == 1 && tile10 == 0 && tile11 == 0)         imgTile = Images::Crate_10;
@@ -200,7 +60,6 @@ void renderWorld(uint8_t currentPlane) {
             if (tile00 == 2 && tile01 == 0 && tile10 == 2 && tile11 == 0)         imgTile = Images::Crate_06;
             if (tile00 == 0 && tile01 == 2 && tile10 == 0 && tile11 == 2)         imgTile = Images::Crate_07;
             if (tile00 == 3 && tile01 == 3 && tile10 == 0 && tile11 == 0)         imgTile = Images::Spikes;
-            if (tile00 == 2 && tile01 == 2 && tile10 == 4 && tile11 == 5)         imgTile = Images::Crate_08;
             if (tile00 == 6 && tile01 == 5 && tile10 == 0 && tile11 == 0)         imgTile = Images::Crate_11;
             if (tile00 == 0 && tile01 == 6 && tile10 == 0 && tile11 == 0)         imgTile = Images::Crate_11;
             if (tile00 == 11 && tile01 == 0 && tile10 == 0 && tile11 == 0)        imgTile = Images::Crate_11a;
@@ -224,6 +83,7 @@ void renderWorld(uint8_t currentPlane) {
 
             // Stairs
 
+            if (tile00 == 2 && tile01 == 2 && tile10 == 4 && tile11 == 5)         imgTile = Images::Crate_08;
             if (tile00 == 2 && tile01 == 2 && tile10 == 9 && tile11 == 10)        imgTile = Images::Crate_12;
 
 
@@ -279,116 +139,6 @@ void renderWorld(uint8_t currentPlane) {
 
         if (item.getItemType() == ItemType::None) break;
 
-        // if (item.getItemType() == ItemType::Key1) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_00, (item.getFrame() / 16 * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Anchor) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_11, (item.getFrame() / 16 * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::PinchBar) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_08, (item.getFrame() / 16 * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::WoodenBarrier) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_01, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::MysteryCrate && item.getFrame() < 8) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_07, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::TrapDoor) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_03, (item.getFrame() / 16 * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Punji) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_04, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Potion) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_10, (item.getFrame() / 16 * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::LockedDoor) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_09, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Hammer) {
-
-        //     switch (item.getFrame()) {
-
-        //         case 3 ... 21:
-        //             SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_05, ((item.getFrame() / 3) * 3) + currentPlane);
-        //             break;
-
-        //         default:
-        //             SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_05, currentPlane);
-        //             break;
-
-        //     }
-
-        // }
-
-        // if (item.getItemType() == ItemType::Vine) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_12, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Flame) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_13, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Trebochet_Left) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_14, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Trebochet_Right) {
-
-        //     SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_15, (item.getFrame() * 3) + currentPlane);
-
-        // }
-
-        // if (item.getItemType() == ItemType::Amulet) {
-
-        //     switch (item.getFrame()) {
-
-        //         case 3 ... 21:
-        //             SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_06, ((item.getFrame() / 3) * 3) + currentPlane);
-        //             break;
-
-        //         default:
-        //             SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_06, currentPlane);
-        //             break;
-
-        //     }
-
-        // }
-
         uint24_t imageIdx = 0;
         uint8_t frame = item.getFrame();
 
@@ -411,14 +161,12 @@ void renderWorld(uint8_t currentPlane) {
 
             case ItemType::WoodenBarrier:
                 imageIdx = Images::Item_01;
-                // frame = item.getFrame();
                 break;
 
             case ItemType::MysteryCrate:
 
                 if (item.getFrame() < 8) {
                     imageIdx = Images::Item_07;
-                    // frame = item.getFrame();
                 }
                 break;
 
@@ -429,7 +177,6 @@ void renderWorld(uint8_t currentPlane) {
 
             case ItemType::Punji:
                 imageIdx = Images::Item_04;
-                // frame = item.getFrame();
                 break;
 
             case ItemType::Potion:
@@ -439,7 +186,6 @@ void renderWorld(uint8_t currentPlane) {
 
             case ItemType::LockedDoor:
                 imageIdx = Images::Item_09;
-                // frame = item.getFrame();
                 break;
 
             case ItemType::Hammer:
@@ -462,22 +208,23 @@ void renderWorld(uint8_t currentPlane) {
 
             case ItemType::Vine:
                 imageIdx = Images::Item_12;
-                // frame = item.getFrame();
                 break;
 
             case ItemType::Flame:
                 imageIdx = Images::Item_13;
-                // frame = item.getFrame();
                 break;
 
             case ItemType::Trebochet_Left:
                 imageIdx = Images::Item_14;
-                // frame = item.getFrame();
                 break;
 
             case ItemType::Trebochet_Right:
                 imageIdx = Images::Item_15;
-                // frame = item.getFrame();
+                break;
+
+            case ItemType::SwingyThing:
+            case ItemType::SwingyThing_2:
+                imageIdx = Images::Item_16;
                 break;
 
             case ItemType::Amulet:
@@ -575,15 +322,15 @@ void renderWorld(uint8_t currentPlane) {
 
                         }
 
-                        if (enemy.getItem().getItemType() == ItemType::Arrow_LH) {
+                        else if (enemy.getItem().getItemType() == ItemType::Arrow_LH) {
 
                             SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Arrow, 3 + currentPlane);
 
                         }
 
 
-                        if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
-                            (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
+                        else if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
+                                 (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
 
 // Serial.print(enemy.getItem().getX() + world.getMiddleground() - 4);
 // Serial.print(" ");
@@ -729,6 +476,13 @@ void renderWorld(uint8_t currentPlane) {
         }
 
     }
+
+// {
+//     Item &item = world.getItem(0);
+//     a.drawRect(item.getX() + world.getMiddleground() - 4 + 6 + Constants::swingyThing_X[item.getFrame()], yOffset - item.getY() + Constants::swingyThing_Y[item.getFrame()] + 11, 20, 3 , WHITE);
+// a.drawRect(59, yOffset - Constants::GroundY + player.getY(), 10, 16, WHITE);
+    // Serial.println(item.getFrame());
+// }
 
 }
 
