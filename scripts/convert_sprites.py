@@ -209,3 +209,8 @@ convert_header(IMAGES + 'Crate_37.png',                                         
 convert_header(IMAGES + 'Crate_38.png',                                                        BASE + 'Images.hpp', 'Crate_38', 4, maskImage=True)
 convert_header(IMAGES + 'Spikes.png',                                                          BASE + 'Images.hpp', 'Spikes', 4, maskImage=True)
 convert_header(IMAGES + 'Trebochet_Ball.png',                                                   BASE + 'Images.hpp', 'Trebochet_Ball', 4, 16, 16, maskImage=True)
+
+
+
+
+convert_header(IMAGES + 'aaa.png',                                                          BASE + 'Images.hpp', 'aaa', 4, maskImage=True)

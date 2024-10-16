@@ -135,8 +135,8 @@ void play_Update() {
 
             }
             else {
-
                 gameState = GameState::PlayGame;
+//                gameState = GameState::PlayGame_Init;
 
             }
 

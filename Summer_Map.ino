@@ -116,53 +116,26 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     uint8_t yInt = world.getYMap() / 64;
     int16_t yTop = -(world.getYMap() - (yInt * 64));
 
+    for (uint8_t i = 0; i < 3; i++) {
 
-    // if (xLeft > -128) {
+        SpritesU::drawOverwriteFX(xLeft, yTop + (i * 64), Images::Map, ((xInt + ((yInt + i) * 3)) * 3) + currentPlane);    
+        SpritesU::drawOverwriteFX(xLeft + 128, yTop + (i * 64), Images::Map, (((xInt + 1) + ((yInt + i) * 3)) * 3) + currentPlane);    
+        SpritesU::drawOverwriteFX(xLeft + 256, yTop + (i * 64), Images::Map, (((xInt + 2) + ((yInt + i) * 3)) * 3) + currentPlane);    
 
-        if (yTop > -64) {
-            SpritesU::drawOverwriteFX(xLeft, yTop, Images::Map, ((xInt + (yInt * 3)) * 3) + currentPlane);    
-        }
-
-        SpritesU::drawOverwriteFX(xLeft, yTop + 64, Images::Map, ((xInt + ((yInt + 1) * 3)) * 3) + currentPlane);    
-
-        if (yTop + 128 < 64) {
-            SpritesU::drawOverwriteFX(xLeft, yTop + 128, Images::Map, ((xInt  + ((yInt + 2) * 3)) * 3) + currentPlane);    
-        }
-
-    // }
-
-    // if (yTop > -64) {
-    SpritesU::drawOverwriteFX(xLeft + 128, yTop, Images::Map, (((xInt + 1) + (yInt * 3)) * 3) + currentPlane);    
-    SpritesU::drawOverwriteFX(xLeft + 128, yTop + 64, Images::Map, (((xInt + 1) + ((yInt + 1) * 3)) * 3) + currentPlane);   
-    SpritesU::drawOverwriteFX(xLeft + 128, yTop + 128, Images::Map, (((xInt + 1) + ((yInt + 2) * 3)) * 3) + currentPlane);    
-
-    if (yTop > -64) {
-        SpritesU::drawOverwriteFX(xLeft + 256, yTop, Images::Map, (((xInt + 2) + (yInt * 3)) * 3) + currentPlane);    
     }
-
-    SpritesU::drawOverwriteFX(xLeft + 256, yTop + 64, Images::Map, (((xInt + 2) + ((yInt + 1) * 3)) * 3) + currentPlane);    
-
-    if (yTop + 128 < 64) {
-        SpritesU::drawOverwriteFX(xLeft + 256, yTop + 128, Images::Map, (((xInt + 2) + ((yInt + 2) * 3)) * 3) + currentPlane);    
-    }
-
 
     if (frameCount % 36 < 18) {
 
-        SpritesU::drawPlusMaskFX(140 - world.getXMap(), 14 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(63 - world.getXMap(),  96 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(24 - world.getXMap(), 166 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(54 - world.getXMap(), 239 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(180 - world.getXMap(),212 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(62 - world.getXMap(), 336 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(151 - world.getXMap(), 266 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(209 - world.getXMap(), 365 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(284 - world.getXMap(), 273 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(332 - world.getXMap(), 338 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(359 - world.getXMap(), 200 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(354 - world.getXMap(), 129 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(290 - world.getXMap(),  61 - world.getYMap(), Images::Beach, currentPlane);
-        SpritesU::drawPlusMaskFX(224 - world.getXMap(), 108 - world.getYMap(), Images::Beach, currentPlane);
+        for (uint8_t i = 0; i < 14; i++) {
+
+            FX::seekData(Constants::mapCoords + (i * 4));
+            uint16_t x = FX::readPendingUInt16();
+            uint16_t y = FX::readPendingUInt16();
+            FX::readEnd();
+
+            SpritesU::drawPlusMaskFX(x - world.getXMap(), y - world.getYMap(), Images::Beach, currentPlane);
+
+        }
 
     }
 
