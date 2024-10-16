@@ -41,20 +41,15 @@ class BaseStack {
 
         void pushSequence(Stance fromStance, Stance toStance) {
 
-            this->pushSequence(fromStance, toStance, Stance::None);
+            this->pushSequence(fromStance, toStance, false);
 
         }
 
-        void pushSequence(Stance fromStance, Stance toStance, Stance finalStance) {
+        void pushSequence(Stance fromStance, Stance toStance, bool clear) {
 
-            if (finalStance != Stance::None) {
+            if (clear) {
 
-                #if defined(DEBUG) && defined(DEBUG_STACK)
-                DEBUG_PRINT(F("Final "));
-                DEBUG_PRINT(finalStance);
-                #endif
-
-                this->stack->push(static_cast<uint16_t>(finalStance));
+                this->stack->clear();
             }
 
             #if defined(DEBUG) && defined(DEBUG_STACK)

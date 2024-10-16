@@ -50,7 +50,7 @@ uint8_t optionsMenuIdx = 0;
 uint8_t optionsTopMenuIdx = 2;
 uint8_t optionsStartingBalance = 0;
 uint8_t pauseMenu = 0;
-Font3x5 font3x5 = Font3x5();
+// Font3x5 font3x5 = Font3x5();
 
 int8_t curPlayerIdx = -1;
 uint16_t bButton = 0;

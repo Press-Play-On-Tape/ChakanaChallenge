@@ -465,15 +465,13 @@ struct World {
                                                 case 0 ... 8:
                                      
                                                     initPuff(itemX - 8, itemY - 16);
-                                                    player.clear();
-                                                    player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
+                                                    player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
                                                     break;
 
                                                 default:
                                          
                                                     initPuff(itemX - 8 + itemRect.width, itemY - 16);
-                                                    player.clear();
-                                                    player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
+                                                    player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
                                                     break;
                                                     
                                             }
@@ -491,15 +489,13 @@ struct World {
                                                 case 0 ... 8:
                                  
                                                     initPuff(itemX - 8, itemY - 16);
-                                                    player.clear();
-                                                    player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                                    player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
                                                     break;
 
                                                 default:
                                            
                                                     initPuff(itemX - 8 + itemRect.width, itemY - 16);
-                                                    player.clear();
-                                                    player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                                    player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
                                                     break;
                                                     
                                             }
@@ -961,13 +957,11 @@ struct World {
                                 switch (this->player.getDirection()) {
 
                                     case Direction::Right:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04);
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
                                         break;
 
                                     case Direction::Left:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04);
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
                                         break;
                                         
                                 }
@@ -995,13 +989,11 @@ struct World {
                                 switch (this->player.getDirection()) {
 
                                     case Direction::Right:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04);
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
                                         break;
 
                                     case Direction::Left:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04);
+                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
                                         break;
                                         
                                 }
@@ -1034,13 +1026,11 @@ struct World {
                                 switch (this->player.getDirection()) {
 
                                     case Direction::Right:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                        this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
                                         break;
 
                                     case Direction::Left:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
+                                        this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
                                         break;
                                         
                                 }
@@ -1072,13 +1062,11 @@ struct World {
                                 switch (this->player.getDirection()) {
 
                                     case Direction::Right:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                        this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
                                         break;
 
                                     case Direction::Left:
-                                        this->player.clear();
-                                        this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
+                                        this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
                                         break;
                                         
                                 }
