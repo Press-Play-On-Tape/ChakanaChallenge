@@ -6,6 +6,9 @@
 #include "Enemy.h"
 #include "Item.h"
 
+
+
+
 struct World {
 
     private:
@@ -25,15 +28,16 @@ struct World {
         int16_t y = 0;
 
         int16_t wave = 0;
-        int16_t palm1 = -240;
-        int16_t palm2 = -130;
-        int16_t palm3 = 0;
-        int16_t palm4 = 130;
+        int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
+        // int16_t palm1 = -240;
+        // int16_t palm2 = -130;
+        // int16_t palm3 = 0;
+        // int16_t palm4 = 130;
 
-        int8_t palm5 = 116;
-        int8_t palm6 = 66;
-        int8_t palm7 = -20;
-        int8_t palm8 = -80;
+        // int8_t palm5 = 116;
+        // int8_t palm6 = 66;
+        // int8_t palm7 = -20;
+        // int8_t palm8 = -80;
 
         uint16_t waveIdx = 0;
         int16_t background = 0;
@@ -57,14 +61,14 @@ struct World {
         int16_t getX()                           { return this->x; }
         int16_t getY()                           { return this->y; }
 
-        int16_t getPalm1()                       { return this->palm1; }
-        int16_t getPalm2()                       { return this->palm2; }
-        int16_t getPalm3()                       { return this->palm3; }
-        int16_t getPalm4()                       { return this->palm4; }
-        int16_t getPalm5()                       { return this->palm5; }
-        int16_t getPalm6()                       { return this->palm6; }
-        int16_t getPalm7()                       { return this->palm7; }
-        int16_t getPalm8()                       { return this->palm8; }
+        // int16_t getPalm1()                       { return this->palm[0]; }
+        // int16_t getPalm2()                       { return this->palm[1]; }
+        // int16_t getPalm3()                       { return this->palm[2]; }
+        // int16_t getPalm4()                       { return this->palm[3]; }
+        // int16_t getPalm5()                       { return this->palm[4]; }
+        // int16_t getPalm6()                       { return this->palm[5]; }
+        // int16_t getPalm7()                       { return this->palm[6]; }
+        // int16_t getPalm8()                       { return this->palm[7]; }
         int16_t getWave()                        { return this->wave; }
         int16_t getBackground()                  { return this->background; }
         int16_t getMiddleground()                { return this->middleground; }
@@ -83,20 +87,24 @@ struct World {
         void setX(int16_t val)                   { this->x = val; }
         void setY(int16_t val)                   { this->y = val; }
 
-        void setPalm1(int16_t val)               { this->palm1 = val; }
-        void setPalm2(int16_t val)               { this->palm2 = val; }
-        void setPalm3(int16_t val)               { this->palm3 = val; }
-        void setPalm4(int16_t val)               { this->palm4 = val; }
-        void setPalm5(int16_t val)               { this->palm5 = val; }
-        void setPalm6(int16_t val)               { this->palm6 = val; }
-        void setPalm7(int16_t val)               { this->palm7 = val; }
-        void setPalm8(int16_t val)               { this->palm8 = val; }
+        // void setPalm1(int16_t val)               { this->palm[0] = val; }
+        // void setPalm2(int16_t val)               { this->palm[1] = val; }
+        // void setPalm3(int16_t val)               { this->palm[2] = val; }
+        // void setPalm4(int16_t val)               { this->palm[3] = val; }
+        // void setPalm5(int16_t val)               { this->palm[4] = val; }
+        // void setPalm6(int16_t val)               { this->palm[5] = val; }
+        // void setPalm7(int16_t val)               { this->palm[6] = val; }
+        // void setPalm8(int16_t val)               { this->palm[7] = val; }
         void setWave(int16_t val)                { this->wave = val; }
         void setBackground(int16_t val)          { this->background = val; }
         void setMiddleground(int16_t val)        { this->middleground = val; }
         void setWaveIdx(uint16_t val)            { this->waveIdx = val; }
 
     public:
+
+        int16_t getPalm(uint8_t idx) { return this->palm[idx]; }
+
+        int16_t setPalm(uint8_t idx, int16_t val) { this->palm[idx] = val; }
 
         void startBoat() {
 
@@ -128,91 +136,20 @@ struct World {
             }
             
         }
+
         void updateBoat() {
 
             if (this->boatCounter > 0) {
 
-                switch (this->boatDirection) {
+                uint8_t idx = static_cast<uint8_t>(this->boatDirection);
+                
+                FX::seekData(Constants::BoatCoords + (idx * 2));
+                int8_t x = FX::readPendingUInt8();
+                int8_t y = FX::readPendingUInt8();                
+                FX::readEnd();
 
-                    case 0:
-                        this->yBoat = this->yBoat - 2;
-                        break;
-
-                    case 1:
-                        this->xBoat = this->xBoat + 1;
-                        this->yBoat = this->yBoat - 2;
-                        break;
-
-                    case 2:
-                        this->xBoat = this->xBoat + 2;
-                        this->yBoat = this->yBoat - 2;
-                        break;
-
-                    case 3:
-                        this->xBoat = this->xBoat + 2;
-                        this->yBoat = this->yBoat + 1;
-                        break;
-
-                    case 4:
-                        this->xBoat = this->xBoat + 2;      // Right
-                        break;
-
-                    case 5:
-                        this->xBoat = this->xBoat + 2;
-                        this->yBoat = this->yBoat + 1;
-                        break;
-
-                    case 6:
-                        this->xBoat = this->xBoat + 2;
-                        this->yBoat = this->yBoat + 2;
-                        break;
-
-                    case 7:
-                        this->xBoat = this->xBoat + 1;
-                        this->yBoat = this->yBoat + 2;
-                        break;
-
-                    case 8:
-                        this->yBoat = this->yBoat + 2;      // Down
-                        break;
-             
-                    case 9:
-                        this->xBoat = this->xBoat - 1;
-                        this->yBoat = this->yBoat + 2;
-                        break;
-
-                    case 10:
-                        this->xBoat = this->xBoat - 2;
-                        this->yBoat = this->yBoat + 2;
-                        break;
-
-                    case 11:
-                        this->xBoat = this->xBoat - 2;
-                        this->yBoat = this->yBoat + 1;
-                        break;
-
-                    case 12:
-                        this->xBoat = this->xBoat - 2;      // Left
-                        break;           
-             
-                    case 13:
-                        this->xBoat = this->xBoat - 2;
-                        this->yBoat = this->yBoat - 1;
-                        break;
-
-                    case 14:
-                        this->xBoat = this->xBoat - 2;
-                        this->yBoat = this->yBoat - 2;
-                        break;
-
-                    case 15:
-                        this->xBoat = this->xBoat - 1;
-                        this->yBoat = this->yBoat - 2;
-                        break;
-
-
-                }
-
+                this->xBoat = this->xBoat + x;
+                this->yBoat = this->yBoat + y;
                 this-boatCounter--;
 
             }
@@ -254,20 +191,20 @@ struct World {
 
         void incForeground(int8_t val) {
 
-            this->incPalm1(val);
-            this->incPalm2(val);
-            this->incPalm3(val);
-            this->incPalm4(val);
+            this->incPalm(0, val);
+            this->incPalm(1, val);
+            this->incPalm(2, val);
+            this->incPalm(3, val);
             this->incWave(val);
             
         }
 
         void incBackground(int8_t val) {
 
-            this->incPalm5(val);
-            this->incPalm6(val);
-            this->incPalm7(val);
-            this->incPalm8(val);
+            this->incPalm(4, val);
+            this->incPalm(5, val);
+            this->incPalm(6, val);
+            this->incPalm(7, val);
             this->incBackgroundVal(val);
 
             this->x = this->x - val;
@@ -286,97 +223,103 @@ struct World {
 
         }
 
-        void incPalm1(int8_t val) {
+        void incPalm(uint8_t idx, int8_t val) {
 
-            this->palm1 = this->palm1 + val;
-
-            // if (this->palm1 <= -256) { 
-                
-            //     this->palm1 = this->palm1 + 512;
-                
-            // }
-            // else if (this->palm1 >= 256) { 
-                
-            //     this->palm1 = this->palm1 - 512;
-
-            // }
+            this->palm[idx] = this->palm[idx] + val;
 
         }
 
-        void incPalm2(int8_t val) {
+        // void incPalm1(int8_t val) {
 
-            this->palm2 = this->palm2 + val;
+        //     this->palm1 = this->palm1 + val;
 
-            // if (this->palm2 <= -256) { 
+        //     // if (this->palm1 <= -256) { 
                 
-            //     this->palm2 = this->palm2 + 512;
+        //     //     this->palm1 = this->palm1 + 512;
                 
-            // }
-            // else if (this->palm2 >= 256) { 
+        //     // }
+        //     // else if (this->palm1 >= 256) { 
                 
-            //     this->palm2 = this->palm2 - 512;
+        //     //     this->palm1 = this->palm1 - 512;
 
-            // }
+        //     // }
 
-        }
+        // }
 
-        void incPalm3(int8_t val) {
+        // void incPalm2(int8_t val) {
 
-            this->palm3 = this->palm3 + val;
+        //     this->palm2 = this->palm2 + val;
 
-            // if (this->palm3 <= -256) { 
+        //     // if (this->palm2 <= -256) { 
                 
-            //     this->palm3 = this->palm3 + 512;
+        //     //     this->palm2 = this->palm2 + 512;
                 
-            // }
-            // else if (this->palm3 >= 256) { 
+        //     // }
+        //     // else if (this->palm2 >= 256) { 
                 
-            //     this->palm3 = this->palm3 - 512;
+        //     //     this->palm2 = this->palm2 - 512;
 
-            // }
+        //     // }
 
-        }
+        // }
 
-        void incPalm4(int8_t val) {
+        // void incPalm3(int8_t val) {
 
-            this->palm4 = this->palm4 + val;
+        //     this->palm3 = this->palm3 + val;
 
-            // if (this->palm4 <= -256) { 
+        //     // if (this->palm3 <= -256) { 
                 
-            //     this->palm4 = this->palm4 + 512;
+        //     //     this->palm3 = this->palm3 + 512;
                 
-            // }
-            // else if (this->palm4 >= 256) { 
+        //     // }
+        //     // else if (this->palm3 >= 256) { 
                 
-            //     this->palm4 = this->palm4 - 512;
+        //     //     this->palm3 = this->palm3 - 512;
 
-            // }
+        //     // }
 
-        }
+        // }
 
-        void incPalm5(int8_t val) {
+        // void incPalm4(int8_t val) {
 
-            this->palm5 = this->palm5 + val;
+        //     this->palm4 = this->palm4 + val;
 
-        }
+        //     // if (this->palm4 <= -256) { 
+                
+        //     //     this->palm4 = this->palm4 + 512;
+                
+        //     // }
+        //     // else if (this->palm4 >= 256) { 
+                
+        //     //     this->palm4 = this->palm4 - 512;
 
-        void incPalm6(int8_t val) {
+        //     // }
 
-            this->palm6 = this->palm6 + val;
+        // }
 
-        }
+        // void incPalm5(int8_t val) {
 
-        void incPalm7(int8_t val) {
+        //     this->palm5 = this->palm5 + val;
 
-            this->palm7 = this->palm7 + val;
+        // }
 
-        }
+        // void incPalm6(int8_t val) {
 
-        void incPalm8(int8_t val) {
+        //     this->palm6 = this->palm6 + val;
 
-            this->palm8 = this->palm8 + val;
+        // }
 
-        }
+        // void incPalm7(int8_t val) {
+
+        //     this->palm7 = this->palm7 + val;
+
+        // }
+
+        // void incPalm8(int8_t val) {
+
+        //     this->palm8 = this->palm8 + val;
+
+        // }
 
         void incBackgroundVal(int8_t val) {
 

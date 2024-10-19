@@ -352,9 +352,14 @@ namespace Music {
 
 namespace Constants {
 
+    constexpr int8_t boatX[] = {  0,  1,  2,  2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2, -2, -1 };
+    constexpr int8_t boatY[] = { -2, -2, -2, -1, 0, 1, 2, 2, 2,  2,  2,  1,  0, -1, -2, -2 };
+
     constexpr int8_t swingyThing_X[] = { 0, -2, -4, -5, -6, -5, -4, -2, 0, 2, 4, 5, 6, 5, 4, 2 };
     constexpr int8_t swingyThing_Y[] = { 0, -1, -2, -3, -4, -3, -2, -1, 
                                          0, -1, -2, -3, -4, -3, -2, -1 };
+
+    constexpr uint24_t PalmImages[] = { Images::Palm1, Images::Palm2, Images::Palm3, Images::Palm4, Images::Palm5, Images::Palm6, Images::Palm5, Images::Palm6 };
 
     constexpr uint8_t ParticlesMax = 25;
     constexpr uint8_t FlipTime = 25;

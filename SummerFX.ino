@@ -169,6 +169,12 @@ void printDetails() {
     
     Player &player = world.getPlayer();
 
+for(uint8_t i = 0; i < 8;i++) {
+    Serial.print(world.getPalm(i));
+    Serial.print(" ");
+};
+Serial.println("");
+
     // DEBUG_PRINT("S");
     // DEBUG_PRINT(player.getStance());
     // DEBUG_PRINT(" y");

@@ -19,14 +19,14 @@ void playGame_Init() {
     // world.setPalm2(-130);
     // world.setPalm3(0);
     // world.setPalm4(130);
-    world.setPalm1(-100);
-    world.setPalm2(-260);
-    world.setPalm3(-320);
-    world.setPalm4(-580);
-    world.setPalm5(116);
-    world.setPalm6(66);
-    world.setPalm7(-20);
-    world.setPalm8(-80);
+    world.setPalm(0, -100);
+    world.setPalm(1, -260);
+    world.setPalm(2, -320);
+    world.setPalm(3, -580);
+    world.setPalm(4, 116);
+    world.setPalm(5, 66);
+    world.setPalm(6, -20);
+    world.setPalm(7, -80);
 
     world.setBackground(0);
 
