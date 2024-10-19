@@ -6,13 +6,7 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-
-
-// Stance stance = Stance::Man_Walk_RH_01;
-
-// int16_t enemy = -20;
-
-
+#ifdef DEBUG_ORIGBOAT
 
 void play_Init() {
 
@@ -21,12 +15,6 @@ void play_Init() {
     frameCount = 0;
 
     world.setX(0);
-    // world.setPalm1(-240);
-    // world.setPalm2(-130);
-    // world.setPalm3(0);
-    // world.setPalm4(140);
-
-
 
     world.setPalm(0, 60);
     world.setPalm(1, 180);
@@ -103,17 +91,6 @@ void play_Update() {
                 for (uint8_t i = 0l; i < 12; i++) {
                     player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
                 }
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-                // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
             }
 
@@ -137,8 +114,8 @@ void play_Update() {
 
             }
             else {
-                gameState = GameState::PlayGame;
-//                gameState = GameState::PlayGame_Init;
+                // gameState = GameState::PlayGame;
+                gameState = GameState::PlayGame_Init;
 
             }
 
@@ -166,10 +143,6 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     for (uint8_t i = 4; i < 8; i++) {
         SpritesU::drawPlusMaskFX(world.getPalm(i), 20, Constants::PalmImages[i], currentPlane);
     }
-    // SpritesU::drawPlusMaskFX(world.getPalm5(), 20, Images::Palm5, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm6(), 20, Images::Palm6, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm7(), 20, Images::Palm5, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm8(), 20, Images::Palm6, currentPlane);
 
     FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
     uint8_t stanceImg = FX::readPendingUInt8();
@@ -207,14 +180,50 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     for (uint8_t i = 0; i < 4; i++) {
         SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10, Constants::PalmImages[i], currentPlane);
     }
-    // SpritesU::drawPlusMaskFX(world.getPalm1() / 2, 10, Images::Palm1, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm2() / 2, 10, Images::Palm2, currentPlane);
-    // // SpritesU::drawPlusMaskFX(world.getPalm3() / 2, 10, Images::Palm3, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm4() / 2, 10, Images::Palm4, currentPlane);
-
 
     world.update(false);
 
+}
+
+#else 
+
+uint8_t img = 0;
+
+void play_Init() { }
+
+void play_Update() {
+
+    uint8_t justPressed = getJustPressedButtons();
+
+    frameCount++;
+    if (frameCount % 4 == 0) {
+
+        img++;
+
+        if (img == 91 ) {
+            gameState = GameState::PlayGame_Init;
+        }
+
+    }
+
+    if (justPressed & A_BUTTON) {
+
+        gameState = GameState::PlayGame_Init;
+
+    }
+    
+}
+
+
+void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
+
+    Player &player = world.getPlayer();
+    if (a.needsUpdate()) play_Update();
+
+    uint8_t currentPlane = a.currentPlane();
+// Serial.println(img);
+    SpritesU::drawOverwriteFX(0, 0, Images::BoatEnters, (img * 3) + currentPlane);    
 
 }
 
+#endif

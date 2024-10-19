@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xfb99;
-constexpr uint24_t FX_DATA_BYTES = 284400;
+constexpr uint16_t FX_DATA_PAGE  = 0xf70d;
+constexpr uint24_t FX_DATA_BYTES = 582384;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -143,6 +143,6 @@ namespace Images
   constexpr uint24_t Crate_38 = 0x043048;
   constexpr uint24_t Spikes = 0x04310A;
   constexpr uint24_t Trebochet_Ball = 0x04316C;
-  constexpr uint24_t aaa = 0x043EEE;
+  constexpr uint24_t BoatEnters = 0x043EEE;
 }
 

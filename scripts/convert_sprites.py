@@ -213,4 +213,4 @@ convert_header(IMAGES + 'Trebochet_Ball.png',                                   
 
 
 
-convert_header(IMAGES + 'aaa.png',                                                          BASE + 'Images.hpp', 'aaa', 4, maskImage=True)
+convert_header(IMAGES + 'BoatEnters/BoatEnters.png',                                                          BASE + 'Images.hpp', 'BoatEnters', 4, 128, 64)

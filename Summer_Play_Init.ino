@@ -19,16 +19,18 @@ void playGame_Init() {
     // world.setPalm2(-130);
     // world.setPalm3(0);
     // world.setPalm4(130);
-    world.setPalm(0, -100);
-    world.setPalm(1, -260);
-    world.setPalm(2, -320);
-    world.setPalm(3, -580);
-    world.setPalm(4, 116);
-    world.setPalm(5, 66);
-    world.setPalm(6, -20);
-    world.setPalm(7, -80);
+    world.setPalm(0, -27);
+    world.setPalm(1, 93);
+    world.setPalm(2, 253);
+    world.setPalm(3, 333);
+    world.setPalm(4, 87);
+    world.setPalm(5, 37);
+    world.setPalm(6, -49);
+    world.setPalm(7, -109);
+    world.setWave(-87);
 
-    world.setBackground(0);
+    world.setBackground(-29);
+    world.setMiddleground(0);
 
 /* Trebochet_Left ----------------------------------------------- 
 
@@ -76,7 +78,8 @@ void playGame_Init() {
         else if (i == 0) {
             item.setItemType(ItemType::SwingyThing);
             item.setX(94 + 34 + 32);
-            item.setY(16);            
+            item.setY(16);   
+            item.setFrame(0);          
         }
 
 */
@@ -94,7 +97,8 @@ void playGame_Init() {
         else if (i == 0) {
             item.setItemType(ItemType::SwingyThing);
             item.setX(94 + 34 + 32);
-            item.setY(16);            
+            item.setY(16);    
+            item.setFrame(0);         
         }
         // // else if (i == 2) {
         // //     item.setItemType(ItemType::PinchBar_Hidden);
@@ -135,6 +139,8 @@ void playGame_Init() {
         player.getItem(5).setItemType(ItemType::Amulet);
 
         player.setItemCount(6);
+        player.setStance(Stance::Man_Walk_RH_01);
+        //player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
 
         // uint16_t waveCount = 0;

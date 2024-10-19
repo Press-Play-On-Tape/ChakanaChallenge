@@ -169,11 +169,18 @@ void printDetails() {
     
     Player &player = world.getPlayer();
 
-for(uint8_t i = 0; i < 8;i++) {
-    Serial.print(world.getPalm(i));
-    Serial.print(" ");
-};
-Serial.println("");
+// for(uint8_t i = 0; i < 8;i++) {
+//     Serial.print(world.getPalm(i));
+//     Serial.print(" ");
+// };
+// Serial.println("");
+// Serial.print(world.getWave());
+//     Serial.print(" ");
+// Serial.print(world.getBackground());
+//     Serial.print(" ");
+// Serial.println(world.getMiddleground());
+// Serial.println(world.get);
+
 
     // DEBUG_PRINT("S");
     // DEBUG_PRINT(player.getStance());
