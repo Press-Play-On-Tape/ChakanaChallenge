@@ -51,9 +51,9 @@ void title_Update() {
                 cookie.hasSavedGame = false;
                 saveCookie(true);
                 // prevGameState = GameState::Title_OptPlay;
-                gameState = GameState::Play_Init;
+                // gameState = GameState::Play_Init;
                 // gameState = GameState::Map_Init;
-                // gameState = GameState::PlayGame_Init;
+                gameState = GameState::PlayGame_Init;
 
             }
 

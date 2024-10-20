@@ -10,29 +10,42 @@ class Enemy : public BaseStack {
 
     private:
 
+        EnemyType enemyType = EnemyType::None;
         Stance stance = Stance::Enemy_Walk_LH_01;
         Item item;
 
         uint16_t x = 0;
         int8_t y = 37;
+        uint8_t health = 12;
 
     public:
 
+        EnemyType getEnemyType()                            { return this->enemyType; }
         Stance getStance()                                  { return this->stance; }
         Item& getItem()                                     { return this->item; }
 
         uint16_t getX()                                     { return this->x; }
         int8_t getY()                                       { return this->y; }
+        uint8_t getHealth()                                 { return this->health; }
 
+        void setEnemyType(EnemyType val)                    { this->enemyType = val; }
         void setStance(Stance val)                          { this->stance = val; }
 
         void setX(uint16_t val)                             { this->x = val; }
         void setY(int8_t val)                               { this->y = val; }
+        void setHealth(uint8_t val)                         { this->health = val; }
 
         void init() {
 
+            this->health = 12;
+
         }
 
+        void decHealth(uint8_t i) {
+
+            this->health = this->health - i;
+
+        }
 
 
         // Other Utils ..

@@ -221,7 +221,7 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     if (a.needsUpdate()) play_Update();
 
     uint8_t currentPlane = a.currentPlane();
-// Serial.println(img);
+
     SpritesU::drawOverwriteFX(0, 0, Images::BoatEnters, (img * 3) + currentPlane);    
 
 }

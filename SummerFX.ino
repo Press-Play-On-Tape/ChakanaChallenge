@@ -11,7 +11,6 @@
 #include "fxdata/fxdata.h"
 #include "fxdata/images/Images.h"
 #include "src/entities/Entities.h"
-#include "src/utils/Random.h"
 #include "src/utils/Stack.h"
 
 #define SPRITESU_OVERWRITE
@@ -143,6 +142,7 @@ void loop() {
 
         case GameState::PlayGame:
         case GameState::Inventory_Open:
+        case GameState::Play_Battle:
             playGame(a);
             break;
 
@@ -182,18 +182,18 @@ void printDetails() {
 // Serial.println(world.get);
 
 
-    // DEBUG_PRINT("S");
-    // DEBUG_PRINT(player.getStance());
-    // DEBUG_PRINT(" y");
-    // DEBUG_PRINT(Constants::GroundY - player.getY());
-    // DEBUG_PRINT(" (");
-    // DEBUG_PRINT((Constants::GroundY - player.getY()) % 8);
-    // DEBUG_PRINT(") M");
-    // DEBUG_PRINT(world.getMiddleground());
-    // DEBUG_PRINT(" (");
-    // DEBUG_PRINT(world.getMiddleground() % 8);
-    // DEBUG_PRINT(")");
-    // DEBUG_PRINTLN(" ");
+    DEBUG_PRINT("S");
+    DEBUG_PRINT(player.getStance());
+    DEBUG_PRINT(" y");
+    DEBUG_PRINT(Constants::GroundY - player.getY());
+    DEBUG_PRINT(" (");
+    DEBUG_PRINT((Constants::GroundY - player.getY()) % 8);
+    DEBUG_PRINT(") M");
+    DEBUG_PRINT(world.getMiddleground());
+    DEBUG_PRINT(" (");
+    DEBUG_PRINT(world.getMiddleground() % 8);
+    DEBUG_PRINT(")");
+    DEBUG_PRINTLN(" ");
 
 
     // DEBUG_PRINT("S");

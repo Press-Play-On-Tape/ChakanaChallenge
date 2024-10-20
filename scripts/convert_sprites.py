@@ -164,6 +164,7 @@ convert_header(IMAGES + 'Item_13.png',                                          
 convert_header(IMAGES + 'Item_14.png',                                                            BASE + 'Images.hpp', 'Item_14', 4, 32, 32)
 convert_header(IMAGES + 'Item_15.png',                                                            BASE + 'Images.hpp', 'Item_15', 4, 32, 32)
 convert_header(IMAGES + 'Item_16.png',                                                            BASE + 'Images.hpp', 'Item_16', 4, 32, 16)
+convert_header(IMAGES + 'Item_17.png',                                                            BASE + 'Images.hpp', 'Item_17', 4, 16, 16)
 
 convert_header(IMAGES + 'Map.png',                                                            BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Scroll.png',                                                            BASE + 'Images.hpp', 'Scroll', 4, maskImage=True)
@@ -212,5 +213,6 @@ convert_header(IMAGES + 'Trebochet_Ball.png',                                   
 
 
 
+convert_header(IMAGES + 'Health.png',                                                          BASE + 'Images.hpp', 'Health', 4, 15, 8)
 
 convert_header(IMAGES + 'BoatEnters/BoatEnters.png',                                                          BASE + 'Images.hpp', 'BoatEnters', 4, 128, 64)

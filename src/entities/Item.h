@@ -79,7 +79,8 @@ class Item {
                 
                 case ItemType::Hammer:
                 case ItemType::Amulet:
-
+                case ItemType::Sword:
+                
                     this->frame++;
 
                     if (this->counter > 0 && this->frame % 8 == 0) {

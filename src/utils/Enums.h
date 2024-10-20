@@ -26,13 +26,19 @@ enum class MusicSFX : uint8_t {
     SFX_BigBlind,
 };
 
-
 enum class Direction : uint8_t {
     Backward,
     Right,
     Forward,
     Left,
     None,
+};
+
+enum class EnemyType : uint8_t {
+    None,
+    Archer,
+    TrebochetOperator,
+    SwordFighter,
 };
 
 enum class ItemType : uint8_t {
@@ -62,6 +68,8 @@ enum class ItemType : uint8_t {
     Arrow_LH_Hidden,
     Arrow_RH,
     Arrow_RH_Hidden,
+    Sword,
+    Sword_Hidden,
     Trebochet_Left,
     Trebochet_Right,
     Trebochet_Ball_Left_1, // 6
@@ -531,6 +539,37 @@ enum Stance : uint16_t {
                 Man_Vine_Entry_RH_08,
 
             Man_Vine_End_RH = Man_Vine_Entry_RH_08,
+
+            Man_Sword_Start_RH,
+
+                Man_Sword_Stationary_RH = Man_Sword_Start_RH,
+
+                Man_Sword_Lunge_RH_01,
+                Man_Sword_Lunge_RH_02,
+                Man_Sword_Lunge_RH_03,
+                Man_Sword_Lunge_RH_04,
+                Man_Sword_Lunge_RH_05,
+                Man_Sword_Lunge_RH_06,
+
+                Man_Sword_Walk_RH_01,
+                Man_Sword_Walk_RH_02,
+                Man_Sword_Walk_RH_03,
+                Man_Sword_Walk_RH_04,
+
+                Man_Sword_Walk_BK_RH_01,
+                Man_Sword_Walk_BK_RH_02,
+                Man_Sword_Walk_BK_RH_03,
+                Man_Sword_Walk_BK_RH_04,
+
+                Man_Sword_StandingJump_RH_01,
+                Man_Sword_StandingJump_RH_02,
+                Man_Sword_StandingJump_RH_03,
+                Man_Sword_StandingJump_RH_04,
+                Man_Sword_StandingJump_RH_05,
+                Man_Sword_StandingJump_RH_06,
+                Man_Sword_StandingJump_RH_07,
+
+            Man_Sword_End_RH = Man_Sword_StandingJump_RH_07,
 
             Man_Die_Fire_RH_01,
             Man_Die_Fire_RH_02,
@@ -1015,7 +1054,38 @@ enum Stance : uint16_t {
             Enemy_Trebochet_Release_RH_13,
             Enemy_Trebochet_Release_RH_14,
 
-        Enemy_RH_End = Enemy_Trebochet_Release_RH_14,
+            Enemy_Sword_Start_RH,
+
+                Enemy_Sword_Stationary_RH =  Enemy_Sword_Start_RH,
+
+                Enemy_Sword_Lunge_RH_01,
+                Enemy_Sword_Lunge_RH_02,
+                Enemy_Sword_Lunge_RH_03,
+                Enemy_Sword_Lunge_RH_04,
+                Enemy_Sword_Lunge_RH_05,
+                Enemy_Sword_Lunge_RH_06,
+
+                Enemy_Sword_Walk_RH_01,
+                Enemy_Sword_Walk_RH_02,
+                Enemy_Sword_Walk_RH_03,
+                Enemy_Sword_Walk_RH_04,
+
+                Enemy_Sword_Walk_BK_RH_01,
+                Enemy_Sword_Walk_BK_RH_02,
+                Enemy_Sword_Walk_BK_RH_03,
+                Enemy_Sword_Walk_BK_RH_04,
+
+                Enemy_Sword_StandingJump_RH_01,
+                Enemy_Sword_StandingJump_RH_02,
+                Enemy_Sword_StandingJump_RH_03,
+                Enemy_Sword_StandingJump_RH_04,
+                Enemy_Sword_StandingJump_RH_05,
+                Enemy_Sword_StandingJump_RH_06,
+                Enemy_Sword_StandingJump_RH_07,
+                
+            Enemy_Sword_End_RH =  Enemy_Sword_StandingJump_RH_07,
+
+        Enemy_RH_End = Enemy_Sword_End_RH,
 
         Enemy_LH_Start = Enemy_RH_End + 1,
 
@@ -1058,7 +1128,38 @@ enum Stance : uint16_t {
             Enemy_Trebochet_Release_LH_13,
             Enemy_Trebochet_Release_LH_14,
 
-        Enemy_LH_End = Enemy_Trebochet_Release_LH_14,
+            Enemy_Sword_Start_LH,
+
+                Enemy_Sword_Stationary_LH =  Enemy_Sword_Start_LH,
+
+                Enemy_Sword_Lunge_LH_01,
+                Enemy_Sword_Lunge_LH_02,
+                Enemy_Sword_Lunge_LH_03,
+                Enemy_Sword_Lunge_LH_04,
+                Enemy_Sword_Lunge_LH_05,
+                Enemy_Sword_Lunge_LH_06,
+
+                Enemy_Sword_Walk_LH_01,
+                Enemy_Sword_Walk_LH_02,
+                Enemy_Sword_Walk_LH_03,
+                Enemy_Sword_Walk_LH_04,
+
+                Enemy_Sword_Walk_BK_LH_01,
+                Enemy_Sword_Walk_BK_LH_02,
+                Enemy_Sword_Walk_BK_LH_03,
+                Enemy_Sword_Walk_BK_LH_04,
+
+                Enemy_Sword_StandingJump_LH_01,
+                Enemy_Sword_StandingJump_LH_02,
+                Enemy_Sword_StandingJump_LH_03,
+                Enemy_Sword_StandingJump_LH_04,
+                Enemy_Sword_StandingJump_LH_05,
+                Enemy_Sword_StandingJump_LH_06,
+                Enemy_Sword_StandingJump_LH_07,
+                
+            Enemy_Sword_End_LH =  Enemy_Sword_StandingJump_LH_07,
+
+        Enemy_LH_End = Enemy_Sword_End_LH,
 
     Enemy_End,
 
@@ -1067,14 +1168,14 @@ enum Stance : uint16_t {
 };
 
 inline Stance &operator++(Stance &c) {
-  c = static_cast<Stance>( static_cast<uint8_t>(c) + 1 );
-  return c;
+    c = static_cast<Stance>( static_cast<uint8_t>(c) + 1 );
+    return c;
 }
 
 inline Stance operator++(Stance &c, int) {
-  Stance result = c;
-  ++c;
-  return result;
+    Stance result = c;
+    ++c;
+    return result;
 }
 
 
@@ -1110,6 +1211,7 @@ enum class GameState : uint8_t {
         Play_PlayerJumps,
         Play_PlayerCenters,
         Play,
+        Play_Battle,
     Play_End,
     PlayGame_Init,
     PlayGame_Start,

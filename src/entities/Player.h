@@ -19,6 +19,7 @@ class Player : public BaseStack {
         int8_t y = 37;
         uint8_t falls = 0;
         uint8_t itemCount = 0;
+        uint8_t health = 12;
 
     public:
 
@@ -32,6 +33,7 @@ class Player : public BaseStack {
         uint8_t getFalls()                                  { return this->falls; }
         uint8_t getLevel()                                  { return (37 - y) / 8; }
         uint8_t getItemCount()                              { return this->itemCount; }
+        uint8_t getHealth()                                 { return this->health; }
 
         void setStance(Stance val)                          { this->stance = val; }
 
@@ -42,12 +44,21 @@ class Player : public BaseStack {
         void setY(int8_t val)                               { this->y = val; }
         void setFalls(uint8_t val)                          { this->falls = val; }
         void setItemCount(uint8_t val)                      { this->itemCount = val; }
+        void setHealth(uint8_t val)                         { this->health = val; }
 
         void incY(int8_t val)                               { this->y = this->y + val; }
         void incFalls()                                     { this->falls++; }
 
         void init() {
 
+            this->health = 12;
+
+        }
+
+        void decHealth(uint8_t i) {
+
+            this->health = this->health - i;
+            
         }
 
 

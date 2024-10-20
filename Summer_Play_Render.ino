@@ -209,6 +209,24 @@ void renderWorld(uint8_t currentPlane) {
 
                 break;
 
+            case ItemType::Sword:
+
+                switch (item.getFrame()) {
+
+                    case 3 ... 21:
+                        imageIdx = Images::Item_17;
+                        frame = (item.getFrame() / 3);
+                        break;
+
+                    default:
+                        imageIdx = Images::Item_17;
+                        frame = 0;
+                        break;
+
+                }
+
+                break;
+
             case ItemType::Vine:
                 imageIdx = Images::Item_12;
                 break;
@@ -288,6 +306,24 @@ void renderWorld(uint8_t currentPlane) {
             // Do nothing
             break;
 
+        case Stance::Man_Sword_Stationary_RH:
+        case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_06:
+        case Stance::Man_Sword_Walk_RH_01 ... Stance::Man_Sword_Walk_RH_04:
+        case Stance::Man_Sword_Walk_BK_RH_01 ... Stance::Man_Sword_Walk_BK_RH_04:
+        case Stance::Man_Sword_StandingJump_RH_01 ... Stance::Man_Sword_StandingJump_RH_07:
+            {
+                FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
+                uint8_t stanceImg = FX::readPendingUInt8();
+                FX::readEnd();
+                
+                uint8_t x = Constants::swordLunge_Player[static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH)];
+                SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+
+                SpritesU::drawPlusMaskFX(56 + x - 1, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, currentPlane);
+
+            }
+            break;
+
         default:
             {
                 FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
@@ -311,6 +347,22 @@ void renderWorld(uint8_t currentPlane) {
 
             switch (enemy.getStance()) {
 
+                case Stance::Enemy_Sword_Stationary_LH:
+                case Stance::Enemy_Sword_Lunge_LH_01 ... Stance::Enemy_Sword_Lunge_LH_06:
+                case Stance::Enemy_Sword_Walk_LH_01 ... Stance::Enemy_Sword_Walk_LH_04:
+                case Stance::Enemy_Sword_Walk_BK_LH_01 ... Stance::Enemy_Sword_Walk_BK_LH_04:
+                case Stance::Enemy_Sword_StandingJump_LH_01 ... Stance::Enemy_Sword_StandingJump_LH_07:
+                    {
+                        FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
+                        uint8_t stanceImg = FX::readPendingUInt8();
+                        FX::readEnd();
+Serial.println(enemy.getHealth());
+                        uint8_t x = Constants::swordLunge_Enemy[static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH)];
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((12 - enemy.getHealth()) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
+                    }
+                    break;
+                    
                 default:
                     {
                         FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
@@ -392,15 +444,11 @@ void renderWorld(uint8_t currentPlane) {
 
     // Front palms
 
-    for (uint8_t i = 0; i < 4; i++) {
+    // for (uint8_t i = 0; i < 4; i++) {
 
-        SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10 + yOffset - Constants::GroundY, Constants::PalmImages[i], currentPlane);
+    //     SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10 + yOffset - Constants::GroundY, Constants::PalmImages[i], currentPlane);
 
-    }
-    // SpritesU::drawPlusMaskFX(world.getPalm1() / 2, 10 + yOffset - Constants::GroundY, Images::Palm1, currentPlane);
-    // // SpritesU::drawPlusMaskFX(world.getPalm2() / 2, 10 + yOffset - Constants::GroundY, Images::Palm2, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm3() / 2, 10 + yOffset - Constants::GroundY, Images::Palm3, currentPlane);
-    // // SpritesU::drawPlusMaskFX(world.getPalm4() / 2, 10 + yOffset - Constants::GroundY, Images::Palm4, currentPlane);
+    // }
 
 
 
@@ -467,6 +515,10 @@ void renderWorld(uint8_t currentPlane) {
                     imgIndex = Images::Item_11;
                     break;
 
+                case ItemType::Sword:
+                    imgIndex = Images::Item_17;
+                    break;
+
             }
 
             if (imgIndex > 0) {
@@ -477,7 +529,7 @@ void renderWorld(uint8_t currentPlane) {
 
         }
 
-        if (frameCount % 64 < 32) {
+        if (frameCount % 64 < 32 && player.getItemCount() > 0) {
 
             SpritesU::drawPlusMaskFX(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
             SpritesU::drawPlusMaskFX(menu.getX() + 27, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
@@ -485,6 +537,8 @@ void renderWorld(uint8_t currentPlane) {
         }
 
     }
+
+    // SpritesU::drawPlusMaskFX(1, 1, Images::Health, currentPlane);
 
 // {
 //     Item &item = world.getItem(0);
