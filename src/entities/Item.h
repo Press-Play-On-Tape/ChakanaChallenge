@@ -136,6 +136,15 @@ class Item {
                     if (this->frame < Constants::Puff_Max) this->frame++;
                     break;
 
+                case ItemType::Glint:
+                    if (this->frame < Constants::Glint_Max - 1) {
+                        this->frame++;
+                    }
+                    else {
+                        this->itemType = ItemType::Glint_Hidden;
+                    }
+                    break;
+
                 case ItemType::Vine:
 
                     if (this->counter < (22 * 16) - 1) {

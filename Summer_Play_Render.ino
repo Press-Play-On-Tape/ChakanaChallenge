@@ -320,6 +320,7 @@ void renderWorld(uint8_t currentPlane) {
                 SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
 
                 SpritesU::drawPlusMaskFX(56 + x - 1, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, currentPlane);
+                // SpritesU::drawPlusMaskFX(2, 58, Images::Health, currentPlane);
 
             }
             break;
@@ -356,10 +357,15 @@ void renderWorld(uint8_t currentPlane) {
                         FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
                         uint8_t stanceImg = FX::readPendingUInt8();
                         FX::readEnd();
-Serial.println(enemy.getHealth());
+
                         uint8_t x = Constants::swordLunge_Enemy[static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH)];
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((12 - enemy.getHealth()) * 3) + currentPlane);
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
+                        
+                        if (enemy.getItem().getItemType() == ItemType::Glint) {
+                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Glint, (enemy.getItem().getFrame() * 3) + currentPlane);
+                        }                        
+
                     }
                     break;
                     
@@ -383,15 +389,9 @@ Serial.println(enemy.getHealth());
 
                         }
 
-
                         else if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
                                  (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
 
-// Serial.print(enemy.getItem().getX() + world.getMiddleground() - 4);
-// Serial.print(" ");
-// Serial.println(yOffset - enemy.getItem().getY());
-// Serial.print("a ");
-// Serial.println(enemy.getItem().getFrame() );
                             SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
 
                         }

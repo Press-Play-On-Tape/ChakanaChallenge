@@ -154,7 +154,7 @@ void playGame_Init() {
     enemy.setY(0);
     // enemy.setCounter(0);
     enemy.setStance(Stance::Enemy_Sword_Stationary_LH);
-    enemy.getItem().setItemType(ItemType::None);
+    enemy.getItem().setItemType(ItemType::Glint_Hidden);
 
 }
 
@@ -353,15 +353,26 @@ void playGame_HandleEnemies() {
                                     case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_03:
 
                                         if (random(0, 5) == 0) {
-Serial.println("eee");    
-                                            // enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
+Serial.println("block");    
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
-                                            // enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
+                                            player.clear();
+                                            player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06);
+
+                                            if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
+
+                                                Item &glint = enemy.getItem();
+
+                                                glint.setItemType(ItemType::Glint);
+                                                glint.setX(enemy.getX() - 9);
+                                                glint.setY(enemy.getY() + 1);
+                                                glint.setFrame(0);
+                                            }
 
                                         }
                                         else {
                                         
                                             if (random(0, 16) == 0) {
+Serial.println("attack, knowing enemy will be hurt");    
 
                                                 enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                 enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -376,6 +387,7 @@ Serial.println("eee");
                                     case Stance::Man_Sword_Lunge_RH_04 ... Stance::Man_Sword_Lunge_RH_06:
                                     
                                         if (random(0, 16) == 0) {
+Serial.println("attack, after player attack");    
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -388,6 +400,7 @@ Serial.println("eee");
                                     default:
 
                                         if (random(0, 24) == 0) {
+Serial.println("attack, safely");    
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -403,8 +416,16 @@ Serial.println("eee");
 
                             case -23 ... -4:
                                 if (random(0, 5) == 0) {
-Serial.println("ddd");                                    
+Serial.println("move back");                                    
                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
+                                }
+                                else  if (random(0, 12) == 0) {
+Serial.println("attack, safely 2");    
+
+                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
+                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
+                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
+
                                 }
                                 break;
 

@@ -83,8 +83,10 @@ enum class ItemType : uint8_t {
     SwingyThing,
     SwingyThing_2,
     SwingyThing_Hidden,
+    Glint,
+    Glint_Hidden,
     Puff,
-    None = 99,
+    None,
 };
 
 

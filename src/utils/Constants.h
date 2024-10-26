@@ -400,6 +400,7 @@ namespace Constants {
     constexpr uint8_t GroundY = 37;
     constexpr uint8_t ItemCount = 10;
     constexpr uint8_t Puff_Max = 7 * 16;
+    constexpr uint8_t Glint_Max = 8;
 
 
 

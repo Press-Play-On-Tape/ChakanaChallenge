@@ -1019,6 +1019,10 @@ struct World {
                         }
                         break;  
 
+                    case ItemType::Glint:
+                        enemy.getItem().update(); 
+                        break;
+
                 }
 
             }

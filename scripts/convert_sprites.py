@@ -214,5 +214,6 @@ convert_header(IMAGES + 'Trebochet_Ball.png',                                   
 
 
 convert_header(IMAGES + 'Health.png',                                                          BASE + 'Images.hpp', 'Health', 4, 15, 8)
+convert_header(IMAGES + 'Glint.png',                                                          BASE + 'Images.hpp', 'Glint', 4, 16, 16)
 
 convert_header(IMAGES + 'BoatEnters/BoatEnters.png',                                                          BASE + 'Images.hpp', 'BoatEnters', 4, 128, 64)
