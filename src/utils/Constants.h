@@ -360,7 +360,7 @@ namespace Constants {
     2, 2, 2, 2, // walk Back
     2, 2, 2, 2, 2, 2, 2, // jump
     };
-    constexpr uint8_t swordLunge_Enemy[] = { 
+    constexpr uint8_t SwordLunge_Enemy[] = { 
     2, // stationary 
     3, 4, 6, 4, 3, 2, // lunge
     2, 2, 2, 2, // walk

@@ -325,6 +325,25 @@ void renderWorld(uint8_t currentPlane) {
             }
             break;
 
+        case Stance::Man_Sword_Stationary_LH:
+        case Stance::Man_Sword_Lunge_LH_01 ... Stance::Man_Sword_Lunge_LH_06:
+        case Stance::Man_Sword_Walk_LH_01 ... Stance::Man_Sword_Walk_LH_04:
+        case Stance::Man_Sword_Walk_BK_LH_01 ... Stance::Man_Sword_Walk_BK_LH_04:
+        case Stance::Man_Sword_StandingJump_LH_01 ... Stance::Man_Sword_StandingJump_LH_07:
+            {
+                FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
+                uint8_t stanceImg = FX::readPendingUInt8();
+                FX::readEnd();
+                
+                uint8_t x = Constants::swordLunge_Player[static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH)];
+                SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+
+                SpritesU::drawPlusMaskFX(56 + x + 2, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, currentPlane);
+                // SpritesU::drawPlusMaskFX(2, 58, Images::Health, currentPlane);
+
+            }
+            break;
+
         default:
             {
                 FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
@@ -358,9 +377,30 @@ void renderWorld(uint8_t currentPlane) {
                         uint8_t stanceImg = FX::readPendingUInt8();
                         FX::readEnd();
 
-                        uint8_t x = Constants::swordLunge_Enemy[static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH)];
+                        uint8_t x = Constants::SwordLunge_Enemy[static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH)];
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((12 - enemy.getHealth()) * 3) + currentPlane);
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
+                        
+                        if (enemy.getItem().getItemType() == ItemType::Glint) {
+                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Glint, (enemy.getItem().getFrame() * 3) + currentPlane);
+                        }                        
+
+                    }
+                    break;
+
+                case Stance::Enemy_Sword_Stationary_RH:
+                case Stance::Enemy_Sword_Lunge_RH_01 ... Stance::Enemy_Sword_Lunge_RH_06:
+                case Stance::Enemy_Sword_Walk_RH_01 ... Stance::Enemy_Sword_Walk_RH_04:
+                case Stance::Enemy_Sword_Walk_BK_RH_01 ... Stance::Enemy_Sword_Walk_BK_RH_04:
+                case Stance::Enemy_Sword_StandingJump_RH_01 ... Stance::Enemy_Sword_StandingJump_RH_07:
+                    {
+                        FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
+                        uint8_t stanceImg = FX::readPendingUInt8();
+                        FX::readEnd();
+
+                        uint8_t x = Constants::SwordLunge_Enemy[static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH)];
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((12 - enemy.getHealth()) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
                             SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Glint, (enemy.getItem().getFrame() * 3) + currentPlane);
@@ -546,6 +586,35 @@ void renderWorld(uint8_t currentPlane) {
 // a.drawRect(59, yOffset - Constants::GroundY + player.getY(), 10, 16, WHITE);
     // Serial.println(item.getFrame());
 // }
+
+
+
+if (player.getEnemyIdx() != 255) {
+
+    Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+    Rect playerRect = { 61, yOffset - Constants::GroundY + player.getY(), 6, 16 };
+    Rect enemyRect = { enemy.getX() + world.getMiddleground(), yOffset - enemy.getY(), 6, 16 };
+
+    if (enemy.getDirection() == Direction::Right) {
+        enemyRect.x = enemyRect.x + 2;
+    }
+    
+    // a.drawRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height , WHITE);
+    // a.drawRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height , WHITE);
+
+    if (player.getStance() == Stance::Man_Sword_Lunge_RH_03 && player.getDirection() == Direction::Right) {
+        a.drawLine(playerRect.x + 14, playerRect.y + 10, playerRect.x + 14, playerRect.y + 14, LIGHT_GRAY);
+        a.drawLine(playerRect.x + 12, playerRect.y + 12, playerRect.x + 16, playerRect.y + 12, LIGHT_GRAY);
+        Point playerPoint = { playerRect.x + 14, playerRect.y + 12 };
+    }
+
+    if (enemy.getStance() == Stance::Enemy_Sword_Lunge_LH_03 && enemy.getDirection() == Direction::Left) {
+        a.drawLine(enemyRect.x - 9, enemyRect.y + 10, enemyRect.x - 9 , enemyRect.y + 14, LIGHT_GRAY);
+        a.drawLine(enemyRect.x - 11, enemyRect.y + 12, enemyRect.x - 7 , enemyRect.y + 12, LIGHT_GRAY);
+    }
+
+}
+
 
 }
 

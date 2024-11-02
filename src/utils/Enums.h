@@ -958,6 +958,37 @@ enum Stance : uint16_t {
 
             Man_Vine_End_LH = Man_Vine_Entry_LH_08,
 
+            Man_Sword_Start_LH,
+
+                Man_Sword_Stationary_LH = Man_Sword_Start_LH,
+
+                Man_Sword_Lunge_LH_01,
+                Man_Sword_Lunge_LH_02,
+                Man_Sword_Lunge_LH_03,
+                Man_Sword_Lunge_LH_04,
+                Man_Sword_Lunge_LH_05,
+                Man_Sword_Lunge_LH_06,
+
+                Man_Sword_Walk_LH_01,
+                Man_Sword_Walk_LH_02,
+                Man_Sword_Walk_LH_03,
+                Man_Sword_Walk_LH_04,
+
+                Man_Sword_Walk_BK_LH_01,
+                Man_Sword_Walk_BK_LH_02,
+                Man_Sword_Walk_BK_LH_03,
+                Man_Sword_Walk_BK_LH_04,
+
+                Man_Sword_StandingJump_LH_01,
+                Man_Sword_StandingJump_LH_02,
+                Man_Sword_StandingJump_LH_03,
+                Man_Sword_StandingJump_LH_04,
+                Man_Sword_StandingJump_LH_05,
+                Man_Sword_StandingJump_LH_06,
+                Man_Sword_StandingJump_LH_07,
+
+            Man_Sword_End_LH = Man_Sword_StandingJump_LH_07,
+
             Man_Die_Fire_LH_01,
             Man_Die_Fire_LH_02,
             Man_Die_Fire_LH_03,

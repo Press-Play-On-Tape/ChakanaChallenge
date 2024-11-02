@@ -213,12 +213,6 @@ struct World {
 
         void incMiddleground(int8_t val) {
 
-            // this->incPalm5(val);
-            // this->incPalm6(val);
-            // this->incPalm7(val);
-            // this->incPalm8(val);
-            // this->incBackgroundVal(val);
-
             this->middleground = this->middleground + val;
 
         }
@@ -228,98 +222,6 @@ struct World {
             this->palm[idx] = this->palm[idx] + val;
 
         }
-
-        // void incPalm1(int8_t val) {
-
-        //     this->palm1 = this->palm1 + val;
-
-        //     // if (this->palm1 <= -256) { 
-                
-        //     //     this->palm1 = this->palm1 + 512;
-                
-        //     // }
-        //     // else if (this->palm1 >= 256) { 
-                
-        //     //     this->palm1 = this->palm1 - 512;
-
-        //     // }
-
-        // }
-
-        // void incPalm2(int8_t val) {
-
-        //     this->palm2 = this->palm2 + val;
-
-        //     // if (this->palm2 <= -256) { 
-                
-        //     //     this->palm2 = this->palm2 + 512;
-                
-        //     // }
-        //     // else if (this->palm2 >= 256) { 
-                
-        //     //     this->palm2 = this->palm2 - 512;
-
-        //     // }
-
-        // }
-
-        // void incPalm3(int8_t val) {
-
-        //     this->palm3 = this->palm3 + val;
-
-        //     // if (this->palm3 <= -256) { 
-                
-        //     //     this->palm3 = this->palm3 + 512;
-                
-        //     // }
-        //     // else if (this->palm3 >= 256) { 
-                
-        //     //     this->palm3 = this->palm3 - 512;
-
-        //     // }
-
-        // }
-
-        // void incPalm4(int8_t val) {
-
-        //     this->palm4 = this->palm4 + val;
-
-        //     // if (this->palm4 <= -256) { 
-                
-        //     //     this->palm4 = this->palm4 + 512;
-                
-        //     // }
-        //     // else if (this->palm4 >= 256) { 
-                
-        //     //     this->palm4 = this->palm4 - 512;
-
-        //     // }
-
-        // }
-
-        // void incPalm5(int8_t val) {
-
-        //     this->palm5 = this->palm5 + val;
-
-        // }
-
-        // void incPalm6(int8_t val) {
-
-        //     this->palm6 = this->palm6 + val;
-
-        // }
-
-        // void incPalm7(int8_t val) {
-
-        //     this->palm7 = this->palm7 + val;
-
-        // }
-
-        // void incPalm8(int8_t val) {
-
-        //     this->palm8 = this->palm8 + val;
-
-        // }
 
         void incBackgroundVal(int8_t val) {
 
@@ -337,7 +239,6 @@ struct World {
             }
 
         }
-
 
         void incWave(int8_t val) {
 
@@ -1044,5 +945,34 @@ struct World {
             puff.setX(x);
             puff.setY(y);
             puff.setFrame(0);
+        }
+
+
+        uint8_t getClosestEnemy(EnemyType enemyType) {
+            
+            int16_t dist = 16000;
+            uint8_t idx = 255;
+
+            for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
+
+                Enemy &enemy = this->enemy[i];
+
+                if (enemy.getEnemyType() == EnemyType::None) break;
+
+                int16_t dist_Test = -this->getMiddleground() + 56 - enemy.getX();
+
+                if (dist_Test < 0) dist_Test = dist_Test * -1;
+
+                if (dist_Test < dist) {
+
+                    dist = dist_Test;
+                    idx = i;
+
+                }
+
+            }
+
+            return idx;
+
         }
 };
