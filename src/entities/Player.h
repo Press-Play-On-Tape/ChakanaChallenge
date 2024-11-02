@@ -19,8 +19,9 @@ class Player : public BaseStack {
         int8_t y = 37;
         uint8_t falls = 0;
         uint8_t itemCount = 0;
-        uint8_t health = 12;
+        uint8_t health = Constants::HealthMax;
         uint8_t enemyIdx = 255;
+        uint8_t swordWound = 0;
 
     public:
 
@@ -36,6 +37,7 @@ class Player : public BaseStack {
         uint8_t getItemCount()                              { return this->itemCount; }
         uint8_t getHealth()                                 { return this->health; }
         uint8_t getEnemyIdx()                               { return this->enemyIdx; }
+        uint8_t getSwordWound()                             { return this->swordWound; }
 
         void setStance(Stance val)                          { this->stance = val; }
 
@@ -48,6 +50,7 @@ class Player : public BaseStack {
         void setItemCount(uint8_t val)                      { this->itemCount = val; }
         void setHealth(uint8_t val)                         { this->health = val; }
         void setEnemyIdx(uint8_t val)                       { this->enemyIdx = val; }
+        void setSwordWound(uint8_t val)                     { this->swordWound = val; }
 
         void incY(int8_t val)                               { this->y = this->y + val; }
         void incFalls()                                     { this->falls++; }
@@ -61,6 +64,12 @@ class Player : public BaseStack {
         void decHealth(uint8_t i) {
 
             this->health = this->health - i;
+            
+        }
+
+        void decSwordWound(uint8_t i) {
+
+            this->swordWound = this->swordWound - i;
             
         }
 
@@ -129,11 +138,11 @@ class Player : public BaseStack {
 
         }
 
-    	void update(uint8_t xLoc, uint8_t yLoc) {
+    	void update() {
 
             // Housekeeping ..
 
-            // this->stack->update();
+            if (this->swordWound > 0) this->swordWound--;
 
         }
 

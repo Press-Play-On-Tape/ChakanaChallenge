@@ -319,7 +319,7 @@ void renderWorld(uint8_t currentPlane) {
                 uint8_t x = Constants::swordLunge_Player[static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH)];
                 SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
 
-                SpritesU::drawPlusMaskFX(56 + x - 1, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, currentPlane);
+                SpritesU::drawPlusMaskFX(56 + x - 1, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, ((Constants::HealthMax - player.getHealth()) * 3) + currentPlane);
                 // SpritesU::drawPlusMaskFX(2, 58, Images::Health, currentPlane);
 
             }
@@ -336,9 +336,9 @@ void renderWorld(uint8_t currentPlane) {
                 FX::readEnd();
                 
                 uint8_t x = Constants::swordLunge_Player[static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH)];
-                SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(56 - x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
 
-                SpritesU::drawPlusMaskFX(56 + x + 2, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, currentPlane);
+                SpritesU::drawPlusMaskFX(56 - x + 2, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, ((Constants::HealthMax - player.getHealth()) * 3) + currentPlane);
                 // SpritesU::drawPlusMaskFX(2, 58, Images::Health, currentPlane);
 
             }
@@ -357,6 +357,33 @@ void renderWorld(uint8_t currentPlane) {
             }
             break;
         
+    }
+
+
+    // Render Sword Wound if applicable ..
+
+    if (player.getSwordWound() != 0) {
+
+        uint8_t enemyIdx = player.getEnemyIdx();
+
+        if (enemyIdx != 255) {
+
+            Enemy &enemy = world.getEnemy(enemyIdx);
+
+            switch (enemy.getDirection()) {
+
+                case Direction::Left:
+                    SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) + 4) * 3) + currentPlane);
+                    break;
+
+                case Direction::Right:
+                    SpritesU::drawPlusMaskFX(56 + 11, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) ) * 3) + currentPlane);
+                    break;
+
+            }
+
+        }
+
     }
 
     for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
@@ -378,7 +405,7 @@ void renderWorld(uint8_t currentPlane) {
                         FX::readEnd();
 
                         uint8_t x = Constants::SwordLunge_Enemy[static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH)];
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((12 - enemy.getHealth()) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
@@ -399,11 +426,11 @@ void renderWorld(uint8_t currentPlane) {
                         FX::readEnd();
 
                         uint8_t x = Constants::SwordLunge_Enemy[static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH)];
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((12 - enemy.getHealth()) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Glint, (enemy.getItem().getFrame() * 3) + currentPlane);
+                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() + 15, yOffset - enemy.getItem().getY(), Images::Glint, (enemy.getItem().getFrame() * 3) + currentPlane);
                         }                        
 
                     }
@@ -588,34 +615,47 @@ void renderWorld(uint8_t currentPlane) {
 // }
 
 
+/*
+    if (player.getEnemyIdx() != 255) {
 
-if (player.getEnemyIdx() != 255) {
+        Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+        Rect playerRect = { 61, yOffset - Constants::GroundY + player.getY(), 6, 16 };
+        Rect enemyRect = { enemy.getX() + world.getMiddleground(), yOffset - enemy.getY(), 6, 16 };
 
-    Enemy &enemy = world.getEnemy(player.getEnemyIdx());
-    Rect playerRect = { 61, yOffset - Constants::GroundY + player.getY(), 6, 16 };
-    Rect enemyRect = { enemy.getX() + world.getMiddleground(), yOffset - enemy.getY(), 6, 16 };
+        if (enemy.getDirection() == Direction::Right) {
+            enemyRect.x = enemyRect.x + 2;
+        }
+        
+        a.drawRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height , WHITE);
+        a.drawRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height , WHITE);
 
-    if (enemy.getDirection() == Direction::Right) {
-        enemyRect.x = enemyRect.x + 2;
+        if (player.getStance() == Stance::Man_Sword_Lunge_RH_03 && player.getDirection() == Direction::Right) {
+            a.drawLine(playerRect.x + 14, playerRect.y + 10, playerRect.x + 14, playerRect.y + 14, LIGHT_GRAY);
+            a.drawLine(playerRect.x + 12, playerRect.y + 12, playerRect.x + 16, playerRect.y + 12, LIGHT_GRAY);
+            Point playerPoint = { playerRect.x + 15, playerRect.y + 12 };
+        }
+
+        if (player.getStance() == Stance::Man_Sword_Lunge_LH_03 && player.getDirection() == Direction::Left) {
+            a.drawLine(playerRect.x - 9, playerRect.y + 10, playerRect.x - 9, playerRect.y + 14, LIGHT_GRAY);
+            a.drawLine(playerRect.x - 11, playerRect.y + 12, playerRect.x - 7, playerRect.y + 12, LIGHT_GRAY);
+            Point playerPoint = { playerRect.x - 9, playerRect.y + 12 };
+        }
+
+        if (enemy.getStance() == Stance::Enemy_Sword_Lunge_LH_03 && enemy.getDirection() == Direction::Left) {
+            a.drawLine(enemyRect.x - 9, enemyRect.y + 10, enemyRect.x - 9, enemyRect.y + 14, LIGHT_GRAY);
+            a.drawLine(enemyRect.x - 11, enemyRect.y + 12, enemyRect.x - 7, enemyRect.y + 12, LIGHT_GRAY);
+            Point enemyPoint = { enemyRect.x - 9, enemyRect.y + 12 };
+        }
+
+        if (enemy.getStance() == Stance::Enemy_Sword_Lunge_RH_03 && enemy.getDirection() == Direction::Right) {
+            a.drawLine(enemyRect.x + 14, enemyRect.y + 10, enemyRect.x + 14, enemyRect.y + 14, LIGHT_GRAY);
+            a.drawLine(enemyRect.x + 12, enemyRect.y + 12, enemyRect.x + 16, enemyRect.y + 12, LIGHT_GRAY);
+            Point enemyPoint = { enemyRect.x - 9, enemyRect.y + 12 };
+        }
+
     }
-    
-    // a.drawRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height , WHITE);
-    // a.drawRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height , WHITE);
-
-    if (player.getStance() == Stance::Man_Sword_Lunge_RH_03 && player.getDirection() == Direction::Right) {
-        a.drawLine(playerRect.x + 14, playerRect.y + 10, playerRect.x + 14, playerRect.y + 14, LIGHT_GRAY);
-        a.drawLine(playerRect.x + 12, playerRect.y + 12, playerRect.x + 16, playerRect.y + 12, LIGHT_GRAY);
-        Point playerPoint = { playerRect.x + 14, playerRect.y + 12 };
-    }
-
-    if (enemy.getStance() == Stance::Enemy_Sword_Lunge_LH_03 && enemy.getDirection() == Direction::Left) {
-        a.drawLine(enemyRect.x - 9, enemyRect.y + 10, enemyRect.x - 9 , enemyRect.y + 14, LIGHT_GRAY);
-        a.drawLine(enemyRect.x - 11, enemyRect.y + 12, enemyRect.x - 7 , enemyRect.y + 12, LIGHT_GRAY);
-    }
+*/
 
 }
 
 
-}
-
-//76 77

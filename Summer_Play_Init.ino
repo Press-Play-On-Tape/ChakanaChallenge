@@ -312,9 +312,83 @@ void playGame_HandleEnemies() {
 // Serial.println("test");
                     switch (newStance) {
                                 
-                        case Stance::Enemy_Sword_Lunge_LH_04:
-                        case Stance::Enemy_Sword_Lunge_RH_04:
+                        case Stance::Enemy_Sword_Lunge_LH_03:
+                        case Stance::Enemy_Sword_Lunge_RH_03:
                             {
+                                if (player.getSwordWound() == 0 && playGame_EnemyStabsPlayer(player)) {
+Serial.println("Stab player");
+                                    player.decHealth(1);
+                                    player.setSwordWound(12);
+
+                                    if (player.getHealth() == 0) {
+
+                                        // Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+                                        // int16_t dist = -world.getMiddleground() + 56 - enemy.getX();
+
+                                        int16_t dist = getDistanceBetween(enemy);
+                                        player.clear();
+
+
+                                        // Enemy puts away sword ..
+
+                                        switch (enemy.getDirection()) {
+
+                                            case Direction::Left:
+                                                enemy.insert(Stance::Enemy_Walk_LH_00);
+                                                break;
+
+                                            case Direction::Right:
+                                                enemy.insert(Stance::Enemy_Walk_RH_00);
+                                                break;
+
+                                        }
+
+
+                                        // Player dies but whch direction does he fall?
+
+                                        switch (dist) {
+
+                                            case -999 ... 0:
+
+                                                switch (player.getDirection()) {
+
+                                                    case Direction::Left:
+        Serial.println("die 1");                                      
+                                                        player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                                        break;
+
+                                                    case Direction::Right:
+        Serial.println("die 2");                                            
+                                                        player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                                        break;
+
+                                                }
+
+                                                break;
+
+                                            case 1 ... 999:
+
+                                                switch (player.getDirection()) {
+
+                                                    case Direction::Left:
+        Serial.println("die 3");                                            
+                                                        player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                                        break;
+
+                                                    case Direction::Right:
+        Serial.println("die 4");                                            
+                                                        player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                                        break;
+
+                                                }
+
+                                                break;
+
+                                        }                                                
+
+                                    }
+
+                                }
 
                             }
 
@@ -338,30 +412,31 @@ void playGame_HandleEnemies() {
         }
         else {
 
+            // Exit if player is dead ..
+
+            if (player.getHealth() == 0) break;
+
             switch (enemy.getEnemyType()) {
 
                 case EnemyType::SwordFighter:
                     {
-                        int16_t dist = -world.getMiddleground() + 56 - enemy.getX();
-                        // Serial.println(dist);
+                        int16_t dist = getDistanceBetween(enemy);
 
                         switch (enemy.getDirection()) {
 
                             case Direction::Left:
-Serial.println("left");                                    
+                                
                                 switch (dist) {
                                     
                                     // - Enemy to right of player -----------------------------------------------------------------------
 
                                     case -8000 ... -38:
-Serial.println(F("LH Walk 1"));
                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
                                         break;
                                     
                                     case -37 ... -28:
 
                                         if (random(0, 5) == 0) {
-Serial.println(F("LH Walk 2"));
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
                                         }
 
@@ -374,7 +449,7 @@ Serial.println(F("LH Walk 2"));
                                             case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_03:
 
                                                 if (random(0, 5) == 0) {
-        Serial.println(F("LH block"));    
+
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
                                                     player.clear();
                                                     player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06);
@@ -393,7 +468,6 @@ Serial.println(F("LH Walk 2"));
                                                 else {
                                                 
                                                     if (random(0, 16) == 0) {
-        Serial.println(F("LH attack, knowing enemy will be hurt"));    
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -408,7 +482,6 @@ Serial.println(F("LH Walk 2"));
                                             case Stance::Man_Sword_Lunge_RH_04 ... Stance::Man_Sword_Lunge_RH_06:
                                             
                                                 if (random(0, 16) == 0) {
-        Serial.println(F("LH attack, after player attack"));    
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -421,7 +494,10 @@ Serial.println(F("LH Walk 2"));
                                             default:
 
                                                 if (random(0, 24) == 0) {
-        Serial.println(F("LH attack, safely"));    
+
+                                                    if (random(0, 8) == 0) {
+                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
+                                                    }
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -436,12 +512,13 @@ Serial.println(F("LH Walk 2"));
                                         break;
 
                                     case -23 ... -4:
+
                                         if (random(0, 5) == 0) {
-        Serial.println(F("LH move back"));                                    
+
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
+
                                         }
                                         else  if (random(0, 12) == 0) {
-        Serial.println(F("LH attack, safely 2"));    
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -451,14 +528,11 @@ Serial.println(F("LH Walk 2"));
                                         break;
 
                                     case 8 ... 999:
-        Serial.println(F("LH turn around"));    
+
                                         enemy.push(Stance::Enemy_Sword_Stationary_RH);
                                         break;
 
                                     default:
-                                        if (random(0, 10) == 0) {
-                                            // enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                        }
                                         break;
 
                                 }
@@ -472,29 +546,27 @@ Serial.println(F("LH Walk 2"));
                                     
                                     // - Enemy to right of player -----------------------------------------------------------------------
 
-                                    case 38 ... 8000:
-Serial.println(F("RH Walk 1"));
+                                    case 34 ... 8000:
 
                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
                                         break;
                                     
-                                    case 28 ... 37:
+                                    case 20 ... 33:
 
                                         if (random(0, 5) == 0) {
-Serial.println(F("RH Walk 2"));
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
                                         }
 
                                         break;
 
-                                    case 24 ... 27:
+                                    case -4 ... 19:
 
                                         switch (player.getStance()) {
 
                                             case Stance::Man_Sword_Lunge_LH_01 ... Stance::Man_Sword_Lunge_LH_03:
 
                                                 if (random(0, 5) == 0) {
-        Serial.println(F("RH block"));    
+
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
                                                     player.clear();
                                                     player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06);
@@ -513,7 +585,6 @@ Serial.println(F("RH Walk 2"));
                                                 else {
                                                 
                                                     if (random(0, 16) == 0) {
-        Serial.println(F("RH attack, knowing enemy will be hurt"));    
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -528,7 +599,6 @@ Serial.println(F("RH Walk 2"));
                                             case Stance::Man_Sword_Lunge_LH_04 ... Stance::Man_Sword_Lunge_LH_06:
                                             
                                                 if (random(0, 16) == 0) {
-        Serial.println(F("RH attack, after player attack"));    
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -541,7 +611,10 @@ Serial.println(F("RH Walk 2"));
                                             default:
 
                                                 if (random(0, 24) == 0) {
-        Serial.println(F("RH attack, safely"));    
+
+                                                    if (random(0, 8) == 0) {
+                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
+                                                    }
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -555,13 +628,14 @@ Serial.println(F("RH Walk 2"));
 
                                         break;
 
-                                    case 4 ... 23:
+                                    case -12 ... -5:
+
                                         if (random(0, 5) == 0) {
-        Serial.println(F("RH move back"));                                    
+
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
+
                                         }
                                         else  if (random(0, 12) == 0) {
-        Serial.println(F("RH attack, safely 2"));    
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -570,15 +644,12 @@ Serial.println(F("RH Walk 2"));
                                         }
                                         break;
 
-                                    case -8 ... -999:
-        Serial.println(F("RH turn around"));    
+                                    case -999 ... -13:
+
                                         enemy.push(Stance::Enemy_Sword_Stationary_LH);
                                         break;
 
                                     default:
-                                        if (random(0, 10) == 0) {
-                                            // enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                        }
                                         break;
 
                                 }
@@ -1840,13 +1911,25 @@ void playGame_HandleMenu_OpenClose() {
 
 void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    Enemy &enemy = world.getEnemy(player.getEnemyIdx());
-
-    int16_t dist = -world.getMiddleground() + 56 - enemy.getX();
+    // Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+    // int16_t dist = -world.getMiddleground() + 56 - enemy.getX();
+    int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
 
     if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
-        player.pushSequence(Stance::Man_Sword_StandingJump_RH_01, Stance::Man_Sword_StandingJump_RH_07);
+        switch (player.getDirection()) {
+
+            case Direction::Left:
+
+                player.pushSequence(Stance::Man_Sword_StandingJump_LH_01, Stance::Man_Sword_StandingJump_LH_07);
+                break;
+
+            case Direction::Right:
+
+                player.pushSequence(Stance::Man_Sword_StandingJump_RH_01, Stance::Man_Sword_StandingJump_RH_07);
+                break;
+
+        }
 
     }
 
@@ -1859,7 +1942,19 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     else if (justPressed & B_BUTTON || pressed & B_BUTTON) {
 
-        player.pushSequence(Stance::Man_Sword_Lunge_RH_01, Stance::Man_Sword_Lunge_RH_06);
+        switch (player.getDirection()) {
+
+            case Direction::Left:
+
+                player.pushSequence(Stance::Man_Sword_Lunge_LH_01, Stance::Man_Sword_Lunge_LH_06);
+                break;
+
+            case Direction::Right:
+        
+                player.pushSequence(Stance::Man_Sword_Lunge_RH_01, Stance::Man_Sword_Lunge_RH_06);
+                break;
+
+        }
 
     }
 
@@ -1929,7 +2024,7 @@ void playGame_HandleMenu() {
         gameState = GameState::Inventory_Open;
         menu.setDirection(Direction::Right);
         menu.setGameState(GameState::PlayGame);
-        
+
     }
     
 }
@@ -2425,6 +2520,22 @@ void playGame_Update() {
                     }
                     break;
 
+                        
+                case Stance::Man_Sword_Lunge_LH_03:
+                case Stance::Man_Sword_Lunge_RH_03:
+                    {
+                        if (playGame_PlayerStabsEnemy(player)) {
+Serial.println("Stab enemy");
+                            Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+                            enemy.decHealth(1);
+                            enemy.setSwordWound(12);
+
+                        }
+
+                    }
+
+                    break;
+
                 default:
                     {
                         FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(player.getStance()) * 2));
@@ -2448,6 +2559,7 @@ void playGame_Update() {
 
     playGame_HandleMenu_OpenClose();
     world.updateEnemies();
+    player.update();
 
 }
 

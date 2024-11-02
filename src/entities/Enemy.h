@@ -16,7 +16,8 @@ class Enemy : public BaseStack {
 
         uint16_t x = 0;
         int8_t y = 37;
-        uint8_t health = 12;
+        uint8_t health = Constants::HealthMax;
+        uint8_t swordWound = 0;
 
     public:
 
@@ -27,6 +28,7 @@ class Enemy : public BaseStack {
         uint16_t getX()                                     { return this->x; }
         int8_t getY()                                       { return this->y; }
         uint8_t getHealth()                                 { return this->health; }
+        uint8_t getSwordWound()                             { return this->swordWound; }
 
         void setEnemyType(EnemyType val)                    { this->enemyType = val; }
         void setStance(Stance val)                          { this->stance = val; }
@@ -34,6 +36,7 @@ class Enemy : public BaseStack {
         void setX(uint16_t val)                             { this->x = val; }
         void setY(int8_t val)                               { this->y = val; }
         void setHealth(uint8_t val)                         { this->health = val; }
+        void setSwordWound(uint8_t val)                     { this->swordWound = val; }
 
         void init() {
 
@@ -87,11 +90,9 @@ class Enemy : public BaseStack {
 
     	void update(uint8_t xLoc, uint8_t yLoc) {
 
-            // switch (item.getItemType()) {
+            // Housekeeping ..
 
-            //     case ItemType::Arrow_LH:
-            //         break;
-            // }
+            if (this->swordWound > 0) this->swordWound--;
 
         }
 

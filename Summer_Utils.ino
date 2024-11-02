@@ -71,9 +71,109 @@ bool collide(Rect rect1, Rect rect2) {
             rect2.y + rect2.height <= rect1.y);
 
 }
- 
+
+
+bool collide(Point point, Rect rect) {
+
+   return ((point.x >= rect.x) && (point.x < rect.x + rect.width) &&
+           (point.y >= rect.y) && (point.y < rect.y + rect.height));
+
+ }
+
 inline void debug_break() {
 
     asm volatile("break\n");
+
+}
+
+
+bool playGame_EnemyStabsPlayer(Player &player) {
+
+    if (player.getEnemyIdx() == 255) {
+
+        uint8_t enemyIdx = world.getClosestEnemy(EnemyType::SwordFighter);
+        player.setEnemyIdx(enemyIdx);
+
+        if (enemyIdx = 255) return false;
+
+    }
+
+    Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+    Rect playerRect = { 61, - Constants::GroundY + player.getY(), 6, 16 };
+
+    if (enemy.getStance() == Stance::Enemy_Sword_Lunge_LH_03) {
+
+        Point enemyPoint = { enemy.getX() + world.getMiddleground() - 10, - enemy.getY() + 12 };
+        return collide(enemyPoint, playerRect);
+
+    }
+
+    if (enemy.getStance() == Stance::Enemy_Sword_Lunge_RH_03) {
+
+        Point enemyPoint = { enemy.getX() + world.getMiddleground() + 17, - enemy.getY() + 12 };
+        return collide(enemyPoint, playerRect);
+
+    }
+
+    return false;
+
+}
+
+
+bool playGame_PlayerStabsEnemy(Player &player) {
+
+    Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+    Rect enemyRect = { enemy.getX() + world.getMiddleground(), - enemy.getY(), 6, 16 };
+
+    if (enemy.getDirection() == Direction::Right) {
+
+        enemyRect.x = enemyRect.x + 2;
+
+    }
+    
+    if (player.getStance() == Stance::Man_Sword_Lunge_RH_03) {
+
+        Point playerPoint = { 61 + 15, - Constants::GroundY + player.getY() + 12 };
+        return collide(playerPoint, enemyRect);
+
+    }
+
+    if (player.getStance() == Stance::Man_Sword_Lunge_LH_03) {
+
+        Point playerPoint = { 61 - 10, - Constants::GroundY + player.getY() + 12 };
+        return collide(playerPoint, enemyRect);        
+
+    }
+
+    return false;
+
+}
+
+int16_t getDistanceBetween(Enemy &enemy) {
+
+    return -world.getMiddleground() + 56 - enemy.getX();
+
+}
+
+int16_t getDistanceBetween(Player &player, EnemyType enemyType) {
+
+    if (player.getEnemyIdx() == 255) {
+
+        uint8_t enemyIdx = world.getClosestEnemy(enemyType);
+        player.setEnemyIdx(enemyIdx);
+
+    }
+
+    if (player.getEnemyIdx() != 255) {
+
+        Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+        return -world.getMiddleground() + 56 - enemy.getX();
+
+    }
+    else {
+
+        return 9999;
+
+    }
 
 }
