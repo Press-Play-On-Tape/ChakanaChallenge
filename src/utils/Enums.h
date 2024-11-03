@@ -1194,6 +1194,23 @@ enum Stance : uint16_t {
 
         Enemy_LH_End = Enemy_Sword_End_LH,
 
+        Enemy_Die_FWD_LH_01,
+        Enemy_Die_FWD_LH_02,
+        Enemy_Die_FWD_LH_03,
+        Enemy_Die_FWD_LH_04,
+        Enemy_Die_BWD_LH_01,
+        Enemy_Die_BWD_LH_02,
+        Enemy_Die_BWD_LH_03,
+        Enemy_Die_BWD_LH_04,
+        Enemy_Die_FWD_RH_01,
+        Enemy_Die_FWD_RH_02,
+        Enemy_Die_FWD_RH_03,
+        Enemy_Die_FWD_RH_04,
+        Enemy_Die_BWD_RH_01,
+        Enemy_Die_BWD_RH_02,
+        Enemy_Die_BWD_RH_03,
+        Enemy_Die_BWD_RH_04,
+
     Enemy_End,
 
     None,

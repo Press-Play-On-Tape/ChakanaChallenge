@@ -34,8 +34,6 @@ class Stack {
 		const ItemType & peek(void) const;
 		bool insert(const ItemType & item);
 		bool push(ItemType && item);
-		bool push(ItemType && item1, ItemType && item2);
-		bool push(ItemType && item1, ItemType && item2, ItemType && item3);
 		ItemType & pop(void);
 
 		void drop(void);
@@ -119,40 +117,6 @@ bool Stack< Type, Capacity >::push(typename Stack< Type, Capacity >::ItemType &&
 		return false;
 
 	this->items[this->next] = item; // ought to be std::move
-	++this->next;
-	return true;
-}
-
-template< typename Type, uint8_t Capacity >
-bool Stack< Type, Capacity >::push(typename Stack< Type, Capacity >::ItemType && item1, typename Stack< Type, Capacity >::ItemType && item2) {  
-
-	// this->frame = Constants::Animation_NumberOfFrames;
-	if (this->isFull()) return false;
-
-	this->items[this->next] = item1; // ought to be std::move
-	++this->next;
-
-	if (this->isFull()) return false;
-	this->items[this->next] = item2; // ought to be std::move
-	++this->next;
-
-	return true;
-}
-
-template< typename Type, uint8_t Capacity >
-bool Stack< Type, Capacity >::push(typename Stack< Type, Capacity >::ItemType && item1, typename Stack< Type, Capacity >::ItemType && item2, typename Stack< Type, Capacity >::ItemType && item3) {   
-
-	// this->frame = Constants::Animation_NumberOfFrames;
-	if (this->isFull()) return false;
-	this->items[this->next] = item1; // ought to be std::move
-	++this->next;
-
-	if (this->isFull()) return false;
-	this->items[this->next] = item2; // ought to be std::move
-	++this->next;
-
-	if (this->isFull()) return false;
-	this->items[this->next] = item3; // ought to be std::move
 	++this->next;
 	return true;
 }

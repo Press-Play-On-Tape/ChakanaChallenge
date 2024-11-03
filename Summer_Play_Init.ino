@@ -309,21 +309,18 @@ void playGame_HandleEnemies() {
                     break;
 
                 case EnemyType::SwordFighter:
-// Serial.println("test");
+
                     switch (newStance) {
                                 
                         case Stance::Enemy_Sword_Lunge_LH_03:
                         case Stance::Enemy_Sword_Lunge_RH_03:
                             {
                                 if (player.getSwordWound() == 0 && playGame_EnemyStabsPlayer(player)) {
-Serial.println("Stab player");
+
                                     player.decHealth(1);
                                     player.setSwordWound(12);
 
                                     if (player.getHealth() == 0) {
-
-                                        // Enemy &enemy = world.getEnemy(player.getEnemyIdx());
-                                        // int16_t dist = -world.getMiddleground() + 56 - enemy.getX();
 
                                         int16_t dist = getDistanceBetween(enemy);
                                         player.clear();
@@ -353,12 +350,12 @@ Serial.println("Stab player");
                                                 switch (player.getDirection()) {
 
                                                     case Direction::Left:
-        Serial.println("die 1");                                      
-                                                        player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+
+                                                        player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
                                                         break;
 
                                                     case Direction::Right:
-        Serial.println("die 2");                                            
+
                                                         player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
                                                         break;
 
@@ -371,13 +368,13 @@ Serial.println("Stab player");
                                                 switch (player.getDirection()) {
 
                                                     case Direction::Left:
-        Serial.println("die 3");                                            
-                                                        player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+
+                                                        player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
                                                         break;
 
                                                     case Direction::Right:
-        Serial.println("die 4");                                            
-                                                        player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+
+                                                        player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
                                                         break;
 
                                                 }
@@ -451,8 +448,7 @@ Serial.println("Stab player");
                                                 if (random(0, 5) == 0) {
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
-                                                    player.clear();
-                                                    player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06);
+                                                    player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06, true);
 
                                                     if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
 
@@ -527,7 +523,7 @@ Serial.println("Stab player");
                                         }
                                         break;
 
-                                    case 8 ... 999:
+                                    case -3 ... 999:
 
                                         enemy.push(Stance::Enemy_Sword_Stationary_RH);
                                         break;
@@ -559,7 +555,7 @@ Serial.println("Stab player");
 
                                         break;
 
-                                    case -4 ... 19:
+                                    case -5 ... 19:
 
                                         switch (player.getStance()) {
 
@@ -568,8 +564,7 @@ Serial.println("Stab player");
                                                 if (random(0, 5) == 0) {
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
-                                                    player.clear();
-                                                    player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06);
+                                                    player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06, true);
 
                                                     if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
 
@@ -628,7 +623,7 @@ Serial.println("Stab player");
 
                                         break;
 
-                                    case -12 ... -5:
+                                    case -12 ... -6:
 
                                         if (random(0, 5) == 0) {
 
@@ -2524,11 +2519,94 @@ void playGame_Update() {
                 case Stance::Man_Sword_Lunge_LH_03:
                 case Stance::Man_Sword_Lunge_RH_03:
                     {
-                        if (playGame_PlayerStabsEnemy(player)) {
-Serial.println("Stab enemy");
-                            Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+                        Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+
+                        if (enemy.getSwordWound() == 0 && playGame_PlayerStabsEnemy(player)) {
+
                             enemy.decHealth(1);
                             enemy.setSwordWound(12);
+
+                            if (enemy.getHealth() > 0) {
+                                    
+                                switch (enemy.getDirection()) {
+
+                                    case Direction::Left:
+                                  
+                                        enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_04);
+                                        break;
+
+                                    case Direction::Right:
+                                   
+                                        enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_04);
+                                        break;
+                                    
+                                }      
+
+                            }
+                            else {
+
+                                int16_t dist = getDistanceBetween(enemy);
+                                enemy.clear();
+
+                                // player puts away sword ..
+
+                                switch (player.getDirection()) {
+
+                                    case Direction::Left:
+                                        player.insert(Stance::Man_Walk_LH_00);
+                                        break;
+
+                                    case Direction::Right:
+                                        player.insert(Stance::Man_Walk_RH_00);
+                                        break;
+
+                                }
+
+
+                                // Player dies but whch direction does he fall?
+
+                                switch (dist) {
+
+                                    case -999 ... 0:
+
+                                        switch (enemy.getDirection()) {
+
+                                            case Direction::Left:
+
+                                                enemy.pushSequence(Stance::Enemy_Die_BWD_LH_01, Stance::Enemy_Die_BWD_LH_04);
+                                                break;
+
+                                            case Direction::Right:
+
+                                                enemy.pushSequence(Stance::Enemy_Die_FWD_RH_01, Stance::Enemy_Die_FWD_RH_04);
+                                                break;
+
+                                        }
+
+                                        break;
+
+                                    case 1 ... 999:
+
+                                        switch (enemy.getDirection()) {
+
+                                            case Direction::Left:
+
+                                                enemy.pushSequence(Stance::Enemy_Die_FWD_LH_01, Stance::Enemy_Die_FWD_LH_04);
+                                                break;
+
+                                            case Direction::Right:
+
+                                                enemy.pushSequence(Stance::Enemy_Die_BWD_RH_01, Stance::Enemy_Die_BWD_RH_04);
+                                                break;
+
+                                        }
+
+                                        break;
+
+                                }   
+
+
+                            }                      
 
                         }
 

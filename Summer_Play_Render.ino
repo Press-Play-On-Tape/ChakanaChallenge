@@ -468,6 +468,27 @@ void renderWorld(uint8_t currentPlane) {
                 
             }
 
+
+            // Render Sword Wound if applicable ..
+
+            if (enemy.getSwordWound() != 0) {
+
+                switch (player.getDirection()) {
+
+                    case Direction::Left:
+                   
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - enemy.getY() + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + 4) * 3) + currentPlane);
+                        break;
+
+                    case Direction::Right:
+            
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() + 6, yOffset - enemy.getY()+ 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) ) * 3) + currentPlane);
+                        break;
+
+                }
+
+            }
+
         }
 
     }

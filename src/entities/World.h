@@ -735,6 +735,7 @@ struct World {
                 Enemy &enemy = this->getEnemy(i);
 
                 if (enemy.getX() == 0) continue;
+                enemy.update();
 
                 Item &item = enemy.getItem();
 
@@ -782,7 +783,7 @@ struct World {
 
                 }
 
-                switch (enemy.getItem().getItemType()) {
+                switch (item.getItemType()) {
 
                     case ItemType::Arrow_LH:
                         {
