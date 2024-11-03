@@ -755,7 +755,6 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                             player.push(Stance::Man_Sword_Stationary_LH);
                             menu.setDirection(Direction::Right);
                             menu.setGameState(GameState::Play_Battle);
-                            // removeInventoryItem(GameState::Play_Battle);
 
                         }
 
@@ -1906,9 +1905,7 @@ void playGame_HandleMenu_OpenClose() {
 
 void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    // Enemy &enemy = world.getEnemy(player.getEnemyIdx());
-    // int16_t dist = -world.getMiddleground() + 56 - enemy.getX();
-    int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
+     int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
 
     if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
@@ -2546,6 +2543,9 @@ void playGame_Update() {
                             else {
 
                                 int16_t dist = getDistanceBetween(enemy);
+                                gameState = GameState::PlayGame;
+
+                                player.removeInventoryItem(menu.getY());
                                 enemy.clear();
 
                                 // player puts away sword ..
@@ -2572,13 +2572,15 @@ void playGame_Update() {
                                         switch (enemy.getDirection()) {
 
                                             case Direction::Left:
+Serial.println("D1");
 
-                                                enemy.pushSequence(Stance::Enemy_Die_BWD_LH_01, Stance::Enemy_Die_BWD_LH_04);
+                                                enemy.pushSequence(Stance::Enemy_Die_BWD_LH_01, Stance::Enemy_Die_BWD_LH_08);
                                                 break;
 
                                             case Direction::Right:
+Serial.println("D2");
 
-                                                enemy.pushSequence(Stance::Enemy_Die_FWD_RH_01, Stance::Enemy_Die_FWD_RH_04);
+                                                enemy.pushSequence(Stance::Enemy_Die_FWD_RH_01, Stance::Enemy_Die_FWD_RH_08);
                                                 break;
 
                                         }
@@ -2590,13 +2592,14 @@ void playGame_Update() {
                                         switch (enemy.getDirection()) {
 
                                             case Direction::Left:
+Serial.println("D3");
 
-                                                enemy.pushSequence(Stance::Enemy_Die_FWD_LH_01, Stance::Enemy_Die_FWD_LH_04);
+                                                enemy.pushSequence(Stance::Enemy_Die_FWD_LH_01, Stance::Enemy_Die_FWD_LH_08);
                                                 break;
 
                                             case Direction::Right:
-
-                                                enemy.pushSequence(Stance::Enemy_Die_BWD_RH_01, Stance::Enemy_Die_BWD_RH_04);
+Serial.println("D4");
+                                                enemy.pushSequence(Stance::Enemy_Die_BWD_RH_01, Stance::Enemy_Die_BWD_RH_08);
                                                 break;
 
                                         }
