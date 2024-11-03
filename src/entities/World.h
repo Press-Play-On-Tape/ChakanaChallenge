@@ -191,22 +191,21 @@ struct World {
 
         void incForeground(int8_t val) {
 
-            this->incPalm(0, val);
-            this->incPalm(1, val);
-            this->incPalm(2, val);
-            this->incPalm(3, val);
+            for (uint8_t i = 0; i < 3; i++) {
+                this->incPalm(i, val);
+            }
+
             this->incWave(val);
             
         }
 
         void incBackground(int8_t val) {
 
-            this->incPalm(4, val);
-            this->incPalm(5, val);
-            this->incPalm(6, val);
-            this->incPalm(7, val);
-            this->incBackgroundVal(val);
+            for (uint8_t i = 4; i < 7; i++) {
+                this->incPalm(i, val);
+            }
 
+            this->incBackgroundVal(val);
             this->x = this->x - val;
 
         }

@@ -2546,6 +2546,7 @@ void playGame_Update() {
                                 gameState = GameState::PlayGame;
 
                                 player.removeInventoryItem(menu.getY());
+                                if (menu.getY() > 0) menu.setY(menu.getY() - 1);
                                 enemy.clear();
 
                                 // player puts away sword ..
@@ -2572,15 +2573,15 @@ void playGame_Update() {
                                         switch (enemy.getDirection()) {
 
                                             case Direction::Left:
-Serial.println("D1");
+// Serial.println("D1");
 
-                                                enemy.pushSequence(Stance::Enemy_Die_BWD_LH_01, Stance::Enemy_Die_BWD_LH_08);
+                                                enemy.pushSequence(Stance::Enemy_Die_BWD_LH_01, Stance::Enemy_Die_BWD_LH_13);
                                                 break;
 
                                             case Direction::Right:
-Serial.println("D2");
+// Serial.println("D2");
 
-                                                enemy.pushSequence(Stance::Enemy_Die_FWD_RH_01, Stance::Enemy_Die_FWD_RH_08);
+                                                enemy.pushSequence(Stance::Enemy_Die_FWD_RH_01, Stance::Enemy_Die_FWD_RH_13);
                                                 break;
 
                                         }
@@ -2592,14 +2593,14 @@ Serial.println("D2");
                                         switch (enemy.getDirection()) {
 
                                             case Direction::Left:
-Serial.println("D3");
+// Serial.println("D3");
 
-                                                enemy.pushSequence(Stance::Enemy_Die_FWD_LH_01, Stance::Enemy_Die_FWD_LH_08);
+                                                enemy.pushSequence(Stance::Enemy_Die_FWD_LH_01, Stance::Enemy_Die_FWD_LH_13);
                                                 break;
 
                                             case Direction::Right:
-Serial.println("D4");
-                                                enemy.pushSequence(Stance::Enemy_Die_BWD_RH_01, Stance::Enemy_Die_BWD_RH_08);
+// Serial.println("D4");
+                                                enemy.pushSequence(Stance::Enemy_Die_BWD_RH_01, Stance::Enemy_Die_BWD_RH_13);
                                                 break;
 
                                         }

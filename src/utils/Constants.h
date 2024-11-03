@@ -376,7 +376,6 @@ namespace Constants {
 
     constexpr uint24_t PalmImages[] = { Images::Palm1, Images::Palm2, Images::Palm3, Images::Palm4, Images::Palm5, Images::Palm6, Images::Palm5, Images::Palm6 };
 
-    constexpr uint8_t ParticlesMax = 25;
     constexpr uint8_t FlipTime = 25;
     constexpr uint8_t WinFlashTime_Start = 120;
     constexpr uint16_t WinFlashTime_End = 800;
@@ -402,12 +401,6 @@ namespace Constants {
     constexpr uint8_t ItemCount = 10;
     constexpr uint8_t Puff_Max = 7 * 16;
     constexpr uint8_t Glint_Max = 8;
-
-
-
-
-
-
 
 
 
