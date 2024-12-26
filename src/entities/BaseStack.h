@@ -6,6 +6,11 @@
 
 class BaseStack {
 
+    private:
+
+        Stance fromStance = Stance::None;
+        Stance toStance = Stance::None;
+
     protected:
 
         Stack <Stance, Constants::StackSize>  *stack;
@@ -90,11 +95,33 @@ class BaseStack {
 
         }
 
-        // void stageSequence(Stance fromStance, Stance toStance) {
+        void stageSequence(Stance fromStance, Stance toStance) {
 
-        //     this->startSeqence = from ;
+            this->fromStance = fromStance;
+            this->toStance = toStance;
 
-        // }
+        }
+
+        bool commitSequence() {
+
+            if (this->fromStance != Stance::None && this->toStance != Stance::None) {
+
+                this->pushSequence(this->fromStance, this->toStance, false);
+                this->fromStance = Stance::None;
+                this->toStance = Stance::None;
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        bool hasStagedSequence() {
+
+            return this->fromStance != Stance::None && this->toStance != Stance::None;
+
+        }
 
         void pushSequence(Stance fromStance, Stance toStance, bool clear) {
 

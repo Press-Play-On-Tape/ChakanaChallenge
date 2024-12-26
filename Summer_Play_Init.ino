@@ -856,6 +856,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
 void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
 
+    player.stageSequence(Stance::None, Stance::None);
+    
     if (justPressed & UP_BUTTON || pressed & UP_BUTTON) {
 
         switch (player.getDirection()) {
@@ -1560,7 +1562,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
                                 if (!world.canWalkPastTile(tile_R)) {     
-Serial.println("A");       
+
                                     player.pushSequence(Stance::Man_StandingJump_RH_UPandOver_01, Stance::Man_StandingJump_RH_UPandOver_06);
 
                                 }          
@@ -1660,7 +1662,7 @@ Serial.println("A");
 
                     default:
 
-                        player.pushSequence(Stance::Man_StandingJump_BK_01, Stance::Man_StandingJump_BK_07); 
+                        player.stageSequence(Stance::Man_StandingJump_BK_01, Stance::Man_StandingJump_BK_07); 
                         break;
                     
                 }
@@ -1675,8 +1677,8 @@ Serial.println("A");
                     if (world.isEmptyTile(tile_U)) {
 
                         if (world.canJumpUpOntoTile(tile)) {
-Serial.println("B");
-                            player.pushSequence(Stance::Man_StandingJump_RH_UP_01, Stance::Man_StandingJump_RH_UP_06); 
+
+                            player.stageSequence(Stance::Man_StandingJump_RH_UP_01, Stance::Man_StandingJump_RH_UP_06); 
 
                         }
                         else if (world.isSpringTile(tile)) {    
@@ -1687,27 +1689,27 @@ Serial.println("B");
                             if (world.isRopeTile(tile_3U)) {
 
                                 // player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_34);
-                                player.pushSequence(Stance::Man_BounceJump_RH_33, Stance::Man_BounceJump_RH_34);
-                                player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_30);
+                                player.stageSequence(Stance::Man_BounceJump_RH_33, Stance::Man_BounceJump_RH_34);
+                                player.stageSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_30);
 
                             }
                             else if (world.isRopeTile(tile_4U)) {
 
-                                player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_34);
+                                player.stageSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_34);
 
                             }
 
                         }   
                         else {
-Serial.println("pg_HGP C");
-                            player.pushSequence(Stance::Man_StandingJump_RH_01, Stance::Man_StandingJump_RH_07); 
+
+                            player.stageSequence(Stance::Man_StandingJump_RH_01, Stance::Man_StandingJump_RH_07); 
 
                         }
 
                     }
                     else {
 
-                        player.pushSequence(Stance::Man_StandingJump_Small_RH_01, Stance::Man_StandingJump_Small_RH_03); 
+                        player.stageSequence(Stance::Man_StandingJump_Small_RH_01, Stance::Man_StandingJump_Small_RH_03); 
 
                     }
 
@@ -1720,12 +1722,12 @@ Serial.println("pg_HGP C");
 
                     if (tile == 0) {
 
-                        player.pushSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
+                        player.stageSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
 
                     }
                     else {
 
-                        player.pushSequence(Stance::Man_StandingJump_FW_UP_01, Stance::Man_StandingJump_FW_UP_06); 
+                        player.stageSequence(Stance::Man_StandingJump_FW_UP_01, Stance::Man_StandingJump_FW_UP_06); 
 
                     }
 
@@ -1742,7 +1744,7 @@ Serial.println("pg_HGP C");
 
                         if (world.canJumpUpOntoTile(tile)) {
 
-                            player.pushSequence(Stance::Man_StandingJump_LH_UP_01, Stance::Man_StandingJump_LH_UP_06); 
+                            player.stageSequence(Stance::Man_StandingJump_LH_UP_01, Stance::Man_StandingJump_LH_UP_06); 
 
                         }
                         else if (world.isSpringTile(tile)) {     
@@ -1751,27 +1753,27 @@ Serial.println("pg_HGP C");
 
                             if (world.isRopeTile(tile_3U)) {
 
-                                player.pushSequence(Stance::Man_BounceJump_LH_33, Stance::Man_BounceJump_LH_34);
-                                player.pushSequence(Stance::Man_BounceJump_LH_01, Stance::Man_BounceJump_LH_30);
+                                player.stageSequence(Stance::Man_BounceJump_LH_33, Stance::Man_BounceJump_LH_34);
+                                player.stageSequence(Stance::Man_BounceJump_LH_01, Stance::Man_BounceJump_LH_30);
 
                             }
                             else if (world.isRopeTile(tile_4U)) {
 
-                                player.pushSequence(Stance::Man_BounceJump_LH_01, Stance::Man_BounceJump_LH_34);
+                                player.stageSequence(Stance::Man_BounceJump_LH_01, Stance::Man_BounceJump_LH_34);
 
                             }
 
                         }                                   
                         else {
 
-                            player.pushSequence(Stance::Man_StandingJump_LH_01, Stance::Man_StandingJump_LH_07); 
+                            player.stageSequence(Stance::Man_StandingJump_LH_01, Stance::Man_StandingJump_LH_07); 
 
                         }
 
                     }
                     else {
 
-                        player.pushSequence(Stance::Man_StandingJump_Small_LH_01, Stance::Man_StandingJump_Small_LH_03); 
+                        player.stageSequence(Stance::Man_StandingJump_Small_LH_01, Stance::Man_StandingJump_Small_LH_03); 
 
                     }
 
@@ -2125,34 +2127,16 @@ void playGame_Update() {
 
         }
 
-        if (!player.isEmpty()) {
+        if (!player.isEmpty() || player.hasStagedSequence()) {
 
-// Stance oldCount = player.getCount()
             Point offset;
+            uint16_t newStance = player.getStance();
 
-            uint16_t newStance = player.pop();
+            if (!player.isEmpty()) {
 
-            player.setStance(newStance);
+                newStance = playGame_PopEntry(player);
 
-            FX::seekData(Constants::StanceY + static_cast<uint16_t>(player.getStance()));
-            int8_t stanceY = FX::readPendingUInt8();
-            player.setY(player.getY() - stanceY);
-            FX::readEnd();
-
-            FX::seekData(Constants::xForeground + static_cast<uint16_t>(player.getStance()));
-            int8_t b = FX::readPendingUInt8();
-            world.incForeground(b);
-            FX::readEnd();
-
-            FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(player.getStance()));
-            b = FX::readPendingUInt8();
-            world.incMiddleground(b);
-            FX::readEnd();
-
-            FX::seekData(Constants::xBackground + static_cast<uint16_t>(player.getStance()));
-            b = FX::readPendingUInt8();
-            world.incBackground(b);
-            FX::readEnd();
+            }
 
 
             // Has the player collided with an item?
@@ -2208,12 +2192,10 @@ void playGame_Update() {
                     case ItemType::Chakana:
 
                         if (collide(playerRect, itemRect) && (justPressed & A_BUTTON)) {                        
-                            // Serial.println("Chakana");
-                            // // a.pollButtons();
-                            // player.clear();
-                            // gameState = GameState::Chakana_Open;
 
                             ignoreKeyPress = 16;
+                            player.stageSequence(Stance::None, Stance::None);
+
                             endOfLevel_Counter = 0;
                             
                         }
@@ -2223,15 +2205,10 @@ void playGame_Update() {
                     case ItemType::Lever_RH:
 
                         if (collide(playerRect, itemRect) && (justPressed & A_BUTTON)) {                        
-                            Serial.println("pg_Update Lever");
-//                             a.pollButtons();
-// DEBUG_BREAK
-                            player.clear();
-//                             justPressed = 0;
-                            ignoreKeyPress = 32;
-                            // player.setStance(oldStance);
 
-// DEBUG_BREAK
+                            ignoreKeyPress = 16;
+                            player.stageSequence(Stance::None, Stance::None);
+
                             if (item.getItemType() == ItemType::Lever_LH)  {
                                 item.setItemType(ItemType::Lever_RH);
                             }
@@ -2368,6 +2345,15 @@ void playGame_Update() {
                         break;
 
                 }
+
+            }
+
+
+            // If a sequence has been staged then commit it now (and adjust the players position etc ..
+
+            if (player.commitSequence()) {
+
+                newStance = playGame_PopEntry(player);
 
             }
 
@@ -2734,15 +2720,44 @@ void playGame_Update() {
 
     }
 
+
     // Housekeeping ..
 
     if (ignoreKeyPress > 0) {
-        Serial.println(ignoreKeyPress);
         ignoreKeyPress--;
     }
 
 }
 
+uint16_t playGame_PopEntry(Player &player) {
+
+    uint16_t newStance = player.pop();
+
+    player.setStance(newStance);
+
+    FX::seekData(Constants::StanceY + static_cast<uint16_t>(player.getStance()));
+    int8_t stanceY = FX::readPendingUInt8();
+    player.setY(player.getY() - stanceY);
+    FX::readEnd();
+
+    FX::seekData(Constants::xForeground + static_cast<uint16_t>(player.getStance()));
+    int8_t b = FX::readPendingUInt8();
+    world.incForeground(b);
+    FX::readEnd();
+
+    FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(player.getStance()));
+    b = FX::readPendingUInt8();
+    world.incMiddleground(b);
+    FX::readEnd();
+
+    FX::seekData(Constants::xBackground + static_cast<uint16_t>(player.getStance()));
+    b = FX::readPendingUInt8();
+    world.incBackground(b);
+    FX::readEnd();
+
+    return newStance;
+
+}
 
 void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
@@ -2767,7 +2782,6 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Chakana_Open:
             SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (endOfLevel_Counter * 3) + currentPlane);
-Serial.println(endOfLevel_Counter);            
             break;
 
     }
