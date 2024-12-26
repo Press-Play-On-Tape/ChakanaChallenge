@@ -7,6 +7,8 @@
 #include "src/utils/SpritesU.hpp"
 
 int16_t enemy = -20;
+uint8_t endOfLevel_Counter = 0;
+uint8_t ignoreKeyPress = 0;
 
 void playGame_Init() {
 
@@ -87,10 +89,23 @@ void playGame_Init() {
 */
 
 
+/* Fighting player -----------------------------------------------
+
+    Enemy &enemy = world.getEnemy(0);
+    enemy.setEnemyType(EnemyType::SwordFighter);
+    enemy.setX(128+ 32 + 48);
+    // enemy.setX(5);
+    enemy.setY(0);
+    // enemy.setCounter(0);
+    enemy.setStance(Stance::Enemy_Sword_Stationary_LH);
+    enemy.getItem().setItemType(ItemType::Glint_Hidden);
+
+*/
+
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 1) {
+        if (i == 3) {
             item.setItemType(ItemType::Puff);
             item.setX(128);
             item.setY(16);  
@@ -99,6 +114,18 @@ void playGame_Init() {
         else if (i == 0) {
             item.setItemType(ItemType::Sword);
             item.setX(64 + 16);
+            item.setY(0);    
+            item.setFrame(0);         
+        }
+        else if (i == 1) {
+            item.setItemType(ItemType::Chakana);
+            item.setX(64 - 48);
+            item.setY(0);    
+            item.setFrame(0);         
+        }
+        else if (i == 2) {
+            item.setItemType(ItemType::Lever_LH);
+            item.setX(64 + 48);
             item.setY(0);    
             item.setFrame(0);         
         }
@@ -133,29 +160,32 @@ void playGame_Init() {
 
     }
 
-        player.getItem(0).setItemType(ItemType::Hammer);
         // player.getItem(1).setItemType(ItemType::PinchBar);
         // player.getItem(2).setItemType(ItemType::Amulet);
         // player.getItem(3).setItemType(ItemType::Hammer);
         // player.getItem(4).setItemType(ItemType::Key1);
         // player.getItem(5).setItemType(ItemType::Amulet);
 
-        player.setItemCount(1);
         player.setStance(Stance::Man_Walk_RH_01);
+
+
+
+        player.getItem(0).setItemType(ItemType::Hammer);
+        player.setItemCount(1);
 
 
         // uint16_t waveCount = 0;
         // uint16_t background = 0;
 
 
-    Enemy &enemy = world.getEnemy(0);
-    enemy.setEnemyType(EnemyType::SwordFighter);
-    enemy.setX(128+ 32 + 48);
-    // enemy.setX(5);
-    enemy.setY(0);
-    // enemy.setCounter(0);
-    enemy.setStance(Stance::Enemy_Sword_Stationary_LH);
-    enemy.getItem().setItemType(ItemType::Glint_Hidden);
+    // Enemy &enemy = world.getEnemy(0);
+    // enemy.setEnemyType(EnemyType::SwordFighter);
+    // enemy.setX(128+ 32 + 48);
+    // // enemy.setX(5);
+    // enemy.setY(0);
+    // // enemy.setCounter(0);
+    // enemy.setStance(Stance::Enemy_Sword_Stationary_LH);
+    // enemy.getItem().setItemType(ItemType::Glint_Hidden);
 
 }
 
@@ -1276,7 +1306,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
                                 if (!world.canWalkPastTile(tile_L) && world.isEmptyTile(tile_U)) {     
-                                    
+
                                     player.pushSequence(Stance::Man_StandingJump_LH_UPandOver_01, Stance::Man_StandingJump_LH_UPandOver_06);
 
                                 }                       
@@ -1530,7 +1560,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
                                 if (!world.canWalkPastTile(tile_R)) {     
-                
+Serial.println("A");       
                                     player.pushSequence(Stance::Man_StandingJump_RH_UPandOver_01, Stance::Man_StandingJump_RH_UPandOver_06);
 
                                 }          
@@ -1629,6 +1659,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         break;
 
                     default:
+
                         player.pushSequence(Stance::Man_StandingJump_BK_01, Stance::Man_StandingJump_BK_07); 
                         break;
                     
@@ -1644,7 +1675,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     if (world.isEmptyTile(tile_U)) {
 
                         if (world.canJumpUpOntoTile(tile)) {
-
+Serial.println("B");
                             player.pushSequence(Stance::Man_StandingJump_RH_UP_01, Stance::Man_StandingJump_RH_UP_06); 
 
                         }
@@ -1668,12 +1699,14 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         }   
                         else {
+Serial.println("pg_HGP C");
                             player.pushSequence(Stance::Man_StandingJump_RH_01, Stance::Man_StandingJump_RH_07); 
+
                         }
 
                     }
                     else {
-                        
+
                         player.pushSequence(Stance::Man_StandingJump_Small_RH_01, Stance::Man_StandingJump_Small_RH_03); 
 
                     }
@@ -1686,11 +1719,16 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
 
                     if (tile == 0) {
+
                         player.pushSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
+
                     }
                     else {
+
                         player.pushSequence(Stance::Man_StandingJump_FW_UP_01, Stance::Man_StandingJump_FW_UP_06); 
+
                     }
+
                 }
                 break;
 
@@ -1732,10 +1770,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
                     else {
-                            player.pushSequence(Stance::Man_StandingJump_Small_LH_01, Stance::Man_StandingJump_Small_LH_03); 
+
+                        player.pushSequence(Stance::Man_StandingJump_Small_LH_01, Stance::Man_StandingJump_Small_LH_03); 
 
                     }
+
                 }                        
+
                 break;
 
         }
@@ -2053,9 +2094,16 @@ void playGame_Update() {
                         playGame_HandleMenu();
                     }
                     else {
-                        playGame_HandleGamePlay(player, pressed, justPressed);          
+
+                        if (ignoreKeyPress == 0) {
+                            playGame_HandleGamePlay(player, pressed, justPressed);          
+                        }
+
                     }
 
+                    break;
+
+                case GameState::Chakana_Open:
                     break;
 
                 case GameState::Play_Battle:
@@ -2067,12 +2115,19 @@ void playGame_Update() {
         }
         else {
 
-            playGame_HandleJump(player, pressed, justPressed);
+            switch (gameState) {
+
+                case GameState::PlayGame:
+                    playGame_HandleJump(player, pressed, justPressed);
+                    break;
+
+            }
 
         }
 
         if (!player.isEmpty()) {
 
+// Stance oldCount = player.getCount()
             Point offset;
 
             uint16_t newStance = player.pop();
@@ -2107,7 +2162,7 @@ void playGame_Update() {
             Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
 
             for (uint8_t i = 0; i < Constants::ItemCount; i++) {
-              
+          
                 Item &item = world.getItem(i);
 
                 
@@ -2124,165 +2179,195 @@ void playGame_Update() {
                 // Otherwise check if we have collided ..
 
                 Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };
+                Item &puff = world.getItem(world.getItem(ItemType::Puff));
 
-                // if (collide(playerRect, itemRect)) {
+                switch (item.getItemType()) {
 
-                    Item &puff = world.getItem(world.getItem(ItemType::Puff));
+                    case ItemType::Key1:
+                    case ItemType::PinchBar:
+                    case ItemType::Hammer:
+                    case ItemType::Amulet:
+                    case ItemType::Potion:
+                    case ItemType::Anchor:
+                    case ItemType::Sword:
 
-                    switch (item.getItemType()) {
+                        if (collide(playerRect, itemRect)) {
 
-                        case ItemType::Key1:
-                        case ItemType::PinchBar:
-                        case ItemType::Hammer:
-                        case ItemType::Amulet:
-                        case ItemType::Potion:
-                        case ItemType::Anchor:
-                        case ItemType::Sword:
+                            if (item.getCounter() == 0) {
 
-                            if (collide(playerRect, itemRect)) {
-
-                                if (item.getCounter() == 0) {
-
-                                    puff.setX(item.getX());
-                                    puff.setY(item.getY());
-                                    puff.setFrame(0);
-                                    item.setCounter(3);
-
-                                }
+                                puff.setX(item.getX());
+                                puff.setY(item.getY());
+                                puff.setFrame(0);
+                                item.setCounter(3);
 
                             }
-                            break;
 
-                        case ItemType::Punji:
-                                    
+                        }
+                        break;
+
+                    case ItemType::Chakana:
+
+                        if (collide(playerRect, itemRect) && (justPressed & A_BUTTON)) {                        
+                            // Serial.println("Chakana");
+                            // // a.pollButtons();
+                            // player.clear();
+                            // gameState = GameState::Chakana_Open;
+
+                            ignoreKeyPress = 16;
+                            endOfLevel_Counter = 0;
+                            
+                        }
+                        break;
+
+                    case ItemType::Lever_LH:
+                    case ItemType::Lever_RH:
+
+                        if (collide(playerRect, itemRect) && (justPressed & A_BUTTON)) {                        
+                            Serial.println("pg_Update Lever");
+//                             a.pollButtons();
+// DEBUG_BREAK
+                            player.clear();
+//                             justPressed = 0;
+                            ignoreKeyPress = 32;
+                            // player.setStance(oldStance);
+
+// DEBUG_BREAK
+                            if (item.getItemType() == ItemType::Lever_LH)  {
+                                item.setItemType(ItemType::Lever_RH);
+                            }
+                            else {
+                                item.setItemType(ItemType::Lever_LH);
+                            }
+                            
+                        }
+                        break;
+
+                    case ItemType::Punji:
+                                
+                        switch (player.getDirection()) {
+
+                            case Direction::Left:
+                                playerRect.width = 4;
+                                break;
+
+                            case Direction::Right:
+                                playerRect.x = playerRect.x + 8;
+                                playerRect.width = playerRect.width - 8;
+                                break;
+
+                        }
+
+                        itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+
+                        if (item.getCounter() == 0 && collide(playerRect, itemRect)) {
+
+                            item.setCounter(1);
+
                             switch (player.getDirection()) {
 
                                 case Direction::Left:
-                                    playerRect.width = 4;
+                                    player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04, true);
                                     break;
 
                                 case Direction::Right:
-                                    playerRect.x = playerRect.x + 8;
-                                    playerRect.width = playerRect.width - 8;
+                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04, true);
                                     break;
 
                             }
 
-                            itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+                        }
 
-                            if (item.getCounter() == 0 && collide(playerRect, itemRect)) {
+                        break;
 
-                                item.setCounter(1);
+                    case ItemType::Flame:
+                        
+                        itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
 
-                                switch (player.getDirection()) {
+                        if (collide(playerRect, itemRect)) {
 
-                                    case Direction::Left:
-                                        player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04, true);
-                                        break;
+                            switch (player.getDirection()) {
 
-                                    case Direction::Right:
-                                        player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04, true);
-                                        break;
+                                case Direction::Left:
 
-                                }
+                                    switch (player.getStance()) {
+
+                                        case Stance::Man_WalkingJump_LH_2_08:
+                                            {
+                                                uint8_t xPos = item.getX() + world.getMiddleground();
+
+                                                if (xPos == 56) {
+
+                                                    player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
+                                                    player.push(Stance::Man_Die_Fire_Adj_LH_02);
+
+                                                }
+                                                else if (xPos == 64) {
+
+                                                    player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
+                                                    player.push(Stance::Man_Die_Fire_Adj_LH_01);
+
+                                                }
+
+                                            }
+                                            break;
+
+                                        case Stance::Man_Walk_LH_02:
+
+                                            player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
+                                            player.pushSequence(Man_Walk_LH_03, Stance::Man_Walk_LH_06);
+
+                                            break;
+
+
+                                    }
+
+                                    break;
+
+                                case Direction::Right:
+
+                                    switch (player.getStance()) {
+
+                                        case Stance::Man_WalkingJump_RH_2_08:
+                                            {
+                                                uint8_t xPos = item.getX() + world.getMiddleground();
+
+                                                if (xPos == 56) {
+
+                                                    player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
+                                                    player.push(Stance::Man_Die_Fire_Adj_RH_01);
+
+                                                }
+                                                else if (xPos == 64) {
+
+                                                    player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
+                                                    player.push(Stance::Man_Die_Fire_Adj_RH_02);
+
+                                                }
+
+                                            }
+                                            break;
+
+                                        case Stance::Man_Walk_RH_03:
+
+                                            player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
+                                            player.pushSequence(Man_Walk_RH_04, Stance::Man_Walk_RH_06);
+
+                                            break;
+
+                                    }
+
+                                    break;
 
                             }
 
-                            break;
+                        }
 
-                        case ItemType::Flame:
-                            
-                            itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+                        break;
 
-                            if (collide(playerRect, itemRect)) {
+                    default:
+                        break;
 
-                                switch (player.getDirection()) {
-
-                                    case Direction::Left:
-
-                                        switch (player.getStance()) {
-
-                                            case Stance::Man_WalkingJump_LH_2_08:
-                                                {
-                                                    uint8_t xPos = item.getX() + world.getMiddleground();
-
-                                                    if (xPos == 56) {
-
-                                                        player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
-                                                        player.push(Stance::Man_Die_Fire_Adj_LH_02);
-
-                                                    }
-                                                    else if (xPos == 64) {
-
-                                                        player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
-                                                        player.push(Stance::Man_Die_Fire_Adj_LH_01);
-
-                                                    }
-
-                                                }
-                                                break;
-
-                                            case Stance::Man_Walk_LH_02:
-
-                                                player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
-                                                player.pushSequence(Man_Walk_LH_03, Stance::Man_Walk_LH_06);
-
-                                                break;
-
-
-                                        }
-
-                                        break;
-
-                                    case Direction::Right:
-
-                                        switch (player.getStance()) {
-
-                                            case Stance::Man_WalkingJump_RH_2_08:
-                                                {
-                                                    uint8_t xPos = item.getX() + world.getMiddleground();
-
-                                                    if (xPos == 56) {
-
-                                                        player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
-                                                        player.push(Stance::Man_Die_Fire_Adj_RH_01);
-
-                                                    }
-                                                    else if (xPos == 64) {
-
-                                                        player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
-                                                        player.push(Stance::Man_Die_Fire_Adj_RH_02);
-
-                                                    }
-
-                                                }
-                                                break;
-
-                                            case Stance::Man_Walk_RH_03:
-
-                                                player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
-                                                player.pushSequence(Man_Walk_RH_04, Stance::Man_Walk_RH_06);
-
-                                                break;
-
-                                        }
-
-                                        break;
-
-                                }
-
-                            }
-
-                            break;
-
-                        default:
-                            break;
-
-                    }
-
-                    break;
-
-                // }
+                }
 
             }
 
@@ -2573,13 +2658,11 @@ void playGame_Update() {
                                         switch (enemy.getDirection()) {
 
                                             case Direction::Left:
-// Serial.println("D1");
 
                                                 enemy.pushSequence(Stance::Enemy_Die_BWD_LH_01, Stance::Enemy_Die_BWD_LH_13);
                                                 break;
 
                                             case Direction::Right:
-// Serial.println("D2");
 
                                                 enemy.pushSequence(Stance::Enemy_Die_FWD_RH_01, Stance::Enemy_Die_FWD_RH_13);
                                                 break;
@@ -2593,13 +2676,12 @@ void playGame_Update() {
                                         switch (enemy.getDirection()) {
 
                                             case Direction::Left:
-// Serial.println("D3");
 
                                                 enemy.pushSequence(Stance::Enemy_Die_FWD_LH_01, Stance::Enemy_Die_FWD_LH_13);
                                                 break;
 
                                             case Direction::Right:
-// Serial.println("D4");
+
                                                 enemy.pushSequence(Stance::Enemy_Die_BWD_RH_01, Stance::Enemy_Die_BWD_RH_13);
                                                 break;
 
@@ -2643,6 +2725,22 @@ void playGame_Update() {
     world.updateEnemies();
     player.update();
 
+
+    // End of level?
+
+    if (endOfLevel_Counter < 14 && frameCount % 2 == 0) {
+
+        endOfLevel_Counter++;
+
+    }
+
+    // Housekeeping ..
+
+    if (ignoreKeyPress > 0) {
+        Serial.println(ignoreKeyPress);
+        ignoreKeyPress--;
+    }
+
 }
 
 
@@ -2659,6 +2757,20 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     uint8_t currentPlane = a.currentPlane();
 
     renderWorld(currentPlane);
+
+
+    switch (gameState) {
+
+        case GameState::PlayGame:
+        case GameState::Inventory_Open:
+            break;
+
+        case GameState::Chakana_Open:
+            SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (endOfLevel_Counter * 3) + currentPlane);
+Serial.println(endOfLevel_Counter);            
+            break;
+
+    }
 
     world.update(true);
 

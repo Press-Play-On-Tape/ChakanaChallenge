@@ -83,6 +83,10 @@ enum class ItemType : uint8_t {
     SwingyThing,
     SwingyThing_2,
     SwingyThing_Hidden,
+    Chakana,
+    Chakana_Hidden,
+    Lever_LH,
+    Lever_RH,
     Glint,
     Glint_Hidden,
     Puff,
@@ -1303,6 +1307,7 @@ enum class GameState : uint8_t {
     PlayGame_Start,
         PlayGame,
         Inventory_Open,
+        Chakana_Open,
     PlayGame_End,
 
     Map_Init,

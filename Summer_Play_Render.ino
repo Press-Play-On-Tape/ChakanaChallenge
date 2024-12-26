@@ -209,6 +209,25 @@ void renderWorld(uint8_t currentPlane) {
 
                 break;
 
+            case ItemType::Lever_LH:
+            case ItemType::Lever_RH:
+
+                switch (item.getFrame()) {
+
+                    case 3 ... 21:
+                        imageIdx = Images::Item_19;
+                        frame = (item.getFrame() / 3) + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
+                        break;
+
+                    default:
+                        imageIdx = Images::Item_19;
+                        frame = 0 + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
+                        break;
+
+                }
+
+                break;
+
             case ItemType::Sword:
 
                 switch (item.getFrame()) {
@@ -226,6 +245,16 @@ void renderWorld(uint8_t currentPlane) {
                 }
 
                 break;
+
+            case ItemType::Chakana:
+                imageIdx = Images::Item_18;
+                frame = item.getFrame();
+                break;
+
+            // case ItemType::Lever:
+            //     imageIdx = Images::Item_19;
+            //     frame = item.getFrame();
+            //     break;
 
             case ItemType::Vine:
                 imageIdx = Images::Item_12;

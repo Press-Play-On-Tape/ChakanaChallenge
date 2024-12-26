@@ -90,6 +90,12 @@ class BaseStack {
 
         }
 
+        // void stageSequence(Stance fromStance, Stance toStance) {
+
+        //     this->startSeqence = from ;
+
+        // }
+
         void pushSequence(Stance fromStance, Stance toStance, bool clear) {
 
             if (clear) {

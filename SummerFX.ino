@@ -142,6 +142,7 @@ void loop() {
 
         case GameState::PlayGame:
         case GameState::Inventory_Open:
+        case GameState::Chakana_Open:
         case GameState::Play_Battle:
             playGame(a);
             break;

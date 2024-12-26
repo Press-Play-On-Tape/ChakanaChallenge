@@ -66,6 +66,24 @@ class Item {
 
                     break;
 
+                case ItemType::Chakana:
+
+                    this->counter++;
+                    if (this->counter == (16 * 12))   this->counter = 0;
+
+                    this->frame = this->counter / 16;
+
+                    break;
+
+                // case ItemType::Lever:
+
+                //     this->counter++;
+                //     if (this->counter == (2 * 8))   this->counter = 0;
+
+                //     this->frame = this->counter / 8;
+
+                //     break;
+
                 case ItemType::Punji:
 
                     if (this->counter > 0 && this->counter < (3 * 8) - 1) {
@@ -80,7 +98,9 @@ class Item {
                 case ItemType::Hammer:
                 case ItemType::Amulet:
                 case ItemType::Sword:
-                
+                case ItemType::Lever_LH:
+                case ItemType::Lever_RH:
+
                     this->frame++;
 
                     if (this->counter > 0 && this->frame % 8 == 0) {
@@ -281,7 +301,6 @@ class Item {
                     }
 
                     break;
-
 
                 case ItemType::SwingyThing:
                 case ItemType::SwingyThing_2:
