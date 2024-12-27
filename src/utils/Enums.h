@@ -42,7 +42,7 @@ enum class EnemyType : uint8_t {
 };
 
 enum class ItemType : uint8_t {
-    Key1 = 0,
+    Key1,
     Key1_Hidden,
     WoodenBarrier,
     TrapDoor,
@@ -87,11 +87,37 @@ enum class ItemType : uint8_t {
     Chakana_Hidden,
     Lever_LH,
     Lever_RH,
+    Lever_Portal_Closed,
+    Lever_Portal_Open,
+    Lever_Portal_Auto_Closed,
+    Lever_Portal_Auto_Open,
     Glint,
     Glint_Hidden,
     Puff,
     None,
 };
+
+
+inline ItemType &operator++(ItemType &c) {
+  c = static_cast<ItemType>( static_cast<uint8_t>(c) + 1 );
+  return c;
+}
+
+inline ItemType operator++(ItemType &c, int) {
+  ItemType result = c;
+  ++c;
+  return result;
+}
+
+inline ItemType &operator--( ItemType & c ) {
+  c = static_cast<ItemType>( static_cast<uint8_t>(c) - 1 );
+  return c;
+}
+inline ItemType operator--( ItemType & c, int ) {
+  ItemType result = c;
+  --c;
+  return result;
+}
 
 
 enum class ItemAction : uint8_t {
@@ -100,7 +126,6 @@ enum class ItemAction : uint8_t {
     Remove_AddToInventory,
     HideCrate_ShowItem,
 };
-
 
 
 enum Stance : uint16_t {

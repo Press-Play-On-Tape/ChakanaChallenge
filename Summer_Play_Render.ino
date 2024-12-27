@@ -106,6 +106,10 @@ void renderWorld(uint8_t currentPlane) {
             if (tile00 == 31 && tile01 == 31 && tile10 == 33 && tile11 == 33)     imgTile = Images::Crate_38;
 
 
+            // Lever Portal
+            // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
+
+
             // Rollers R then L
 
             if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == 0 && tile11 == 0) {
@@ -225,6 +229,27 @@ void renderWorld(uint8_t currentPlane) {
                         break;
 
                 }
+
+                break;
+
+            case ItemType::Lever_Portal_Closed:
+            case ItemType::Lever_Portal_Open:
+            case ItemType::Lever_Portal_Auto_Closed:
+            case ItemType::Lever_Portal_Auto_Open:
+
+                // switch (item.getFrame()) {
+
+                //     case 3 ... 21:
+                        imageIdx = Images::Item_20;
+                //         frame = (item.getFrame() / 3) + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
+                //         break;
+
+                //     default:
+                //         imageIdx = Images::Item_19;
+                //         frame = 0 + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
+                //         break;
+
+                // }
 
                 break;
 

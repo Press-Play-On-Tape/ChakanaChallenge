@@ -17,6 +17,7 @@ class Item {
         uint16_t x;
         int8_t y;
         uint8_t frame;
+        int8_t data;
         uint16_t counter;
 
     public:
@@ -24,6 +25,7 @@ class Item {
         uint16_t getX()                                 { return this->x; }
         int8_t getY()                                   { return this->y; }
         uint8_t getFrame()                              { return this->frame; }
+        int16_t getData()                               { return this->data; }
         uint16_t getCounter()                           { return this->counter; }
         ItemType getItemType()                          { return this->itemType; }
 
@@ -31,6 +33,7 @@ class Item {
         void setX(uint16_t val)                         { this->x = val; }
         void setY(int8_t val)                           { this->y = val; }
         void setFrame(uint8_t val)                      { this->frame = val; }
+        void setData(int16_t val)                       { this->data = val; }
         void setCounter(uint16_t val)                   { this->counter = val; }
 
         ItemAction update() {
@@ -94,6 +97,65 @@ class Item {
                     }
                     
                     break;
+
+                case ItemType::Lever_Portal_Closed:
+                case ItemType::Lever_Portal_Open:
+                case ItemType::Lever_Portal_Auto_Closed:
+                case ItemType::Lever_Portal_Auto_Open:
+
+                    switch (this->data) {
+                        
+                        case 0:
+
+                            this->counter++;
+
+                            if (this->counter == 256) {
+
+                                if (this->itemType == ItemType::Lever_Portal_Auto_Open) {
+                                    this->data = -1;
+                                    this->counter = 0;
+                                }
+                            }
+                            break;
+
+
+                        case 1:
+
+                            this->counter++;
+
+                            if (this->counter == 8) {
+
+                                this->counter = 0;
+                                this->frame++;
+
+                                if (this->frame == 8) {
+                                    this->data = 0;
+                                    this->itemType++;
+                                }
+
+                            }
+                            break;
+                        
+                        case -1:
+
+                            this->counter++;
+
+                            if (this->counter == 8) {
+
+                                this->counter = 0;
+                                this->frame--;
+
+                                if (this->frame == 0) {
+                                    this->data = 0;
+                                    this->itemType--;
+                                }
+
+                            }
+                            break;
+
+                    }
+                    
+                    break;                    
                 
                 case ItemType::Hammer:
                 case ItemType::Amulet:

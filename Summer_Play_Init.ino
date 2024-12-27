@@ -105,7 +105,7 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 3) {
+        if (i == 6) {
             item.setItemType(ItemType::Puff);
             item.setX(128);
             item.setY(16);  
@@ -113,7 +113,7 @@ void playGame_Init() {
         }
         else if (i == 0) {
             item.setItemType(ItemType::Sword);
-            item.setX(64 + 16);
+            item.setX(64 - 32);
             item.setY(0);    
             item.setFrame(0);         
         }
@@ -125,8 +125,29 @@ void playGame_Init() {
         }
         else if (i == 2) {
             item.setItemType(ItemType::Lever_LH);
+            item.setX(64 + 32);
+            item.setY(0);    
+            item.setFrame(0);
+            item.setData(1 + 4);         
+        }
+        else if (i == 3) {
+            item.setItemType(ItemType::Lever_Portal_Auto_Closed);
+            item.setX(64 + 48 + 48);
+            item.setY(16);    
+            item.setFrame(0);         
+       
+        }
+        else if (i == 4) {
+            item.setItemType(ItemType::Lever_LH);
             item.setX(64 + 48);
             item.setY(0);    
+            item.setFrame(0);         
+            item.setData(1);         
+        }
+        else if (i == 5) {
+            item.setItemType(ItemType::Lever_Portal_Closed);
+            item.setX(64 + 48 + 48 + 16);
+            item.setY(16);    
             item.setFrame(0);         
         }
         // // else if (i == 2) {
@@ -2210,11 +2231,64 @@ void playGame_Update() {
                             player.stageSequence(Stance::None, Stance::None);
 
                             if (item.getItemType() == ItemType::Lever_LH)  {
+
                                 item.setItemType(ItemType::Lever_RH);
+
                             }
                             else {
+
                                 item.setItemType(ItemType::Lever_LH);
+
                             }
+
+                            for (uint8_t x = 0; x < 4; x++) {
+
+                                if (item.getData() & (1<<x)) {
+Serial.println(x);
+                                    Item &item2 = world.getItem(i + x + 1);
+
+                                    switch (item2.getItemType()) {
+
+                                        case ItemType::Lever_Portal_Closed:
+                                        case ItemType::Lever_Portal_Auto_Closed:
+                                            item2.setData(1);
+                                            item2.setCounter(0);
+                                            break;
+
+                                        default:
+                                            item2.setData(-1);
+                                            item2.setCounter(0);
+                                            break;
+
+                                    }
+
+                                }
+
+                            }
+
+                            // }
+                            // else {
+                            //     item.setItemType(ItemType::Lever_LH);
+                            //     Item &item2 = world.getItem(i + 1);
+
+                            //     switch (item2.getItemType()) {
+
+                            //         case ItemType::Lever_Portal_Open:
+                            //         case ItemType::Lever_Portal_Auto_Open:
+                            //             item2.setData(1);
+                            //             item2.setCounter(0);
+                            //             break;
+
+                            //         default:
+                            //             item2.setData(-1);
+                            //             item2.setCounter(0);
+                            //             break;
+
+                            //     }
+
+                            //     item2.setData(-1);
+                            //     item2.setCounter(0);
+                            // }
                             
                         }
                         break;

@@ -462,6 +462,42 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile) {
 
+            if (tile == 34) { 
+
+                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                    
+                    Item &item = this->items[i];
+
+                    if (item.getItemType() == ItemType::Lever_Portal_Open) {
+                        
+                        return true;
+
+                    }
+
+                }
+
+                return false; 
+                
+            }
+
+            if (tile == 35) { 
+
+                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                    
+                    Item &item = this->items[i];
+
+                    if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
+                        
+                        return true;
+
+                    }
+
+                }
+
+                return false; 
+                
+            }
+
             if (tile == 24) { 
 
                 for (uint8_t i = 0; i < Constants::ItemCount; i++) {
