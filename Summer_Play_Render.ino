@@ -30,10 +30,10 @@ void renderWorld(uint8_t currentPlane) {
     for (uint8_t i = 4; i < 8; i++) {    
         SpritesU::drawPlusMaskFX(world.getPalm(i), 20 + yOffset - Constants::GroundY, Constants::PalmImages[i], currentPlane);
     }
-    // SpritesU::drawPlusMaskFX(world.getPalm5(), 20 + yOffset - Constants::GroundY, Images::Palm5, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm6(), 20 + yOffset - Constants::GroundY, Images::Palm6, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm7(), 20 + yOffset - Constants::GroundY, Images::Palm5, currentPlane);
-    // SpritesU::drawPlusMaskFX(world.getPalm8(), 20 + yOffset - Constants::GroundY, Images::Palm6, currentPlane);
+    // SpritesU::drawPlusMaskFX(world.getPalm(5), 20 + yOffset - Constants::GroundY, Images::Palm5, currentPlane);
+    // SpritesU::drawPlusMaskFX(world.getPalm(6), 20 + yOffset - Constants::GroundY, Images::Palm6, currentPlane);
+    // SpritesU::drawPlusMaskFX(world.getPalm(7), 20 + yOffset - Constants::GroundY, Images::Palm5, currentPlane);
+    // SpritesU::drawPlusMaskFX(world.getPalm(8), 20 + yOffset - Constants::GroundY, Images::Palm6, currentPlane);
 
 
     for (uint8_t y = 0; y < 10; y = y + 2) {
@@ -241,6 +241,8 @@ void renderWorld(uint8_t currentPlane) {
 
                 //     case 3 ... 21:
                         imageIdx = Images::Item_20;
+                        frame = 0;
+                        if (item.getFrame() > 0) frame = item.getFrame() - 1;
                 //         frame = (item.getFrame() / 3) + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
                 //         break;
 
@@ -584,7 +586,7 @@ void renderWorld(uint8_t currentPlane) {
         // SpritesU::drawOverwriteFX(world.getWave(), 32, Images::Beach_LH, ((world.getWaveIdx() / 64) * 3) + currentPlane);
     }
 
-    // Front palms
+    // Front palms  SJH should be enabled
 
     // for (uint8_t i = 0; i < 4; i++) {
 

@@ -17,7 +17,7 @@ class Item {
         uint16_t x;
         int8_t y;
         uint8_t frame;
-        int8_t data;
+        int16_t data;
         uint16_t counter;
 
     public:
@@ -33,7 +33,7 @@ class Item {
         void setX(uint16_t val)                         { this->x = val; }
         void setY(int8_t val)                           { this->y = val; }
         void setFrame(uint8_t val)                      { this->frame = val; }
-        void setData(int16_t val)                       { this->data = val; }
+        void setData(int16_t val)                       { Serial.println(val); this->data = val; }
         void setCounter(uint16_t val)                   { this->counter = val; }
 
         ItemAction update() {
@@ -97,29 +97,16 @@ class Item {
                     }
                     
                     break;
+               
 
                 case ItemType::Lever_Portal_Closed:
-                case ItemType::Lever_Portal_Open:
                 case ItemType::Lever_Portal_Auto_Closed:
-                case ItemType::Lever_Portal_Auto_Open:
+if (this->itemType == ItemType::Lever_Portal_Auto_Closed) {                            
+Serial.println(this->data);
+}
+                    switch (this->frame) {
 
-                    switch (this->data) {
-                        
-                        case 0:
-
-                            this->counter++;
-
-                            if (this->counter == 256) {
-
-                                if (this->itemType == ItemType::Lever_Portal_Auto_Open) {
-                                    this->data = -1;
-                                    this->counter = 0;
-                                }
-                            }
-                            break;
-
-
-                        case 1:
+                        case 1 ... 8:
 
                             this->counter++;
 
@@ -128,15 +115,26 @@ class Item {
                                 this->counter = 0;
                                 this->frame++;
 
-                                if (this->frame == 8) {
-                                    this->data = 0;
+                                if (this->frame == 9) {
                                     this->itemType++;
                                 }
 
                             }
+
                             break;
+
+                        default: break;
+
+                    }
+                    
+                    break;       
+
+                case ItemType::Lever_Portal_Open:
+                case ItemType::Lever_Portal_Auto_Open:
+
+                    switch (this->frame) {
                         
-                        case -1:
+                        case 1 ... 8:
 
                             this->counter++;
 
@@ -146,17 +144,30 @@ class Item {
                                 this->frame--;
 
                                 if (this->frame == 0) {
-                                    this->data = 0;
                                     this->itemType--;
                                 }
 
                             }
                             break;
+                        
+                        case 9:
+
+                            this->counter++;
+if (this->itemType == ItemType::Lever_Portal_Auto_Open) {                            
+Serial.println(this->data);
+}
+                            if (this->counter == this->data && this->itemType == ItemType::Lever_Portal_Auto_Open) {
+                                this->counter = 0;
+                                this->frame = 8;
+                            }
+                            break;
+
+                        default: break;
 
                     }
                     
-                    break;                    
-                
+                    break;  
+
                 case ItemType::Hammer:
                 case ItemType::Amulet:
                 case ItemType::Sword:
