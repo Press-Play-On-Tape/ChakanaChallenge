@@ -284,7 +284,7 @@ void renderWorld(uint8_t currentPlane) {
             //     frame = item.getFrame();
             //     break;
 
-            case ItemType::Vine:
+            case ItemType::Swinging_Vine:
                 imageIdx = Images::Item_12;
                 break;
 

@@ -234,7 +234,7 @@ class Item {
                     }
                     break;
 
-                case ItemType::Vine:
+                case ItemType::Swinging_Vine:
 
                     if (this->counter < (22 * 16) - 1) {
 

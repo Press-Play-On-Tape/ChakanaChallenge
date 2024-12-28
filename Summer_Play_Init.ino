@@ -112,9 +112,9 @@ void playGame_Init() {
             item.setFrame(255);           
         }
         else if (i == 0) {
-            item.setItemType(ItemType::Punji);
-            item.setX(64 - 32);
-            item.setY(0);    
+            item.setItemType(ItemType::Swinging_Vine);
+            item.setX(64 + 64 + 16);
+            item.setY(32);    
             item.setFrame(0);         
         }
         else if (i == 1) {
@@ -1180,7 +1180,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                             if (world.isVineTile_RH(tile_L) && (player.getStance() < Stance::Man_Vine_LH_01 || player.getStance() > Stance::Man_Vine_LH_20)) {
 
-                                Item &item = world.getItem(world.getItem(ItemType::Vine));
+                                Item &item = world.getItem(world.getItem(ItemType::Swinging_Vine));
 
                                 if ((item.getCounter() >= 144 && item.getCounter() < 208)) {
 
@@ -1441,7 +1441,7 @@ Serial.println("1");
 
                             if (world.isVineTile_LH(tile_R) && (player.getStance() < Stance::Man_Vine_RH_01 || player.getStance() > Stance::Man_Vine_RH_20)) {
 
-                                Item &item = world.getItem(world.getItem(ItemType::Vine));
+                                Item &item = world.getItem(world.getItem(ItemType::Swinging_Vine));
 
                                 if ((item.getCounter() >= 0 && item.getCounter() < 32) || (item.getCounter() >= 320 && item.getCounter() < 352)) {
 
