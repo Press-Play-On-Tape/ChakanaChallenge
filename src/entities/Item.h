@@ -101,9 +101,7 @@ class Item {
 
                 case ItemType::Lever_Portal_Closed:
                 case ItemType::Lever_Portal_Auto_Closed:
-if (this->itemType == ItemType::Lever_Portal_Auto_Closed) {                            
-Serial.println(this->data);
-}
+
                     switch (this->frame) {
 
                         case 1 ... 8:
@@ -153,9 +151,7 @@ Serial.println(this->data);
                         case 9:
 
                             this->counter++;
-if (this->itemType == ItemType::Lever_Portal_Auto_Open) {                            
-Serial.println(this->data);
-}
+
                             if (this->counter == this->data && this->itemType == ItemType::Lever_Portal_Auto_Open) {
                                 this->counter = 0;
                                 this->frame = 8;

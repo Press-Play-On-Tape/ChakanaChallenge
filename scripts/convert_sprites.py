@@ -211,7 +211,8 @@ convert_header(IMAGES + 'Crate_35.png',                                         
 convert_header(IMAGES + 'Crate_36.png',                                                        BASE + 'Images.hpp', 'Crate_36', 4, maskImage=True)
 convert_header(IMAGES + 'Crate_37.png',                                                        BASE + 'Images.hpp', 'Crate_37', 4, maskImage=True)
 convert_header(IMAGES + 'Crate_38.png',                                                        BASE + 'Images.hpp', 'Crate_38', 4, maskImage=True)
-convert_header(IMAGES + 'Spikes.png',                                                          BASE + 'Images.hpp', 'Spikes', 4, maskImage=True)
+convert_header(IMAGES + 'Spikes_Top.png',                                                          BASE + 'Images.hpp', 'Spikes_Top', 4, maskImage=True)
+convert_header(IMAGES + 'Spikes_Bottom.png',                                                          BASE + 'Images.hpp', 'Spikes_Bottom', 4, maskImage=True)
 convert_header(IMAGES + 'Trebochet_Ball.png',                                                   BASE + 'Images.hpp', 'Trebochet_Ball', 4, 16, 16, maskImage=True)
 
 

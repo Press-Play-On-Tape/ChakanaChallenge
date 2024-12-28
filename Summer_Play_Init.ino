@@ -105,7 +105,7 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 6) {
+        if (i == 3) {
             item.setItemType(ItemType::Puff);
             item.setX(128);
             item.setY(16);  
@@ -123,34 +123,35 @@ void playGame_Init() {
             item.setY(0);    
             item.setFrame(0);         
         }
-        else if (i == 2) {
-            item.setItemType(ItemType::Lever_LH);
-            item.setX(64 + 48);
-            item.setY(0);    
-            item.setFrame(0);
-            item.setData(1 + 4);         
-        }
-        else if (i == 3) {
-            item.setItemType(ItemType::Lever_Portal_Auto_Closed);
-            item.setX(64 + 48 + 48);
-            item.setY(16);    
-            item.setFrame(0);         
-            item.setData(512);         
+        // else if (i == 2) {
+        //     item.setItemType(ItemType::Lever_LH);
+        //     item.setX(64 + 48);
+        //     item.setY(0);    
+        //     item.setFrame(0);
+        //     item.setData(1 + 4);         
+        // }
+        // else if (i == 3) {
+        //     item.setItemType(ItemType::Lever_Portal_Auto_Closed);
+        //     item.setX(64 + 48 + 48);
+        //     item.setY(16);    
+        //     item.setFrame(0);         
+        //     item.setData(512);         
        
-        }
-        else if (i == 4) {
-            item.setItemType(ItemType::Lever_LH);
-            item.setX(64 + 32 + 80 + 32);
-            item.setY(0);    
-            item.setFrame(0);         
-            item.setData(1);         
-        }
-        else if (i == 5) {
-            item.setItemType(ItemType::Lever_Portal_Closed);
-            item.setX(64 + 48 + 48 + 16);
-            item.setY(16);    
-            item.setFrame(0);         
-        }
+        // }
+        // else if (i == 4) {
+        //     item.setItemType(ItemType::Lever_LH);
+        //     item.setX(64 + 32 + 80 + 32);
+        //     item.setY(0);    
+        //     item.setFrame(0);         
+        //     item.setData(1);         
+        // }
+        // else if (i == 5) {
+        //     item.setItemType(ItemType::Lever_Portal_Closed);
+        //     item.setX(64 + 48 + 48 + 16);
+        //     item.setY(16);    
+        //     item.setFrame(0);         
+        // }
+        
         // // else if (i == 2) {
         // //     item.setItemType(ItemType::PinchBar_Hidden);
         // //     // item.setX(128 - 32 - 32);
@@ -1320,11 +1321,16 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_LH_01, Stance::Man_DescendStairs_LH_04);
 
                         }                                    
-                        else if (world.canWalkPastTile(tile_L) || player.getLevel() == 0) {  
-
+                        else if (world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0) {  
+Serial.println("1");
                             player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
 
                         }
+//                         else if (!world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0) {  
+// Serial.println("1");
+//                             player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
+
+//                         }
                         else {
 
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
@@ -1574,11 +1580,25 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_RH_01, Stance::Man_DescendStairs_RH_04);
 
                         }                                
-                        else if (world.canWalkPastTile(tile_R) || player.getLevel() == 0) {  
+                        else if (world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0) {  
+Serial.println("2");
 
                             player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
                         }
+//                         else if (!world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0) {  
+// int16_t tileIdx = (-world.getMiddleground() + 65 + (0 * 8)) / 8;
+// int16_t tileIdx2 = (-world.getMiddleground() + 65 + (0 * 8)) % 8;
+// Serial.print(">> ");
+// Serial.print(tileIdx);
+// Serial.print(" ");
+// Serial.print(tileIdx2);
+// Serial.print(" ");
+// Serial.println("2");
+
+//                             player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+
+//                         }                        
                         else {
 
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {

@@ -459,10 +459,21 @@ struct World {
 
         }
 
-
         bool canWalkPastTile(uint8_t tile) {
 
-            if (tile == 34) { 
+            return canWalkPastTile(tile, Direction::None);
+
+        }
+
+        bool canWalkPastTile(uint8_t tile, Direction direction) {
+            
+            if (tile == Tiles::Lever_Portal_LH && direction == Direction::Left) { 
+
+                return true;
+
+            }
+
+            if (tile == Tiles::Lever_Portal_LH && direction == Direction::Right) { 
 
                 for (uint8_t i = 0; i < Constants::ItemCount; i++) {
                     
@@ -479,8 +490,62 @@ struct World {
                 return false; 
                 
             }
+            
+            if (tile == Tiles::Lever_Portal_RH && direction == Direction::Right) { 
 
-            if (tile == 35) { 
+                return true;
+
+            }
+
+            if (tile == Tiles::Lever_Portal_RH && direction == Direction::Left) { 
+
+                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                    
+                    Item &item = this->items[i];
+
+                    if (item.getItemType() == ItemType::Lever_Portal_Open) {
+                        
+                        return true;
+
+                    }
+
+                }
+
+                return false; 
+                
+            }
+            
+            if (tile == Tiles::Lever_Portal_Auto_LH && direction == Direction::Left) { 
+
+                return true;
+
+            }
+
+            if (tile == Tiles::Lever_Portal_Auto_LH && direction == Direction::Right) { 
+
+                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                    
+                    Item &item = this->items[i];
+
+                    if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
+                        
+                        return true;
+
+                    }
+
+                }
+
+                return false; 
+                
+            }
+
+            if (tile == Tiles::Lever_Portal_Auto_RH && direction == Direction::Right) { 
+
+                return true;
+
+            }
+
+            if (tile == Tiles::Lever_Portal_Auto_RH && direction == Direction::Left) { 
 
                 for (uint8_t i = 0; i < Constants::ItemCount; i++) {
                     
@@ -552,7 +617,7 @@ struct World {
                 
             }
 
-            return tile == 0 || tile == 1 || tile == 7 /*stairs*/ || tile == 12 /*stairs*/ || tile == 13 /*rope lh*/ || 
+            return tile == 0 || tile == 1 || tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == 13 /*rope lh*/ || 
                    tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == 23 /*Punji Invisible*/ ||
                    tile == 29 || tile == 30;
             
@@ -560,7 +625,7 @@ struct World {
 
         bool canWalkOnTile(uint8_t tile) {
 
-            return tile == 1 || tile == 2 || tile == 9 || tile == 27 || tile == 28;
+            return tile == Tiles::Solid_1 || tile == Tiles::Solid_2 || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
             
         }
 
@@ -572,19 +637,19 @@ struct World {
 
         bool canJumpUpOntoTile(uint8_t tile) {
 
-            return tile == 1 || tile == 2;
+            return tile == Tiles::Solid_1 || tile == Tiles::Solid_2;
             
         }
 
         bool isEmptyTile(uint8_t tile) {
 
-            return tile == 0 || tile == 3 || tile == 29 || tile == 30;
+            return tile == Tiles::Blank || tile == Tiles::Spikes || tile == 29 || tile == 30;
             
         }
 
         bool isSpikeTile(uint8_t tile) {
 
-            return tile == 3;
+            return tile == Tiles::Spikes;
             
         }
 
@@ -596,31 +661,31 @@ struct World {
 
         bool isStairTile_R_Half(uint8_t tile) {
 
-            return tile == 6;
+            return tile == Tiles::Single_Stair_RH_Lower;
             
         }
 
         bool isStairTile_R2(uint8_t tile) {
 
-            return tile == 5;
+            return tile == Tiles::Single_Stair_RH_Upper_TR;
             
         }
 
         bool isStairTile_L1(uint8_t tile) {
 
-            return tile == 10;
+            return tile == Tiles::Single_Stair_LH_Upper_TR;
             
         }
 
         bool isStairTile_L_Half(uint8_t tile) {
 
-            return tile == 11;
+            return tile == Tiles::Single_Stair_LH_Lower;
             
         }
 
         bool isStairTile_L2(uint8_t tile) {
 
-            return tile == 9;
+            return tile == Tiles::Single_Stair_LH_Upper_TL;
             
         }
 
@@ -652,19 +717,19 @@ struct World {
 
         bool isVerticalVine_Lower(uint8_t tile) {
 
-            return tile == 32;
+            return tile == Tiles::Vine_Lower;
             
         }
 
         bool isVerticalVine_Middle(uint8_t tile) {
 
-            return tile == 31;
+            return tile == Tiles::Vine_Middle;
             
         }
 
         bool isVerticalVine_Upper(uint8_t tile) {
 
-            return tile == 33;
+            return tile == Tiles::Vine_Upper;
             
         }
 
