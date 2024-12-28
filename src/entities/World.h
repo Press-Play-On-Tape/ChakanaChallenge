@@ -563,7 +563,7 @@ struct World {
                 
             }
 
-            if (tile == 24) { 
+            if (tile == Tiles::WoddenBarrier) { 
 
                 for (uint8_t i = 0; i < Constants::ItemCount; i++) {
                     
@@ -618,7 +618,7 @@ struct World {
             }
 
             return tile == 0 || tile == 1 || tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == 13 /*rope lh*/ || 
-                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == 23 /*Punji Invisible*/ ||
+                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == Tiles::Punji ||
                    tile == 29 || tile == 30;
             
         }
@@ -631,7 +631,7 @@ struct World {
 
         bool isPunjiTile(uint8_t tile) {
 
-            return tile == 23;
+            return tile == Tiles::Punji;
             
         }
 
@@ -787,7 +787,7 @@ struct World {
 
         bool isWoodenBarrier(uint8_t tile) {
 
-            return tile == 24;
+            return tile == Tiles::WoddenBarrier;
             
         }
 

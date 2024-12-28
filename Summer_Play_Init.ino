@@ -105,14 +105,14 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 3) {
+        if (i == 2) {
             item.setItemType(ItemType::Puff);
             item.setX(128);
             item.setY(16);  
             item.setFrame(255);           
         }
         else if (i == 0) {
-            item.setItemType(ItemType::Sword);
+            item.setItemType(ItemType::Punji);
             item.setX(64 - 32);
             item.setY(0);    
             item.setFrame(0);         
@@ -151,7 +151,7 @@ void playGame_Init() {
         //     item.setY(16);    
         //     item.setFrame(0);         
         // }
-        
+
         // // else if (i == 2) {
         // //     item.setItemType(ItemType::PinchBar_Hidden);
         // //     // item.setX(128 - 32 - 32);
