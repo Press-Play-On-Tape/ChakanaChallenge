@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xf5f6;
-constexpr uint24_t FX_DATA_BYTES = 653654;
+constexpr uint16_t FX_DATA_PAGE  = 0xf5d2;
+constexpr uint24_t FX_DATA_BYTES = 662876;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -145,13 +145,16 @@ namespace Images
   constexpr uint24_t Crate_36 = 0x048E20;
   constexpr uint24_t Crate_37 = 0x048EE2;
   constexpr uint24_t Crate_38 = 0x048FA4;
-  constexpr uint24_t Spikes_Top = 0x049066;
-  constexpr uint24_t Spikes_Bottom = 0x049128;
-  constexpr uint24_t Trebochet_Ball = 0x0491EA;
-  constexpr uint24_t Health = 0x049F6C;
-  constexpr uint24_t Glint = 0x04A50E;
-  constexpr uint24_t Sword_Wound = 0x04AB10;
-  constexpr uint24_t BoatEnters = 0x04AD52;
-  constexpr uint24_t EndOfLevel = 0x095154;
+  constexpr uint24_t Crate_39 = 0x049066;
+  constexpr uint24_t Crate_40 = 0x049C68;
+  constexpr uint24_t Crate_41 = 0x04A86A;
+  constexpr uint24_t Spikes_Top = 0x04B46C;
+  constexpr uint24_t Spikes_Bottom = 0x04B52E;
+  constexpr uint24_t Trebochet_Ball = 0x04B5F0;
+  constexpr uint24_t Health = 0x04C372;
+  constexpr uint24_t Glint = 0x04C914;
+  constexpr uint24_t Sword_Wound = 0x04CF16;
+  constexpr uint24_t BoatEnters = 0x04D158;
+  constexpr uint24_t EndOfLevel = 0x09755A;
 }
 

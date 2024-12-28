@@ -1,12 +1,5 @@
 #pragma once
 
-struct StanceData {
-    int8_t y;
-    int8_t foreground;
-    int8_t middleground;
-    int9_t background;
-};
-
 enum class MusicSong : uint8_t {
     MainTheme
 };

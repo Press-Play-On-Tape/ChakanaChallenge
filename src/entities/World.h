@@ -643,13 +643,19 @@ struct World {
 
         bool isEmptyTile(uint8_t tile) {
 
-            return tile == Tiles::Blank || tile == Tiles::Spikes || tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH;
+            return tile == Tiles::Blank || tile == Tiles::Spikes || tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || tile == Tiles::Water_Bubbling_2;
             
         }
 
         bool isSpikeTile(uint8_t tile) {
 
             return tile == Tiles::Spikes;
+            
+        }
+
+        bool isWaterTile(uint8_t tile) {
+
+            return tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || tile == Tiles::Water_Bubbling_2;
             
         }
 

@@ -1189,7 +1189,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                                 }     
                                 else {
-                                    
+                                  
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
 
@@ -1322,15 +1322,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         }                                    
                         else if (world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0) {  
-Serial.println("1");
+
                             player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
 
                         }
-//                         else if (!world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0) {  
-// Serial.println("1");
-//                             player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
-
-//                         }
                         else {
 
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
@@ -1453,7 +1448,7 @@ Serial.println("1");
 
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
-
+Serial.println("a");  
                                 }
 
                             }
@@ -1507,7 +1502,7 @@ Serial.println("1");
 
                                 player.setFalls(0);
                                 player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
-
+Serial.println("b");  
                             }
 
                         }
@@ -1581,24 +1576,10 @@ Serial.println("1");
 
                         }                                
                         else if (world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0) {  
-Serial.println("2");
 
                             player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
                         }
-//                         else if (!world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0) {  
-// int16_t tileIdx = (-world.getMiddleground() + 65 + (0 * 8)) / 8;
-// int16_t tileIdx2 = (-world.getMiddleground() + 65 + (0 * 8)) % 8;
-// Serial.print(">> ");
-// Serial.print(tileIdx);
-// Serial.print(" ");
-// Serial.print(tileIdx2);
-// Serial.print(" ");
-// Serial.println("2");
-
-//                             player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
-
-//                         }                        
                         else {
 
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
@@ -2541,6 +2522,12 @@ void playGame_Update() {
                                     player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
 
                                 }
+                                else if (world.isWaterTile(tile_D)) {
+Serial.println("Water");
+                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+                                    player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+
+                                }
                                 else {
 
                                     if (world.getMiddleground() % 8 == 4 || world.getMiddleground() % 8 == -4) {
@@ -2573,7 +2560,7 @@ void playGame_Update() {
                 case Stance::Man_Rollers_Fall_RH_04:
                 case Stance::Man_Vine_Exit_RH_08:
                     {
-  
+
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
 
@@ -2588,21 +2575,23 @@ void playGame_Update() {
                                     player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
 
                                 }
-                                else {
+                                else if (world.isSpikeTile(tile_D)) {
 
-                                    if (world.isSpikeTile(tile_D)) {
-
-                                        player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
-                                        player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
-
-                                    }
-                                    else {
-
-                                        player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
-
-                                    } 
+                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+                                    player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
 
                                 }
+                                else if (world.isWaterTile(tile_D)) {
+
+                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+                                    player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
+
+                                }
+                                else {
+
+                                    player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
+
+                                } 
 
                             }
                             else {
@@ -2645,18 +2634,21 @@ void playGame_Update() {
                                     player.pushSequence(Stance::Man_Walk_FallMore_LH_01, Stance::Man_Walk_FallMore_LH_02); 
 
                                 }
+                                else if (world.isSpikeTile(tile_D)) {
+
+                                    player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04); 
+                                    player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
+
+                                }
+                                else if (world.isWaterTile(tile_D)) {
+
+                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+                                    player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04);
+
+                                }                                    
                                 else {
-                                    if (world.isSpikeTile(tile_D)) {
 
-                                        player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04); 
-                                        player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
-
-                                    }
-                                    else {
-
-                                        player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
-
-                                    }
+                                    player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
 
                                 }
 
