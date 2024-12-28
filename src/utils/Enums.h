@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Arduboy2.h>
+
 enum class MusicSong : uint8_t {
     MainTheme
 };
@@ -101,23 +103,24 @@ enum class ItemType : uint8_t {
 inline ItemType &operator++(ItemType &c) {
   c = static_cast<ItemType>( static_cast<uint8_t>(c) + 1 );
   return c;
-}
+};
 
 inline ItemType operator++(ItemType &c, int) {
   ItemType result = c;
   ++c;
   return result;
-}
+};
 
 inline ItemType &operator--( ItemType & c ) {
   c = static_cast<ItemType>( static_cast<uint8_t>(c) - 1 );
   return c;
-}
+};
+
 inline ItemType operator--( ItemType & c, int ) {
   ItemType result = c;
   --c;
   return result;
-}
+};
 
 
 enum class ItemAction : uint8_t {
@@ -643,7 +646,23 @@ enum Stance : uint16_t {
             Man_Die_BWD_RH_03,
             Man_Die_BWD_RH_04,
 
-        Man_RH_End = Man_Die_BWD_RH_04,
+            Man_Die_Water_RH_01,
+            Man_Die_Water_RH_02,
+            Man_Die_Water_RH_03,
+            Man_Die_Water_RH_04,
+            Man_Die_Water_RH_05,
+            Man_Die_Water_RH_06,
+            Man_Die_Water_RH_07,
+
+            Man_Die_Water_RH_02_01,
+            Man_Die_Water_RH_02_02,
+            Man_Die_Water_RH_02_03,
+            Man_Die_Water_RH_02_04,
+            Man_Die_Water_RH_02_05,
+            Man_Die_Water_RH_02_06,
+            Man_Die_Water_RH_02_07,
+
+        Man_RH_End = Man_Die_Water_RH_02_07,
         
         Man_FW_Start,
             
@@ -1059,7 +1078,23 @@ enum Stance : uint16_t {
             Man_Die_BWD_LH_03,
             Man_Die_BWD_LH_04,
 
-        Man_LH_End = Man_Die_BWD_LH_04,
+            Man_Die_Water_LH_01,
+            Man_Die_Water_LH_02,
+            Man_Die_Water_LH_03,
+            Man_Die_Water_LH_04,
+            Man_Die_Water_LH_05,
+            Man_Die_Water_LH_06,
+            Man_Die_Water_LH_07,
+
+            Man_Die_Water_LH_02_01,
+            Man_Die_Water_LH_02_02,
+            Man_Die_Water_LH_02_03,
+            Man_Die_Water_LH_02_04,
+            Man_Die_Water_LH_02_05,
+            Man_Die_Water_LH_02_06,
+            Man_Die_Water_LH_02_07,
+
+        Man_LH_End = Man_Die_Water_LH_02_07,
     
         Man_StandingJumpDown_RH_01,
         Man_StandingJumpDown_RH_02,
