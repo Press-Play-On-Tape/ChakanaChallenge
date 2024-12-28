@@ -48,8 +48,8 @@ void renderWorld(uint8_t currentPlane) {
             uint24_t imgTile = 0;
 
             if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == Tiles::Blank && tile11 == Tiles::Blank)         imgTile = Images::Crate_10;
-            if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == 16 && tile11 == Tiles::Blank)        imgTile = Images::Crate_20;
-            if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == Tiles::Blank && tile11 == 17)        imgTile = Images::Crate_21;
+            if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)        imgTile = Images::Crate_20;
+            if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)        imgTile = Images::Crate_21;
             if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == Tiles::Blank && tile11 == Tiles::Solid_1)         imgTile = Images::Crate_00;
             if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_2 && tile10 == Tiles::Blank && tile11 == Tiles::Solid_2)         imgTile = Images::Crate_00;
             if (tile00 == Tiles::Solid_2 && tile01 == Tiles::Solid_2 && tile10 == Tiles::Blank && tile11 == Tiles::Solid_2)         imgTile = Images::Crate_09;
@@ -61,7 +61,9 @@ void renderWorld(uint8_t currentPlane) {
             if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == Tiles::Solid_1 && tile11 == Tiles::Blank)         imgTile = Images::Crate_02;
             if (tile00 == Tiles::Solid_1 && tile01 == Tiles::Solid_1 && tile10 == Tiles::Solid_2 && tile11 == Tiles::Blank)         imgTile = Images::Crate_04;
             if (tile00 == Tiles::Solid_2 && tile01 == Tiles::Blank && tile10 == Tiles::Solid_2 && tile11 == Tiles::Blank)         imgTile = Images::Crate_06;
+            if (tile00 == Tiles::Solid_2 && tile01 == Tiles::Blank && tile10 == Tiles::Solid_1 && tile11 == Tiles::Blank)         imgTile = Images::Crate_06;
             if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_2 && tile10 == Tiles::Blank && tile11 == Tiles::Solid_2)         imgTile = Images::Crate_07;
+            if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_2 && tile10 == Tiles::Blank && tile11 == Tiles::Solid_1)         imgTile = Images::Crate_07;
             if (tile00 == Tiles::Spikes && tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank)         imgTile = Images::Spikes_Bottom;
             if (tile00 == Tiles::Solid_2 && tile01 == Tiles::Solid_2 && tile10 == Tiles::Spikes && tile11 == Tiles::Spikes)         imgTile = Images::Spikes_Top;
             // if (tile00 == 6 && tile01 == 5 && tile10 == Tiles::Blank && tile11 == Tiles::Blank)         imgTile = Images::Crate_11;

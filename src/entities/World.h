@@ -618,7 +618,7 @@ struct World {
             }
 
             return tile == 0 || tile == 1 || tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == 13 /*rope lh*/ || 
-                   tile == 14 /*rope rh*/ || tile == 16 /*Spring lh*/ || tile == 17 /*Spring rh*/ || tile == Tiles::Punji ||
+                   tile == 14 /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH;
             
         }
@@ -749,19 +749,19 @@ struct World {
 
         bool isSpringTile(uint8_t tile) {
 
-            return tile == 16 || tile == 17;
+            return tile == Tiles::Spring_LH || tile == Tiles::Spring_RH;
             
         }
 
         bool isSpringTile_LH(uint8_t tile) {
 
-            return tile == 16;
+            return tile == Tiles::Spring_LH;
             
         }
 
         bool isSpringTile_RH(uint8_t tile) {
 
-            return tile == 17;
+            return tile == Tiles::Spring_RH;
             
         }
 
@@ -769,13 +769,13 @@ struct World {
         
         bool isSlideTile_LH(uint8_t tile) {
 
-            return tile == 19;
+            return tile == Tiles::Slide_LH_Upper;
             
         }
 
         bool isSlideTile_Full_LH(uint8_t tile) {
 
-            return tile == 20;
+            return tile == Tiles::Slide_LH_Full;
             
         }
         
