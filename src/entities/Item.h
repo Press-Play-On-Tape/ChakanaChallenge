@@ -169,6 +169,7 @@ class Item {
                 case ItemType::Sword:
                 case ItemType::Lever_LH:
                 case ItemType::Lever_RH:
+                case ItemType::LifeSaver:
 
                     this->frame++;
 
@@ -183,7 +184,7 @@ class Item {
                     }
 
                     break;
-
+                    
                 case ItemType::WoodenBarrier:
 
                     if (this->counter > 0 && this->counter < (7 * 32) - 1) {

@@ -95,6 +95,8 @@ enum class ItemType : uint8_t {
     Lever_Portal_Auto_Open,
     Glint,
     Glint_Hidden,
+    LifeSaver,
+    LifeSaver_Hidden,
     Puff,
     None,
 };

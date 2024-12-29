@@ -168,6 +168,7 @@ convert_header(IMAGES + 'Item_17.png',                                          
 convert_header(IMAGES + 'Item_18.png',                                                            BASE + 'Images.hpp', 'Item_18', 4, 16, 16, maskImage=True)
 convert_header(IMAGES + 'Item_19.png',                                                            BASE + 'Images.hpp', 'Item_19', 4, 16, 16, maskImage=True)
 convert_header(IMAGES + 'Item_20.png',                                                            BASE + 'Images.hpp', 'Item_20', 4, 16, 16, maskImage=True)
+convert_header(IMAGES + 'Item_21.png',                                                            BASE + 'Images.hpp', 'Item_21', 4, 16, 16, maskImage=True)
 
 convert_header(IMAGES + 'Map.png',                                                            BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Scroll.png',                                                            BASE + 'Images.hpp', 'Scroll', 4, maskImage=True)

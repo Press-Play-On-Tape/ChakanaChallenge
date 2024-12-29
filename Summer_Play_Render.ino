@@ -207,6 +207,11 @@ void renderWorld(uint8_t currentPlane) {
                 frame = item.getFrame() / 16;
                 break;
 
+            case ItemType::LifeSaver:
+                imageIdx = Images::Item_21;
+                frame = item.getFrame() / 22;
+                break;
+
             case ItemType::LockedDoor:
                 imageIdx = Images::Item_09;
                 break;
@@ -253,21 +258,9 @@ void renderWorld(uint8_t currentPlane) {
             case ItemType::Lever_Portal_Auto_Closed:
             case ItemType::Lever_Portal_Auto_Open:
 
-                // switch (item.getFrame()) {
-
-                //     case 3 ... 21:
-                        imageIdx = Images::Item_20;
-                        frame = 0;
-                        if (item.getFrame() > 0) frame = item.getFrame() - 1;
-                //         frame = (item.getFrame() / 3) + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
-                //         break;
-
-                //     default:
-                //         imageIdx = Images::Item_19;
-                //         frame = 0 + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
-                //         break;
-
-                // }
+                imageIdx = Images::Item_20;
+                frame = 0;
+                if (item.getFrame() > 0) frame = item.getFrame() - 1;
 
                 break;
 
@@ -293,11 +286,6 @@ void renderWorld(uint8_t currentPlane) {
                 imageIdx = Images::Item_18;
                 frame = item.getFrame();
                 break;
-
-            // case ItemType::Lever:
-            //     imageIdx = Images::Item_19;
-            //     frame = item.getFrame();
-            //     break;
 
             case ItemType::Swinging_Vine:
                 imageIdx = Images::Item_12;
@@ -677,6 +665,10 @@ void renderWorld(uint8_t currentPlane) {
 
                 case ItemType::Sword:
                     imgIndex = Images::Item_17;
+                    break;
+
+                case ItemType::LifeSaver:
+                    imgIndex = Images::Item_21;
                     break;
 
             }

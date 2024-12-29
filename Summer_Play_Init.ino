@@ -118,8 +118,8 @@ void playGame_Init() {
             item.setFrame(0);         
         }
         else if (i == 1) {
-            item.setItemType(ItemType::Chakana);
-            item.setX(64 - 48 - 64);
+            item.setItemType(ItemType::LifeSaver);
+            item.setX(64 - 64);
             item.setY(0);    
             item.setFrame(0);         
         }
@@ -727,7 +727,7 @@ void playGame_HandleEnemies() {
 
 void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    if (justPressed & A_BUTTON || pressed & A_BUTTON) {
+    if (justPressed & A_BUTTON){//} || pressed & A_BUTTON) {
 
         if (player.getItemCount() != 0) {
                 
@@ -736,6 +736,17 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                 case Direction::Right:
                     {
                         uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
+                        uint8_t tile_R1D = world.getTile_RelativeToPlayer(1, -2);
+                        uint8_t tile_R3D = world.getTile_RelativeToPlayer(3, -2);
+
+                        if (world.isWaterTile(tile_R1D) && world.isWaterTile(tile_R3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver) {
+Serial.print(tile_R1D);
+Serial.print(" ");
+Serial.println(tile_R3D);
+                            // player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
+                            removeInventoryItem(GameState::PlayGame);
+
+                        }
 
                         if (world.isWoodenBarrier(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
 
@@ -782,6 +793,15 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                 case Direction::Left:
                     {
                         uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+                        uint8_t tile_L1D = world.getTile_RelativeToPlayer(-1, -2);
+                        uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -2);
+
+                        if (world.isWaterTile(tile_L1D) && world.isWaterTile(tile_L3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver) {
+
+                            player.pushSequence(Stance::Man_Hammering_LH_00, Stance::Man_Hammering_LH_10);
+                            removeInventoryItem(GameState::PlayGame);
+
+                        }
 
                         if (world.isWoodenBarrier(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
 
@@ -1458,13 +1478,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
-Serial.println("Man_Walk_FallDown_RH_01");  
+
                                 }
 
                             }
                             else if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
                                     world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.canWalkOnTile(tile_R3D)) {     
-Serial.println("Man_WalkingJump_RH_25_01 A");
+
                                 player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
 
                             }    
@@ -1847,7 +1867,7 @@ void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
 
                     }
                     else if (world.isPunjiTile(tile_R)) {
-Serial.println("Man_WalkingJump_RH_25_01 B");
+
                         player.pushSequence(Stance::Man_WalkingJump_RH_25_02, Stance::Man_WalkingJump_RH_25_11, true); 
 
                     }     
@@ -2215,6 +2235,7 @@ void playGame_Update() {
                     case ItemType::Potion:
                     case ItemType::Anchor:
                     case ItemType::Sword:
+                    case ItemType::LifeSaver:
 
                         if (collide(playerRect, itemRect)) {
 
@@ -2541,7 +2562,7 @@ void playGame_Update() {
 
                                 }
                                 else if (world.isWaterTile(tile_D)) {
-Serial.println("Water");
+
 ///SJH Need graphics for this!
                                     player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
                                     player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
@@ -2913,8 +2934,8 @@ void removeInventoryItem(GameState gameState) {
 
     menu.setDirection(Direction::Right);
     menu.setGameState(gameState);
-    menu.setY(0);    
 
     world.getPlayer().removeInventoryItem(menu.getY());
+    menu.setY(0);    
 
 }
