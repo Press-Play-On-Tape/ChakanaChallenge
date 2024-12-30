@@ -1070,49 +1070,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 break;
 
             case Direction::Right:
-                {
-                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-                    uint8_t tile_U = world.getTile_RelativeToPlayer(0, 2);
 
-                    if (world.isEmptyTile(tile_U)) {
-
-                        if (world.canJumpUpOntoTile(tile)) {
-
-                            player.stageSequence(Stance::Man_StandingJump_RH_UP_01, Stance::Man_StandingJump_RH_UP_06); 
-
-                        }
-                        else if (world.isSpringTile(tile)) {    
-
-                            uint8_t tile_3U = world.getTile_RelativeToPlayer(0, 3);
-                            uint8_t tile_4U = world.getTile_RelativeToPlayer(0, 4);
-
-                            if (world.isRopeTile(tile_3U)) {
-
-                                player.stageSequence(Stance::Man_BounceJump_RH_33, Stance::Man_BounceJump_RH_34);
-                                player.stageSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_30);
-
-                            }
-                            else if (world.isRopeTile(tile_4U)) {
-
-                                player.stageSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_34);
-
-                            }
-
-                        }   
-                        else {
-
-                            player.stageSequence(Stance::Man_StandingJump_RH_01, Stance::Man_StandingJump_RH_07); 
-
-                        }
-
-                    }
-                    else {
-
-                        player.stageSequence(Stance::Man_StandingJump_Small_RH_01, Stance::Man_StandingJump_Small_RH_03); 
-
-                    }
-
-                }
+                playGame_HandleGamePlay_Basics(player, Stance::Man_Start);
                 break;
 
             case Direction::Forward:
@@ -1134,51 +1093,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 break;
 
             case Direction::Left:
-                {
-
-                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-                    uint8_t tile_U = world.getTile_RelativeToPlayer(0, 2);
-
-                    if (world.isEmptyTile(tile_U)) {
-
-                        if (world.canJumpUpOntoTile(tile)) {
-
-                            player.stageSequence(Stance::Man_StandingJump_LH_UP_01, Stance::Man_StandingJump_LH_UP_06); 
-
-                        }
-                        else if (world.isSpringTile(tile)) {  
-                               
-                            uint8_t tile_3U = world.getTile_RelativeToPlayer(0, 3);
-                            uint8_t tile_4U = world.getTile_RelativeToPlayer(0, 4);
-
-                            if (world.isRopeTile(tile_3U)) {
-
-                                player.stageSequence(Stance::Man_BounceJump_LH_33, Stance::Man_BounceJump_LH_34);
-                                player.stageSequence(Stance::Man_BounceJump_LH_01, Stance::Man_BounceJump_LH_30);
-
-                            }
-                            else if (world.isRopeTile(tile_4U)) {
-
-                                player.stageSequence(Stance::Man_BounceJump_LH_01, Stance::Man_BounceJump_LH_34);
-
-                            }
-
-                        }                                   
-                        else {
-
-                            player.stageSequence(Stance::Man_StandingJump_LH_01, Stance::Man_StandingJump_LH_07); 
-
-                        }
-
-                    }
-                    else {
-
-                        player.stageSequence(Stance::Man_StandingJump_Small_LH_01, Stance::Man_StandingJump_Small_LH_03); 
-
-                    }
-
-                }                        
-
+                
+                playGame_HandleGamePlay_Basics(player, Stance::Man_LH_Start - Stance::Man_RH_Start);
                 break;
 
         }
@@ -1186,6 +1102,52 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     }
 
 }
+
+void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
+
+    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+    uint8_t tile_U = world.getTile_RelativeToPlayer(0, 2);
+
+    if (world.isEmptyTile(tile_U)) {
+
+        if (world.canJumpUpOntoTile(tile)) {
+
+            player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+
+        }
+        else if (world.isSpringTile(tile)) {    
+
+            uint8_t tile_3U = world.getTile_RelativeToPlayer(0, 3);
+            uint8_t tile_4U = world.getTile_RelativeToPlayer(0, 4);
+
+            if (world.isRopeTile(tile_3U)) {
+
+                player.stageSequence(Stance::Man_BounceJump_RH_33 + stanceOffset, Stance::Man_BounceJump_RH_34 + stanceOffset);
+                player.stageSequence(Stance::Man_BounceJump_RH_01 + stanceOffset, Stance::Man_BounceJump_RH_30 + stanceOffset);
+
+            }
+            else if (world.isRopeTile(tile_4U)) {
+
+                player.stageSequence(Stance::Man_BounceJump_RH_01 + stanceOffset, Stance::Man_BounceJump_RH_34 + stanceOffset);
+
+            }
+
+        }   
+        else {
+
+            player.stageSequence(Stance::Man_StandingJump_RH_01 + stanceOffset, Stance::Man_StandingJump_RH_07 + stanceOffset); 
+
+        }
+
+    }
+    else {
+
+        player.stageSequence(Stance::Man_StandingJump_Small_RH_01 + stanceOffset, Stance::Man_StandingJump_Small_RH_03 + stanceOffset); 
+
+    }
+
+}
+
 
 void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
 

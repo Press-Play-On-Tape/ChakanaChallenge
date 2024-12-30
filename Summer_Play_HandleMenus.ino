@@ -32,7 +32,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                             item.setFrame(0);
                             item.setCounter(0);
 item.setX(world.getMiddleground() + 56 - 2);
-item.setY(16 + 4);                            
+item.setY(16 + 4);     //SJH fix!                       
                             // player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
                             removeInventoryItem(GameState::PlayGame);
 
@@ -205,6 +205,7 @@ item.setY(16 + 4);
 }
 
 
+// void playGame_HandleMenu_LR(Direction direction, Stance stanceOffset)
 
 void playGame_HandleMenu_OpenClose() {
 
