@@ -492,7 +492,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
-    //            else if (gameState == GameState::PlayGame && (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && player.canMoveLeft()) {
     else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
 
         switch (player.getDirection()) {
@@ -771,7 +770,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
-    // else if (gameState == GameState::PlayGame && (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && player.canMoveRight()) {
     else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
 
         switch (player.getDirection()) {
@@ -1090,7 +1088,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                             if (world.isRopeTile(tile_3U)) {
 
-                                // player.pushSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_34);
                                 player.stageSequence(Stance::Man_BounceJump_RH_33, Stance::Man_BounceJump_RH_34);
                                 player.stageSequence(Stance::Man_BounceJump_RH_01, Stance::Man_BounceJump_RH_30);
 
@@ -1149,7 +1146,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.stageSequence(Stance::Man_StandingJump_LH_UP_01, Stance::Man_StandingJump_LH_UP_06); 
 
                         }
-                        else if (world.isSpringTile(tile)) {     
+                        else if (world.isSpringTile(tile)) {  
+                               
                             uint8_t tile_3U = world.getTile_RelativeToPlayer(0, 3);
                             uint8_t tile_4U = world.getTile_RelativeToPlayer(0, 4);
 
