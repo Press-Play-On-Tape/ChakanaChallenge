@@ -159,56 +159,34 @@ void renderWorld(uint8_t currentPlane) {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-
-        if (item.getItemType() == ItemType::None) break;
+        if (item.getItemType() == ItemType::Puff) break;
 
         uint24_t imageIdx = 0;
+        imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
+         
         uint8_t frame = item.getFrame();
 
         switch (item.getItemType()) {
 
             case ItemType::Key1:
-                imageIdx = Images::Item_00;
-                frame = item.getFrame() / 16;
-                break;
-
             case ItemType::Anchor:
-                imageIdx = Images::Item_11;
-                frame = item.getFrame() / 16;
-                break;
-
             case ItemType::PinchBar:
-                imageIdx = Images::Item_08;
+            case ItemType::TrapDoor:
+            case ItemType::Potion:
                 frame = item.getFrame() / 16;
                 break;
 
             case ItemType::WoodenBarrier:
-                imageIdx = Images::Item_01;
                 break;
 
             case ItemType::MysteryCrate:
 
-                if (item.getFrame() < 8) {
-                    imageIdx = Images::Item_07;
+                if (item.getFrame() >= 8) {
+                    imageIdx = 0;
                 }
                 break;
 
-            case ItemType::TrapDoor:
-                imageIdx = Images::Item_03;
-                frame = item.getFrame() / 16;
-                break;
-
-            case ItemType::Punji:
-                imageIdx = Images::Item_04;
-                break;
-
-            case ItemType::Potion:
-                imageIdx = Images::Item_10;
-                frame = item.getFrame() / 16;
-                break;
-
             case ItemType::LifeSaver:
-                imageIdx = Images::Item_21;
                 frame = item.getFrame() / 22;
                 break;
 
@@ -220,8 +198,8 @@ void renderWorld(uint8_t currentPlane) {
 // Serial.print(yOffset - item.getY());
 //             Serial.print(" ");
 // Serial.print("frame: ");            
-                imageIdx = Images::Item_21_Action_LH;
-                frame = item.getFrame();
+                // imageIdx = Images::Item_21_Action_LH;
+                // frame = item.getFrame();
 // Serial.println(frame);            
                 break;
 
@@ -231,26 +209,22 @@ void renderWorld(uint8_t currentPlane) {
 // Serial.print(yOffset - item.getY());
 //             Serial.print(" ");
 // Serial.print("frame: ");                    
-                imageIdx = Images::Item_21_Action_RH;
-                frame = item.getFrame();
+                // imageIdx = Images::Item_21_Action_RH;
+                // frame = item.getFrame();
 // Serial.println(frame);                  
                 break;
 
-            case ItemType::LockedDoor:
-                imageIdx = Images::Item_09;
-                break;
-
             case ItemType::Hammer:
+            case ItemType::Sword:
+            case ItemType::Amulet:
 
                 switch (item.getFrame()) {
 
                     case 3 ... 21:
-                        imageIdx = Images::Item_05;
                         frame = (item.getFrame() / 3);
                         break;
 
                     default:
-                        imageIdx = Images::Item_05;
                         frame = 0;
                         break;
 
@@ -264,12 +238,10 @@ void renderWorld(uint8_t currentPlane) {
                 switch (item.getFrame()) {
 
                     case 3 ... 21:
-                        imageIdx = Images::Item_19;
                         frame = (item.getFrame() / 3) + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
                         break;
 
                     default:
-                        imageIdx = Images::Item_19;
                         frame = 0 + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
                         break;
 
@@ -282,71 +254,8 @@ void renderWorld(uint8_t currentPlane) {
             case ItemType::Lever_Portal_Auto_Closed:
             case ItemType::Lever_Portal_Auto_Open:
 
-                imageIdx = Images::Item_20;
                 frame = 0;
                 if (item.getFrame() > 0) frame = item.getFrame() - 1;
-
-                break;
-
-            case ItemType::Sword:
-
-                switch (item.getFrame()) {
-
-                    case 3 ... 21:
-                        imageIdx = Images::Item_17;
-                        frame = (item.getFrame() / 3);
-                        break;
-
-                    default:
-                        imageIdx = Images::Item_17;
-                        frame = 0;
-                        break;
-
-                }
-
-                break;
-
-            case ItemType::Chakana:
-                imageIdx = Images::Item_18;
-                frame = item.getFrame();
-                break;
-
-            case ItemType::Swinging_Vine:
-                imageIdx = Images::Item_12;
-                break;
-
-            case ItemType::Flame:
-                imageIdx = Images::Item_13;
-                break;
-
-            case ItemType::Trebochet_Left:
-                imageIdx = Images::Item_14;
-                break;
-
-            case ItemType::Trebochet_Right:
-                imageIdx = Images::Item_15;
-                break;
-
-            case ItemType::SwingyThing:
-            case ItemType::SwingyThing_2:
-                imageIdx = Images::Item_16;
-                break;
-
-            case ItemType::Amulet:
-
-                switch (item.getFrame()) {
-
-                    case 3 ... 21:
-                        imageIdx = Images::Item_06;
-                        frame = item.getFrame() / 3;
-                        break;
-
-                    default:
-                        imageIdx = Images::Item_06;
-                        frame = 0;
-                        break;
-
-                }
 
                 break;
 
@@ -631,6 +540,7 @@ void renderWorld(uint8_t currentPlane) {
                     // a.drawRect(world.getItem(0).getX() + world.getMiddleground() - 4 + 1, yOffset - world.getItem(0).getY() + 1, 14, 14, WHITE);
 
 
+    // Render Menu -----------------------------------------------------------------------------------------------------
 
     if (menu.getX() != 128) {
 
@@ -657,51 +567,9 @@ void renderWorld(uint8_t currentPlane) {
             InventoryItem &item = player.getItem(i);
             if (item.getItemType() == ItemType::None)   break;
 
-            uint24_t imgIndex = 0;
-            uint24_t imgFrame = 0;
-
-            switch (item.getItemType()) {
-
-                case ItemType::Key1:
-                    imgIndex = Images::Item_00;
-                    break;
-
-                case ItemType::PinchBar:
-                    imgIndex = Images::Item_08;
-                    break;
-
-                case ItemType::Hammer:
-                    imgIndex = Images::Item_05;
-                    break;
-
-                case ItemType::Amulet:
-                    imgIndex = Images::Item_06;
-                    break;
-
-                case ItemType::Potion:
-                    imgIndex = Images::Item_10;
-                    imgFrame = 24;
-                    break;
-
-                case ItemType::Anchor:
-                    imgIndex = Images::Item_11;
-                    break;
-
-                case ItemType::Sword:
-                    imgIndex = Images::Item_17;
-                    break;
-
-                case ItemType::LifeSaver:
-                    imgIndex = Images::Item_21;
-                    break;
-
-            }
-
-            if (imgIndex > 0) {
-
-                SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), imgIndex, imgFrame + currentPlane);
-
-            }
+            uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
+            uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
+            SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
 
         }
 
@@ -713,57 +581,6 @@ void renderWorld(uint8_t currentPlane) {
         }
 
     }
-
-    // SpritesU::drawPlusMaskFX(1, 1, Images::Health, currentPlane);
-
-// {
-//     Item &item = world.getItem(0);
-//     a.drawRect(item.getX() + world.getMiddleground() - 4 + 6 + Constants::swingyThing_X[item.getFrame()], yOffset - item.getY() + Constants::swingyThing_Y[item.getFrame()] + 11, 20, 3 , WHITE);
-// a.drawRect(59, yOffset - Constants::GroundY + player.getY(), 10, 16, WHITE);
-    // Serial.println(item.getFrame());
-// }
-
-
-/*
-    if (player.getEnemyIdx() != 255) {
-
-        Enemy &enemy = world.getEnemy(player.getEnemyIdx());
-        Rect playerRect = { 61, yOffset - Constants::GroundY + player.getY(), 6, 16 };
-        Rect enemyRect = { enemy.getX() + world.getMiddleground(), yOffset - enemy.getY(), 6, 16 };
-
-        if (enemy.getDirection() == Direction::Right) {
-            enemyRect.x = enemyRect.x + 2;
-        }
-        
-        a.drawRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height , WHITE);
-        a.drawRect(enemyRect.x, enemyRect.y, enemyRect.width, enemyRect.height , WHITE);
-
-        if (player.getStance() == Stance::Man_Sword_Lunge_RH_03 && player.getDirection() == Direction::Right) {
-            a.drawLine(playerRect.x + 14, playerRect.y + 10, playerRect.x + 14, playerRect.y + 14, LIGHT_GRAY);
-            a.drawLine(playerRect.x + 12, playerRect.y + 12, playerRect.x + 16, playerRect.y + 12, LIGHT_GRAY);
-            Point playerPoint = { playerRect.x + 15, playerRect.y + 12 };
-        }
-
-        if (player.getStance() == Stance::Man_Sword_Lunge_LH_03 && player.getDirection() == Direction::Left) {
-            a.drawLine(playerRect.x - 9, playerRect.y + 10, playerRect.x - 9, playerRect.y + 14, LIGHT_GRAY);
-            a.drawLine(playerRect.x - 11, playerRect.y + 12, playerRect.x - 7, playerRect.y + 12, LIGHT_GRAY);
-            Point playerPoint = { playerRect.x - 9, playerRect.y + 12 };
-        }
-
-        if (enemy.getStance() == Stance::Enemy_Sword_Lunge_LH_03 && enemy.getDirection() == Direction::Left) {
-            a.drawLine(enemyRect.x - 9, enemyRect.y + 10, enemyRect.x - 9, enemyRect.y + 14, LIGHT_GRAY);
-            a.drawLine(enemyRect.x - 11, enemyRect.y + 12, enemyRect.x - 7, enemyRect.y + 12, LIGHT_GRAY);
-            Point enemyPoint = { enemyRect.x - 9, enemyRect.y + 12 };
-        }
-
-        if (enemy.getStance() == Stance::Enemy_Sword_Lunge_RH_03 && enemy.getDirection() == Direction::Right) {
-            a.drawLine(enemyRect.x + 14, enemyRect.y + 10, enemyRect.x + 14, enemyRect.y + 14, LIGHT_GRAY);
-            a.drawLine(enemyRect.x + 12, enemyRect.y + 12, enemyRect.x + 16, enemyRect.y + 12, LIGHT_GRAY);
-            Point enemyPoint = { enemyRect.x - 9, enemyRect.y + 12 };
-        }
-
-    }
-*/
 
 }
 

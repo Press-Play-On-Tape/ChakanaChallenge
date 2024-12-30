@@ -105,19 +105,19 @@ void playGame_Init() {
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
-        if (i == 2) {
+        if (i == 1) {
             item.setItemType(ItemType::Puff);
             item.setX(128);
             item.setY(16);  
             item.setFrame(255);           
         }
+        // else if (i == 0) {
+        //     item.setItemType(ItemType::Swinging_Vine);
+        //     item.setX(64 + 64 + 32);
+        //     item.setY(32);    
+        //     item.setFrame(0);         
+        // }
         else if (i == 0) {
-            item.setItemType(ItemType::Swinging_Vine);
-            item.setX(64 + 64 + 32);
-            item.setY(32);    
-            item.setFrame(0);         
-        }
-        else if (i == 1) {
             item.setItemType(ItemType::LifeSaver);
             item.setX(64 - 64 + 16);
             item.setY(0);    
