@@ -6,6 +6,29 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
+void playGame_HandleEnemies_LaunchArrow(Enemy &enemy, Direction direction) {
+
+    Item &item = enemy.getItem();
+    item.setItemType(direction == Direction::Left ? ItemType::Arrow_LH : ItemType::Arrow_RH);
+    item.setCounter(25 * 4);
+    item.setX(enemy.getX());
+    item.setY(enemy.getY() - 7);
+
+}
+
+void playGame_HandleEnemies_Trebochet_SetFrame(uint8_t idx, ItemType itemType) {
+
+    FX::seekData(Constants::TrebochetImgs + idx);
+    uint8_t frame = FX::readPendingUInt8();
+    FX::readEnd();
+
+    idx = world.getItem(itemType);
+    Item &item = world.getItem(idx);
+    item.setFrame(frame);
+
+}
+
+
 void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     Player &player = world.getPlayer();
@@ -50,23 +73,13 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     switch (newStance) {
 
                         case Stance::Enemy_Fire_LH_07:
-                            {
-                                Item &item = enemy.getItem();
-                                item.setItemType(ItemType::Arrow_LH);
-                                item.setCounter(25 * 4);
-                                item.setX(enemy.getX());
-                                item.setY(enemy.getY() - 7);
-                            }
+
+                            playGame_HandleEnemies_LaunchArrow(enemy, Direction::Left);
                             break;
 
                         case Stance::Enemy_Fire_RH_07:
-                            {
-                                Item &item = enemy.getItem();
-                                item.setItemType(ItemType::Arrow_RH);
-                                item.setCounter(25 * 4);
-                                item.setX(enemy.getX());
-                                item.setY(enemy.getY() - 7);
-                            }
+
+                            playGame_HandleEnemies_LaunchArrow(enemy, Direction::Right);
                             break;
 
                     }
@@ -81,28 +94,15 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         case Stance::Enemy_Trebochet_Release_LH_06 ... Stance::Enemy_Trebochet_Release_LH_14:
                             {
                                 uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Left);
-                                Item &item = world.getItem(idx);
-                                item.setFrame(frame);
+                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left);
                                 
                             }
                             break;
 
                         case Stance::Enemy_Trebochet_Release_LH_05:
                             {
-
                                 uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Left);
-                                Item &trebochet = world.getItem(idx);
-                                trebochet.setFrame(frame);
+                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left);
 
                                 Item &item = enemy.getItem();
                                 uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
@@ -118,28 +118,15 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         case Stance::Enemy_Trebochet_Release_RH_06 ... Stance::Enemy_Trebochet_Release_RH_14:
                             {
                                 uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Right);
-                                Item &item = world.getItem(idx);
-                                item.setFrame(frame);
+                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
                                 
                             }
                             break;
 
                         case Stance::Enemy_Trebochet_Release_RH_05:
                             {
-
                                 uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Right);
-                                Item &trebochet = world.getItem(idx);
-                                trebochet.setFrame(frame);
+                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
 
                                 Item &item = enemy.getItem();
                                 uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
