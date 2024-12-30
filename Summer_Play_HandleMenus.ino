@@ -16,7 +16,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             switch (player.getDirection()) {
 
                 case Direction::Right:
-                
+
                     playGame_HandleMenu_LR(player, Direction::Right, Stance::Man_Start);
                     break;
 
@@ -102,10 +102,14 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Hidden);
 // Serial.println(itemIdx);                            
         Item &item = world.getItem(itemIdx);
-        item.setItemType(ItemType::LifeSaver_InWater_RH);
+        item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_InWater_RH : ItemType::LifeSaver_InWater_LH);
         item.setFrame(0);
         item.setCounter(0);
-item.setX(world.getMiddleground() + 56 - 2);
+Serial.print("Dir ");
+Serial.println((uint8_t)direction);        
+// item.setX(world.getMiddleground() + 56 - 2 + (direction == Direction::Left, -150, 0));
+item.setX(56 - 2 + (direction == Direction::Left, -50, 0));
+Serial.println(item.getX());        
 item.setY(16 + 4);     //SJH fix!                       
         // player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
         removeInventoryItem(GameState::PlayGame);

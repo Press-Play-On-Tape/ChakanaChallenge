@@ -205,12 +205,12 @@ void renderWorld(uint8_t currentPlane) {
 
             case ItemType::LifeSaver_InWater_RH:
 // Serial.print(item.getX() + world.getMiddleground() - 4);
-//             Serial.print(" ");
+// Serial.print(" ");
 // Serial.print(yOffset - item.getY());
-//             Serial.print(" ");
+// Serial.print(" ");
 // Serial.print("frame: ");                    
-                // imageIdx = Images::Item_21_Action_RH;
-                // frame = item.getFrame();
+                imageIdx = Images::Item_21_Action_RH;
+                frame = item.getFrame();
 // Serial.println(frame);                  
                 break;
 
