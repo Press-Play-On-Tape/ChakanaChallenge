@@ -1412,7 +1412,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 }
 
 
-void playGame_Update() {
+void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     
     Player &player = world.getPlayer();
 
@@ -2115,12 +2115,12 @@ void playGame_Update() {
 
         }
 
-        playGame_HandleEnemies();
+        playGame_HandleEnemies(a);
 
     }
 
     playGame_HandleMenu_OpenClose();
-    world.updateEnemies();
+    world.updateEnemies(a);
     player.update();
 
 
@@ -2175,7 +2175,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     Player &player = world.getPlayer();
 
-    if (a.needsUpdate()) playGame_Update();
+    if (a.needsUpdate()) playGame_Update(a);
 
     uint8_t yOffset = Constants::GroundY;
 

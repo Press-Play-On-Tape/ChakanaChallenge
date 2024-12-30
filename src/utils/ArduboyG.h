@@ -287,12 +287,21 @@ template<
 >
 struct ArduboyG_Common : public BASE
 {
+    uint16_t rnd = 0xACE1;
     static uint8_t justPressedButtons() {
         return (~Arduboy2Base::previousButtonState & Arduboy2Base::currentButtonState);
     }
     
     static uint8_t pressedButtons() {
         return Arduboy2Base::currentButtonState;
+    }
+
+    uint8_t randomLFSR(uint8_t min, uint8_t max) {
+        uint16_t r = rnd;
+        r ^= TCNT0; // add some extra timing randomness
+        (r & 1) ? r = (r >> 1) ^ 0xB400 : r >>= 1;
+        rnd = r;
+        return r % (max - min) + min;
     }
 
     static void startGray()

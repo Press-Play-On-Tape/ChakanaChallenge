@@ -861,7 +861,7 @@ struct World {
         }       
 
 
-        void updateEnemies() {
+        void updateEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             for (uint8_t i  = 0; i < Constants::EnemyCount; i++) {
 
@@ -876,7 +876,7 @@ struct World {
 
                     case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
 
-                        if (enemy.getCount() == 0 && random(0, 120) == 0) {
+                        if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
 
                             switch (enemy.getDirection()) {
 
@@ -896,7 +896,7 @@ struct World {
 
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
 
-                        if (enemy.getCount() == 0 && random(0, 120) == 0) {
+                        if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
 
                             switch (enemy.getDirection()) {
 

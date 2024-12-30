@@ -6,7 +6,7 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-void playGame_HandleEnemies() {
+void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     Player &player = world.getPlayer();
 
@@ -105,7 +105,7 @@ void playGame_HandleEnemies() {
                                 trebochet.setFrame(frame);
 
                                 Item &item = enemy.getItem();
-                                uint8_t r = random(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+                                uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
                                 item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Left_1) + r));
                                 item.setCounter(20);
                                 item.setX(enemy.getX() - 16);
@@ -142,7 +142,7 @@ void playGame_HandleEnemies() {
                                 trebochet.setFrame(frame);
 
                                 Item &item = enemy.getItem();
-                                uint8_t r = random(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+                                uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
                                 item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Right_1) + r));
                                 item.setCounter(20);
                                 item.setX(enemy.getX() + 28);
@@ -280,7 +280,7 @@ void playGame_HandleEnemies() {
                                     
                                     case -37 ... -28:
 
-                                        if (random(0, 5) == 0) {
+                                        if (a.randomLFSR(0, 5) == 0) {
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
                                         }
 
@@ -292,7 +292,7 @@ void playGame_HandleEnemies() {
 
                                             case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_03:
 
-                                                if (random(0, 5) == 0) {
+                                                if (a.randomLFSR(0, 5) == 0) {
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
                                                     player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06, true);
@@ -310,7 +310,7 @@ void playGame_HandleEnemies() {
                                                 }
                                                 else {
                                                 
-                                                    if (random(0, 16) == 0) {
+                                                    if (a.randomLFSR(0, 16) == 0) {
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -324,7 +324,7 @@ void playGame_HandleEnemies() {
 
                                             case Stance::Man_Sword_Lunge_RH_04 ... Stance::Man_Sword_Lunge_RH_06:
                                             
-                                                if (random(0, 16) == 0) {
+                                                if (a.randomLFSR(0, 16) == 0) {
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -336,9 +336,9 @@ void playGame_HandleEnemies() {
 
                                             default:
 
-                                                if (random(0, 24) == 0) {
+                                                if (a.randomLFSR(0, 24) == 0) {
 
-                                                    if (random(0, 8) == 0) {
+                                                    if (a.randomLFSR(0, 8) == 0) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                     }
 
@@ -356,12 +356,12 @@ void playGame_HandleEnemies() {
 
                                     case -23 ... -4:
 
-                                        if (random(0, 5) == 0) {
+                                        if (a.randomLFSR(0, 5) == 0) {
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
 
                                         }
-                                        else  if (random(0, 12) == 0) {
+                                        else  if (a.randomLFSR(0, 12) == 0) {
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -396,7 +396,7 @@ void playGame_HandleEnemies() {
                                     
                                     case 20 ... 33:
 
-                                        if (random(0, 5) == 0) {
+                                        if (a.randomLFSR(0, 5) == 0) {
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
                                         }
 
@@ -408,7 +408,7 @@ void playGame_HandleEnemies() {
 
                                             case Stance::Man_Sword_Lunge_LH_01 ... Stance::Man_Sword_Lunge_LH_03:
 
-                                                if (random(0, 5) == 0) {
+                                                if (a.randomLFSR(0, 5) == 0) {
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
                                                     player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06, true);
@@ -426,7 +426,7 @@ void playGame_HandleEnemies() {
                                                 }
                                                 else {
                                                 
-                                                    if (random(0, 16) == 0) {
+                                                    if (a.randomLFSR(0, 16) == 0) {
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -440,7 +440,7 @@ void playGame_HandleEnemies() {
 
                                             case Stance::Man_Sword_Lunge_LH_04 ... Stance::Man_Sword_Lunge_LH_06:
                                             
-                                                if (random(0, 16) == 0) {
+                                                if (a.randomLFSR(0, 16) == 0) {
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -452,9 +452,9 @@ void playGame_HandleEnemies() {
 
                                             default:
 
-                                                if (random(0, 24) == 0) {
+                                                if (a.randomLFSR(0, 24) == 0) {
 
-                                                    if (random(0, 8) == 0) {
+                                                    if (a.randomLFSR(0, 8) == 0) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                     }
 
@@ -472,12 +472,12 @@ void playGame_HandleEnemies() {
 
                                     case -12 ... -6:
 
-                                        if (random(0, 5) == 0) {
+                                        if (a.randomLFSR(0, 5) == 0) {
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
 
                                         }
-                                        else  if (random(0, 12) == 0) {
+                                        else  if (a.randomLFSR(0, 12) == 0) {
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
