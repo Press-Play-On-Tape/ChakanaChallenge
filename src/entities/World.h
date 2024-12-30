@@ -282,6 +282,11 @@ struct World {
                         removeItemIdx = i;
                         break;
 
+                    case ItemAction::ChangeToHidden:
+                        player.addInventoryItem(item.getItemType());
+                        item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(item.getItemType()) + 1));
+                        break;
+
                 }
 
                 uint8_t yOffset = Constants::GroundY;
@@ -423,18 +428,29 @@ struct World {
 
         uint8_t getTile(int8_t xOffset, int8_t yOffset) {
 
-            // #ifdef DEBUG
+            #ifdef MAP_FROM_FX
 
-                // DEBUG_PRINT(F("getTile(xOffset,yOffset) "));
-                // DEBUG_PRINT(xOffset);
-                // DEBUG_PRINT(" ");
-                // DEBUG_PRINT(yOffset);
-                // DEBUG_PRINT(" = ");
-                // DEBUG_PRINTLN(mapData[yOffset][xOffset]);
-                    
-            // #endif
+                FX::seekData(Levels::mapData1 + (yOffset * numberOfTiles) + xOffset);
+                uint8_t x = FX::readPendingUInt8();
+                FX::readEnd();
+                return x;
 
-            return mapData[yOffset][xOffset];
+            #else
+
+                // #ifdef DEBUG
+
+                    // DEBUG_PRINT(F("getTile(xOffset,yOffset) "));
+                    // DEBUG_PRINT(xOffset);
+                    // DEBUG_PRINT(" ");
+                    // DEBUG_PRINT(yOffset);
+                    // DEBUG_PRINT(" = ");
+                    // DEBUG_PRINTLN(mapData[yOffset][xOffset]);
+                        
+                // #endif
+
+                return mapData[yOffset][xOffset];
+
+            #endif
 
         }
 
@@ -444,18 +460,29 @@ struct World {
 
             int16_t tileIdx = (-this->getMiddleground() + 65 + (xOffset * 8)) / 8;
 
-            // #ifdef DEBUG
+            #ifdef MAP_FROM_FX
 
-            //     DEBUG_PRINT(F("getTile(p,x,y) "));
-            //     DEBUG_PRINT(xOffset);
-            //     DEBUG_PRINT(" ");
-            //     DEBUG_PRINT(yOffset);
-            //     DEBUG_PRINT(" = ");
-            //     DEBUG_PRINTLN(mapData[player.getLevel() + yOffset][tileIdx]);
-                    
-            // #endif
+                FX::seekData(Levels::mapData1 + ((this->player.getLevel() + yOffset) * numberOfTiles) + tileIdx);
+                uint8_t x = FX::readPendingUInt8();
+                FX::readEnd();
+                return x;
 
-            return mapData[this->player.getLevel() + yOffset][tileIdx];
+            #else
+
+                // #ifdef DEBUG
+
+                //     DEBUG_PRINT(F("getTile(p,x,y) "));
+                //     DEBUG_PRINT(xOffset);
+                //     DEBUG_PRINT(" ");
+                //     DEBUG_PRINT(yOffset);
+                //     DEBUG_PRINT(" = ");
+                //     DEBUG_PRINTLN(mapData[player.getLevel() + yOffset][tileIdx]);
+                        
+                // #endif
+
+                return mapData[this->player.getLevel() + yOffset][tileIdx];
+
+            #endif
 
         }
 

@@ -14,7 +14,7 @@ class Item {
     private:
 
         ItemType itemType;
-        uint16_t x;
+        int16_t x;
         int8_t y;
         uint8_t frame;
         int16_t data;
@@ -22,7 +22,7 @@ class Item {
 
     public:
 
-        uint16_t getX()                                 { return this->x; }
+        int16_t getX()                                  { return this->x; }
         int8_t getY()                                   { return this->y; }
         uint8_t getFrame()                              { return this->frame; }
         int16_t getData()                               { return this->data; }
@@ -30,7 +30,7 @@ class Item {
         ItemType getItemType()                          { return this->itemType; }
 
         void setItemType(ItemType val)                  { this->itemType = val; }
-        void setX(uint16_t val)                         { this->x = val; }
+        void setX(int16_t val)                          { this->x = val; }
         void setY(int8_t val)                           { this->y = val; }
         void setFrame(uint8_t val)                      { this->frame = val; }
         void setData(int16_t val)                       { Serial.println(val); this->data = val; }
@@ -169,7 +169,6 @@ class Item {
                 case ItemType::Sword:
                 case ItemType::Lever_LH:
                 case ItemType::Lever_RH:
-                case ItemType::LifeSaver:
 
                     this->frame++;
 
@@ -184,7 +183,37 @@ class Item {
                     }
 
                     break;
-                    
+
+                case ItemType::LifeSaver:
+
+                    this->frame++;
+
+                    if (this->counter > 0 && this->frame % 8 == 0) {
+
+                        this->counter--;
+
+                        if (this->counter == 0) {
+                            return ItemAction::ChangeToHidden;
+                        }
+
+                    }
+
+                    break;
+                   
+                case ItemType::LifeSaver_InWater_RH:
+                case ItemType::LifeSaver_InWater_LH:
+
+                    if (this->frame < 12) {
+
+                        this->counter++;
+                        // if (this->counter == (6 * 12))   this->counter = 0;
+
+                        this->frame = this->counter / 12;
+
+                    }
+
+                    break;
+
                 case ItemType::WoodenBarrier:
 
                     if (this->counter > 0 && this->counter < (7 * 32) - 1) {

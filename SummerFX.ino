@@ -182,7 +182,6 @@ void printDetails() {
 // Serial.println(world.getMiddleground());
 // Serial.println(world.get);
 
-
     // DEBUG_PRINT("S");
     // DEBUG_PRINT(player.getStance());
     // DEBUG_PRINT(" y");

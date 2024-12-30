@@ -113,13 +113,13 @@ void playGame_Init() {
         }
         else if (i == 0) {
             item.setItemType(ItemType::Swinging_Vine);
-            item.setX(64 + 64 + 16);
+            item.setX(64 + 64 + 32);
             item.setY(32);    
             item.setFrame(0);         
         }
         else if (i == 1) {
             item.setItemType(ItemType::LifeSaver);
-            item.setX(64 - 64);
+            item.setX(64 - 64 + 16);
             item.setY(0);    
             item.setFrame(0);         
         }
@@ -210,691 +210,6 @@ void playGame_Init() {
     // enemy.setStance(Stance::Enemy_Sword_Stationary_LH);
     // enemy.getItem().setItemType(ItemType::Glint_Hidden);
 
-}
-
-void playGame_HandleEnemies() {
-
-    Player &player = world.getPlayer();
-
-    for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
-
-        Enemy &enemy = world.getEnemy(i);
-
-        if (enemy.getX() == 0) continue;
-            
-        if (!enemy.isEmpty()) {
-
-            Point offset;
-            uint16_t newStance = enemy.pop();
-
-            enemy.setStance(newStance);
-
-            FX::seekData(Constants::StanceY + static_cast<uint16_t>(enemy.getStance()));
-            int8_t stanceY = FX::readPendingUInt8();
-            enemy.setY(enemy.getY() - stanceY);
-            FX::readEnd();
-            
-            FX::seekData(Constants::xForeground + static_cast<uint16_t>(enemy.getStance()));
-            int8_t b = FX::readPendingUInt8();
-            world.incForeground(b);
-            FX::readEnd();
-
-            FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(enemy.getStance()));
-            b = FX::readPendingUInt8();
-            enemy.setX(enemy.getX() + b);
-            FX::readEnd();
-
-            // FX::seekData(Constants::xBackground + static_cast<uint16_t>(enemy.getStance()));
-            // b = FX::readPendingUInt8();
-            // world.incBackground(b);
-            // FX::readEnd();
-
-            switch (enemy.getEnemyType()) {
-
-                case EnemyType::Archer:
-                        
-                    switch (newStance) {
-
-                        case Stance::Enemy_Fire_LH_07:
-                            {
-                                Item &item = enemy.getItem();
-                                item.setItemType(ItemType::Arrow_LH);
-                                item.setCounter(25 * 4);
-                                item.setX(enemy.getX());
-                                item.setY(enemy.getY() - 7);
-                            }
-                            break;
-
-                        case Stance::Enemy_Fire_RH_07:
-                            {
-                                Item &item = enemy.getItem();
-                                item.setItemType(ItemType::Arrow_RH);
-                                item.setCounter(25 * 4);
-                                item.setX(enemy.getX());
-                                item.setY(enemy.getY() - 7);
-                            }
-                            break;
-
-                    }
-
-                    break;
-
-                case EnemyType::TrebochetOperator:
-
-                    switch (newStance) {
-                                
-                        case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_04:
-                        case Stance::Enemy_Trebochet_Release_LH_06 ... Stance::Enemy_Trebochet_Release_LH_14:
-                            {
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Left);
-                                Item &item = world.getItem(idx);
-                                item.setFrame(frame);
-                                
-                            }
-                            break;
-
-                        case Stance::Enemy_Trebochet_Release_LH_05:
-                            {
-
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Left);
-                                Item &trebochet = world.getItem(idx);
-                                trebochet.setFrame(frame);
-
-                                Item &item = enemy.getItem();
-                                uint8_t r = random(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
-                                item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Left_1) + r));
-                                item.setCounter(20);
-                                item.setX(enemy.getX() - 16);
-                                item.setY(enemy.getY() + 10);
-
-                            }
-                            break;
-
-                        case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_04:
-                        case Stance::Enemy_Trebochet_Release_RH_06 ... Stance::Enemy_Trebochet_Release_RH_14:
-                            {
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Right);
-                                Item &item = world.getItem(idx);
-                                item.setFrame(frame);
-                                
-                            }
-                            break;
-
-                        case Stance::Enemy_Trebochet_Release_RH_05:
-                            {
-
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
-                                FX::seekData(Constants::TrebochetImgs + idx);
-                                uint8_t frame = FX::readPendingUInt8();
-                                FX::readEnd();
-
-                                idx = world.getItem(ItemType::Trebochet_Right);
-                                Item &trebochet = world.getItem(idx);
-                                trebochet.setFrame(frame);
-
-                                Item &item = enemy.getItem();
-                                uint8_t r = random(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
-                                item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Right_1) + r));
-                                item.setCounter(20);
-                                item.setX(enemy.getX() + 28);
-                                item.setY(enemy.getY() + 10);
-
-                            }
-                            break;
-
-                    }
-
-                    break;
-
-                case EnemyType::SwordFighter:
-
-                    switch (newStance) {
-                                
-                        case Stance::Enemy_Sword_Lunge_LH_03:
-                        case Stance::Enemy_Sword_Lunge_RH_03:
-                            {
-                                if (player.getSwordWound() == 0 && playGame_EnemyStabsPlayer(player)) {
-
-                                    player.decHealth(1);
-                                    player.setSwordWound(12);
-
-                                    if (player.getHealth() == 0) {
-
-                                        int16_t dist = getDistanceBetween(enemy);
-                                        player.clear();
-
-
-                                        // Enemy puts away sword ..
-
-                                        switch (enemy.getDirection()) {
-
-                                            case Direction::Left:
-                                                enemy.insert(Stance::Enemy_Walk_LH_00);
-                                                break;
-
-                                            case Direction::Right:
-                                                enemy.insert(Stance::Enemy_Walk_RH_00);
-                                                break;
-
-                                        }
-
-
-                                        // Player dies but whch direction does he fall?
-
-                                        switch (dist) {
-
-                                            case -999 ... 0:
-
-                                                switch (player.getDirection()) {
-
-                                                    case Direction::Left:
-
-                                                        player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
-                                                        break;
-
-                                                    case Direction::Right:
-
-                                                        player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
-                                                        break;
-
-                                                }
-
-                                                break;
-
-                                            case 1 ... 999:
-
-                                                switch (player.getDirection()) {
-
-                                                    case Direction::Left:
-
-                                                        player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
-                                                        break;
-
-                                                    case Direction::Right:
-
-                                                        player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
-                                                        break;
-
-                                                }
-
-                                                break;
-
-                                        }                                                
-
-                                    }
-
-                                }
-
-                            }
-
-                            break;
-
-                    }
-
-                    break;
-
-            }
-
-            FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(enemy.getStance()) * 2));
-            uint16_t subsituteStance = FX::readPendingUInt16();
-            FX::readEnd();
-
-            if (subsituteStance != 65535) {
-                enemy.setStance(subsituteStance);
-            }
-
-
-        }
-        else {
-
-            // Exit if player is dead ..
-
-            if (player.getHealth() == 0) break;
-
-            switch (enemy.getEnemyType()) {
-
-                case EnemyType::SwordFighter:
-                    {
-                        int16_t dist = getDistanceBetween(enemy);
-
-                        switch (enemy.getDirection()) {
-
-                            case Direction::Left:
-                                
-                                switch (dist) {
-                                    
-                                    // - Enemy to right of player -----------------------------------------------------------------------
-
-                                    case -8000 ... -38:
-                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-                                        break;
-                                    
-                                    case -37 ... -28:
-
-                                        if (random(0, 5) == 0) {
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-                                        }
-
-                                        break;
-
-                                    case -27 ... -24:
-
-                                        switch (player.getStance()) {
-
-                                            case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_03:
-
-                                                if (random(0, 5) == 0) {
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
-                                                    player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06, true);
-
-                                                    if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
-
-                                                        Item &glint = enemy.getItem();
-
-                                                        glint.setItemType(ItemType::Glint);
-                                                        glint.setX(enemy.getX() - 9);
-                                                        glint.setY(enemy.getY() + 1);
-                                                        glint.setFrame(0);
-                                                    }
-
-                                                }
-                                                else {
-                                                
-                                                    if (random(0, 16) == 0) {
-
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                                                    }
-
-                                                }
-
-                                                break;
-
-                                            case Stance::Man_Sword_Lunge_RH_04 ... Stance::Man_Sword_Lunge_RH_06:
-                                            
-                                                if (random(0, 16) == 0) {
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                                                }
-
-                                                break;
-
-                                            default:
-
-                                                if (random(0, 24) == 0) {
-
-                                                    if (random(0, 8) == 0) {
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                    }
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                                                }
-
-                                                break;
-
-                                        }
-
-                                        break;
-
-                                    case -23 ... -4:
-
-                                        if (random(0, 5) == 0) {
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-
-                                        }
-                                        else  if (random(0, 12) == 0) {
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                                        }
-                                        break;
-
-                                    case -3 ... 999:
-
-                                        enemy.push(Stance::Enemy_Sword_Stationary_RH);
-                                        break;
-
-                                    default:
-                                        break;
-
-                                }
-
-                                break;
-
-
-                            case Direction::Right:
-                                    
-                                switch (dist) {
-                                    
-                                    // - Enemy to right of player -----------------------------------------------------------------------
-
-                                    case 34 ... 8000:
-
-                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-                                        break;
-                                    
-                                    case 20 ... 33:
-
-                                        if (random(0, 5) == 0) {
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-                                        }
-
-                                        break;
-
-                                    case -5 ... 19:
-
-                                        switch (player.getStance()) {
-
-                                            case Stance::Man_Sword_Lunge_LH_01 ... Stance::Man_Sword_Lunge_LH_03:
-
-                                                if (random(0, 5) == 0) {
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
-                                                    player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06, true);
-
-                                                    if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
-
-                                                        Item &glint = enemy.getItem();
-
-                                                        glint.setItemType(ItemType::Glint);
-                                                        glint.setX(enemy.getX() - 9);
-                                                        glint.setY(enemy.getY() + 1);
-                                                        glint.setFrame(0);
-                                                    }
-
-                                                }
-                                                else {
-                                                
-                                                    if (random(0, 16) == 0) {
-
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-                                                    }
-
-                                                }
-
-                                                break;
-
-                                            case Stance::Man_Sword_Lunge_LH_04 ... Stance::Man_Sword_Lunge_LH_06:
-                                            
-                                                if (random(0, 16) == 0) {
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-                                                }
-
-                                                break;
-
-                                            default:
-
-                                                if (random(0, 24) == 0) {
-
-                                                    if (random(0, 8) == 0) {
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                    }
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-                                                }
-
-                                                break;
-
-                                        }
-
-                                        break;
-
-                                    case -12 ... -6:
-
-                                        if (random(0, 5) == 0) {
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-
-                                        }
-                                        else  if (random(0, 12) == 0) {
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-                                        }
-                                        break;
-
-                                    case -999 ... -13:
-
-                                        enemy.push(Stance::Enemy_Sword_Stationary_LH);
-                                        break;
-
-                                    default:
-                                        break;
-
-                                }
-
-                                break;
-                                
-                        }
-
-                        // switch (newStance) {
-
-                        // }
-
-                    }
-
-                    break;
-
-                default:
-                    break;
-
-            }
-
-        }
-
-    }
-
-}
-
-void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
-
-    if (justPressed & A_BUTTON){//} || pressed & A_BUTTON) {
-
-        if (player.getItemCount() != 0) {
-                
-            switch (player.getDirection()) {
-
-                case Direction::Right:
-                    {
-                        uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
-                        uint8_t tile_R1D = world.getTile_RelativeToPlayer(1, -2);
-                        uint8_t tile_R3D = world.getTile_RelativeToPlayer(3, -2);
-
-                        if (world.isWaterTile(tile_R1D) && world.isWaterTile(tile_R3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver) {
-Serial.print(tile_R1D);
-Serial.print(" ");
-Serial.println(tile_R3D);
-                            // player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
-                            removeInventoryItem(GameState::PlayGame);
-
-                        }
-
-                        if (world.isWoodenBarrier(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
-
-                            player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
-                            removeWorldandInventoryItem(ItemType::WoodenBarrier, GameState::PlayGame);
-
-                        }
-
-                        else if (world.isMysteryCrate(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
-
-                            player.pushSequence(Stance::Man_Levering_RH_00, Stance::Man_Levering_RH_10);
-                            removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::PlayGame);
-
-                        }
-
-                        else if (world.isLockedDoor(tile_R) && player.getItem(menu.getY()).getItemType() == ItemType::Key1) {
-
-                            removeWorldandInventoryItem(ItemType::LockedDoor, GameState::PlayGame);
-
-                        }
-
-                        else if (player.getItem(menu.getY()).getItemType() == ItemType::Sword) {
-
-                            uint8_t enemySwordIdx = world.getClosestEnemy(EnemyType::SwordFighter);
-                            player.setEnemyIdx(enemySwordIdx);
-
-                            if (enemySwordIdx != 255) {
-
-                                Enemy &enemy = world.getEnemy(enemySwordIdx);
-
-                                player.push(Stance::Man_Sword_Stationary_RH);
-                                menu.setDirection(Direction::Right);
-                                menu.setGameState(GameState::Play_Battle);
-
-                            }
-                            // removeInventoryItem(GameState::Play_Battle);
-
-                        }
-
-                    }
-
-                    break;
-
-                case Direction::Left:
-                    {
-                        uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
-                        uint8_t tile_L1D = world.getTile_RelativeToPlayer(-1, -2);
-                        uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -2);
-
-                        if (world.isWaterTile(tile_L1D) && world.isWaterTile(tile_L3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver) {
-
-                            player.pushSequence(Stance::Man_Hammering_LH_00, Stance::Man_Hammering_LH_10);
-                            removeInventoryItem(GameState::PlayGame);
-
-                        }
-
-                        if (world.isWoodenBarrier(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
-
-                            player.pushSequence(Stance::Man_Hammering_LH_00, Stance::Man_Hammering_LH_10);
-                            removeWorldandInventoryItem(ItemType::WoodenBarrier, GameState::PlayGame);
-
-                        }
-
-                        else if (world.isMysteryCrate(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
-
-                            player.pushSequence(Stance::Man_Levering_LH_00, Stance::Man_Levering_LH_10);
-                            removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::PlayGame);
-
-                        }
-
-                        else if (world.isLockedDoor(tile_L) && player.getItem(menu.getY()).getItemType() == ItemType::Key1) {
-
-                            removeWorldandInventoryItem(ItemType::LockedDoor, GameState::PlayGame);
-
-                        }
-
-                        else if (player.getItem(menu.getY()).getItemType() == ItemType::Sword) {
-
-                            player.push(Stance::Man_Sword_Stationary_LH);
-                            menu.setDirection(Direction::Right);
-                            menu.setGameState(GameState::Play_Battle);
-
-                        }
-
-                    }
-
-                    break;
-            }
-
-        }
-
-    }
-    else if (justPressed & UP_BUTTON) {
-
-        // Showing top 3 items and can not move up ..
-        if (menu.getTop() == 0 && menu.getY() == 0) { }
-
-        // Showing top 3 items and can move up .. 
-        else if (menu.getTop() == 0 && menu.getY() > 0 && menu.getY() < player.getItemCount()) {
-            menu.setY(menu.getY() - 1);
-        }
-
-        // Showing bottomn 3 items and bottom item is selected ..
-        else if (menu.getTop() == player.getItemCount() - 3 && menu.getY() == player.getItemCount() - 1) {
-            menu.setY(menu.getY() - 1);
-        }
-
-        // Otherwise scroll top and selected up ..
-        else {
-            menu.setTop(menu.getTop() - 1);
-            menu.setY(menu.getY() - 1);
-        }
-        
-    }
-    else if (justPressed & DOWN_BUTTON) {
-
-        // Bottom item is already selected and cannot move ..
-        if (menu.getY() == player.getItemCount() - 1) { }
-
-        // Showing top 3 items and top row is selected, move down ..
-        else if (menu.getTop() == 0 && menu.getY() == 0 && menu.getY() < player.getItemCount()) {
-            menu.setY(menu.getY() + 1);
-        }
-
-        // Showing all 3 items ..
-        else if (menu.getTop() == 0 && menu.getY() < player.getItemCount() - 1 && player.getItemCount() == 3) {
-            menu.setY(menu.getY() + 1);
-        }
-
-        // Showing top 3 items and top row is selected, move down ..
-        else if (menu.getTop() == 0 && menu.getY() < player.getItemCount()) {
-            menu.setTop(menu.getTop() + 1);
-            menu.setY(menu.getY() + 1);
-        }
-
-        // Showing bottom 3 items and bottom 
-        else if (menu.getTop() == player.getItemCount() - 3) {
-            menu.setY(menu.getY() + 1);
-        }
-
-        // Otherwise scroll top and selected down ..
-        else {
-            menu.setTop(menu.getTop() + 1);
-            menu.setY(menu.getY() + 1);
-        }
-
-    }
-    
 }
 
 void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
@@ -1235,8 +550,21 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                                 if (world.isWaterTile(tile_L2D2)) {
 
-                                    player.pushSequence(Stance::Man_Die_Water_LH_02_01, Stance::Man_Die_Water_LH_02_07);
-                                    player.pushSequence(Stance::Man_WalkingJump_LH_2D_25_01, Stance::Man_WalkingJump_LH_2D_25_09);
+                                    uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH);
+
+                                    if (itemIdx == 255) {
+
+                                        player.pushSequence(Stance::Man_Die_Water_LH_02_01, Stance::Man_Die_Water_LH_02_07);
+                                        player.pushSequence(Stance::Man_WalkingJump_LH_2D_25_01, Stance::Man_WalkingJump_LH_2D_25_09);
+
+                                    }
+                                    else {
+
+                                        player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
+                                        player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
+                                        player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
+
+                                    }
 
                                 }
                                 else {
@@ -1500,8 +828,21 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                                 if (world.isWaterTile(tile_R2D2)) {
 
-                                    player.pushSequence(Stance::Man_Die_Water_RH_02_01, Stance::Man_Die_Water_RH_02_07);
-                                    player.pushSequence(Stance::Man_WalkingJump_RH_2D_25_01, Stance::Man_WalkingJump_RH_2D_25_09);
+                                    uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH);
+
+                                    if (itemIdx == 255) {
+
+                                        player.pushSequence(Stance::Man_Die_Water_RH_02_01, Stance::Man_Die_Water_RH_02_07);
+                                        player.pushSequence(Stance::Man_WalkingJump_RH_2D_25_01, Stance::Man_WalkingJump_RH_2D_25_09);
+
+                                    }
+                                    else {
+
+                                        player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
+                                        player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                                        player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
+
+                                    }
 
                                 }
                                 else {
@@ -1513,7 +854,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         }
                         else {
-                            
+                   
                             uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
                             uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                             uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
@@ -1971,42 +1312,6 @@ void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
 
 }
 
-
-void playGame_HandleMenu_OpenClose() {
-
-    switch (menu.getDirection()) {
-
-        case Direction::Left:
-
-            if (menu.getX() > 128 - 32) {
-                menu.setX(menu.getX() - 2);
-            }
-            else {
-                menu.setDirection(Direction::None);
-            }
-
-            break;
-
-
-        case Direction::Right:
-
-            if (menu.getX() < 128) {
-                menu.setX(menu.getX() + 2);
-            }
-            else {
-                menu.setDirection(Direction::None);
-                gameState = menu.getGameState();
-            }
-
-            break;
-
-        default:
-            break;
-
-    }
-
-}
-
 void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t justPressed) {
 
      int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
@@ -2106,24 +1411,6 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
 }
 
-void playGame_HandleMenu() {
-
-    if (menu.getX() == 128) {
-
-        menu.setGameState(gameState);
-        menu.setDirection(Direction::Left);
-        gameState = GameState::Inventory_Open;
-
-    }
-    else if (menu.getX() == 128 - 32) {
-
-        gameState = GameState::Inventory_Open;
-        menu.setDirection(Direction::Right);
-        menu.setGameState(GameState::PlayGame);
-
-    }
-    
-}
 
 void playGame_Update() {
     

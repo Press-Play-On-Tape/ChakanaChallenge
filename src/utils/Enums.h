@@ -97,6 +97,8 @@ enum class ItemType : uint8_t {
     Glint_Hidden,
     LifeSaver,
     LifeSaver_Hidden,
+    LifeSaver_InWater_LH,
+    LifeSaver_InWater_RH,
     Puff,
     None,
 };
@@ -130,6 +132,7 @@ enum class ItemAction : uint8_t {
     Remove,
     Remove_AddToInventory,
     HideCrate_ShowItem,
+    ChangeToHidden,
 };
 
 

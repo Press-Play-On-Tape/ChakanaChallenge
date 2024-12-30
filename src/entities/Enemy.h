@@ -14,7 +14,7 @@ class Enemy : public BaseStack {
         Stance stance = Stance::Enemy_Walk_LH_01;
         Item item;
 
-        uint16_t x = 0;
+        int16_t x = 0;
         int8_t y = 37;
         uint8_t health = 2;//Constants::HealthMax;
         uint8_t swordWound = 0;
@@ -25,7 +25,7 @@ class Enemy : public BaseStack {
         Stance getStance()                                  { return this->stance; }
         Item& getItem()                                     { return this->item; }
 
-        uint16_t getX()                                     { return this->x; }
+        int16_t getX()                                      { return this->x; }
         int8_t getY()                                       { return this->y; }
         uint8_t getHealth()                                 { return this->health; }
         uint8_t getSwordWound()                             { return this->swordWound; }
@@ -33,7 +33,7 @@ class Enemy : public BaseStack {
         void setEnemyType(EnemyType val)                    { this->enemyType = val; }
         void setStance(Stance val)                          { this->stance = val; }
 
-        void setX(uint16_t val)                             { this->x = val; }
+        void setX(int16_t val)                              { this->x = val; }
         void setY(int8_t val)                               { this->y = val; }
         void setHealth(uint8_t val)                         { this->health = val; }
         void setSwordWound(uint8_t val)                     { this->swordWound = val; }
