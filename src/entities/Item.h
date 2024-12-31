@@ -5,10 +5,6 @@
 #include "../utils/Constants.h"
 #include "../utils/Enums.h"
 
-constexpr uint8_t ball_X[20] = { 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
-// constexpr int8_t ball_Y[20] = { 0, -6, -5, -4,         -4,  -3,  -3, -3, -1, 0, 0, 1,    2,  2, 3,   4,  5, 5, 7, 8 };
-constexpr int8_t ball_Y[20] = { 0, -8, -6, -5,         -4,  -3,  -2, -1, 0, 0, 0, 0,    0,  0, 1,   2,  3, 4, 4, 5 };
-
 class Item {
 
     private:
@@ -362,7 +358,7 @@ class Item {
                     if (this->counter > 0) {
 
                         this->setCounter(this->getCounter() - 1);
-                        this->setY(this->getY() + ball_Y[this->getCounter()]);
+                        this->setY(this->getY() + pgm_read_byte(&Constants::ball_Y[this->getCounter()]));
 
                         switch (this->itemType) {
 
@@ -404,7 +400,7 @@ class Item {
                     if (this->counter > 0) {
 
                         this->setCounter(this->getCounter() - 1);
-                        this->setY(this->getY() + ball_Y[this->getCounter()]);
+                        this->setY(this->getY() + &Constants::ball_Y[this->getCounter()]);
 
                         switch (this->itemType) {
 

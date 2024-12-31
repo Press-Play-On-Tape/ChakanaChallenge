@@ -628,8 +628,9 @@ namespace Constants {
     2, 2, 2, 2, // walk Back
     2, 2, 2, 2, 2, 2, 2, // jump
     };
-    // constexpr int8_t boatX[] = {  0,  1,  2,  2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2, -2, -1 };
-    // constexpr int8_t boatY[] = { -2, -2, -2, -1, 0, 1, 2, 2, 2,  2,  2,  1,  0, -1, -2, -2 };
+
+    const uint8_t PROGMEM ball_X[20] = { 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
+    const uint8_t PROGMEM ball_Y[20] = { 0, -8, -6, -5,         -4,  -3,  -2, -1, 0, 0, 0, 0,    0,  0, 1,   2,  3, 4, 4, 5 };
 
     constexpr int8_t swingyThing_X[] = { 0, -2, -4, -5, -6, -5, -4, -2, 0, 2, 4, 5, 6, 5, 4, 2 };
     constexpr int8_t swingyThing_Y[] = { 0, -1, -2, -3, -4, -3, -2, -1, 
@@ -657,7 +658,6 @@ namespace Constants {
     constexpr uint8_t EnemyCount = 4;
 
     constexpr uint8_t StackSize = 30;
-//    constexpr uint8_t StackSize_Enemy = 20;
     constexpr uint8_t Animation_NumberOfFrames = 15;
     constexpr uint16_t NoWaves = 29999;
 
