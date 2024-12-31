@@ -118,7 +118,7 @@ void playGame_Init() {
         //     item.setFrame(0);         
         // }
         else if (i == 0) {
-            item.setItemType(ItemType::LifeSaver);
+            item.setItemType(ItemType::LifeSaver_Dissolve);
             item.setX(64 - 64 + 16);
             item.setY(0);    
             item.setFrame(0);         
@@ -548,8 +548,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                     world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
 
                                 if (world.isWaterTile(tile_L2D2)) {
-
-                                    uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH);
+                                    
+                                    uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH, ItemType::LifeSaver_Dissolve_InWater_RH);
 
                                     if (itemIdx == 255) {
 
@@ -559,8 +559,9 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                     }
                                     else {
 
+                                        player.pushSequence(Stance::Man_Walk_LH_03, Stance::Man_Walk_LH_04);
                                         player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
-                                        player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
+                                        player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_02);
                                         player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
 
                                     }
@@ -826,7 +827,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                                 if (world.isWaterTile(tile_R2D2)) {
 
-                                    uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH);
+                                    uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH, ItemType::LifeSaver_Dissolve_InWater_RH);
 
                                     if (itemIdx == 255) {
 
@@ -836,8 +837,9 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                     }
                                     else {
 
+                                        player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
                                         player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
-                                        player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
+                                        player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_02);
                                         player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
 
                                     }
@@ -1483,6 +1485,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     case ItemType::Anchor:
                     case ItemType::Sword:
                     case ItemType::LifeSaver:
+                    case ItemType::LifeSaver_Dissolve:
 
                         if (collide(playerRect, itemRect)) {
 

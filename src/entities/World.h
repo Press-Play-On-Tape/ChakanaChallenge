@@ -399,6 +399,19 @@ struct World {
 
         }
 
+        uint8_t getItem(ItemType itemType1, ItemType itemType2) {
+
+            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+                if (this->items[i].getItemType() == itemType1) return i;
+                if (this->items[i].getItemType() == itemType2) return i;
+
+            }
+
+            return 255;
+
+        }
+
         uint8_t getItem(ItemType itemType) {
 
             for (uint8_t i = 0; i < Constants::ItemCount; i++) {

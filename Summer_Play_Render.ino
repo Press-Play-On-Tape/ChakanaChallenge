@@ -187,31 +187,8 @@ void renderWorld(uint8_t currentPlane) {
                 break;
 
             case ItemType::LifeSaver:
+            case ItemType::LifeSaver_Dissolve:
                 frame = item.getFrame() / 22;
-                break;
-
-            case ItemType::LifeSaver_InWater_LH:
-//             Serial.print(item.getX());
-//             Serial.print(" ");
-// Serial.println(item.getX() + world.getMiddleground() - 4);
-//             Serial.print(" ");
-// Serial.print(yOffset - item.getY());
-//             Serial.print(" ");
-// Serial.print("frame: ");            
-                // imageIdx = Images::Item_21_Action_LH;
-                // frame = item.getFrame();
-// Serial.println(frame);            
-                break;
-
-            case ItemType::LifeSaver_InWater_RH:
-// Serial.print(item.getX() + world.getMiddleground() - 4);
-// Serial.print(" ");
-// Serial.print(yOffset - item.getY());
-// Serial.print(" ");
-// Serial.print("frame: ");                    
-                imageIdx = Images::Item_21_Action_RH;
-                frame = item.getFrame();
-// Serial.println(frame);                  
                 break;
 
             case ItemType::Hammer:

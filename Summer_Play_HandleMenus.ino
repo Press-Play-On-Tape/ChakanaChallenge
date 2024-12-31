@@ -96,22 +96,27 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
     uint8_t tile_3D = world.getTile_RelativeToPlayer(direction == Direction::Left ? -3 : 3, -2);
 
     if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver) {
-// Serial.print(tile_R1D);
-// Serial.print(" ");
-// Serial.println(tile_R3D);
+
         uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Hidden);
-// Serial.println(itemIdx);                            
         Item &item = world.getItem(itemIdx);
         item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_InWater_RH : ItemType::LifeSaver_InWater_LH);
         item.setFrame(0);
         item.setCounter(0);
-Serial.print("Dir ");
-Serial.println((uint8_t)direction);        
-// item.setX(world.getMiddleground() + 56 - 2 + (direction == Direction::Left, -150, 0));
-item.setX(56 - 2 + (direction == Direction::Left, -50, 0));
-Serial.println(item.getX());        
-item.setY(16 + 4);     //SJH fix!                       
-        // player.pushSequence(Stance::Man_Hammering_RH_00, Stance::Man_Hammering_RH_10);
+        item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
+        item.setY(player.getY() - 1);   
+        removeInventoryItem(GameState::PlayGame);
+
+    }
+
+    if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver_Dissolve) {
+
+        uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Dissolve_Hidden);
+        Item &item = world.getItem(itemIdx);
+        item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_Dissolve_InWater_RH : ItemType::LifeSaver_Dissolve_InWater_LH);
+        item.setFrame(0);
+        item.setCounter(0);
+        item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
+        item.setY(player.getY() - 1);     
         removeInventoryItem(GameState::PlayGame);
 
     }

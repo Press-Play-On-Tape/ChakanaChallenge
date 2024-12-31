@@ -114,6 +114,10 @@ namespace Images
         0,                      // LifeSaver_Hidden,
         Item_21_Action_LH,      // LifeSaver_InWater_LH,
         Item_21_Action_RH,      // LifeSaver_InWater_RH,
+        Item_21,                // LifeSaver_Dissolve,
+        0,                      // LifeSaver_Dissolve_Hidden,
+        Item_21_Action_LH,      // LifeSaver_Dissolve_InWater_LH,
+        Item_21_Action_RH,      // LifeSaver_Dissolve_InWater_RH,
         Item_00,                // Puff,
         Item_00,                // None,
     };
@@ -174,6 +178,10 @@ namespace Images
         0,                // LifeSaver_Hidden,
         0,                // LifeSaver_InWater_LH,
         0,                // LifeSaver_InWater_RH,
+        0,                // LifeSaver_Dissolve,
+        0,                // LifeSaver_Dissolve_Hidden,
+        0,                // LifeSaver_Dissolve_InWater_LH,
+        0,                // LifeSaver_Dissolve_InWater_RH,
         0,                // Puff,
         0,                // None,
     };

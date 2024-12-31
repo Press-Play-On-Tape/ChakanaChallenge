@@ -185,6 +185,7 @@ class Item {
                     break;
 
                 case ItemType::LifeSaver:
+                case ItemType::LifeSaver_Dissolve:
 
                     this->frame++;
 
@@ -206,9 +207,49 @@ class Item {
                     if (this->frame < 12) {
 
                         this->counter++;
-                        // if (this->counter == (6 * 12))   this->counter = 0;
-
                         this->frame = this->counter / 12;
+
+                        if (this->frame == 12 && this->getItemType() == ItemType::LifeSaver_InWater_LH) {
+                            this->setItemType(ItemType::LifeSaver_InWater_RH);
+                            this->x = this->x - 16;
+                        }
+
+                    }
+
+                    break;
+                   
+                case ItemType::LifeSaver_Dissolve_InWater_RH:
+                case ItemType::LifeSaver_Dissolve_InWater_LH:
+
+                    if (this->frame < 12) {
+
+                        this->counter++;
+                        this->frame = this->counter / 12;
+
+                        if (this->frame == 12 && this->getItemType() == ItemType::LifeSaver_Dissolve_InWater_LH) {
+                            this->setItemType(ItemType::LifeSaver_Dissolve_InWater_RH);
+                            this->x = this->x - 16;
+                        }
+
+                    }
+                    else {
+
+                        this->counter++;
+
+                        if (this->counter > 800) {
+                            
+                            if (this->frame < 19) {
+
+                                this->frame = (this->counter - 800 + 144) / 12;
+
+                            }
+                            else {
+
+                                this->setItemType(ItemType::LifeSaver_Dissolve_Hidden);
+
+                            }
+
+                        }
 
                     }
 
