@@ -38,7 +38,7 @@ void renderWorld(uint8_t currentPlane) {
 
     for (uint8_t y = 0; y < 10; y = y + 2) {
 
-        for (uint8_t i= 0; i < numberOfTiles - 1; i = i + 2) {
+        for (uint8_t i= 0; i < Constants::Map_X_Count - 1; i = i + 2) {
 
             uint8_t tile00 = world.getTile(i, y);
             uint8_t tile01 = world.getTile(i + 1, y);

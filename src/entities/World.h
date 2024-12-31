@@ -26,18 +26,10 @@ struct World {
         uint8_t boatCounter = 0;
         int16_t x = 0;
         int16_t y = 0;
+        uint8_t level = 0;
 
         int16_t wave = 0;
         int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
-        // int16_t palm1 = -240;
-        // int16_t palm2 = -130;
-        // int16_t palm3 = 0;
-        // int16_t palm4 = 130;
-
-        // int8_t palm5 = 116;
-        // int8_t palm6 = 66;
-        // int8_t palm7 = -20;
-        // int8_t palm8 = -80;
 
         uint16_t waveIdx = 0;
         int16_t background = 0;
@@ -57,18 +49,11 @@ struct World {
         uint8_t  getBoatDirection()              { return this->boatDirection; }
         uint8_t  getBoatCounter()                { return this->boatCounter; }
         uint16_t getBoatIdx()                    { return this->boatIdx; }
+        uint8_t  getLevel()                      { return this->level; }
 
         int16_t getX()                           { return this->x; }
         int16_t getY()                           { return this->y; }
 
-        // int16_t getPalm1()                       { return this->palm[0]; }
-        // int16_t getPalm2()                       { return this->palm[1]; }
-        // int16_t getPalm3()                       { return this->palm[2]; }
-        // int16_t getPalm4()                       { return this->palm[3]; }
-        // int16_t getPalm5()                       { return this->palm[4]; }
-        // int16_t getPalm6()                       { return this->palm[5]; }
-        // int16_t getPalm7()                       { return this->palm[6]; }
-        // int16_t getPalm8()                       { return this->palm[7]; }
         int16_t getWave()                        { return this->wave; }
         int16_t getBackground()                  { return this->background; }
         int16_t getMiddleground()                { return this->middleground; }
@@ -83,18 +68,11 @@ struct World {
         void setBoatDirection(uint8_t val)       { this->boatDirection = val; }
         void setBoatIdx(uint16_t val)            { this->boatIdx = val; }
         void setBoatCounter(uint8_t val)         { this->boatCounter = val; }
+        void setLevel(uint8_t val)               { this->level = val; }
 
         void setX(int16_t val)                   { this->x = val; }
         void setY(int16_t val)                   { this->y = val; }
 
-        // void setPalm1(int16_t val)               { this->palm[0] = val; }
-        // void setPalm2(int16_t val)               { this->palm[1] = val; }
-        // void setPalm3(int16_t val)               { this->palm[2] = val; }
-        // void setPalm4(int16_t val)               { this->palm[3] = val; }
-        // void setPalm5(int16_t val)               { this->palm[4] = val; }
-        // void setPalm6(int16_t val)               { this->palm[5] = val; }
-        // void setPalm7(int16_t val)               { this->palm[6] = val; }
-        // void setPalm8(int16_t val)               { this->palm[7] = val; }
         void setWave(int16_t val)                { this->wave = val; }
         void setBackground(int16_t val)          { this->background = val; }
         void setMiddleground(int16_t val)        { this->middleground = val; }
@@ -443,7 +421,7 @@ struct World {
 
             #ifdef MAP_FROM_FX
 
-                FX::seekData(Levels::mapData1 + (yOffset * numberOfTiles) + xOffset);
+                FX::seekData(Levels::mapData1 + (yOffset * Constants::Map_X_Count) + xOffset);
                 uint8_t x = FX::readPendingUInt8();
                 FX::readEnd();
                 return x;
@@ -475,7 +453,7 @@ struct World {
 
             #ifdef MAP_FROM_FX
 
-                FX::seekData(Levels::mapData1 + ((this->player.getLevel() + yOffset) * numberOfTiles) + tileIdx);
+                FX::seekData(Levels::mapData1 + ((this->player.getLevel() + yOffset) * Constants::Map_X_Count) + tileIdx);
                 uint8_t x = FX::readPendingUInt8();
                 FX::readEnd();
                 return x;

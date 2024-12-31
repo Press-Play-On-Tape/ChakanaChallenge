@@ -16,6 +16,107 @@ void playGame_Init() {
     gameState = GameState::PlayGame;
     frameCount = 0;
 
+
+
+    // Load Map Data ..
+
+    {
+        uint24_t levelStart = FX::readIndexedUInt24(Levels::Levels, world.getLevel());
+
+        for (uint8_t y = 0; y < Constants::Map_Y_Count; y++) {
+                
+            FX::seekDataArray(levelStart, y, 0, Constants::Map_X_Count);
+            
+            FX::readObject(mapData[Constants::Map_Y_Count - y - 1]);
+            FX::readEnd();
+
+        }
+
+    }
+
+
+    // Load Map Items ..
+
+    {
+
+        bool puffFound = false;
+
+        uint24_t levelItemsStart = FX::readIndexedUInt24(Levels::Level_Items, world.getLevel());
+        FX::seekData(levelItemsStart);
+
+        for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+
+            Item &item = world.getItem(i);
+
+            if (!puffFound) {
+
+                item.setItemType(static_cast<ItemType>(FX::readPendingUInt8()));
+
+                uint8_t xM = FX::readPendingUInt8();
+                uint8_t xL = FX::readPendingUInt8();
+
+                item.setX((xM * 256) + xL);
+                item.setY(FX::readPendingUInt8());
+                item.setFrame(FX::readPendingUInt8());
+
+                uint8_t dM = FX::readPendingUInt8();
+                uint8_t dL = FX::readPendingUInt8();
+
+                item.setData((dM * 256) + dL);
+
+                uint8_t cM = FX::readPendingUInt8();
+                uint8_t cL = FX::readPendingUInt8();
+
+                item.setCounter((cM * 256) + cL);
+
+                if (item.getItemType() == ItemType::Puff) {
+                    puffFound = true;
+                }
+                
+            }
+            else {
+                
+                item.setItemType(ItemType::None);
+
+            }
+
+            player.getItem(i).setItemType(ItemType::None);
+
+        }
+
+        FX::readEnd();
+
+    }
+
+
+    // Load Map Enemies ..
+
+    {
+
+        uint24_t levelEnemiesStart = FX::readIndexedUInt24(Levels::Level_Enemies, world.getLevel());
+        FX::seekData(levelEnemiesStart);
+
+        for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
+
+            Enemy &enemy = world.getEnemy(i);
+
+            enemy.setEnemyType(static_cast<EnemyType>(FX::readPendingUInt16()));
+            enemy.setX(FX::readPendingUInt16());
+            enemy.setY(FX::readPendingUInt16());
+            enemy.setStance(FX::readPendingUInt16());
+            enemy.getItem().setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
+            
+            // if (enemy.getEnemyType() != EnemyType::None) {
+            //     world.get
+            // }
+        }
+
+        FX::readEnd();
+
+    }
+
+
+
     world.setX(0);
     // world.setPalm1(-240);
     // world.setPalm2(-130);
@@ -101,7 +202,7 @@ void playGame_Init() {
     enemy.getItem().setItemType(ItemType::Glint_Hidden);
 
 */
-
+/*
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
@@ -182,7 +283,7 @@ void playGame_Init() {
         player.getItem(i).setItemType(ItemType::None);
 // DEBUG_BREAK
     }
-
+*/
         // player.getItem(1).setItemType(ItemType::PinchBar);
         // player.getItem(2).setItemType(ItemType::Amulet);
         // player.getItem(3).setItemType(ItemType::Hammer);
