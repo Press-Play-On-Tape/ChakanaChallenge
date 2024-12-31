@@ -14,8 +14,8 @@
 enum Tiles : uint8_t {
 
     Blank = 0,
-    Solid_1 = 1,
-    Solid_2 = 2,
+    Solid_Walkable = 1,
+    Solid_NonWalkable = 2,
 
     // --------------------------------------------------------------------------------------------
     /* Basic Shapes
@@ -79,7 +79,7 @@ enum Tiles : uint8_t {
     /* Single Stair RH Upper
 
     04, 05, 
-    02, 02, 
+    02, 01, 
 
     ........   ...*****   
     ........   ...*****   
@@ -116,7 +116,7 @@ enum Tiles : uint8_t {
     /* Single Stair LH Upper
 
     09, 10, 
-    02, 02, 
+    02, 01, 
 
     *****...   ........   
     *****...   ........   
@@ -612,8 +612,8 @@ namespace Music {
 
 namespace Constants {
 
-    constexpr uint8_t Map_X_Count = 32;
-    constexpr uint8_t Map_Y_Count = 10;
+    constexpr uint8_t Map_X_Count = 40;
+    constexpr uint8_t Map_Y_Count = 16;
 
 
     constexpr uint8_t swordLunge_Player[] = { 
@@ -657,7 +657,7 @@ namespace Constants {
     constexpr uint8_t Bet_Default = 50;
     constexpr uint8_t Bet_Increment = Bet_Default / 2;
 
-    constexpr uint8_t EnemyCount = 4;
+    constexpr uint8_t EnemyCount = 3;
 
     constexpr uint8_t StackSize = 30;
     constexpr uint8_t Animation_NumberOfFrames = 15;
@@ -684,16 +684,4 @@ namespace Constants {
 
 
 
-uint8_t mapData[Constants::Map_Y_Count][Constants::Map_X_Count] = {  // Blank 
-//0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6  7  8  9  0  1
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  }, 
-};
+uint8_t mapData[Constants::Map_Y_Count][Constants::Map_X_Count];

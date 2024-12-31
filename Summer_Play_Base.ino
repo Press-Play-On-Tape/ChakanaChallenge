@@ -50,24 +50,13 @@ void playGame_Init() {
 
             if (!puffFound) {
 
-                item.setItemType(static_cast<ItemType>(FX::readPendingUInt8()));
+                item.setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
 
-                uint8_t xM = FX::readPendingUInt8();
-                uint8_t xL = FX::readPendingUInt8();
-
-                item.setX((xM * 256) + xL);
-                item.setY(FX::readPendingUInt8());
-                item.setFrame(FX::readPendingUInt8());
-
-                uint8_t dM = FX::readPendingUInt8();
-                uint8_t dL = FX::readPendingUInt8();
-
-                item.setData((dM * 256) + dL);
-
-                uint8_t cM = FX::readPendingUInt8();
-                uint8_t cL = FX::readPendingUInt8();
-
-                item.setCounter((cM * 256) + cL);
+                item.setX(FX::readPendingUInt16());
+                item.setY(FX::readPendingUInt16());
+                item.setFrame(FX::readPendingUInt16());
+                item.setData(FX::readPendingUInt16());
+                item.setCounter(FX::readPendingUInt16());
 
                 if (item.getItemType() == ItemType::Puff) {
                     puffFound = true;

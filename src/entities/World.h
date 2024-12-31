@@ -643,7 +643,8 @@ struct World {
 
         bool canWalkOnTile(uint8_t tile) {
 
-            return tile == Tiles::Solid_1 || tile == Tiles::Solid_2 || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
+            // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
+            return tile == Tiles::Solid_Walkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
             
         }
 
@@ -655,7 +656,8 @@ struct World {
 
         bool canJumpUpOntoTile(uint8_t tile) {
 
-            return tile == Tiles::Solid_1 || tile == Tiles::Solid_2;
+            // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable;
+            return tile == Tiles::Solid_Walkable;
             
         }
 

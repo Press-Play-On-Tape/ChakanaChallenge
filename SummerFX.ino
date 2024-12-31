@@ -37,7 +37,7 @@ decltype(a) a;
 #include <stdlib.h>
 #include "time.h"
 
-//ARDUBOY_NO_USB
+ARDUBOY_NO_USB
 
 Cookie cookie;
 Game &game = cookie.game;

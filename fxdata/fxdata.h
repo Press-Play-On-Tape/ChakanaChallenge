@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xf53a;
-constexpr uint24_t FX_DATA_BYTES = 701935;
+constexpr uint16_t FX_DATA_PAGE  = 0xf539;
+constexpr uint24_t FX_DATA_BYTES = 702003;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -166,10 +166,10 @@ namespace Images
 namespace Levels
 {
   constexpr uint24_t Level_00 = 0x0AB45A;
-  constexpr uint24_t Level_00_Items = 0x0AB59A;
-  constexpr uint24_t Level_00_Enemies = 0x0AB5BE;
-  constexpr uint24_t Levels = 0x0AB5E6;
-  constexpr uint24_t Level_Items = 0x0AB5E9;
-  constexpr uint24_t Level_Enemies = 0x0AB5EC;
+  constexpr uint24_t Level_00_Items = 0x0AB5EA;
+  constexpr uint24_t Level_00_Enemies = 0x0AB602;
+  constexpr uint24_t Levels = 0x0AB62A;
+  constexpr uint24_t Level_Items = 0x0AB62D;
+  constexpr uint24_t Level_Enemies = 0x0AB630;
 }
 
