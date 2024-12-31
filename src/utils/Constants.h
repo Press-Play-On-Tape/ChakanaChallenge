@@ -641,6 +641,9 @@ namespace Constants {
     constexpr uint8_t WinFlashTime_Start = 120;
     constexpr uint16_t WinFlashTime_End = 800;
     constexpr uint8_t NoPlayer = 255;
+    constexpr uint8_t NoItem = 255;
+    constexpr uint8_t NoDirection = 255;
+    constexpr uint8_t NoEnemy = 255;
     constexpr uint8_t PlayerCount = 6;
     constexpr uint8_t HealthMax = 14;
 

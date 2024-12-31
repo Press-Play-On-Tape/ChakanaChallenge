@@ -551,7 +551,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                     
                                     uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH, ItemType::LifeSaver_Dissolve_InWater_RH);
 
-                                    if (itemIdx == 255) {
+                                    if (itemIdx == Constants::NoItem) {
 
                                         player.pushSequence(Stance::Man_Die_Water_LH_02_01, Stance::Man_Die_Water_LH_02_07);
                                         player.pushSequence(Stance::Man_WalkingJump_LH_2D_25_01, Stance::Man_WalkingJump_LH_2D_25_09);
@@ -829,7 +829,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                                     uint8_t itemIdx = world.getItem(ItemType::LifeSaver_InWater_RH, ItemType::LifeSaver_Dissolve_InWater_RH);
 
-                                    if (itemIdx == 255) {
+                                    if (itemIdx == Constants::NoItem) {
 
                                         player.pushSequence(Stance::Man_Die_Water_RH_02_01, Stance::Man_Die_Water_RH_02_07);
                                         player.pushSequence(Stance::Man_WalkingJump_RH_2D_25_01, Stance::Man_WalkingJump_RH_2D_25_09);

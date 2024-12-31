@@ -408,7 +408,7 @@ struct World {
 
             }
 
-            return 255;
+            return Constants::NoItem;
 
         }
 
@@ -420,7 +420,7 @@ struct World {
 
             }
 
-            return 255;
+            return Constants::NoItem;
 
         }
 
@@ -428,14 +428,14 @@ struct World {
 
             for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
-                if (this->items[i].getItemType() == ItemType::None) return 255;
+                if (this->items[i].getItemType() == ItemType::None) return Constants::NoItem;
 
                 if (this->items[i].getItemType() != ItemType::None && this->items[i].getX() == xOffset && this->items[y].getY() == yOffset) {
                     return i;
                 }
             }
 
-            return 255;
+            return Constants::NoItem;
 
         };
 

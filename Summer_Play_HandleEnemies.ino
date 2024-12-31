@@ -402,12 +402,12 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 bool playGame_EnemyStabsPlayer(Player &player) {
 
-    if (player.getEnemyIdx() == 255) {
+    if (player.getEnemyIdx() == Constants::NoEnemy) {
 
         uint8_t enemyIdx = world.getClosestEnemy(EnemyType::SwordFighter);
         player.setEnemyIdx(enemyIdx);
 
-        if (enemyIdx = 255) return false;
+        if (enemyIdx = Constants::NoEnemy) return false;
 
     }
 
@@ -470,14 +470,14 @@ int16_t getDistanceBetween(Enemy &enemy) {
 
 int16_t getDistanceBetween(Player &player, EnemyType enemyType) {
 
-    if (player.getEnemyIdx() == 255) {
+    if (player.getEnemyIdx() == Constants::NoEnemy) {
 
         uint8_t enemyIdx = world.getClosestEnemy(enemyType);
         player.setEnemyIdx(enemyIdx);
 
     }
 
-    if (player.getEnemyIdx() != 255) {
+    if (player.getEnemyIdx() != Constants::NoEnemy) {
 
         Enemy &enemy = world.getEnemy(player.getEnemyIdx());
         return -world.getMiddleground() + 56 - enemy.getX();

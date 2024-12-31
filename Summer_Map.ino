@@ -91,7 +91,7 @@ void map_Update() {
             if (frameCount % 2 == 0) {
 
                 world.updateBoat();
-                if (world.getBoatDirection() == 255) {
+                if (world.getBoatDirection() == Constants::NoDirection) {
                     gameState = GameState::Play_Init;
 
                 }
