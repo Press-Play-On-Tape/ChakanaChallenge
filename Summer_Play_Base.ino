@@ -1626,11 +1626,12 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     case ItemType::Chakana:
 
-                        if (collide(playerRect, itemRect) && (justPressed & A_BUTTON)) {                        
+                        if (collide(playerRect, itemRect) &&  gameState != GameState::Chakana_Open) {                        
 
                             ignoreKeyPress = 16;
                             player.stageSequence(Stance::None, Stance::None);
 
+                            gameState = GameState::Chakana_Open;
                             endOfLevel_Counter = 0;
                             
                         }

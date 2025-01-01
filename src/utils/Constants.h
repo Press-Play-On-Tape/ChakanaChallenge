@@ -8,7 +8,7 @@
 
 #define _DEBUG
 #define _DEBUG_STACK
-#define DEBUG_SOUND
+#define _DEBUG_SOUND
 #define _DEBUG_ORIGBOAT
 
 enum Tiles : uint8_t {
@@ -222,7 +222,7 @@ enum Tiles : uint8_t {
     Typical:
 
     00, 00,   00, 00,   00, 00,   00, 00,   00, 00, 
-    00, 00,   29, 00,   00, 00,   00, 00,   30, 00,
+    00, 00,   29, 00,   00, 00,   00, 30,   00, 00,
     
     01, 01,   00, 00,   00, 00,   00, 00,   01, 01,
     02, 02,   00, 00,   00, 00,   00, 00,   02, 02, 
@@ -614,8 +614,7 @@ namespace Constants {
 
     constexpr uint8_t EnemyCount = 4;
 
-    constexpr uint8_t StackSize = 20;
-    constexpr uint8_t Animation_NumberOfFrames = 15;
+    constexpr uint8_t StackSize = 25;
     constexpr uint16_t NoWaves = 29999;
 
     constexpr uint8_t GroundY = 37;

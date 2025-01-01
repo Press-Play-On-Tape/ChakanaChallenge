@@ -33,7 +33,6 @@ decltype(a) a;
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "time.h"
 
 #ifndef DEBUG
 ARDUBOY_NO_USB
@@ -47,18 +46,8 @@ GameState prevGameState = GameState::SplashScreen_Start;
 uint16_t frameCount = 0;
 uint8_t titleCounter = 0;
 
-uint8_t optionsMenuIdx = 0;
-uint8_t optionsTopMenuIdx = 2;
-uint8_t optionsStartingBalance = 0;
-uint8_t pauseMenu = 0;
-
-int8_t curPlayerIdx = -1;
-uint16_t bButton = 0;
-uint16_t raiseBy = 50;
-uint8_t pressCount = 0;
 World world;
 Menu menu;
-
 
 Stance stanceOld = Stance::Man_Walk_RH_01;
 
@@ -94,7 +83,22 @@ void setup() {
 void loop() {
 
     FX::enableOLED();
-    a.waitForNextPlane(BLACK);
+
+    switch (gameState) {
+
+        case GameState::PlayGame:
+        case GameState::Inventory_Open:
+        case GameState::Chakana_Open:
+        case GameState::Play_Battle:
+            a.waitForNextPlane(WHITE);
+            break;
+
+        default:
+            a.waitForNextPlane(BLACK);
+            break;
+        
+    }
+    
     FX::disableOLED();
 
     Player &player = world.getPlayer();
@@ -159,12 +163,11 @@ void loop() {
 
 }
 
-uint16_t coords_Y = 0;
 
 void printDetails() {
     
     Player &player = world.getPlayer();
-coords_Y = Constants::GroundY - player.getY();
+
 // for(uint8_t i = 0; i < 8;i++) {
 //     Serial.print(world.getPalm(i));
 //     Serial.print(" ");

@@ -111,8 +111,6 @@ bool Stack< Type, Capacity >::insert(const typename Stack< Type, Capacity >::Ite
 template< typename Type, uint8_t Capacity >
 bool Stack< Type, Capacity >::push(typename Stack< Type, Capacity >::ItemType && item) {   
 
-	// this->frame = Constants::Animation_NumberOfFrames;
-
 	if (this->isFull())
 		return false;
 
