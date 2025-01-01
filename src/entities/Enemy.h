@@ -16,7 +16,7 @@ class Enemy : public BaseStack {
 
         int16_t x = 0;
         int8_t y = 37;
-        uint8_t health = 2;//Constants::HealthMax;
+        uint8_t health = Constants::HealthMax;
         uint8_t swordWound = 0;
 
     public:

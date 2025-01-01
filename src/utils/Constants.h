@@ -594,30 +594,20 @@ namespace Constants {
     constexpr uint8_t Map_Y_Count = 16;
     #endif
 
-    constexpr uint8_t FlipTime = 25;
-    constexpr uint8_t WinFlashTime_Start = 120;
-    constexpr uint16_t WinFlashTime_End = 800;
     constexpr uint8_t NoPlayer = 255;
     constexpr uint8_t NoItem = 255;
     constexpr uint8_t NoDirection = 255;
+    constexpr uint16_t NoWaves = 29999;
     constexpr uint8_t NoEnemy = 255;
-    constexpr uint8_t PlayerCount = 6;
+
     constexpr uint8_t HealthMax = 14;
 
-    constexpr uint8_t Speed_Action_Fast = 8;
-    constexpr uint8_t Speed_Action_Slow = 24;
-    constexpr uint8_t Speed_Fold = 6;
+    constexpr uint8_t EnemyCount = 3;
+    constexpr uint8_t ItemCount = 10;
 
-    constexpr uint8_t Bet_Default = 50;
-    constexpr uint8_t Bet_Increment = Bet_Default / 2;
-
-    constexpr uint8_t EnemyCount = 4;
-
-    constexpr uint8_t StackSize = 25;
-    constexpr uint16_t NoWaves = 29999;
+    constexpr uint8_t StackSize = 23;
 
     constexpr uint8_t GroundY = 37;
-    constexpr uint8_t ItemCount = 10;
     constexpr uint8_t Puff_Max = 7 * 16;
     constexpr uint8_t Glint_Max = 8;
 

@@ -39,14 +39,13 @@ ARDUBOY_NO_USB
 #endif
 
 Cookie cookie;
-Game &game = cookie.game;
 SoundSettings &soundSettings = cookie.soundSettings;
 GameState gameState = GameState::SplashScreen_Start;
 GameState prevGameState = GameState::SplashScreen_Start;
 uint16_t frameCount = 0;
 uint8_t titleCounter = 0;
 
-World world;
+World &world = cookie.world;
 Menu menu;
 
 Stance stanceOld = Stance::Man_Walk_RH_01;

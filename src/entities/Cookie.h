@@ -7,6 +7,6 @@ struct Cookie {
 
     bool hasSavedGame;
     SoundSettings soundSettings;
-    Game game;
+    World world;
 
 };
