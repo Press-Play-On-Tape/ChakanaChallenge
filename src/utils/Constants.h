@@ -6,7 +6,7 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define DEBUG
+#define _DEBUG
 #define _DEBUG_STACK
 #define DEBUG_SOUND
 #define _DEBUG_ORIGBOAT
@@ -612,9 +612,9 @@ namespace Constants {
     constexpr uint8_t Bet_Default = 50;
     constexpr uint8_t Bet_Increment = Bet_Default / 2;
 
-    constexpr uint8_t EnemyCount = 3;
+    constexpr uint8_t EnemyCount = 4;
 
-    constexpr uint8_t StackSize = 30;
+    constexpr uint8_t StackSize = 20;
     constexpr uint8_t Animation_NumberOfFrames = 15;
     constexpr uint16_t NoWaves = 29999;
 

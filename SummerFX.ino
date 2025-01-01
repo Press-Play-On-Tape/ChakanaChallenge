@@ -35,8 +35,8 @@ decltype(a) a;
 #include <stdlib.h>
 #include "time.h"
 
-#ifdef DEBUG
-//ARDUBOY_NO_USB
+#ifndef DEBUG
+ARDUBOY_NO_USB
 #endif
 
 Cookie cookie;
@@ -61,7 +61,6 @@ Menu menu;
 
 
 Stance stanceOld = Stance::Man_Walk_RH_01;
-// Stance stance = Stance::Man_Walk_RH_01;
 
 #ifdef DEBUG_FIXED_RAND
 uint16_t seed = 72;
