@@ -9,7 +9,6 @@
 #define _DEBUG
 #define _DEBUG_STACK
 #define _DEBUG_SOUND
-#define _DEBUG_ORIGBOAT
 
 enum Tiles : uint8_t {
 
