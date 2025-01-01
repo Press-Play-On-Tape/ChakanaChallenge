@@ -133,12 +133,12 @@ struct World {
             }
             else {
 
-                uint8_t move = Constants::BoatMovements[this->boatIdx];
+                uint8_t move = FX::readIndexedUInt8(Constants::BoatMovements, this->boatIdx);
                 
                 if (move != 255) {
                     this->boatDirection = move;
                     this->boatIdx++;
-                    this->boatCounter = Constants::BoatMovements[this->boatIdx];
+                    this->boatCounter = FX::readIndexedUInt8(Constants::BoatMovements, this->boatIdx);
                     this->boatIdx++;
                 }
                 else {
@@ -275,8 +275,10 @@ struct World {
 
                     case ItemType::SwingyThing:
                         {  
-                            int16_t itemX = item.getX() + 6 + 2 + Constants::swingyThing_X[item.getFrame()];
-                            int8_t itemY = yOffset - item.getY() + Constants::swingyThing_Y[item.getFrame()] + 11;
+                            int8_t xOffset = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
+                            int8_t yOffset = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
+                            int16_t itemX = item.getX() + 6 + 2 + xOffset;
+                            int8_t itemY = yOffset - item.getY() + yOffset + 11;
 
                             Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
 
@@ -641,10 +643,38 @@ struct World {
             
         }
 
+        bool canWalkOnLifeSaver(uint8_t tile) {
+
+            if (tile == Tiles::Water_Plain) {
+
+                uint8_t idx = this->getItem(ItemType::LifeSaver_InWater_LH, ItemType::LifeSaver_InWater_RH);
+
+                if (idx == Constants::NoItem) {
+
+                    idx = this->getItem(ItemType::LifeSaver_Dissolve_InWater_LH, ItemType::LifeSaver_Dissolve_InWater_RH);
+
+                }
+
+                return idx != Constants::NoItem;
+
+            }
+
+            return false;
+
+        }
+
         bool canWalkOnTile(uint8_t tile) {
 
-            // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
-            return tile == Tiles::Solid_Walkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
+            if (tile == Tiles::Water_Plain) {
+
+                return canWalkOnLifeSaver(tile);
+
+            }
+            else {
+    
+                return tile == Tiles::Solid_Walkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
+
+            }
             
         }
 

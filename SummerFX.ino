@@ -31,13 +31,13 @@ decltype(a) a;
 #include "src/utils/SynthU.hpp"
 #define ABG_TIMER1
 
-#include "src/fonts/Font3x5.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "time.h"
 
-ARDUBOY_NO_USB
+#ifdef DEBUG
+//ARDUBOY_NO_USB
+#endif
 
 Cookie cookie;
 Game &game = cookie.game;
@@ -51,7 +51,6 @@ uint8_t optionsMenuIdx = 0;
 uint8_t optionsTopMenuIdx = 2;
 uint8_t optionsStartingBalance = 0;
 uint8_t pauseMenu = 0;
-// Font3x5 font3x5 = Font3x5();
 
 int8_t curPlayerIdx = -1;
 uint16_t bButton = 0;
@@ -101,18 +100,12 @@ void loop() {
 
     Player &player = world.getPlayer();
 
-    #ifdef DEBUG
-
-        font3x5.setCursor(0, 0);
-        font3x5.print((uint8_t)gameState);
-
-    #endif
-
     if (player.getStance() != stanceOld) {
         printDetails();
         stanceOld = player.getStance();
 
     }
+
     switch (gameState) {
 
         case GameState::SplashScreen_Start ... GameState::SplashScreen_End:
@@ -167,11 +160,12 @@ void loop() {
 
 }
 
+uint16_t coords_Y = 0;
 
 void printDetails() {
     
     Player &player = world.getPlayer();
-
+coords_Y = Constants::GroundY - player.getY();
 // for(uint8_t i = 0; i < 8;i++) {
 //     Serial.print(world.getPalm(i));
 //     Serial.print(" ");
@@ -256,5 +250,5 @@ void printDetails() {
     //     }
 
     // }
-
+    
 }

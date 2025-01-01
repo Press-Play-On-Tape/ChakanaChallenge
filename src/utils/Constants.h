@@ -6,7 +6,7 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define _DEBUG
+#define DEBUG
 #define _DEBUG_STACK
 #define DEBUG_SOUND
 #define _DEBUG_ORIGBOAT
@@ -583,62 +583,17 @@ enum Tiles : uint8_t {
 // };
 
 
-namespace Music {
-
-    constexpr uint24_t Songs[] = { Music::Song_MainTheme };
-
-    constexpr uint24_t SFXs[] =  { Music::SFX_Death, 
-                                   Music::SFX_Victory,
-                                   Music::SFX_XPGain,
-                                   Music::SFX_Three_Inc,
-                                   Music::SFX_Three_Dec,
-                                   Music::SFX_PlayerBlip,
-                                   Music::SFX_EnemyBlip,
-                                   Music::SFX_Explosion,
-                                   Music::SFX_DoubleBeep,
-                                   Music::SFX_DoubleBeepDown,
-                                   Music::SFX_Bet1,
-                                   Music::SFX_Bet2,
-                                   Music::SFX_Bet3,
-                                   Music::SFX_Bet4,
-                                   Music::SFX_Bet5,
-                                   Music::SFX_Bet6,
-                                   Music::SFX_Click,
-                                   Music::SFX_SmallBlind,
-                                   Music::SFX_BigBlind,
-                                };
-
-}
-
 namespace Constants {
 
-    constexpr uint8_t Map_X_Count = 40;
+    #ifdef DEBUG
+    constexpr uint8_t Map_X_Count_Full = 50;
+    constexpr uint8_t Map_X_Count = 24;
     constexpr uint8_t Map_Y_Count = 16;
-
-
-    constexpr uint8_t swordLunge_Player[] = { 
-    2, // stationary 
-    3, 3, 5, 3, 3, 2, // lunge
-    2, 2, 2, 2, // walk
-    2, 2, 2, 2, // walk Back
-    2, 2, 2, 2, 2, 2, 2, // jump
-    };
-    constexpr uint8_t SwordLunge_Enemy[] = { 
-    2, // stationary 
-    3, 4, 6, 4, 3, 2, // lunge
-    2, 2, 2, 2, // walk
-    2, 2, 2, 2, // walk Back
-    2, 2, 2, 2, 2, 2, 2, // jump
-    };
-
-    const uint8_t PROGMEM ball_X[20] = { 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
-    const uint8_t PROGMEM ball_Y[20] = { 0, -8, -6, -5,         -4,  -3,  -2, -1, 0, 0, 0, 0,    0,  0, 1,   2,  3, 4, 4, 5 };
-
-    constexpr int8_t swingyThing_X[] = { 0, -2, -4, -5, -6, -5, -4, -2, 0, 2, 4, 5, 6, 5, 4, 2 };
-    constexpr int8_t swingyThing_Y[] = { 0, -1, -2, -3, -4, -3, -2, -1, 
-                                         0, -1, -2, -3, -4, -3, -2, -1 };
-
-    constexpr uint24_t PalmImages[] = { Images::Palm1, Images::Palm2, Images::Palm3, Images::Palm4, Images::Palm5, Images::Palm6, Images::Palm5, Images::Palm6 };
+    #else
+    constexpr uint8_t Map_X_Count_Full = 50;
+    constexpr uint8_t Map_X_Count = 50;
+    constexpr uint8_t Map_Y_Count = 16;
+    #endif
 
     constexpr uint8_t FlipTime = 25;
     constexpr uint8_t WinFlashTime_Start = 120;
@@ -668,20 +623,7 @@ namespace Constants {
     constexpr uint8_t Puff_Max = 7 * 16;
     constexpr uint8_t Glint_Max = 8;
 
-
-
-
-
-    constexpr int8_t BoatMovements[] = {
-
-        0, 2,   6, 30,  7, 5,   8, 20,  7, 2, 6, 2, 5, 2, 4, 28,   5, 2, 6, 2, 7, 2, 8, 16,  9, 2, 10, 2, 11, 2, 12, 8,  255,
-
-        0, 1,   4, 118,   5, 4,   6, 4, 255,
-
-    };
-
 };
-
 
 
 uint8_t mapData[Constants::Map_Y_Count][Constants::Map_X_Count];

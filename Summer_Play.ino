@@ -141,7 +141,8 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     SpritesU::drawOverwriteFX(world.getBackground() + 128, 0, Images::Background, currentPlane);    
 
     for (uint8_t i = 4; i < 8; i++) {
-        SpritesU::drawPlusMaskFX(world.getPalm(i), 20, Constants::PalmImages[i], currentPlane);
+        uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
+        SpritesU::drawPlusMaskFX(world.getPalm(i), 20, palmIdx, currentPlane);
     }
 
     FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
@@ -178,7 +179,8 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 
     for (uint8_t i = 0; i < 4; i++) {
-        SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10, Constants::PalmImages[i], currentPlane);
+        uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
+        SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10, palmIdx, currentPlane);
     }
 
     world.update(false);

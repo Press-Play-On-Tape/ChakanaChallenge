@@ -351,8 +351,9 @@ class Item {
 
                     if (this->counter > 0) {
 
+                        int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
                         this->setCounter(this->getCounter() - 1);
-                        this->setY(this->getY() + pgm_read_byte(&Constants::ball_Y[this->getCounter()]));
+                        this->setY(this->getY() + yOffset);
 
                         switch (this->itemType) {
 
@@ -392,9 +393,10 @@ class Item {
                 case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
 
                     if (this->counter > 0) {
-
+                        
+                        int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
                         this->setCounter(this->getCounter() - 1);
-                        this->setY(this->getY() + &Constants::ball_Y[this->getCounter()]);
+                        this->setY(this->getY() + yOffset);
 
                         switch (this->itemType) {
 

@@ -25,7 +25,7 @@ void playGame_Init() {
 
         for (uint8_t y = 0; y < Constants::Map_Y_Count; y++) {
                 
-            FX::seekDataArray(levelStart, y, 0, Constants::Map_X_Count);
+            FX::seekDataArray(levelStart, y, 0, Constants::Map_X_Count_Full);
             
             FX::readObject(mapData[Constants::Map_Y_Count - y - 1]);
             FX::readEnd();
@@ -649,10 +649,20 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                     }
                                     else {
 
-                                        player.pushSequence(Stance::Man_Walk_LH_03, Stance::Man_Walk_LH_04);
-                                        player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
-                                        player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_02);
-                                        player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
+                                        uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
+
+                                        if (tile_D2 == Tiles::Water_Plain) {
+
+                                            player.pushSequence(Stance::Man_Walk_LH_03, Stance::Man_Walk_LH_04);
+                                            player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
+                                            player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_02);
+
+                                        }
+                                        else {
+
+                                            player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
+
+                                        }
 
                                     }
 
@@ -867,6 +877,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
             case Direction::Right:
                 {
+
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                     uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
 
@@ -927,10 +938,20 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                     }
                                     else {
 
-                                        player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
-                                        player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
-                                        player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_02);
-                                        player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
+                                        uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
+
+                                        if (tile_D2 == Tiles::Water_Plain) {
+                                     
+                                            player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
+                                            player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
+                                            player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_02);
+
+                                        }
+                                        else {
+
+                                            player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
+
+                                        }
 
                                     }
 
@@ -1249,12 +1270,18 @@ void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
 
             case Stance::Man_Walk_RH_01:
                 {
+                    uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                     uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
                     uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
                     uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
 
-                    if (world.canJumpUpOntoTile(tile_R)) {
+                    if (tile_D2 == Tiles::Water_Plain) {
+
+                        // Do nothing ..
+
+                    }
+                    else if (world.canJumpUpOntoTile(tile_R)) {
 
                         player.pushSequence(Stance::Man_WalkingJump_RH_UP_01, Stance::Man_WalkingJump_RH_UP_05, true); 
 
@@ -1303,11 +1330,17 @@ void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
 
             case Stance::Man_Walk_LH_01:
                 {                            
+                    uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                     uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
                     uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
                     uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
 
-                    if (world.canJumpUpOntoTile(tile_L)) {
+                    if (tile_D2 == Tiles::Water_Plain) {
+
+                        // Do nothing ..
+
+                    }
+                    else if (world.canJumpUpOntoTile(tile_L)) {
 
                         player.pushSequence(Stance::Man_WalkingJump_LH_UP_01, Stance::Man_WalkingJump_LH_UP_05, true); 
 
