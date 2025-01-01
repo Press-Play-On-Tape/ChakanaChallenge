@@ -598,12 +598,12 @@ void renderWorld(uint8_t currentPlane) {
 
         uint8_t frame = player.getItemCount() > 0 ? 0 : 4;
 
-        if (player.getItemCount() > 3) {
+        if (player.getItemCount() > 2) {
 
-            if (menu.getTop() + 3 == player.getItemCount()) {
+            if (menu.getTop() + 4 == player.getItemCount()) {
                 frame = 2;
             }
-            else if (menu.getTop() == 0 ) {
+            else if (menu.getTop() == 0 || menu.getTop() == 1) {
                 frame = 1;
             }
             else {
@@ -614,22 +614,47 @@ void renderWorld(uint8_t currentPlane) {
 
         SpritesU::drawPlusMaskFX(menu.getX(), 0,  Images::InventoryPanel, (frame * 3) + currentPlane);
 
-        for (uint8_t i = menu.getTop(); i < menu.getTop() + 3; i++) {
+        if (menu.getTop() == 0) {
 
-            InventoryItem &item = player.getItem(i);
-            if (item.getItemType() == ItemType::None)   break;
+            for (uint8_t i = menu.getTop(); i < menu.getTop() + 3; i++) {
 
-            uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
-            uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
-            SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
+                if (i =< 1) {
+
+                }
+                else {
+
+                    InventoryItem &item = player.getItem(i - 2);
+                    if (item.getItemType() == ItemType::None)   break;
+
+                    uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
+                    uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
+                    SpritesU::drawPlusMaskFX(menu.getX() + 13, -6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
+
+                }
+
+            }
 
         }
+        else {
 
-        if (frameCount % 64 < 32 && player.getItemCount() > 0) {
+            for (uint8_t i = menu.getTop(); i < menu.getTop() + 3; i++) {
 
-            SpritesU::drawPlusMaskFX(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
-            SpritesU::drawPlusMaskFX(menu.getX() + 27, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
 
+                InventoryItem &item = player.getItem(i - 2);
+                if (item.getItemType() == ItemType::None)   break;
+
+                uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
+                uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
+                SpritesU::drawPlusMaskFX(menu.getX() + 13, -6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
+
+            }
+
+            if (frameCount % 64 < 32 && player.getItemCount() > 0) {
+
+                SpritesU::drawPlusMaskFX(menu.getX() + 12, -5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
+                SpritesU::drawPlusMaskFX(menu.getX() + 27, -5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
+
+            }
         }
 
     }
