@@ -20,6 +20,7 @@ struct World {
         Enemy enemy[Constants::EnemyCount];
         Item items[10];
 
+        uint16_t frameCount = 0;
         uint16_t xMap = 0;
         uint16_t yMap = 0;
         uint16_t xBoat = 14;
@@ -42,56 +43,64 @@ struct World {
 
     public:
 
-        GameState getGameState()                 { return this->gameState; }
-        GameState getPrevGameState()             { return this->prevGameState; }
-        
-        Item &getItem(uint8_t idx)               { return this->items[idx]; }
-        Player &getPlayer()                      { return this->player; }
-        Enemy &getEnemy(uint8_t idx)             { return this->enemy[idx]; }
-        uint16_t getXMap()                       { return this->xMap; }
-        uint16_t getYMap()                       { return this->yMap; }
-        uint16_t getXBoat()                      { return this->xBoat; }
-        uint16_t getYBoat()                      { return this->yBoat; }
-        uint8_t  getBoatDirection()              { return this->boatDirection; }
-        uint8_t  getBoatCounter()                { return this->boatCounter; }
-        uint16_t getBoatIdx()                    { return this->boatIdx; }
-        uint8_t  getLevel()                      { return this->level; }
+        GameState getGameState()                        { return this->gameState; }
+        GameState getPrevGameState()                    { return this->prevGameState; }
 
-        int16_t getX()                           { return this->x; }
-        int16_t getY()                           { return this->y; }
+        Item &getItem(uint8_t idx)                      { return this->items[idx]; }
+        Player &getPlayer()                             { return this->player; }
+        Enemy &getEnemy(uint8_t idx)                    { return this->enemy[idx]; }
+        uint16_t getXMap()                              { return this->xMap; }
+        uint16_t getYMap()                              { return this->yMap; }
+        uint16_t getXBoat()                             { return this->xBoat; }
+        uint16_t getYBoat()                             { return this->yBoat; }
+        uint8_t  getBoatDirection()                     { return this->boatDirection; }
+        uint8_t  getBoatCounter()                       { return this->boatCounter; }
+        uint16_t getBoatIdx()                           { return this->boatIdx; }
+        uint16_t getFrameCount()                        { return this->frameCount; }
+        uint8_t  getLevel()                             { return this->level; }
 
-        int16_t getWave()                        { return this->wave; }
-        int16_t getBackground()                  { return this->background; }
-        int16_t getMiddleground()                { return this->middleground; }
-        uint16_t getWaveIdx()                    { return this->waveIdx; }
+        int16_t getX()                                  { return this->x; }
+        int16_t getY()                                  { return this->y; }
 
-        Boat& getBoat()                          { return this->boat; }
+        int16_t getWave()                               { return this->wave; }
+        int16_t getBackground()                         { return this->background; }
+        int16_t getMiddleground()                       { return this->middleground; }
+        uint16_t getWaveIdx()                           { return this->waveIdx; }
 
-        void setGameState(GameState val)         { this->gameState = val; }
-        void setPrevGameState(GameState val)     { this->prevGameState = val; }
+        Boat& getBoat()                                 { return this->boat; }
 
-        void setXMap(uint16_t val)               { this->xMap = val; }
-        void setYMap(uint16_t val)               { this->yMap = val; }
-        void setXBoat(uint16_t val)              { this->xBoat = val; }
-        void setYBoat(uint16_t val)              { this->yBoat = val; }
-        void setBoatDirection(uint8_t val)       { this->boatDirection = val; }
-        void setBoatIdx(uint16_t val)            { this->boatIdx = val; }
-        void setBoatCounter(uint8_t val)         { this->boatCounter = val; }
-        void setLevel(uint8_t val)               { this->level = val; }
+        void setGameState(GameState val)                { this->gameState = val; }
+        void setPrevGameState(GameState val)            { this->prevGameState = val; }
 
-        void setX(int16_t val)                   { this->x = val; }
-        void setY(int16_t val)                   { this->y = val; }
+        void setXMap(uint16_t val)                      { this->xMap = val; }
+        void setYMap(uint16_t val)                      { this->yMap = val; }
+        void setXBoat(uint16_t val)                     { this->xBoat = val; }
+        void setYBoat(uint16_t val)                     { this->yBoat = val; }
+        void setBoatDirection(uint8_t val)              { this->boatDirection = val; }
+        void setBoatIdx(uint16_t val)                   { this->boatIdx = val; }
+        void setBoatCounter(uint8_t val)                { this->boatCounter = val; }
+        void setFrameCount(uint16_t val)                { this->frameCount = val; }
+        void setLevel(uint8_t val)                      { this->level = val; }
 
-        void setWave(int16_t val)                { this->wave = val; }
-        void setBackground(int16_t val)          { this->background = val; }
-        void setMiddleground(int16_t val)        { this->middleground = val; }
-        void setWaveIdx(uint16_t val)            { this->waveIdx = val; }
+        void setX(int16_t val)                          { this->x = val; }
+        void setY(int16_t val)                          { this->y = val; }
+
+        void setWave(int16_t val)                       { this->wave = val; }
+        void setBackground(int16_t val)                 { this->background = val; }
+        void setMiddleground(int16_t val)               { this->middleground = val; }
+        void setWaveIdx(uint16_t val)                   { this->waveIdx = val; }
 
     public:
 
         int16_t getPalm(uint8_t idx) { return this->palm[idx]; }
 
         int16_t setPalm(uint8_t idx, int16_t val) { this->palm[idx] = val; }
+
+        void incFrameCount() {
+
+            this->frameCount++;
+
+        }
 
         void startBoat() {
 

@@ -11,7 +11,7 @@
 void map_Init() {
 
     world.setGameState(GameState::Map);
-    frameCount = 0;
+    world.setFrameCount(0);
 
 }
 
@@ -19,13 +19,13 @@ void map_Update() {
 
     uint8_t pressed = getPressedButtons();
     uint8_t justPressed = getJustPressedButtons();
-    frameCount++;
+    world.incFrameCount();
 
     switch (world.getGameState()) {
 
         case GameState::Map:
 
-            if (frameCount % 4 == 0) {
+            if (world.getFrameCount() % 4 == 0) {
 
                 if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
 
@@ -60,7 +60,7 @@ void map_Update() {
             if (justPressed & A_BUTTON) {
 
                 world.setGameState(GameState::Map_ShowDialogue);
-                frameCount = 0;
+                world.setFrameCount(0);
 
             }
 
@@ -73,14 +73,14 @@ void map_Update() {
 
                 world.startBoat();
                 world.setGameState(GameState::Map_MoveBoat);
-                frameCount = 0;
+                world.setFrameCount(0);
 
             }
 
             if (justPressed & B_BUTTON) {
 
                 world.setGameState(GameState::Map);
-                frameCount = 0;
+                world.setFrameCount(0);
 
             }
 
@@ -88,7 +88,7 @@ void map_Update() {
 
         case GameState::Map_MoveBoat:
 
-            if (frameCount % 2 == 0) {
+            if (world.getFrameCount() % 2 == 0) {
 
                 world.updateBoat();
                 if (world.getBoatDirection() == Constants::NoDirection) {
@@ -124,7 +124,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     }
 
-    if (frameCount % 36 < 18) {
+    if (world.getFrameCount() % 36 < 18) {
 
         for (uint8_t i = 0; i < 14; i++) {
 

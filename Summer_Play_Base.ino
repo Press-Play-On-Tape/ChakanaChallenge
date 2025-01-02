@@ -13,7 +13,7 @@ void playGame_Init() {
 
     Player &player = world.getPlayer();
     world.setGameState(GameState::PlayGame);
-    frameCount = 0;
+    world.setFrameCount(0);
 
 
 
@@ -1502,9 +1502,9 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     
     Player &player = world.getPlayer();
 
-    frameCount++;
+    world.incFrameCount();
         
-    if (frameCount % 4 == 0) {
+    if (world.getFrameCount() % 4 == 0) {
     
         uint8_t pressed = getPressedButtons();
         uint8_t justPressed = getJustPressedButtons();
@@ -2206,7 +2206,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     // End of level?
 
-    if (endOfLevel_Counter < 14 && frameCount % 2 == 0) {
+    if (endOfLevel_Counter < 14 && world.getFrameCount() % 2 == 0) {
 
         endOfLevel_Counter++;
 

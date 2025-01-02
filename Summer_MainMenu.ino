@@ -19,7 +19,7 @@ void title_Init() {
 
 void title_Update() {
 
-    frameCount++;
+    world.incFrameCount();
 
     uint8_t justPressed = getJustPressedButtons();
     uint8_t pressed = getPressedButtons();

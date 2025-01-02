@@ -14,8 +14,9 @@ void play_Update() {
 
     uint8_t justPressed = getJustPressedButtons();
 
-    frameCount++;
-    if (frameCount % 4 == 0) {
+    world.incFrameCount();
+
+    if (world.getFrameCount() % 4 == 0) {
 
         img++;
 

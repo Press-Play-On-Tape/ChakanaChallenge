@@ -189,33 +189,33 @@ void renderWorld(uint8_t currentPlane) {
             // Rollers R then L
 
             else if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_32, ((frameCount % 24) / 6 * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_32, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
             }
 
             else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_34, ((frameCount % 24) / 6 * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_34, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
             }
 
             else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_33, ((frameCount % 24) / 6 * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_33, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
             }
 
             else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_35, ((frameCount % 24) / 6 * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_35, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
             }
 
             // Water
 
             else if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_39, ((frameCount % 48) / 3 * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_39, ((world.getFrameCount() % 48) / 3 * 3) + currentPlane);
             }
 
             else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_40, ((frameCount % 48) / 3 * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_40, ((world.getFrameCount() % 48) / 3 * 3) + currentPlane);
             }
 
             else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_41, ((frameCount % 48) / 3 * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_41, ((world.getFrameCount() % 48) / 3 * 3) + currentPlane);
             }
 
 
@@ -641,7 +641,7 @@ void renderWorld(uint8_t currentPlane) {
 
                             if (menu.getY() <= 1) {
 
-                                if (frameCount % 64 < 32) {
+                                if (world.getFrameCount() % 64 < 32) {
 
                                     if (menu.getY() == 0) {
                                         SpritesU::drawPlusMaskFX(menu.getX() + 8, 1, Images::InventoryPanel_Cursor, currentPlane);
@@ -666,7 +666,7 @@ void renderWorld(uint8_t currentPlane) {
                             uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
                             SpritesU::drawPlusMaskFX(menu.getX() + 13, -12 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
 
-                            if (menu.getY() >= 2 && frameCount % 64 < 32 && player.getItemCount() > 0) {
+                            if (menu.getY() >= 2 && world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
                                 SpritesU::drawPlusMaskFX(menu.getX() + 12, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
                                 SpritesU::drawPlusMaskFX(menu.getX() + 27, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
@@ -697,7 +697,7 @@ void renderWorld(uint8_t currentPlane) {
                     }
         // Serial.println("");
 
-                    if (frameCount % 64 < 32 && player.getItemCount() > 0) {
+                    if (world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
                         SpritesU::drawPlusMaskFX(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
                         SpritesU::drawPlusMaskFX(menu.getX() + 27, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
@@ -711,7 +711,7 @@ void renderWorld(uint8_t currentPlane) {
                 frame = ((static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Inventory_Open_Reset_0)) / 2) + 5;
                 SpritesU::drawPlusMaskFX(menu.getX(), 0,  Images::InventoryPanel, (frame * 3) + currentPlane);
 
-                if (frameCount % 64 < 32) {
+                if (world.getFrameCount() % 64 < 32) {
 
                     uint8_t y = 0;
 

@@ -40,9 +40,6 @@ ARDUBOY_NO_USB
 
 Cookie cookie;
 SoundSettings &soundSettings = cookie.soundSettings;
-// GameState gameState = GameState::SplashScreen_Start;
-// GameState prevGameState = GameState::SplashScreen_Start;
-uint16_t frameCount = 0;
 uint8_t titleCounter = 0;
 
 World &world = cookie.world;
