@@ -6,14 +6,13 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-int16_t enemy = -20;
 uint8_t endOfLevel_Counter = 0;
 uint8_t ignoreKeyPress = 0;
 
 void playGame_Init() {
 
     Player &player = world.getPlayer();
-    gameState = GameState::PlayGame;
+    world.setGameState(GameState::PlayGame);
     frameCount = 0;
 
 
@@ -94,10 +93,7 @@ void playGame_Init() {
             enemy.setY(FX::readPendingUInt16());
             enemy.setStance(FX::readPendingUInt16());
             enemy.getItem().setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
-            
-            // if (enemy.getEnemyType() != EnemyType::None) {
-            //     world.get
-            // }
+
         }
 
         FX::readEnd();
@@ -284,7 +280,12 @@ void playGame_Init() {
 
 
         player.getItem(0).setItemType(ItemType::Hammer);
-        player.setItemCount(1);
+        player.getItem(1).setItemType(ItemType::Key1);
+        // player.getItem(2).setItemType(ItemType::Amulet);
+        // player.getItem(3).setItemType(ItemType::Anchor);
+        // player.getItem(4).setItemType(ItemType::LifeSaver);
+        // player.getItem(5).setItemType(ItemType::Sword);
+        player.setItemCount(2);
 
 
         // uint16_t waveCount = 0;
@@ -1421,7 +1422,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
 
-        gameState = GameState::PlayGame;
+        world.setGameState(GameState::PlayGame);
         player.setStance(Stance::Man_Walk_RH_00);
 
     }
@@ -1510,12 +1511,28 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         if (player.isEmpty()) {
 
-            switch (gameState) {
+            switch (world.getGameState()) {
                 
                 case GameState::Inventory_Open:
 
                     if (justPressed & B_BUTTON || pressed & B_BUTTON) {
                         playGame_HandleMenu();
+                    }
+                    else {
+                        playGame_HandleMenu(player, pressed, justPressed);
+                    }
+
+                    break;
+                
+                case GameState::Inventory_Open_Exit_0:
+                case GameState::Inventory_Open_Exit_1:
+                case GameState::Inventory_Open_Reset_0:
+                case GameState::Inventory_Open_Reset_1:
+                case GameState::Inventory_Open_Reset_Exit_0:
+                case GameState::Inventory_Open_Reset_Exit_1:
+
+                    if (justPressed & B_BUTTON) {
+                        world.setGameState(GameState::Inventory_Open);
                     }
                     else {
                         playGame_HandleMenu(player, pressed, justPressed);
@@ -1550,7 +1567,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         }
         else {
 
-            switch (gameState) {
+            switch (world.getGameState()) {
 
                 case GameState::PlayGame:
                     playGame_HandleJump(player, pressed, justPressed);
@@ -1626,12 +1643,12 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     case ItemType::Chakana:
 
-                        if (collide(playerRect, itemRect) &&  gameState != GameState::Chakana_Open) {                        
+                        if (collide(playerRect, itemRect) &&  world.getGameState() != GameState::Chakana_Open) {                        
 
                             ignoreKeyPress = 16;
                             player.stageSequence(Stance::None, Stance::None);
 
-                            gameState = GameState::Chakana_Open;
+                            world.setGameState(GameState::Chakana_Open);
                             endOfLevel_Counter = 0;
                             
                         }
@@ -1680,30 +1697,6 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 }
 
                             }
-
-                            // }
-                            // else {
-                            //     item.setItemType(ItemType::Lever_LH);
-                            //     Item &item2 = world.getItem(i + 1);
-
-                            //     switch (item2.getItemType()) {
-
-                            //         case ItemType::Lever_Portal_Open:
-                            //         case ItemType::Lever_Portal_Auto_Open:
-                            //             item2.setData(1);
-                            //             item2.setCounter(0);
-                            //             break;
-
-                            //         default:
-                            //             item2.setData(-1);
-                            //             item2.setCounter(0);
-                            //             break;
-
-                            //     }
-
-                            //     item2.setData(-1);
-                            //     item2.setCounter(0);
-                            // }
                             
                         }
                         break;
@@ -2113,7 +2106,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             else {
 
                                 int16_t dist = getDistanceBetween(enemy);
-                                gameState = GameState::PlayGame;
+                                world.setGameState(GameState::PlayGame);
 
                                 player.removeInventoryItem(menu.getY());
                                 if (menu.getY() > 0) menu.setY(menu.getY() - 1);
@@ -2272,11 +2265,16 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     renderWorld(currentPlane);
 
-
-    switch (gameState) {
+    switch (world.getGameState()) {
 
         case GameState::PlayGame:
         case GameState::Inventory_Open:
+        case GameState::Inventory_Open_Exit_0:
+        case GameState::Inventory_Open_Exit_1:
+        case GameState::Inventory_Open_Reset_0:
+        case GameState::Inventory_Open_Reset_1:
+        case GameState::Inventory_Open_Reset_Exit_0:
+        case GameState::Inventory_Open_Reset_Exit_1:
             break;
 
         case GameState::Chakana_Open:
