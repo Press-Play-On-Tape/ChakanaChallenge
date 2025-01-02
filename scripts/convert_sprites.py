@@ -143,6 +143,7 @@ convert_header(IMAGES + 'Boat_Small.png',                                       
 convert_header(IMAGES + 'Arrow.png',                                                            BASE + 'Images.hpp', 'Arrow', 4, 11, 8)
 
 convert_header(IMAGES + 'InventoryPanel.png',                                                            BASE + 'Images.hpp', 'InventoryPanel', 4, 32, 64)
+convert_header(IMAGES + 'InventoryPanel_Cursor.png',                                                            BASE + 'Images.hpp', 'InventoryPanel_Cursor', 4)
 convert_header(IMAGES + 'Cursor_00.png',                                                            BASE + 'Images.hpp', 'Cursor_00', 4)
 convert_header(IMAGES + 'Cursor_01.png',                                                            BASE + 'Images.hpp', 'Cursor_01', 4)
 

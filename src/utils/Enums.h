@@ -1376,6 +1376,12 @@ enum class GameState : uint8_t {
     PlayGame_Start,
         PlayGame,
         Inventory_Open,
+        Inventory_Open_Reset_0,
+        Inventory_Open_Reset_1,
+        Inventory_Open_Reset_Exit_0,
+        Inventory_Open_Reset_Exit_1,
+        Inventory_Open_Exit_0,
+        Inventory_Open_Exit_1,
         Chakana_Open,
     PlayGame_End,
 
@@ -1395,3 +1401,14 @@ inline GameState operator++(GameState &c, int) {
   ++c;
   return result;
 }
+
+inline GameState &operator--( GameState & c ) {
+  c = static_cast<GameState>( static_cast<uint8_t>(c) - 1 );
+  return c;
+};
+
+inline GameState operator--( GameState & c, int ) {
+  GameState result = c;
+  --c;
+  return result;
+};

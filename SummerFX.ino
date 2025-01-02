@@ -40,8 +40,8 @@ ARDUBOY_NO_USB
 
 Cookie cookie;
 SoundSettings &soundSettings = cookie.soundSettings;
-GameState gameState = GameState::SplashScreen_Start;
-GameState prevGameState = GameState::SplashScreen_Start;
+// GameState gameState = GameState::SplashScreen_Start;
+// GameState prevGameState = GameState::SplashScreen_Start;
 uint16_t frameCount = 0;
 uint8_t titleCounter = 0;
 
@@ -83,10 +83,16 @@ void loop() {
 
     FX::enableOLED();
 
-    switch (gameState) {
+    switch (world.getGameState()) {
 
         case GameState::PlayGame:
         case GameState::Inventory_Open:
+        case GameState::Inventory_Open_Exit_0:
+        case GameState::Inventory_Open_Exit_1:
+        case GameState::Inventory_Open_Reset_0:
+        case GameState::Inventory_Open_Reset_1:
+        case GameState::Inventory_Open_Reset_Exit_0:
+        case GameState::Inventory_Open_Reset_Exit_1:
         case GameState::Chakana_Open:
         case GameState::Play_Battle:
             a.waitForNextPlane(WHITE);
@@ -108,7 +114,7 @@ void loop() {
 
     }
 
-    switch (gameState) {
+    switch (world.getGameState()) {
 
         case GameState::SplashScreen_Start ... GameState::SplashScreen_End:
             splashScreen(a);
@@ -139,6 +145,12 @@ void loop() {
 
         case GameState::PlayGame:
         case GameState::Inventory_Open:
+        case GameState::Inventory_Open_Exit_0:
+        case GameState::Inventory_Open_Exit_1:
+        case GameState::Inventory_Open_Reset_0:
+        case GameState::Inventory_Open_Reset_1:
+        case GameState::Inventory_Open_Reset_Exit_0:
+        case GameState::Inventory_Open_Reset_Exit_1:
         case GameState::Chakana_Open:
         case GameState::Play_Battle:
             playGame(a);

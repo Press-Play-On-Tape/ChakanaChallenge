@@ -10,7 +10,7 @@
 
 void map_Init() {
 
-    gameState = GameState::Map;
+    world.setGameState(GameState::Map);
     frameCount = 0;
 
 }
@@ -21,7 +21,7 @@ void map_Update() {
     uint8_t justPressed = getJustPressedButtons();
     frameCount++;
 
-    switch (gameState) {
+    switch (world.getGameState()) {
 
         case GameState::Map:
 
@@ -59,7 +59,7 @@ void map_Update() {
 
             if (justPressed & A_BUTTON) {
 
-                gameState = GameState::Map_ShowDialogue;
+                world.setGameState(GameState::Map_ShowDialogue);
                 frameCount = 0;
 
             }
@@ -72,14 +72,14 @@ void map_Update() {
             if (justPressed & A_BUTTON) {
 
                 world.startBoat();
-                gameState = GameState::Map_MoveBoat;
+                world.setGameState(GameState::Map_MoveBoat);
                 frameCount = 0;
 
             }
 
             if (justPressed & B_BUTTON) {
 
-                gameState = GameState::Map;
+                world.setGameState(GameState::Map);
                 frameCount = 0;
 
             }
@@ -92,7 +92,7 @@ void map_Update() {
 
                 world.updateBoat();
                 if (world.getBoatDirection() == Constants::NoDirection) {
-                    gameState = GameState::Play_Init;
+                    world.setGameState(GameState::Play_Init);
 
                 }
 
@@ -141,7 +141,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     }
 
-    switch (gameState) {
+    switch (world.getGameState()) {
 
         case GameState::Map:
             SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, currentPlane);

@@ -19,7 +19,7 @@ void splashScreen_Update() {
             randomSeed(1);
         #endif
         
-        gameState = GameState::Title_Init; 
+        world.setGameState(GameState::Title_Init); 
 
     }
     
@@ -29,7 +29,7 @@ void splashScreen_Update() {
 void splashScreen(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     
     uint8_t currentPlane = a.currentPlane();
-    uint8_t idx = static_cast<uint8_t>(gameState) - static_cast<uint8_t>(GameState::SplashScreen_Start);
+    uint8_t idx = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::SplashScreen_Start);
 
     SpritesU::drawOverwriteFX(0, 0, Images::PPOT, (3 * idx) + currentPlane);
 
@@ -37,7 +37,7 @@ void splashScreen(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         idx = (idx + 1) % 4;
         frameCount = 0;
-        gameState = static_cast<GameState>(static_cast<uint8_t>(GameState::SplashScreen_Start) + idx);
+        world.setGameState(static_cast<GameState>(static_cast<uint8_t>(GameState::SplashScreen_Start) + idx));
 
     }
 

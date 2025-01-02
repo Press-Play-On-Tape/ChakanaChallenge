@@ -9,10 +9,10 @@
 void title_Init() {
 
     if (!cookie.hasSavedGame) {
-        gameState = GameState::Title_OptPlay;
+        world.setGameState(GameState::Title_OptPlay);
     }
     else {
-        gameState = GameState::Title_OptResume;
+        world.setGameState(GameState::Title_OptResume);
     }
 
 }
@@ -24,7 +24,7 @@ void title_Update() {
     uint8_t justPressed = getJustPressedButtons();
     uint8_t pressed = getPressedButtons();
 
-    switch (gameState) {
+    switch (world.getGameState()) {
 
         #ifndef DEBUG        
 
@@ -32,7 +32,7 @@ void title_Update() {
 
                 if (justPressed & B_BUTTON || justPressed & A_BUTTON) {
 
-                    gameState = GameState::Title_OptCredits;
+                    world.setGameState(GameState::Title_OptCredits);
 
                 }
 
@@ -43,7 +43,7 @@ void title_Update() {
         case GameState::Title_OptPlay:
 
             if (justPressed & DOWN_BUTTON) {
-                gameState = GameState::Title_OptSound;
+                world.setGameState(GameState::Title_OptSound);
             }
 
             if (justPressed & A_BUTTON) {
@@ -51,9 +51,9 @@ void title_Update() {
                 cookie.hasSavedGame = false;
                 saveCookie(true);
                 // prevGameState = GameState::Title_OptPlay;
-                // gameState = GameState::Play_Init;
-                // gameState = GameState::Map_Init;
-                gameState = GameState::PlayGame_Init;
+                // world.setGameState(GameState::Play_Init);
+                // world.setGameState(GameState::Map_Init);
+                world.setGameState(GameState::PlayGame_Init);
 
             }
 
@@ -62,12 +62,12 @@ void title_Update() {
         case GameState::Title_OptResume:
 
             if (justPressed & DOWN_BUTTON) {
-                gameState = GameState::Title_OptPlay2;
+                world.setGameState(GameState::Title_OptPlay2);
             }
 
             if (justPressed & A_BUTTON) {
 
-                gameState = GameState::Play_Init;
+                world.setGameState(GameState::Play_Init);
 
             }
 
@@ -76,19 +76,19 @@ void title_Update() {
         case GameState::Title_OptPlay2:
 
             if (justPressed & UP_BUTTON) {
-                gameState = GameState::Title_OptResume;
+                world.setGameState(GameState::Title_OptResume);
             }
 
             if (justPressed & DOWN_BUTTON) {
-                gameState = GameState::Title_OptSound2;
+                world.setGameState(GameState::Title_OptSound2);
             }
 
             if (justPressed & A_BUTTON) {
 
                 cookie.hasSavedGame = false;
                 saveCookie(true);
-                prevGameState = GameState::Title_OptPlay2;
-                gameState = GameState::Play_Init;
+                world.setPrevGameState(GameState::Title_OptPlay2);
+                world.setGameState(GameState::Play_Init);
 
             }
 
@@ -97,16 +97,16 @@ void title_Update() {
         case GameState::Title_OptSound:
 
             if (justPressed & UP_BUTTON) {
-                gameState = GameState::Title_OptPlay;
+                world.setGameState(GameState::Title_OptPlay);
             }
 
             if (justPressed & DOWN_BUTTON) {
-                gameState = GameState::Title_OptCredits;
+                world.setGameState(GameState::Title_OptCredits);
             }
 
             if (justPressed & A_BUTTON) {
 
-                gameState = GameState::Title_OptSound_Music;
+                world.setGameState(GameState::Title_OptSound_Music);
 
             }
 
@@ -115,16 +115,16 @@ void title_Update() {
         case GameState::Title_OptSound2:
 
             if (justPressed & UP_BUTTON) {
-                gameState = GameState::Title_OptPlay2;
+                world.setGameState(GameState::Title_OptPlay2);
             }
 
             if (justPressed & DOWN_BUTTON) {
-                gameState = GameState::Title_OptCredits;
+                world.setGameState(GameState::Title_OptCredits);
             }
 
             if (justPressed & A_BUTTON) {
 
-                gameState = GameState::Title_OptSound_Music2;
+                world.setGameState(GameState::Title_OptSound_Music2);
 
             }
 
@@ -133,11 +133,11 @@ void title_Update() {
         case GameState::Title_OptCredits:
 
             if (justPressed & UP_BUTTON) {
-                gameState = GameState::Title_OptSound;
+                world.setGameState(GameState::Title_OptSound);
             }
 
             if (justPressed & A_BUTTON) {
-                gameState = GameState::Title_ShowCredits;
+                world.setGameState(GameState::Title_ShowCredits);
             }
 
             break;
@@ -161,14 +161,14 @@ void title_Update() {
                 
                 if (justPressed & B_BUTTON) {
 
-                    switch (gameState) {
+                    switch (world.getGameState()) {
 
                         case GameState::Title_OptSound_Music:
-                            gameState = GameState::Title_OptSound;
+                            world.setGameState(GameState::Title_OptSound);
                             break;
 
                         case GameState::Title_OptSound_Music2:
-                            gameState = GameState::Title_OptSound2;
+                            world.setGameState(GameState::Title_OptSound2);
                             break;
                 
                     }
@@ -179,7 +179,7 @@ void title_Update() {
                 
                 if (justPressed & DOWN_BUTTON) {
 
-                    gameState++;
+                    world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) + 1));
 
                 }
 
@@ -196,14 +196,14 @@ void title_Update() {
                 
                 if (justPressed & B_BUTTON) {
 
-                    switch (gameState) {
+                    switch (world.getGameState()) {
 
                         case GameState::Title_OptSound_SFX:
-                            gameState = GameState::Title_OptSound;
+                            world.setGameState(GameState::Title_OptSound);
                             break;
 
                         case GameState::Title_OptSound_SFX2:
-                            gameState = GameState::Title_OptSound2;
+                            world.setGameState(GameState::Title_OptSound2);
                             break;
                 
                     }
@@ -214,13 +214,13 @@ void title_Update() {
                 
                 if (justPressed & UP_BUTTON) {
 
-                    gameState = static_cast<GameState>(static_cast<uint8_t>(gameState) - 1);
+                    world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) - 1));
 
                 }
                 
                 if (justPressed & DOWN_BUTTON) {
 
-                    gameState++;
+                    world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) + 1));
 
                 }
 
@@ -253,14 +253,14 @@ void title_Update() {
 
                 if (justPressed & B_BUTTON) {
 
-                    switch (gameState) {
+                    switch (world.getGameState()) {
 
                         case GameState::Title_OptSound_Volume:
-                            gameState = GameState::Title_OptSound;
+                            world.setGameState(GameState::Title_OptSound);
                             break;
 
                         case GameState::Title_OptSound_Volume2:
-                            gameState = GameState::Title_OptSound2;
+                            world.setGameState(GameState::Title_OptSound2);
                             break;
                 
                     }
@@ -271,7 +271,7 @@ void title_Update() {
                 
                 if (justPressed & UP_BUTTON) {
 
-                    gameState = static_cast<GameState>(static_cast<uint8_t>(gameState) - 1);
+                    world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) - 1));
 
                 }
 
@@ -292,9 +292,9 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     uint8_t currentPlane = a.currentPlane();
 
     SpritesU::drawOverwriteFX(0, 0, Images::Title_Background, currentPlane);
-    SpritesU::drawPlusMaskFX(80, 23, Images::Title, (3 * (static_cast<uint8_t>(gameState) - 6)) + currentPlane);
+    SpritesU::drawPlusMaskFX(80, 23, Images::Title, (3 * (static_cast<uint8_t>(world.getGameState()) - 6)) + currentPlane);
 
-    switch (gameState) {
+    switch (world.getGameState()) {
         
         case GameState::Title_OptSound_Music ... GameState::Title_OptSound_SFX:
         case GameState::Title_OptSound_Music2 ... GameState::Title_OptSound_SFX2:

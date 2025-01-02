@@ -13,6 +13,9 @@ struct World {
 
     private:
 
+        GameState gameState = GameState::SplashScreen_Start;
+        GameState prevGameState = GameState::SplashScreen_Start;
+
         Player player;
         Enemy enemy[Constants::EnemyCount];
         Item items[10];
@@ -39,6 +42,9 @@ struct World {
 
     public:
 
+        GameState getGameState()                 { return this->gameState; }
+        GameState getPrevGameState()             { return this->prevGameState; }
+        
         Item &getItem(uint8_t idx)               { return this->items[idx]; }
         Player &getPlayer()                      { return this->player; }
         Enemy &getEnemy(uint8_t idx)             { return this->enemy[idx]; }
@@ -60,6 +66,9 @@ struct World {
         uint16_t getWaveIdx()                    { return this->waveIdx; }
 
         Boat& getBoat()                          { return this->boat; }
+
+        void setGameState(GameState val)         { this->gameState = val; }
+        void setPrevGameState(GameState val)     { this->prevGameState = val; }
 
         void setXMap(uint16_t val)               { this->xMap = val; }
         void setYMap(uint16_t val)               { this->yMap = val; }

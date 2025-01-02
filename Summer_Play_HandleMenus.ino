@@ -10,78 +10,177 @@
 void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
     if (justPressed & A_BUTTON){//} || pressed & A_BUTTON) {
-
-        if (player.getItemCount() != 0) {
                 
-            switch (player.getDirection()) {
+        switch (world.getGameState()) {
 
-                case Direction::Right:
+            case GameState::Inventory_Open:     
 
-                    playGame_HandleMenu_LR(player, Direction::Right, Stance::Man_Start);
-                    break;
+                switch  (menu.getY()) {
 
-                case Direction::Left:
+                    case 0:
+                        world.setGameState(GameState::Inventory_Open_Reset_0);
+                        break;
 
-                    playGame_HandleMenu_LR(player, Direction::Left, Stance::Man_LH_Start - Stance::Man_RH_Start);
-                    break;
+                    case 1:
+                        world.setGameState(GameState::Inventory_Open_Exit_0);
+                        break;
+                        
+                    default:
 
-            }
+                        switch (player.getDirection()) {
+
+                            case Direction::Right:
+
+                                playGame_HandleMenu_LR(player, Direction::Right, Stance::Man_Start);
+                                break;
+
+                            case Direction::Left:
+
+                                playGame_HandleMenu_LR(player, Direction::Left, Stance::Man_LH_Start - Stance::Man_RH_Start);
+                                break;
+
+                        }
+
+                        break;
+
+                }
+
+                break;
+
+            case GameState::Inventory_Open_Exit_0:
+                world.setGameState(GameState::Inventory_Open);
+                break;
+
+            case GameState::Inventory_Open_Exit_1:
+                world.setGameState(GameState::Title_Init);
+                break;
+
+            case GameState::Inventory_Open_Reset_0:
+                world.setGameState(GameState::Inventory_Open);
+                break;
+
+            case GameState::Inventory_Open_Reset_1:
+                break;
+
+            case GameState::Inventory_Open_Reset_Exit_0:
+                world.setGameState(GameState::Inventory_Open);
+                break;
+
+            case GameState::Inventory_Open_Reset_Exit_1:
+                world.setGameState(GameState::Title_Init);
+                break;
 
         }
 
     }
     else if (justPressed & UP_BUTTON) {
-
-        // Showing top 3 items and can not move up ..
-        if (menu.getTop() == 0 && menu.getY() == 0) { }
-
-        // Showing top 3 items and can move up .. 
-        else if (menu.getTop() == 0 && menu.getY() > 0 && menu.getY() < player.getItemCount()) {
-            menu.setY(menu.getY() - 1);
-        }
-
-        // Showing bottomn 3 items and bottom item is selected ..
-        else if (menu.getTop() == player.getItemCount() - 3 && menu.getY() == player.getItemCount() - 1) {
-            menu.setY(menu.getY() - 1);
-        }
-
-        // Otherwise scroll top and selected up ..
-        else {
-            menu.setTop(menu.getTop() - 1);
-            menu.setY(menu.getY() - 1);
-        }
         
+        switch (world.getGameState()) {
+
+            case GameState::Inventory_Open:
+                        
+                if (menu.getTop() == 0) {
+
+                    if (menu.getY() > 0) {
+                        menu.setY(menu.getY() - 1);
+                    }
+
+                }
+                else  if (menu.getTop() >= 2) {
+
+                    if (menu.getY() - 1 == player.getItemCount()) {
+
+                        menu.setY(menu.getY() - 1);
+
+                    }
+                    else {
+
+                        menu.setTop(menu.getTop() - 1);
+                        menu.setY(menu.getY() - 1);
+
+                        if (menu.getY() == 2) {
+                            menu.setTop(0);
+                        }
+
+                    }
+
+                }
+
+                break;
+
+            case GameState::Inventory_Open_Exit_1:
+            case GameState::Inventory_Open_Reset_1:
+            case GameState::Inventory_Open_Reset_Exit_1:
+                world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) - 1));
+                break;
+
+        }
+
     }
     else if (justPressed & DOWN_BUTTON) {
 
-        // Bottom item is already selected and cannot move ..
-        if (menu.getY() == player.getItemCount() - 1) { }
+        switch (world.getGameState()) {
 
-        // Showing top 3 items and top row is selected, move down ..
-        else if (menu.getTop() == 0 && menu.getY() == 0 && menu.getY() < player.getItemCount()) {
-            menu.setY(menu.getY() + 1);
-        }
+            case GameState::Inventory_Open:
+                
+                // Bottom item is already selected and cannot move ..
+                if (menu.getY() == player.getItemCount() + 1) { }
 
-        // Showing all 3 items ..
-        else if (menu.getTop() == 0 && menu.getY() < player.getItemCount() - 1 && player.getItemCount() == 3) {
-            menu.setY(menu.getY() + 1);
-        }
+                // Showing top 2 items and top row is selected, move down ..
+                else if (menu.getTop() == 0 && menu.getY() == 0 && menu.getY() < player.getItemCount() + 2) {
+                    menu.setY(menu.getY() + 1);
+                }
 
-        // Showing top 3 items and top row is selected, move down ..
-        else if (menu.getTop() == 0 && menu.getY() < player.getItemCount()) {
-            menu.setTop(menu.getTop() + 1);
-            menu.setY(menu.getY() + 1);
-        }
+                // Showing all 2 items ..
+                else if (menu.getTop() == 0 && menu.getY() < player.getItemCount() - 1 && player.getItemCount() == 2) {
+                    menu.setY(menu.getY() + 1);
+                }
 
-        // Showing bottom 3 items and bottom 
-        else if (menu.getTop() == player.getItemCount() - 3) {
-            menu.setY(menu.getY() + 1);
-        }
+                // Showing top 2 items and top row is selected, move down ..
+                else if (menu.getY() == 0) {
+                    menu.setY(menu.getY() + 1);
+                }
+                // Showing top 2 items and top row is selected, move down ..
+                else if (menu.getY() == 1 && player.getItemCount() > 1) {
+                    menu.setY(menu.getY() + 1);
+                }
 
-        // Otherwise scroll top and selected down ..
-        else {
-            menu.setTop(menu.getTop() + 1);
-            menu.setY(menu.getY() + 1);
+                // Showing bottom 3 items and bottom 
+                else if (menu.getTop() == player.getItemCount() - 1) {
+                    menu.setY(menu.getY() + 1);
+                }
+
+                // Otherwise scroll top and selected down ..
+                else {
+
+                    if (menu.getY() == 2) {
+
+                        if (player.getItemCount() > 2) {
+                            menu.setTop(2);
+                            menu.setY(3);
+                        }
+                        else {
+                            menu.setTop(0);
+                            menu.setY(3);
+                        }
+
+                    }
+                    else {
+
+                        menu.setTop(menu.getTop() + 1);
+                        menu.setY(menu.getY() + 1);
+                    }
+
+                }
+
+                break;
+
+            case GameState::Inventory_Open_Exit_0:
+            case GameState::Inventory_Open_Reset_0:
+            case GameState::Inventory_Open_Reset_Exit_0:
+                world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) + 1));
+                break;
+
         }
 
     }
@@ -184,7 +283,7 @@ void playGame_HandleMenu_OpenClose() {
             }
             else {
                 menu.setDirection(Direction::None);
-                gameState = menu.getGameState();
+                world.setGameState(menu.getGameState());
             }
 
             break;
@@ -201,14 +300,14 @@ void playGame_HandleMenu() {
 
     if (menu.getX() == 128) {
 
-        menu.setGameState(gameState);
+        menu.setGameState(world.getGameState());
         menu.setDirection(Direction::Left);
-        gameState = GameState::Inventory_Open;
+        world.setGameState(GameState::Inventory_Open);
 
     }
     else if (menu.getX() == 128 - 32) {
 
-        gameState = GameState::Inventory_Open;
+        world.setGameState(GameState::Inventory_Open);
         menu.setDirection(Direction::Right);
         menu.setGameState(GameState::PlayGame);
 
