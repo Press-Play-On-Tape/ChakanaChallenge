@@ -30,4 +30,15 @@ class Menu {
         void setDirection(Direction val)                { this->direction = val; }
         void setGameState(GameState val)                { this->gameState = val; }
 
+        void reset() {
+
+            x = 128;
+            y = 0;
+            top = 0;
+
+            direction = Direction::None;
+            gameState = GameState::Inventory_Open;
+
+        }
+
 };

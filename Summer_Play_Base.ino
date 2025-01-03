@@ -14,6 +14,7 @@ void playGame_Init() {
     Player &player = world.getPlayer();
     world.setGameState(GameState::PlayGame);
     world.setFrameCount(0);
+    menu.reset();
 
 
 
@@ -100,6 +101,21 @@ void playGame_Init() {
 
     }
 
+
+    // Load Player Starting Details ..
+
+    {
+
+        uint24_t Level_PlayerStart = FX::readIndexedUInt24(Levels::Level_PlayerStart, world.getLevel());
+        FX::seekData(Level_PlayerStart);
+
+        world.setMiddleground(FX::readPendingUInt16());
+        player.setY(Constants::GroundY - FX::readPendingUInt16());
+        player.setStance(FX::readPendingUInt16());
+
+        FX::readEnd();
+
+    }
 
 
     world.setX(0);

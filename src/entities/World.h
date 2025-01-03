@@ -92,6 +92,10 @@ struct World {
 
     public:
 
+        void reset() {
+
+        }
+        
         int16_t getPalm(uint8_t idx) { return this->palm[idx]; }
 
         int16_t setPalm(uint8_t idx, int16_t val) { this->palm[idx] = val; }
