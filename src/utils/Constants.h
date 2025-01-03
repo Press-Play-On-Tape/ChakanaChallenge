@@ -605,7 +605,8 @@ namespace Constants {
     constexpr uint8_t EnemyCount = 3;
     constexpr uint8_t ItemCount = 10;
 
-    constexpr uint8_t StackSize = 23;
+    constexpr uint8_t StackSize_Enemy = 15;
+    constexpr uint8_t StackSize_Player = 25;
 
     constexpr uint8_t GroundY = 37;
     constexpr uint8_t Puff_Max = 7 * 16;

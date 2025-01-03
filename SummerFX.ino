@@ -51,8 +51,8 @@ Stance stanceOld = Stance::Man_Walk_RH_01;
 uint16_t seed = 72;
 #endif
 
-Stack <Stance, Constants::StackSize> playerStack;
-Stack <Stance, Constants::StackSize> enemyStack[Constants::EnemyCount];
+// Stack <Stance, Constants::StackSize> playerStack;
+// Stack <Stance, Constants::StackSize> enemyStack[Constants::EnemyCount];
 
 
 void setup() {
@@ -68,11 +68,11 @@ void setup() {
     setAudioOn();
     #endif
 
-    world.getPlayer().setStack(&playerStack);
+    // world.getPlayer().setStack(&playerStack);
 
-    for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
-        world.getEnemy(i).setStack(&enemyStack[i]);
-    }
+    // for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
+    //     world.getEnemy(i).setStack(&enemyStack[i]);
+    // }
 
 }
 

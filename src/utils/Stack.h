@@ -155,3 +155,4 @@ template< typename Type, uint8_t Capacity >
 const typename Stack< Type, Capacity >::ItemType & Stack< Type, Capacity >::operator [] (const typename Stack< Type, Capacity >::IndexType index) const {   
 	return this->items[index];
 }
+

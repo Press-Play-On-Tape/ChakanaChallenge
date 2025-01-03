@@ -4,9 +4,8 @@
 #include "../utils/Constants.h"
 #include "../utils/Stack.h"
 #include "InventoryItem.h"
-#include "BaseStack.h"
 
-class Player : public BaseStack {
+class Player {
 
     private:
 
@@ -22,6 +21,11 @@ class Player : public BaseStack {
         uint8_t health = Constants::HealthMax;
         uint8_t enemyIdx = 255;
         uint8_t swordWound = 0;
+		
+        Stance fromStance = Stance::None;
+        Stance toStance = Stance::None;
+        
+        Stack <Stance, Constants::StackSize_Player> stack;
 
     public:
 
@@ -179,4 +183,173 @@ class Player : public BaseStack {
             
         }
 
+
+        // Stack Methods ---------------------------------------
+        
+        bool isEmpty(void) {
+            return this->stack.isEmpty();
+        }
+
+        Stance pop(void) {
+            return this->stack.pop();
+        }
+
+      	uint8_t getCount(void) {
+            return this->stack.getCount();
+        }
+
+        Stance & peek(void) {
+            return this->stack.peek();
+        }
+
+        const Stance & peek(void) const {
+            return this->stack.peek();
+        }
+
+        bool insert(const Stance & item) {
+            return this->stack.insert(item);
+        }
+
+        void clear(void) {
+            this->stack.clear();
+        }
+
+        bool push(Stance item) {
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F("Stack count "));
+            DEBUG_PRINTLN(this->stack.getCount());
+            #endif
+
+            return this->stack.push(static_cast<uint16_t>(item));
+        }
+
+        void insertSequence(Stance fromStance, Stance toStance) {
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F("Seq "));
+            DEBUG_PRINT(toStance);
+            DEBUG_PRINT(F(" to "));
+            DEBUG_PRINT(fromStance);
+            DEBUG_PRINT(F(" - "));  
+            #endif
+            
+            if (fromStance < toStance) {
+
+                for (uint16_t x = toStance; x >= fromStance; x--) {
+
+                    #if defined(DEBUG) && defined(DEBUG_STACK)
+                    DEBUG_PRINT(x); 
+                    DEBUG_PRINT(" ");        
+                    #endif
+
+                    this->stack.insert(static_cast<uint16_t>(x));
+
+                }
+
+            }
+            else {
+
+                for (uint16_t x = toStance; x <= fromStance; x++) {
+
+                    #if defined(DEBUG) && defined(DEBUG_STACK)
+                    DEBUG_PRINT(x); 
+                    DEBUG_PRINT(" ");                         
+                    #endif
+
+                    this->stack.insert(static_cast<uint16_t>(-x));
+                }
+
+            }
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F(", count "));
+            DEBUG_PRINTLN(this->stack.getCount());
+            #endif
+
+        }
+
+        void pushSequence(Stance fromStance, Stance toStance) {
+
+            this->pushSequence(fromStance, toStance, false);
+
+        }
+
+        void stageSequence(Stance fromStance, Stance toStance) {
+
+            this->fromStance = fromStance;
+            this->toStance = toStance;
+
+        }
+
+        bool commitSequence() {
+
+            if (this->fromStance != Stance::None && this->toStance != Stance::None) {
+
+                this->pushSequence(this->fromStance, this->toStance, false);
+                this->fromStance = Stance::None;
+                this->toStance = Stance::None;
+                return true;
+
+            }
+
+            return false;
+
+        }
+
+        bool hasStagedSequence() {
+
+            return this->fromStance != Stance::None && this->toStance != Stance::None;
+
+        }
+
+        void pushSequence(Stance fromStance, Stance toStance, bool clear) {
+
+            if (clear) {
+
+                this->stack.clear();
+            }
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F("Seq "));
+            DEBUG_PRINT(toStance);
+            DEBUG_PRINT(F(" to "));
+            DEBUG_PRINT(fromStance);
+            DEBUG_PRINT(F(" - "));  
+            #endif
+            
+            if (fromStance < toStance) {
+
+                for (uint16_t x = toStance; x >= fromStance; x--) {
+
+                    #if defined(DEBUG) && defined(DEBUG_STACK)
+                    DEBUG_PRINT(x); 
+                    DEBUG_PRINT(" ");        
+                    #endif
+
+                    this->stack.push(static_cast<uint16_t>(x));
+
+                }
+
+            }
+            else {
+
+                for (uint16_t x = toStance; x <= fromStance; x++) {
+
+                    #if defined(DEBUG) && defined(DEBUG_STACK)
+                    DEBUG_PRINT(x); 
+                    DEBUG_PRINT(" ");                         
+                    #endif
+
+                    this->stack.push(static_cast<uint16_t>(-x));
+                }
+
+            }
+
+            #if defined(DEBUG) && defined(DEBUG_STACK)
+            DEBUG_PRINT(F(", count "));
+            DEBUG_PRINTLN(this->stack->getCount());
+            #endif
+
+        }
 };
