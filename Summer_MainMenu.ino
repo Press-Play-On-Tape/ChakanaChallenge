@@ -197,6 +197,6 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     }
 
-    SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 8) % 12) * 3) + currentPlane);
+    SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
 
 }
