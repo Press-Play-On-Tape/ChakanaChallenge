@@ -291,7 +291,7 @@ void playGame_Init() {
         // player.getItem(4).setItemType(ItemType::Key1);
         // player.getItem(5).setItemType(ItemType::Amulet);
 
-        player.setStance(Stance::Man_Walk_RH_01);
+        // player.setStance(Stance::Man_Walk_RH_01);
 
 
 
@@ -733,13 +733,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                         uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
-                        uint8_t tile_R1 = world.getTile_RelativeToPlayer(1, 0);
-                        uint8_t tile_L1 = world.getTile_RelativeToPlayer(-1, 0);
-                        uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
-                        uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
-                        uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
                         uint8_t tile_L3D2 = world.getTile_RelativeToPlayer(-3, -2);
-
 
                         if (world.isVerticalVine_Upper(tile_L) || world.isVerticalVine_Middle(tile_L)) {
                             
@@ -751,6 +745,18 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Slide_LH_Full_Land_01, Stance::Man_Slide_LH_Full_Land_13);
+
+                        }
+                        else if (world.isSlideTile_Full_RH(tile_LD) && !world.canWalkOnTile(tile_L3D2)) {
+
+                            player.setFalls(0);
+                            player.pushSequence(Stance::Man_Slide_LH_Full_01, Stance::Man_Slide_LH_Full_13);
+
+                        }
+                        else if (world.isSlideTile_Full_RH(tile_LD) && !world.isSlideTile_Full_RH(tile_L3D2)) {
+
+                            player.setFalls(0);
+                            player.pushSequence(Stance::Man_Slide_LH_Full_CanCont_01, Stance::Man_Slide_LH_Full_CanCont_12);
 
                         }
                         else if (world.isSlideTile_Full_RH(tile_LD) && !world.canWalkOnTile(tile_L3D2)) {
@@ -1017,15 +1023,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     }
                     else {
 
-                        uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                         uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-                        uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
-                        uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
-                        uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
-                        uint8_t tile_R2U = world.getTile_RelativeToPlayer(2, 1);
-                        uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
-                        uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
-                        uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
                         uint8_t tile_R3D2 = world.getTile_RelativeToPlayer(3, -2);
 
                         if (world.isVerticalVine_Upper(tile_R) || world.isVerticalVine_Middle(tile_R)) {
@@ -1038,6 +1036,12 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Slide_RH_Full_Land_01, Stance::Man_Slide_RH_Full_Land_13);
+
+                        }
+                        else if (world.isSlideTile_Full_LH(tile_RD) && !world.isSlideTile_Full_LH(tile_R3D2)) {
+
+                            player.setFalls(0);
+                            player.pushSequence(Stance::Man_Slide_RH_Full_CanCont_01, Stance::Man_Slide_RH_Full_CanCont_12);
 
                         }
                         else if (world.isSlideTile_Full_LH(tile_RD) && !world.canWalkOnTile(tile_R3D2)) {
@@ -1975,11 +1979,30 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     }
                     break;
 
+                case Stance::Man_Slide_RH_Full_Cont_08:       
+                case Stance::Man_Slide_RH_Full_CanCont_12:       
+                case Stance::Man_Slide_RH_Full_CanCont_13:       
+                case Stance::Man_Slide_RH_Full_13:       
+                    {
+                        uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                        uint8_t tile_RD2 = world.getTile_RelativeToPlayer(1, -2);
+
+                        if (tile_D == Tiles::Slide_LH_Full && tile_RD2 == Tiles::Slide_LH_Full) {
+
+                            player.clear();
+                            player.pushSequence(Stance::Man_Slide_RH_Full_Cont_01, Stance::Man_Slide_RH_Full_Cont_08);
+                            break;
+
+                        }
+
+                    }
+
+                    [[fallthrough]];
+
                 case Stance::Man_Walk_FallDown_RH_06:
                 case Stance::Man_Walk_FallMore_RH_02:
                 case Stance::Man_WalkingJump_RH_1D_25_11:
                 case Stance::Man_Slide_RH_11:
-                case Stance::Man_Slide_RH_Full_13:
                 case Stance::Man_Rollers_Fall_RH_04:
                 case Stance::Man_Vine_Exit_RH_08:
                     {
@@ -2033,11 +2056,31 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     }
                     break;
 
+                case Stance::Man_Slide_LH_Full_Cont_08:       
+                case Stance::Man_Slide_LH_Full_CanCont_12:       
+                case Stance::Man_Slide_LH_Full_CanCont_13:       
+                case Stance::Man_Slide_LH_Full_13:       
+                    {
+                        
+                        uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
+                        uint8_t tile_LD2 = world.getTile_RelativeToPlayer(-1, -2);
+
+                        if (tile_D == Tiles::Slide_RH_Full && tile_LD2 == Tiles::Slide_RH_Full) {
+
+                            player.clear();
+                            player.pushSequence(Stance::Man_Slide_LH_Full_Cont_01, Stance::Man_Slide_LH_Full_Cont_08);
+                            break;
+
+                        }
+
+                    }
+
+                    [[fallthrough]];
+
                 case Stance::Man_Walk_FallDown_LH_06:
                 case Stance::Man_Walk_FallMore_LH_02:
                 case Stance::Man_WalkingJump_LH_1D_25_11:
                 case Stance::Man_Slide_LH_11:
-                case Stance::Man_Slide_LH_Full_13:       
                 case Stance::Man_Rollers_Fall_LH_04:
                 case Stance::Man_Vine_Exit_LH_08:
                     {

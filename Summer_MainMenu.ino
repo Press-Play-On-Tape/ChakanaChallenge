@@ -25,16 +25,6 @@ void title_Update() {
     uint8_t pressed = getPressedButtons();
 
     switch (world.getGameState()) {
-
-        case GameState::Title_ShowCredits:
-
-            if (justPressed & B_BUTTON || justPressed & A_BUTTON) {
-
-                world.setGameState(GameState::Title_OptCredits);
-
-            }
-
-            break;
         
         case GameState::Title_Start:
 
@@ -65,108 +55,122 @@ void title_Update() {
 
             break;
         
-        case GameState::Title_OptResume:
+        #ifndef DEBUG
+            
+            case GameState::Title_ShowCredits:
 
-            if (justPressed & DOWN_BUTTON) {
-                world.setGameState(GameState::Title_OptPlay2);
-            }
+                if (justPressed & B_BUTTON || justPressed & A_BUTTON) {
 
-            if (justPressed & A_BUTTON) {
+                    world.setGameState(GameState::Title_OptCredits);
 
-                world.setGameState(GameState::Play_Init);
+                }
 
-            }
+                break;
 
-            break;
-          
-        case GameState::Title_OptPlay2:
+            case GameState::Title_OptResume:
 
-            if (justPressed & UP_BUTTON) {
-                world.setGameState(GameState::Title_OptResume);
-            }
-
-            if (justPressed & DOWN_BUTTON) {
-                world.setGameState(GameState::Title_OptSound2);
-            }
-
-            if (justPressed & A_BUTTON) {
-
-                cookie.hasSavedGame = false;
-                saveCookie(true);
-                world.setPrevGameState(GameState::Title_OptPlay2);
-                world.setGameState(GameState::Play_Init);
-
-            }
-
-            break;
-
-        case GameState::Title_OptSound:
-
-            if (justPressed & UP_BUTTON) {
-                world.setGameState(GameState::Title_OptPlay);
-            }
-
-            if (justPressed & DOWN_BUTTON) {
-                world.setGameState(GameState::Title_OptCredits);
-            }
-
-            if (justPressed & A_BUTTON) {
+                if (justPressed & DOWN_BUTTON) {
+                    world.setGameState(GameState::Title_OptPlay2);
+                }
 
                 if (justPressed & A_BUTTON) {
 
-                    soundSettings.setMusic(!soundSettings.getMusic());
-                    if (soundSettings.getMusic()) {
-                        playMusic();
-                    }
-                    else {
-                        SynthU::stop();
+                    world.setGameState(GameState::Play_Init);
+
+                }
+
+                break;
+            
+            case GameState::Title_OptPlay2:
+
+                if (justPressed & UP_BUTTON) {
+                    world.setGameState(GameState::Title_OptResume);
+                }
+
+                if (justPressed & DOWN_BUTTON) {
+                    world.setGameState(GameState::Title_OptSound2);
+                }
+
+                if (justPressed & A_BUTTON) {
+
+                    cookie.hasSavedGame = false;
+                    saveCookie(true);
+                    world.setPrevGameState(GameState::Title_OptPlay2);
+                    world.setGameState(GameState::Play_Init);
+
+                }
+
+                break;
+
+            case GameState::Title_OptSound:
+
+                if (justPressed & UP_BUTTON) {
+                    world.setGameState(GameState::Title_OptPlay);
+                }
+
+                if (justPressed & DOWN_BUTTON) {
+                    world.setGameState(GameState::Title_OptCredits);
+                }
+
+                if (justPressed & A_BUTTON) {
+
+                    if (justPressed & A_BUTTON) {
+
+                        soundSettings.setMusic(!soundSettings.getMusic());
+                        if (soundSettings.getMusic()) {
+                            playMusic();
+                        }
+                        else {
+                            SynthU::stop();
+                        }
+
                     }
 
                 }
 
-            }
+                break;
 
-            break;
+            case GameState::Title_OptSound2:
 
-        case GameState::Title_OptSound2:
+                if (justPressed & UP_BUTTON) {
+                    world.setGameState(GameState::Title_OptPlay2);
+                }
 
-            if (justPressed & UP_BUTTON) {
-                world.setGameState(GameState::Title_OptPlay2);
-            }
-
-            if (justPressed & DOWN_BUTTON) {
-                world.setGameState(GameState::Title_OptCredits);
-            }
-
-            if (justPressed & A_BUTTON) {
+                if (justPressed & DOWN_BUTTON) {
+                    world.setGameState(GameState::Title_OptCredits);
+                }
 
                 if (justPressed & A_BUTTON) {
 
-                    soundSettings.setMusic(!soundSettings.getMusic());
-                    if (soundSettings.getMusic()) {
-                        playMusic();
-                    }
-                    else {
-                        SynthU::stop();
+                    if (justPressed & A_BUTTON) {
+
+                        soundSettings.setMusic(!soundSettings.getMusic());
+                        if (soundSettings.getMusic()) {
+                            playMusic();
+                        }
+                        else {
+                            SynthU::stop();
+                        }
+
                     }
 
                 }
 
-            }
+                break;
+            
+            case GameState::Title_OptCredits:
 
-            break;
-        
-        case GameState::Title_OptCredits:
+                if (justPressed & UP_BUTTON) {
+                    world.setGameState(GameState::Title_OptSound);
+                }
 
-            if (justPressed & UP_BUTTON) {
-                world.setGameState(GameState::Title_OptSound);
-            }
+                if (justPressed & A_BUTTON) {
+                    world.setGameState(GameState::Title_ShowCredits);
+                }
 
-            if (justPressed & A_BUTTON) {
-                world.setGameState(GameState::Title_ShowCredits);
-            }
+                break;
 
-            break;
+        #endif
         
     }
 

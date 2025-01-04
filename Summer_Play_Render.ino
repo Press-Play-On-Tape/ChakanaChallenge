@@ -631,10 +631,7 @@ void renderWorld(uint8_t currentPlane) {
 
 
                 if (menu.getTop() == 0) {
-        // Serial.print("a ");
-        // Serial.print(menu.getTop());
-        // Serial.print(" ");
-        // Serial.println(menu.getY());
+
                     for (uint8_t i = menu.getTop(); i < menu.getTop() + 4; i++) {
 
                         if (i <= 1) {
@@ -679,13 +676,8 @@ void renderWorld(uint8_t currentPlane) {
 
                 }
                 else {
-        // Serial.print("b ");
-        // Serial.print(menu.getTop());
-        // Serial.print(" ");
-        // Serial.println(menu.getY());
 
                     for (uint8_t i = menu.getTop(); i < menu.getTop() + 3; i++) {
-        // Serial.print(i);
 
                         InventoryItem &item = player.getItem(i - 2);
                         if (item.getItemType() == ItemType::None)   break;
@@ -695,7 +687,6 @@ void renderWorld(uint8_t currentPlane) {
                         SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
 
                     }
-        // Serial.println("");
 
                     if (world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
