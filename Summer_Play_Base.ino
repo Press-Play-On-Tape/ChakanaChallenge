@@ -19,7 +19,6 @@ void playGame_Init() {
 
 
     // Load Map Data ..
-
     {
         uint24_t levelStart = FX::readIndexedUInt24(Levels::Levels, world.getLevel());
 
@@ -36,7 +35,6 @@ void playGame_Init() {
 
 
     // Load Map Items ..
-
     {
 
         bool puffFound = false;
@@ -79,7 +77,6 @@ void playGame_Init() {
 
 
     // Load Map Enemies ..
-
     {
 
         uint24_t levelEnemiesStart = FX::readIndexedUInt24(Levels::Level_Enemies, world.getLevel());
@@ -103,7 +100,6 @@ void playGame_Init() {
 
 
     // Load Player Starting Details ..
-
     {
 
         uint24_t Level_PlayerStart = FX::readIndexedUInt24(Levels::Level_PlayerStart, world.getLevel());
@@ -295,13 +291,13 @@ void playGame_Init() {
 
 
 
-        player.getItem(0).setItemType(ItemType::Hammer);
-        player.getItem(1).setItemType(ItemType::Key1);
-        // player.getItem(2).setItemType(ItemType::Amulet);
-        // player.getItem(3).setItemType(ItemType::Anchor);
-        // player.getItem(4).setItemType(ItemType::LifeSaver);
-        // player.getItem(5).setItemType(ItemType::Sword);
-        player.setItemCount(2);
+        // player.getItem(0).setItemType(ItemType::Hammer);
+        // player.getItem(1).setItemType(ItemType::Key1);
+        // // player.getItem(2).setItemType(ItemType::Amulet);
+        // // player.getItem(3).setItemType(ItemType::Anchor);
+        // // player.getItem(4).setItemType(ItemType::LifeSaver);
+        // // player.getItem(5).setItemType(ItemType::Sword);
+        // player.setItemCount(2);
 
 
         // uint16_t waveCount = 0;
@@ -1248,6 +1244,25 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
 
             player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
 
+            if (tile == Tiles::Rollers_Left) {
+
+                player.pushSequence(Stance::Man_Rollers_RH_01, Stance::Man_Rollers_RH_04);
+                player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+
+            }
+            else if (tile == Tiles::Rollers_Right) {
+
+                player.pushSequence(Stance::Man_Rollers_LH_01, Stance::Man_Rollers_LH_04);
+                player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+
+            }
+
+            else {
+
+                player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+
+            }
+
         }
         else if (world.isSpringTile(tile)) {    
 
@@ -2061,7 +2076,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case Stance::Man_Slide_LH_Full_CanCont_13:       
                 case Stance::Man_Slide_LH_Full_13:       
                     {
-                        
+
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_LD2 = world.getTile_RelativeToPlayer(-1, -2);
 
@@ -2355,7 +2370,8 @@ void removeWorldandInventoryItem(ItemType itemType, GameState gameState) {
     menu.setDirection(Direction::Right);
     menu.setGameState(gameState);
 
-    world.getPlayer().removeInventoryItem(menu.getY());
+    world.getPlayer().removeInventoryItem(menu.getY() - 2);
+    menu.setTop(0);
     menu.setY(0);
 
 }
@@ -2366,7 +2382,8 @@ void removeInventoryItem(GameState gameState) {
     menu.setDirection(Direction::Right);
     menu.setGameState(gameState);
 
-    world.getPlayer().removeInventoryItem(menu.getY());
+    world.getPlayer().removeInventoryItem(menu.getY() - 2);
+    menu.setTop(0);
     menu.setY(0);    
 
 }

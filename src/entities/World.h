@@ -95,7 +95,7 @@ struct World {
         void reset() {
 
         }
-        
+
         int16_t getPalm(uint8_t idx) { return this->palm[idx]; }
 
         int16_t setPalm(uint8_t idx, int16_t val) { this->palm[idx] = val; }
@@ -623,7 +623,7 @@ struct World {
                 
             }
 
-            if (tile == 25) { 
+            if (tile == Tiles::Mystery_Crate) { 
 
                 for (uint8_t i = 0; i < Constants::ItemCount; i++) {
                     
@@ -641,7 +641,7 @@ struct World {
                 
             }
 
-            if (tile == 26) { 
+            if (tile == Tiles::LockedDoor) { 
 
                 for (uint8_t i = 0; i < Constants::ItemCount; i++) {
                     
@@ -694,7 +694,7 @@ struct World {
             }
             else {
     
-                return tile == Tiles::Solid_Walkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == 27 || tile == 28;
+                return tile == Tiles::Solid_Walkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
             }
             
@@ -709,7 +709,7 @@ struct World {
         bool canJumpUpOntoTile(uint8_t tile) {
 
             // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable;
-            return tile == Tiles::Solid_Walkable;
+            return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
             
         }
 
@@ -883,13 +883,13 @@ struct World {
 
         bool isRollerTile_RH(uint8_t tile) {
 
-            return tile == 27;
+            return tile == Tiles::Rollers_Left;
             
         }
 
         bool isRollerTile_LH(uint8_t tile) {
 
-            return tile == 28;
+            return tile == Tiles::Rollers_Right;
             
         }        
 

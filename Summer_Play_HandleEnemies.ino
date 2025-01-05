@@ -211,7 +211,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         case Stance::Enemy_Trebochet_Release_LH_06 ... Stance::Enemy_Trebochet_Release_LH_14:
                             {
                                 uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
-                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left);
+                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left); 
                                 
                             }
                             break;

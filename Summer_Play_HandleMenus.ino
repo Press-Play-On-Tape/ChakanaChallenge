@@ -194,7 +194,13 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
     uint8_t tile_1D = world.getTile_RelativeToPlayer(direction == Direction::Left ? -1 : 1, -2);
     uint8_t tile_3D = world.getTile_RelativeToPlayer(direction == Direction::Left ? -3 : 3, -2);
 
-    if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver) {
+    ItemType selectedItem = ItemType::None;
+
+    if (menu.getY() >= 2) {
+        selectedItem = player.getItem(menu.getY() - 2).getItemType();
+    }
+
+    if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver) {
 
         uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Hidden);
         Item &item = world.getItem(itemIdx);
@@ -207,7 +213,7 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     }
 
-    if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && player.getItem(menu.getY()).getItemType() == ItemType::LifeSaver_Dissolve) {
+    else if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver_Dissolve) {
 
         uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Dissolve_Hidden);
         Item &item = world.getItem(itemIdx);
@@ -220,27 +226,27 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     }
 
-    if (world.isWoodenBarrier(tile) && player.getItem(menu.getY()).getItemType() == ItemType::Hammer) {
+    else if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
 
         player.pushSequence(Stance::Man_Hammering_RH_00 + stanceOffset, Stance::Man_Hammering_RH_10 + stanceOffset);
         removeWorldandInventoryItem(ItemType::WoodenBarrier, GameState::PlayGame);
 
     }
 
-    else if (world.isMysteryCrate(tile) && player.getItem(menu.getY()).getItemType() == ItemType::PinchBar) {
+    else if (world.isMysteryCrate(tile) && selectedItem == ItemType::PinchBar) {
 
         player.pushSequence(Stance::Man_Levering_RH_00 + stanceOffset, Stance::Man_Levering_RH_10 + stanceOffset);
         removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::PlayGame);
 
     }
 
-    else if (world.isLockedDoor(tile) && player.getItem(menu.getY()).getItemType() == ItemType::Key1) {
+    else if (world.isLockedDoor(tile) && selectedItem == ItemType::Key1) {
 
         removeWorldandInventoryItem(ItemType::LockedDoor, GameState::PlayGame);
 
     }
 
-    else if (player.getItem(menu.getY()).getItemType() == ItemType::Sword) {
+    else if (selectedItem == ItemType::Sword) {
 
         uint8_t enemySwordIdx = world.getClosestEnemy(EnemyType::SwordFighter);
         player.setEnemyIdx(enemySwordIdx);
