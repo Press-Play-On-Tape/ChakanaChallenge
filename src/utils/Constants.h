@@ -6,9 +6,9 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define DEBUG
+#define _DEBUG
 #define _DEBUG_STACK
-#define DEBUG_SOUND
+#define _DEBUG_SOUND
 
 enum Tiles : uint8_t {
 

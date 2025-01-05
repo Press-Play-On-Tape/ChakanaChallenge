@@ -331,7 +331,7 @@ class Item {
                     this->setX(this->getX() - 4);
 
                     if (this->getCounter() == 0) {
-                        this->itemType = ItemType::None;
+                        this->itemType = ItemType::Arrow_LH_Hidden;
                     }
 
                     break;
@@ -342,7 +342,7 @@ class Item {
                     this->setX(this->getX() + 4);
 
                     if (this->getCounter() == 0) {
-                        this->itemType = ItemType::None;
+                        this->itemType = ItemType::Arrow_RH_Hidden;
                     }
 
                     break;

@@ -129,8 +129,6 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         for (uint8_t i = 0; i < 14; i++) {
 
             FX::seekData(Constants::mapCoords + (i * 4));
-            // uint16_t x = FX::readPendingUInt16();
-            // uint16_t y = FX::readPendingUInt16();
             Point pt;
             FX::readObject(pt);
             FX::readEnd();

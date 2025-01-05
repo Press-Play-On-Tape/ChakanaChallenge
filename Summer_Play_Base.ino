@@ -113,7 +113,6 @@ void playGame_Init() {
 
     }
 
-
     world.setX(0);
     // world.setPalm1(-240);
     // world.setPalm2(-130);
@@ -130,49 +129,6 @@ void playGame_Init() {
     world.setWave(-87);
 
     world.setBackground(-29);
-    world.setMiddleground(0);
-
-/* Trebochet_Left ----------------------------------------------- 
-
-        else if (i == 0) {
-            item.setItemType(ItemType::Trebochet_Left);
-            item.setX(208);
-            item.setY(16);            
-        }
-        else if (i == 1) {
-            item.setItemType(ItemType::Trebochet_Ball_Left_Hidden);
-            item.setX(208);
-            item.setY(16);            
-        }
-
-    Enemy &enemy = world.getEnemy(0);
-    enemy.setX(208 + 28);
-    enemy.setEnemyType(EnemyType::TrebochetOperator);
-    enemy.setY(0);
-    enemy.setStance(Stance::Enemy_Trebochet_Release_LH_01);
-    enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
-*/
-
-/* Trebochet_Right -----------------------------------------------
-
-        else if (i == 0) {
-            item.setItemType(ItemType::Trebochet_Right);
-            item.setX(128);
-            item.setY(16);            
-        }
-        else if (i == 1) {
-            item.setItemType(ItemType::Trebochet_Ball_Right_Hidden);
-            item.setX(128);
-            item.setY(16);            
-        }
-
-    Enemy &enemy = world.getEnemy(0);
-    enemy.setEnemyType(EnemyType::TrebochetOperator);
-    enemy.setX(128 - 14);
-    enemy.setY(0);
-    enemy.setStance(Stance::Enemy_Trebochet_Release_RH_01);
-    enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
-*/
 
 
 /* Swingy Thingy -----------------------------------------------
@@ -187,131 +143,6 @@ void playGame_Init() {
 */
 
 
-/* Fighting player -----------------------------------------------
-
-    Enemy &enemy = world.getEnemy(0);
-    enemy.setEnemyType(EnemyType::SwordFighter);
-    enemy.setX(128+ 32 + 48);
-    // enemy.setX(5);
-    enemy.setY(0);
-    // enemy.setCounter(0);
-    enemy.setStance(Stance::Enemy_Sword_Stationary_LH);
-    enemy.getItem().setItemType(ItemType::Glint_Hidden);
-
-*/
-/*
-    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
-
-        Item &item = world.getItem(i);
-        if (i == 1) {
-            item.setItemType(ItemType::Puff);
-            item.setX(128);
-            item.setY(16);  
-            item.setFrame(255);           
-        }
-        // else if (i == 0) {
-        //     item.setItemType(ItemType::Swinging_Vine);
-        //     item.setX(64 + 64 + 32);
-        //     item.setY(32);    
-        //     item.setFrame(0);         
-        // }
-        else if (i == 0) {
-            item.setItemType(ItemType::LifeSaver_Dissolve);
-            item.setX(64 - 64 + 16);
-            item.setY(0);    
-            item.setFrame(0);         
-        }
-        // else if (i == 2) {
-        //     item.setItemType(ItemType::Lever_LH);
-        //     item.setX(64 + 48);
-        //     item.setY(0);    
-        //     item.setFrame(0);
-        //     item.setData(1 + 4);         
-        // }
-        // else if (i == 3) {
-        //     item.setItemType(ItemType::Lever_Portal_Auto_Closed);
-        //     item.setX(64 + 48 + 48);
-        //     item.setY(16);    
-        //     item.setFrame(0);         
-        //     item.setData(512);         
-       
-        // }
-        // else if (i == 4) {
-        //     item.setItemType(ItemType::Lever_LH);
-        //     item.setX(64 + 32 + 80 + 32);
-        //     item.setY(0);    
-        //     item.setFrame(0);         
-        //     item.setData(1);         
-        // }
-        // else if (i == 5) {
-        //     item.setItemType(ItemType::Lever_Portal_Closed);
-        //     item.setX(64 + 48 + 48 + 16);
-        //     item.setY(16);    
-        //     item.setFrame(0);         
-        // }
-
-        // // else if (i == 2) {
-        // //     item.setItemType(ItemType::PinchBar_Hidden);
-        // //     // item.setX(128 - 32 - 32);
-        // //     // item.setY(32);
-        // //     item.setX(128 + 64 + 48 - 32);
-        // //     item.setY(16);                        
-        // // }
-        // else if (i == 0) {
-        //     item.setItemType(ItemType::Trebochet_Right);
-        //     item.setX(128);
-        //     item.setY(16);            
-        // }
-        // else if (i == 1) {
-        //     item.setItemType(ItemType::Trebochet_Ball_Right_Hidden);
-        //     item.setX(128);
-        //     item.setY(16);            
-        // }
-        else {
-            item.setItemType(ItemType::None);
-
-        }
-
-        player.getItem(i).setItemType(ItemType::None);
-
-
-
-
-        player.getItem(i).setItemType(ItemType::None);
-// DEBUG_BREAK
-    }
-*/
-        // player.getItem(1).setItemType(ItemType::PinchBar);
-        // player.getItem(2).setItemType(ItemType::Amulet);
-        // player.getItem(3).setItemType(ItemType::Hammer);
-        // player.getItem(4).setItemType(ItemType::Key1);
-        // player.getItem(5).setItemType(ItemType::Amulet);
-
-        // player.setStance(Stance::Man_Walk_RH_01);
-
-
-
-        // player.getItem(0).setItemType(ItemType::Hammer);
-        // player.getItem(1).setItemType(ItemType::Key1);
-        // // player.getItem(2).setItemType(ItemType::Amulet);
-        // // player.getItem(3).setItemType(ItemType::Anchor);
-        // // player.getItem(4).setItemType(ItemType::LifeSaver);
-        // // player.getItem(5).setItemType(ItemType::Sword);
-        // player.setItemCount(2);
-
-
-        // uint16_t waveCount = 0;
-        // uint16_t background = 0;
-
-
-    // Enemy &enemy = world.getEnemy(0);
-    // enemy.setEnemyType(EnemyType::SwordFighter);
-    // enemy.setX(128+ 32 + 48);
-    // // enemy.setX(5);
-    // enemy.setY(0);
-    // // enemy.setCounter(0);
-    // enemy.setStance(Stance::Enemy_Sword_Stationary_LH);
-    // enemy.getItem().setItemType(ItemType::Glint_Hidden);
 
 }
 
@@ -1472,7 +1303,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
                 break;
 
             case Direction::Right:
-        
+
                 player.pushSequence(Stance::Man_Sword_Lunge_RH_01, Stance::Man_Sword_Lunge_RH_06);
                 break;
 

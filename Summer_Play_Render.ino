@@ -40,10 +40,6 @@ void renderWorld(uint8_t currentPlane) {
             int16_t renderX = (i * 8) + world.getMiddleground() - 4;
             int16_t renderY = yOffset - (y * 8);
 
-            // if (renderX <= -16 || renderX > 127) {
-            //     y = Constants::Map_X_Count;
-            //     continue;
-            // }
             if (renderY <= -16 || renderY > 127) continue;
 
             uint8_t tile00 = world.getTile(i, y);
@@ -53,8 +49,6 @@ void renderWorld(uint8_t currentPlane) {
 
             uint24_t imgTile = 0;
 
-
-            // if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)         imgTile = Images::Crate_01;
 
             // Is the first tile a solid?
 

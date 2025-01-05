@@ -17,9 +17,6 @@ class Enemy {
         int8_t y = 37;
         uint8_t health = Constants::HealthMax;
         uint8_t swordWound = 0;
-		
-        Stance fromStance = Stance::None;
-        Stance toStance = Stance::None;
 
         Stack <Stance, Constants::StackSize_Enemy> stack;
 
@@ -61,22 +58,12 @@ class Enemy {
 
             switch (this->getStance()) {
 
-                // case Stance::Man_BK_Start ... Stance::Man_BK_End:
-                // case Stance::Man_Rope_Start_LH_01 ... Stance::Man_Rope_Start_LH_07:
-                // case Stance::Man_Rope_End_LH_01 ... Stance::Man_Rope_End_LH_06:
-                // case Stance::Man_Rope_Start_RH_01 ... Stance::Man_Rope_Start_RH_07:
-                // case Stance::Man_Rope_End_RH_01 ... Stance::Man_Rope_End_RH_06:
-                //     return Direction::Backward;
-
                 case Stance::Enemy_Walk_RH_00 ... Stance::Enemy_Walk_RH_03:
                 case Stance::Enemy_Walk_Bow_RH_00 ... Stance::Enemy_Walk_Bow_RH_03:
                 case Stance::Enemy_Fire_RH_00 ... Stance::Enemy_Fire_RH_12:
                 case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_14:
                 case Stance::Enemy_Sword_Start_RH ... Stance::Enemy_Sword_End_RH:
                     return Direction::Right;
-
-                // case Stance::Man_FW_Start ... Stance::Man_FW_End:
-                //     return Direction::Forward;
 
                 case Stance::Enemy_Walk_LH_00 ... Stance::Enemy_Walk_LH_03:
                 case Stance::Enemy_Walk_Bow_LH_00 ... Stance::Enemy_Walk_Bow_LH_03:
@@ -189,34 +176,6 @@ class Enemy {
         void pushSequence(Stance fromStance, Stance toStance) {
 
             this->pushSequence(fromStance, toStance, false);
-
-        }
-
-        void stageSequence(Stance fromStance, Stance toStance) {
-
-            this->fromStance = fromStance;
-            this->toStance = toStance;
-
-        }
-
-        bool commitSequence() {
-
-            if (this->fromStance != Stance::None && this->toStance != Stance::None) {
-
-                this->pushSequence(this->fromStance, this->toStance, false);
-                this->fromStance = Stance::None;
-                this->toStance = Stance::None;
-                return true;
-
-            }
-
-            return false;
-
-        }
-
-        bool hasStagedSequence() {
-
-            return this->fromStance != Stance::None && this->toStance != Stance::None;
 
         }
 

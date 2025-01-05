@@ -258,9 +258,9 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
             player.push(Stance::Man_Sword_Stationary_RH + stanceOffset);
             menu.setDirection(direction);
             menu.setGameState(GameState::Play_Battle);
+            removeInventoryItem(GameState::Play_Battle);
 
         }
-        // removeInventoryItem(GameState::Play_Battle);
 
     }
 

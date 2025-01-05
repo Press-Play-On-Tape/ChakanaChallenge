@@ -28,21 +28,20 @@ void playGame_HandleEnemies_Trebochet_SetFrame(uint8_t idx, ItemType itemType) {
 
 }
 
-void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance stanceOffset, Stance stanceOffset2, uint16_t dist) {
-            
+void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance stanceOffset, Stance stanceOffset2, int16_t dist) {
+
     switch (dist) {
         
         // - Enemy to right of player -----------------------------------------------------------------------
 
         case 34 ... 8000:
-
-            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset);
+            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
             break;
         
         case 20 ... 33:
 
             if (a.randomLFSR(0, 5) == 0) {
-                enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset);
+                enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
             }
 
             break;
@@ -56,8 +55,8 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
 
                     if (a.randomLFSR(0, 5) == 0) {
 
-                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05 + stanceOffset, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset);
-                        player.pushSequence(Stance::Man_Sword_Lunge_LH_05 - stanceOffset2, Stance::Man_Sword_Lunge_LH_06 - stanceOffset2, true);
+                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
+                        player.pushSequence(Stance::Man_Sword_Lunge_RH_05 + stanceOffset, Stance::Man_Sword_Lunge_RH_06 + stanceOffset, true);
 
                         if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
 
@@ -74,9 +73,9 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
                     
                         if (a.randomLFSR(0, 16) == 0) {
 
-                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset);
-                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset);
-                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset);
+                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
+                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
+                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
 
                         }
 
@@ -89,9 +88,9 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
                 
                     if (a.randomLFSR(0, 16) == 0) {
 
-                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset);
-                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset);
-                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset);
+                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
+                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
+                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
 
                     }
 
@@ -102,12 +101,12 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
                     if (a.randomLFSR(0, 24) == 0) {
 
                         if (a.randomLFSR(0, 8) == 0) {
-                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset);
+                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
                         }
 
-                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset);
-                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset);
-                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset);
+                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
+                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
+                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
 
                     }
 
@@ -117,25 +116,25 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
 
             break;
 
-        case -12 ... -6:
+        case -12 ... -17:
 
             if (a.randomLFSR(0, 5) == 0) {
 
-                enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset);
+                enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
 
             }
             else  if (a.randomLFSR(0, 12) == 0) {
 
-                enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset);
-                enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset);
-                enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset);
+                enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
+                enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
+                enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
 
             }
             break;
 
-        case -999 ... -13:
+        case -999 ... -18:
 
-            enemy.push(Stance::Enemy_Sword_Stationary_LH - stanceOffset2);
+           enemy.push(Stance::Enemy_Sword_Stationary_LH - stanceOffset2);
             break;
 
         default:
@@ -177,11 +176,6 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             b = FX::readPendingUInt8();
             enemy.setX(enemy.getX() + b);
             FX::readEnd();
-
-            // FX::seekData(Constants::xBackground + static_cast<uint16_t>(enemy.getStance()));
-            // b = FX::readPendingUInt8();
-            // world.incBackground(b);
-            // FX::readEnd();
 
             switch (enemy.getEnemyType()) {
 
@@ -374,12 +368,12 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             case Direction::Left:
 
-                                playGame_HandleEnemies_SwordFighter(player, enemy, Stance::Man_LH_Start - Stance::Man_RH_Start, 0, -dist);
+                                playGame_HandleEnemies_SwordFighter(player, enemy, 0, Stance::Enemy_LH_Start - Stance::Enemy_RH_Start, -dist);
                                 break;
 
                             case Direction::Right:
 
-                                playGame_HandleEnemies_SwordFighter(player, enemy, 0, Stance::Man_LH_Start - Stance::Man_RH_Start, dist);
+                                playGame_HandleEnemies_SwordFighter(player, enemy, Stance::Man_LH_Start - Stance::Man_RH_Start, 0, dist);
                                 break;
                                 
                         }
