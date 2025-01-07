@@ -1483,6 +1483,22 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 switch (item.getItemType()) {
 
+                    case ItemType::Chakana_Small:
+
+                        if (collide(playerRect, itemRect)) {
+
+                            if (item.getCounter() == 0) {
+
+                                puff.setX(item.getX());
+                                puff.setY(item.getY());
+                                puff.setFrame(0);
+                                item.setCounter(3);
+
+                            }
+
+                        }
+                        break;
+
                     case ItemType::Key1:
                     case ItemType::PinchBar:
                     case ItemType::Hammer:

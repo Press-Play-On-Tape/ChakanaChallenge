@@ -249,9 +249,6 @@ void renderWorld(uint8_t currentPlane) {
                 frame = item.getFrame() / 16;
                 break;
 
-            case ItemType::WoodenBarrier:
-                break;
-
             case ItemType::MysteryCrate:
 
                 if (item.getFrame() >= 8) {
@@ -267,6 +264,7 @@ void renderWorld(uint8_t currentPlane) {
             case ItemType::Hammer:
             case ItemType::Sword:
             case ItemType::Amulet:
+            case ItemType::Chakana_Small:
 
                 switch (item.getFrame()) {
 

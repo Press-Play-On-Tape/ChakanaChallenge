@@ -176,6 +176,7 @@ class Item {
 
                 case ItemType::LifeSaver:
                 case ItemType::LifeSaver_Dissolve:
+                case ItemType::Chakana_Small:
 
                     this->frame++;
 
