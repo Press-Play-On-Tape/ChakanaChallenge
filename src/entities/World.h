@@ -291,16 +291,19 @@ struct World {
 
                 uint8_t yOffset = Constants::GroundY;
                 if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+ 
                 Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
                 
                 switch (item.getItemType()) {
 
                     case ItemType::SwingyThing:
                         {  
-                            int8_t xOffset = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
-                            int8_t yOffset = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
-                            int16_t itemX = item.getX() + 6 + 2 + xOffset;
-                            int8_t itemY = yOffset - item.getY() + yOffset + 11;
+
+                            int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
+                            int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
+
+                            int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
+                            int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
 
                             Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
 

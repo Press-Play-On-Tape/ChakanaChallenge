@@ -21,6 +21,7 @@ class Player {
         uint8_t health = Constants::HealthMax;
         uint8_t enemyIdx = 255;
         uint8_t swordWound = 0;
+        uint8_t chakanas = 100;
 		
         Stance fromStance = Stance::None;
         Stance toStance = Stance::None;
@@ -42,6 +43,7 @@ class Player {
         uint8_t getHealth()                                 { return this->health; }
         uint8_t getEnemyIdx()                               { return this->enemyIdx; }
         uint8_t getSwordWound()                             { return this->swordWound; }
+        uint8_t getChakanas()                               { return this->chakanas; }
 
         void setStance(Stance val)                          { this->stance = val; }
 
@@ -55,13 +57,15 @@ class Player {
         void setHealth(uint8_t val)                         { this->health = val; }
         void setEnemyIdx(uint8_t val)                       { this->enemyIdx = val; }
         void setSwordWound(uint8_t val)                     { this->swordWound = val; }
+        void setChakanas(uint8_t val)                       { this->chakanas = val; }
 
         void incY(int8_t val)                               { this->y = this->y + val; }
         void incFalls()                                     { this->falls++; }
 
         void init() {
 
-            this->health = 12;
+            this->health = 14;
+            this->chakanas = 100;
 
         }
 

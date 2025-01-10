@@ -111,6 +111,8 @@ IMAGES = '../images/'
 
 deleteFile(BASE + 'Images.hpp')
 
+convert_header(IMAGES + 'Numbers/Numbers_6x4_3D_BW.png',                                       BASE + 'Images.hpp', 'Numbers_6x4_3D_BW', 4, 16, 8, maskImage=False)
+
 convert_header(IMAGES + 'Chakana.png',                                                         BASE + 'Images.hpp', 'Chakana', 4, 32, 32)
 convert_header(IMAGES + 'Titles/PPOT.png',                                                     BASE + 'Images.hpp', 'PPOT', 4, 128, 64)
 convert_header(IMAGES + 'Titles/Sound_Volume_Grey.png',                                        BASE + 'Images.hpp', 'Sound_Volume_Grey', 4, 22, 16)
@@ -120,7 +122,7 @@ convert_header(IMAGES + 'Titles/Title_Base.png',                                
 convert_header(IMAGES + 'Titles/Title_Options.png',                                            BASE + 'Images.hpp', 'Title_Options', 4, 68, 32)
 convert_header(IMAGES + 'Titles/Pause.png',                                                    BASE + 'Images.hpp', 'Pause', 4, 128, 64)
 
-convert_header(IMAGES + 'HUD.png',                                                             BASE + 'Images.hpp', 'HUD', 4)
+convert_header(IMAGES + 'HUD.png',                                                             BASE + 'Images.hpp', 'HUD', 4, 68, 16)
 convert_header(IMAGES + 'ArrowUpDown.png',                                                     BASE + 'Images.hpp', 'ArrowUpDown', 4)
 
 convert_header(IMAGES + 'Palm1.png',                                                            BASE + 'Images.hpp', 'Palm1', 4)

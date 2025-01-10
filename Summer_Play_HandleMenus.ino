@@ -9,7 +9,9 @@
 
 void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    if (justPressed & A_BUTTON){//} || pressed & A_BUTTON) {
+    #ifndef DEBUG
+
+    if (justPressed & A_BUTTON) {
                 
         switch (world.getGameState()) {
 
@@ -184,11 +186,15 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
         }
 
     }
+
+    #endif
     
 }
 
 
 void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOffset) {
+
+    #ifndef DEBUG
 
     uint8_t tile = world.getTile_RelativeToPlayer(direction == Direction::Left ? -1 : 1, 0);
     uint8_t tile_1D = world.getTile_RelativeToPlayer(direction == Direction::Left ? -1 : 1, -2);
@@ -264,9 +270,13 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     }
 
+    #endif
+
 }
 
 void playGame_HandleMenu_OpenClose() {
+
+    #ifndef DEBUG
 
     switch (menu.getDirection()) {
 
@@ -298,6 +308,8 @@ void playGame_HandleMenu_OpenClose() {
             break;
 
     }
+
+    #endif
 
 }
 
