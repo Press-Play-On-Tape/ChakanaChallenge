@@ -20,7 +20,7 @@ void playGame_Init() {
 
     // Load Map Data ..
     {
-        uint24_t levelStart = FX::readIndexedUInt24(Levels::Levels, world.getLevel());
+        uint24_t levelStart = FX::readIndexedUInt24(Levels::Levels, world.getCurrentPort());
 
         for (uint8_t y = 0; y < Constants::Map_Y_Count; y++) {
                 
@@ -39,7 +39,7 @@ void playGame_Init() {
 
         bool puffFound = false;
 
-        uint24_t levelItemsStart = FX::readIndexedUInt24(Levels::Level_Items, world.getLevel());
+        uint24_t levelItemsStart = FX::readIndexedUInt24(Levels::Level_Items, world.getCurrentPort());
         FX::seekData(levelItemsStart);
 
         for (uint8_t i = 0; i < Constants::ItemCount; i++) {
@@ -79,7 +79,7 @@ void playGame_Init() {
     // Load Map Enemies ..
     {
 
-        uint24_t levelEnemiesStart = FX::readIndexedUInt24(Levels::Level_Enemies, world.getLevel());
+        uint24_t levelEnemiesStart = FX::readIndexedUInt24(Levels::Level_Enemies, world.getCurrentPort());
         FX::seekData(levelEnemiesStart);
 
         for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
@@ -102,7 +102,7 @@ void playGame_Init() {
     // Load Player Starting Details ..
     {
 
-        uint24_t Level_PlayerStart = FX::readIndexedUInt24(Levels::Level_PlayerStart, world.getLevel());
+        uint24_t Level_PlayerStart = FX::readIndexedUInt24(Levels::Level_PlayerStart, world.getCurrentPort());
         FX::seekData(Level_PlayerStart);
 
         world.setMiddleground(FX::readPendingUInt16());

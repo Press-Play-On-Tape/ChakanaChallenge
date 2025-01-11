@@ -65,14 +65,10 @@ void map_Update() {
                     
                     FX::readObject(pt);
 
-                    if (abs(pt.x - world.getXMap()) < 128 && abs(pt.y - world.getYMap()) < 64) {
+                    if (abs(pt.x - world.getXMap()) < 128 && abs(pt.y - world.getYMap()) < 64 && world.getCurrentPort() != i) {
 
                         world.setNextPort(i);
-
-
                         break;
-
-
 
                     }
 
@@ -82,29 +78,13 @@ void map_Update() {
 
                 if (world.getNextPort() != 255) {
 
-
                     uint8_t from = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
                     uint8_t toPort = world.getNextPort() + 1;
-
-// if (toPort < from) {
-
-//     uint8_t temp = from;
-//     from = toPort;
-//     toPort = temp;
-
-// }
 
                     FX::seekData(Constants::PortCosts + ( from * 15) + toPort);
                     world.setNextPortCost(FX::readPendingUInt8());
                     FX::readEnd();
 
-// Serial.print(from);
-// Serial.print(" ");
-// Serial.print(toPort);
-// Serial.print(" ");
-// Serial.println(cost);
-
-// world.setPort(port);
                     world.setGameState(GameState::Map_ShowDialogue);
                     world.setFrameCount(0);
 
@@ -115,6 +95,23 @@ void map_Update() {
                     leftDialogue = (left == 0);
 
                 }
+
+            }
+
+            if (justPressed & B_BUTTON) {
+            
+                Point pt = { 0, 0 };
+
+                if (world.getCurrentPort() != 255) {
+
+                    FX::seekDataArray(Constants::BeachDetails, world.getCurrentPort(), 0, 6);
+                    FX::readObject(pt);
+                    FX::readEnd();
+
+                }
+                
+                world.setXMap(pt.x);
+                world.setYMap(pt.y);
 
             }
 

@@ -30,12 +30,13 @@ struct World {
         uint8_t boatCounter = 0;
         int16_t x = 0;
         int16_t y = 0;
-        uint8_t level = 0;
+        // uint8_t level = 0;
 
         uint8_t currentPort = 255;
         uint8_t nextPort = 255;
         uint8_t nextPortCost = 0;
-        uint8_t chakanas = 50;
+        uint16_t portCompleted = 1;
+        uint8_t chakanas = 30;
 
         int16_t wave = 0;
         int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
@@ -62,7 +63,6 @@ struct World {
         uint8_t  getBoatCounter()                       { return this->boatCounter; }
         uint16_t getBoatIdx()                           { return this->boatIdx; }
         uint16_t getFrameCount()                        { return this->frameCount; }
-        uint8_t  getLevel()                             { return this->level; }
         uint8_t  getCurrentPort()                       { return this->currentPort; }
         uint8_t  getNextPort()                          { return this->nextPort; }
         uint8_t  getNextPortCost()                      { return this->nextPortCost; }
@@ -89,7 +89,6 @@ struct World {
         void setBoatIdx(uint16_t val)                   { this->boatIdx = val; }
         void setBoatCounter(uint8_t val)                { this->boatCounter = val; }
         void setFrameCount(uint16_t val)                { this->frameCount = val; }
-        void setLevel(uint8_t val)                      { this->level = val; }
         void setCurrentPort(uint8_t val)                { this->currentPort = val; }
         void setNextPort(uint8_t val)                   { this->nextPort = val; }
         void setNextPortCost(uint8_t val)               { this->nextPortCost = val; }
