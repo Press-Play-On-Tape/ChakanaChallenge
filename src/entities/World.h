@@ -31,6 +31,7 @@ struct World {
         int16_t x = 0;
         int16_t y = 0;
         uint8_t level = 0;
+        uint8_t port = 0;
 
         int16_t wave = 0;
         int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
@@ -58,6 +59,7 @@ struct World {
         uint16_t getBoatIdx()                           { return this->boatIdx; }
         uint16_t getFrameCount()                        { return this->frameCount; }
         uint8_t  getLevel()                             { return this->level; }
+        uint8_t  getPort()                              { return this->port; }
 
         int16_t getX()                                  { return this->x; }
         int16_t getY()                                  { return this->y; }
@@ -81,6 +83,7 @@ struct World {
         void setBoatCounter(uint8_t val)                { this->boatCounter = val; }
         void setFrameCount(uint16_t val)                { this->frameCount = val; }
         void setLevel(uint8_t val)                      { this->level = val; }
+        void setPort(uint8_t val)                       { this->port = val; }
 
         void setX(int16_t val)                          { this->x = val; }
         void setY(int16_t val)                          { this->y = val; }

@@ -6,7 +6,7 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-
+bool leftDialogue = false;
 
 void map_Init() {
 
@@ -50,20 +50,47 @@ void map_Update() {
                     if (world.getYMap() > 0) world.incYMap(-4);
 
                 }
-
-                
-
                 
             }
 
 
             if (justPressed & A_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowDialogue);
-                world.setFrameCount(0);
+                uint8_t port = 255;
+                Point pt;
+
+                FX::seekData(Constants::mapCoords);
+
+                for (uint8_t i = 0; i < 14; i++) {
+                    
+                    FX::readObject(pt);
+
+                    if (abs(pt.x - world.getXMap()) < 128 && abs(pt.y - world.getYMap()) < 64) {
+
+                        port = i;
+                        world.setPort(i);
+                        break;
+
+                    }
+
+                }
+
+                FX::readEnd();
+
+                if (port != 255) {
+
+                    world.setGameState(GameState::Map_ShowDialogue);
+                    world.setFrameCount(0);
+
+                    FX::seekDataArray(Constants::BeachDetails, world.getPort(), 0, 6);
+                    uint16_t left = FX::readPendingUInt16();
+                    FX::readEnd();
+
+                    leftDialogue = (left == 0);
+
+                }
 
             }
-
 
             break;
 
@@ -84,6 +111,23 @@ void map_Update() {
 
             }
 
+            Point pt;
+
+            FX::seekDataArray(Constants::BeachDetails, world.getPort(), 0, 6);
+            uint16_t left = FX::readPendingUInt16();
+            FX::readObject(pt);
+            FX::readEnd();
+
+            leftDialogue = (left == 0);
+
+            int16_t xOffset = pt.x - world.getXMap();
+            int16_t yOffset = pt.y - world.getYMap();
+
+            if (xOffset > 32)  world.incXMap(1);
+            if (xOffset < -32) world.incXMap(-1);
+            if (yOffset > 16)  world.incYMap(1);
+            if (yOffset < -16) world.incYMap(-1);
+            
             break;
 
         case GameState::Map_MoveBoat:
@@ -146,7 +190,13 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             break;
 
         case GameState::Map_ShowDialogue:
-            SpritesU::drawPlusMaskFX(0, 0, Images::Scroll, currentPlane);
+            {
+
+
+                SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, currentPlane);
+                SpritesU::drawOverwriteFX(12+ (leftDialogue ? 0 : 73), 23, Images::PortNames, (world.getPort() * 3) + currentPlane);
+
+            }
             break;
 
         case GameState::Map_MoveBoat:

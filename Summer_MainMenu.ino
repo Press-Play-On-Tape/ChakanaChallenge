@@ -48,8 +48,8 @@ void title_Update() {
                 saveCookie(true);
                 // prevGameState = GameState::Title_OptPlay;
                 // world.setGameState(GameState::Play_Init);
-                // world.setGameState(GameState::Map_Init);
-                world.setGameState(GameState::PlayGame_Init);
+                world.setGameState(GameState::Map_Init);
+                // world.setGameState(GameState::PlayGame_Init);
 
             }
 

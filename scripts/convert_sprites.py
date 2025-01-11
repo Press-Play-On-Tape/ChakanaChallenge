@@ -123,6 +123,7 @@ convert_header(IMAGES + 'Titles/Title_Options.png',                             
 convert_header(IMAGES + 'Titles/Pause.png',                                                    BASE + 'Images.hpp', 'Pause', 4, 128, 64)
 
 convert_header(IMAGES + 'HUD.png',                                                             BASE + 'Images.hpp', 'HUD', 4, 68, 16)
+convert_header(IMAGES + 'PortNames.png',                                                       BASE + 'Images.hpp', 'PortNames', 4, 31, 8)
 convert_header(IMAGES + 'ArrowUpDown.png',                                                     BASE + 'Images.hpp', 'ArrowUpDown', 4)
 
 convert_header(IMAGES + 'Palm1.png',                                                            BASE + 'Images.hpp', 'Palm1', 4)
