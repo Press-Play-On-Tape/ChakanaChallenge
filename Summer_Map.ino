@@ -56,7 +56,7 @@ void map_Update() {
 
             if (justPressed & A_BUTTON) {
 
-                uint8_t port = 255;
+                world.setNextPort(255);
                 Point pt;
 
                 FX::seekData(Constants::mapCoords);
@@ -67,9 +67,12 @@ void map_Update() {
 
                     if (abs(pt.x - world.getXMap()) < 128 && abs(pt.y - world.getYMap()) < 64) {
 
-                        port = i;
-                        world.setPort(i);
+                        world.setNextPort(i);
+
+
                         break;
+
+
 
                     }
 
@@ -77,12 +80,35 @@ void map_Update() {
 
                 FX::readEnd();
 
-                if (port != 255) {
+                if (world.getNextPort() != 255) {
 
+
+                    uint8_t from = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
+                    uint8_t toPort = world.getNextPort() + 1;
+
+// if (toPort < from) {
+
+//     uint8_t temp = from;
+//     from = toPort;
+//     toPort = temp;
+
+// }
+
+                    FX::seekData(Constants::PortCosts + ( from * 15) + toPort);
+                    world.setNextPortCost(FX::readPendingUInt8());
+                    FX::readEnd();
+
+// Serial.print(from);
+// Serial.print(" ");
+// Serial.print(toPort);
+// Serial.print(" ");
+// Serial.println(cost);
+
+// world.setPort(port);
                     world.setGameState(GameState::Map_ShowDialogue);
                     world.setFrameCount(0);
 
-                    FX::seekDataArray(Constants::BeachDetails, world.getPort(), 0, 6);
+                    FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
                     uint16_t left = FX::readPendingUInt16();
                     FX::readEnd();
 
@@ -98,13 +124,26 @@ void map_Update() {
 
             if (justPressed & A_BUTTON) {
 
-                world.startBoat();
-                world.setGameState(GameState::Map_MoveBoat);
-                world.setFrameCount(0);
+                if (world.getChakanas() >= world.getNextPortCost()) {
+
+                    world.startBoat();
+                    world.setGameState(GameState::Map_MoveBoat);
+                    world.setFrameCount(0);
+
+                    world.setChakanas(world.getChakanas() - world.getNextPortCost());
+                    world.setCurrentPort(world.getNextPort());
+
+                }
+                else {
+
+                    world.setGameState(GameState::Map);
+                    world.setFrameCount(0);
+
+                }
 
             }
 
-            if (justPressed & B_BUTTON) {
+            else if (justPressed & B_BUTTON) {
 
                 world.setGameState(GameState::Map);
                 world.setFrameCount(0);
@@ -113,7 +152,7 @@ void map_Update() {
 
             Point pt;
 
-            FX::seekDataArray(Constants::BeachDetails, world.getPort(), 0, 6);
+            FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
             uint16_t left = FX::readPendingUInt16();
             FX::readObject(pt);
             FX::readEnd();
@@ -191,10 +230,40 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Map_ShowDialogue:
             {
+                uint8_t frame = 0;
+                uint8_t numberToShow = 67;
 
+                if (world.getChakanas() < world.getNextPortCost()) {
 
-                SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, currentPlane);
-                SpritesU::drawOverwriteFX(12+ (leftDialogue ? 0 : 73), 23, Images::PortNames, (world.getPort() * 3) + currentPlane);
+                    numberToShow = world.getNextPortCost() - world.getChakanas();
+                    frame = (numberToShow < 100 ? 2 : 3);
+
+                    SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
+
+                    if (numberToShow < 100) {
+                        SpritesU::drawOverwriteFX(15 + (leftDialogue ? 0 : 73), 27, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
+                    }
+                    else {
+                        SpritesU::drawOverwriteFX(13 + (leftDialogue ? 0 : 73), 27, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
+                    }
+
+                }
+                else {
+
+                    numberToShow = world.getNextPortCost();
+                    frame = (numberToShow < 100 ? 0 : 1);
+
+                    SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
+                    SpritesU::drawOverwriteFX(12 + (leftDialogue ? 0 : 73), 23, Images::PortNames, (world.getNextPort() * 3) + currentPlane);
+
+                    if (numberToShow < 100) {
+                        SpritesU::drawOverwriteFX(33 + (leftDialogue ? 0 : 73), 32, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
+                    }
+                    else {
+                        SpritesU::drawOverwriteFX(31 + (leftDialogue ? 0 : 73), 32, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
+                    }
+
+                }
 
             }
             break;
