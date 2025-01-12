@@ -19,8 +19,8 @@ struct World {
         Item items[10];
 
         uint16_t frameCount = 0;
-        uint16_t xMap = 64;
-        uint16_t yMap = 246;
+        uint16_t xMap = 172;
+        uint16_t yMap = 254;
         uint16_t xBoat = 14;
         uint16_t yBoat = 6;
         BoatDirection boatDirection = BoatDirection::None;
@@ -28,8 +28,8 @@ struct World {
         int16_t x = 0;
         int16_t y = 0;
 
-        uint8_t currentPort = 4; //SJH 255
-        uint8_t nextPort = 4; //SJH 255
+        uint8_t currentPort = 8; //SJH 255
+        uint8_t nextPort = 8; //SJH 255
         uint8_t nextPortCost = 0;
         uint16_t portCompleted = 1;
         uint8_t chakanas = 230;
