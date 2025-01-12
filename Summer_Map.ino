@@ -159,10 +159,10 @@ void map_Update() {
             int16_t xOffset = pt.x - world.getXMap();
             int16_t yOffset = pt.y - world.getYMap();
 
-            if (xOffset > 32)  world.incXMap(1);
-            if (xOffset < -32) world.incXMap(-1);
-            if (yOffset > 16)  world.incYMap(1);
-            if (yOffset < -16) world.incYMap(-1);
+            if (xOffset > 20)  world.incXMap(1);
+            if (xOffset < -20) world.incXMap(-1);
+            if (yOffset > 12)  world.incYMap(1);
+            if (yOffset < -12) world.incYMap(-1);
             
             break;
 
