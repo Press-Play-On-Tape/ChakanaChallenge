@@ -7,8 +7,6 @@
 #include "Item.h"
 
 
-
-
 struct World {
 
     private:
@@ -21,22 +19,20 @@ struct World {
         Item items[10];
 
         uint16_t frameCount = 0;
-        uint16_t xMap = 0;
-        uint16_t yMap = 0;
+        uint16_t xMap = 64;
+        uint16_t yMap = 246;
         uint16_t xBoat = 14;
         uint16_t yBoat = 6;
-        uint16_t boatIdx = 0;
-        uint8_t boatDirection = 0;
+        BoatDirection boatDirection = BoatDirection::None;
         uint8_t boatCounter = 0;
         int16_t x = 0;
         int16_t y = 0;
-        // uint8_t level = 0;
 
-        uint8_t currentPort = 255;
-        uint8_t nextPort = 255;
+        uint8_t currentPort = 4; //SJH 255
+        uint8_t nextPort = 4; //SJH 255
         uint8_t nextPortCost = 0;
         uint16_t portCompleted = 1;
-        uint8_t chakanas = 30;
+        uint8_t chakanas = 230;
 
         int16_t wave = 0;
         int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
@@ -59,9 +55,8 @@ struct World {
         uint16_t getYMap()                              { return this->yMap; }
         uint16_t getXBoat()                             { return this->xBoat; }
         uint16_t getYBoat()                             { return this->yBoat; }
-        uint8_t  getBoatDirection()                     { return this->boatDirection; }
+        BoatDirection  getBoatDirection()               { return this->boatDirection; }
         uint8_t  getBoatCounter()                       { return this->boatCounter; }
-        uint16_t getBoatIdx()                           { return this->boatIdx; }
         uint16_t getFrameCount()                        { return this->frameCount; }
         uint8_t  getCurrentPort()                       { return this->currentPort; }
         uint8_t  getNextPort()                          { return this->nextPort; }
@@ -85,8 +80,7 @@ struct World {
         void setYMap(uint16_t val)                      { this->yMap = val; }
         void setXBoat(uint16_t val)                     { this->xBoat = val; }
         void setYBoat(uint16_t val)                     { this->yBoat = val; }
-        void setBoatDirection(uint8_t val)              { this->boatDirection = val; }
-        void setBoatIdx(uint16_t val)                   { this->boatIdx = val; }
+        void setBoatDirection(BoatDirection val)        { this->boatDirection = val; }
         void setBoatCounter(uint8_t val)                { this->boatCounter = val; }
         void setFrameCount(uint16_t val)                { this->frameCount = val; }
         void setCurrentPort(uint8_t val)                { this->currentPort = val; }
@@ -118,75 +112,55 @@ struct World {
 
         }
 
-        void startBoat() {
-
-            this->boatIdx = 2;
-
-        }
-
-        uint8_t getBoatDirection4() {
-
-            switch (this->boatDirection) {
-
-                case 0:     
-                case 1:     
-                case 15:     
-                    return 0;
-
-                case 2 ... 6:     
-                    return 1;
-
-                case 7 ... 9:     
-                    return 2;
-
-                case 10 ... 14:
-                    return 3;
-
-                case 255:
-                    return 2;
-
-            }
-            
-        }
-
         void updateBoat() {
 
-            if (this->boatCounter > 0) {
+            if (this->frameCount % 8 == 0) {
 
-                uint8_t idx = static_cast<uint8_t>(this->boatDirection);
-                
-                FX::seekData(Constants::BoatCoords + (idx * 2));
-                int8_t x = FX::readPendingUInt8();
-                int8_t y = FX::readPendingUInt8();                
+                uint8_t offset = 0;
+
+                if (this->getCurrentPort() < 255 && this->getNextPort() < 255 && this->getCurrentPort() < this->getNextPort()) offset = 1;
+
+                FX::seekDataArray(Constants::BoatCoords, (this->getCurrentPort() * 2) + offset, 0, 3);
+                uint24_t boatCoords = FX::readPendingUInt24();
                 FX::readEnd();
 
-                this->xBoat = this->xBoat + x;
-                this->yBoat = this->yBoat + y;
-                this-boatCounter--;
+                #ifdef DEBUG_BOATS
+                DEBUG_PRINT("UpdateBoat ");   
+                DEBUG_PRINT(this->getCurrentPort());
+                DEBUG_PRINT(" ");     
+                DEBUG_PRINT(this->getNextPort());
+                DEBUG_PRINT(" ");     
+                DEBUG_PRINT(offset);
+                DEBUG_PRINT(" ");     
+                DEBUG_PRINT((uint32_t)boatCoords);
+                DEBUG_PRINT(" ");
+                #endif
 
-            }
-            else {
+                FX::seekData(boatCoords + (this->boatCounter * 3));
+                int8_t x = FX::readPendingUInt8();
+                int8_t y = FX::readPendingUInt8();                
+                uint8_t direction = FX::readPendingUInt8();                
+                FX::readEnd();
 
-                uint8_t move = FX::readIndexedUInt8(Constants::BoatMovements, this->boatIdx);
-                
-                if (move != 255) {
-                    this->boatDirection = move;
-                    this->boatIdx++;
-                    this->boatCounter = FX::readIndexedUInt8(Constants::BoatMovements, this->boatIdx);
-                    this->boatIdx++;
+                #ifdef DEBUG_BOATS
+                DEBUG_PRINT(x);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINTLN(y);
+                #endif
+
+                this->boatDirection = static_cast<BoatDirection>(direction);
+
+                if (x != 0 || y !=0) {
+                    this->xBoat = this->xBoat + x;
+                    this->yBoat = this->yBoat + y;
+                    this-boatCounter++;
                 }
                 else {
-
-                    this->boatDirection = 255;
+                    DEBUG_BREAK
                 }
 
             }
-        }
-
-        void incXBoatIdx() {
-
-            this->boatIdx++;
-            
+        
         }
 
         void incXMap(int8_t val) {

@@ -130,23 +130,11 @@ void playGame_Init() {
 
     world.setBackground(-29);
 
-
-/* Swingy Thingy -----------------------------------------------
-
-        else if (i == 0) {
-            item.setItemType(ItemType::SwingyThing);
-            item.setX(94 + 34 + 32);
-            item.setY(16);   
-            item.setFrame(0);          
-        }
-
-*/
-
-
-
 }
 
 void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
+
+    #ifndef DEBUG
 
     player.stageSequence(Stance::None, Stance::None);
     
@@ -1062,6 +1050,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
+    #endif
 }
 
 void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {

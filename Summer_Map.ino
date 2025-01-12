@@ -23,6 +23,19 @@ void map_Update() {
 
     switch (world.getGameState()) {
 
+        case GameState::Map_MoveBoat:
+
+            if (world.getFrameCount() % 2 == 0) {
+
+                world.updateBoat();
+
+                if (world.getBoatDirection() == BoatDirection::None) {
+                    world.setGameState(GameState::Play_Init);
+                }
+
+            }
+            break;
+
         case GameState::Map:
 
             if (world.getFrameCount() % 4 == 0) {
@@ -53,7 +66,6 @@ void map_Update() {
                 
             }
 
-
             if (justPressed & A_BUTTON) {
 
                 world.setNextPort(255);
@@ -65,8 +77,8 @@ void map_Update() {
                     
                     FX::readObject(pt);
 
-                    if (abs(pt.x - world.getXMap()) < 128 && abs(pt.y - world.getYMap()) < 64 && world.getCurrentPort() != i) {
-
+                    if (abs(pt.x - world.getXMap()) < 128 && abs(pt.y - world.getYMap()) < 64) {
+// && world.getCurrentPort() != i
                         world.setNextPort(i);
                         break;
 
@@ -81,7 +93,7 @@ void map_Update() {
                     uint8_t from = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
                     uint8_t toPort = world.getNextPort() + 1;
 
-                    FX::seekData(Constants::PortCosts + ( from * 15) + toPort);
+                    FX::seekData(Constants::PortCosts + (from * 15) + toPort);
                     world.setNextPortCost(FX::readPendingUInt8());
                     FX::readEnd();
 
@@ -121,15 +133,48 @@ void map_Update() {
 
             if (justPressed & A_BUTTON) {
 
-                if (world.getChakanas() >= world.getNextPortCost()) {
+                if (world.getChakanas() >= world.getNextPortCost() && world.getCurrentPort() != world.getNextPort()) {
 
-                    world.startBoat();
                     world.setGameState(GameState::Map_MoveBoat);
                     world.setFrameCount(0);
-
                     world.setChakanas(world.getChakanas() - world.getNextPortCost());
-                    world.setCurrentPort(world.getNextPort());
 
+
+                    // Swap port positions as we are about to move!
+
+                    uint8_t port = world.getCurrentPort();
+                    world.setCurrentPort(world.getNextPort());
+                    world.setNextPort(port);
+
+
+                    // Reposition boat ..
+
+                    uint8_t offset = 0;
+
+                    if (world.getCurrentPort() < 255 && world.getNextPort() < 255 && world.getCurrentPort() < world.getNextPort()) offset = 1;
+
+                    #ifdef DEBUG_BOATS
+                    DEBUG_PRINT("Position Boat ");
+                    DEBUG_PRINT(world.getCurrentPort());
+                    DEBUG_PRINT(" ");
+                    DEBUG_PRINT(world.getNextPort());
+                    DEBUG_PRINT(" ");
+                    DEBUG_PRINTLN(offset? 1 : 0);
+                    #endif
+
+                    FX::seekDataArray(Constants::BoatCoords_Start, (world.getCurrentPort() * 2) + offset, 0, 4);
+                    world.setXBoat(FX::readPendingUInt16());
+                    world.setYBoat(FX::readPendingUInt16());
+                    world.setBoatCounter(0);
+                    world.setBoatDirection(BoatDirection::Left);
+                    FX::readEnd();
+
+                    #ifdef DEBUG_BOATS
+                    DEBUG_PRINT(world.getXBoat());
+                    DEBUG_PRINT(",");
+                    DEBUG_PRINTLN(world.getYBoat());
+                    #endif
+                    
                 }
                 else {
 
@@ -146,39 +191,28 @@ void map_Update() {
                 world.setFrameCount(0);
 
             }
+            else {
 
-            Point pt;
+                Point pt;
 
-            FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
-            uint16_t left = FX::readPendingUInt16();
-            FX::readObject(pt);
-            FX::readEnd();
+                FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
+                uint16_t left = FX::readPendingUInt16();
+                FX::readObject(pt);
+                FX::readEnd();
 
-            leftDialogue = (left == 0);
+                leftDialogue = (left == 0);
 
-            int16_t xOffset = pt.x - world.getXMap();
-            int16_t yOffset = pt.y - world.getYMap();
+                int16_t xOffset = pt.x - world.getXMap();
+                int16_t yOffset = pt.y - world.getYMap();
 
-            if (xOffset > 20)  world.incXMap(1);
-            if (xOffset < -20) world.incXMap(-1);
-            if (yOffset > 12)  world.incYMap(1);
-            if (yOffset < -12) world.incYMap(-1);
-            
-            break;
-
-        case GameState::Map_MoveBoat:
-
-            if (world.getFrameCount() % 2 == 0) {
-
-                world.updateBoat();
-                if (world.getBoatDirection() == Constants::NoDirection) {
-                    world.setGameState(GameState::Play_Init);
-
-                }
+                if (xOffset > 20)  world.incXMap(1);
+                if (xOffset < -20) world.incXMap(-1);
+                if (yOffset > 12)  world.incYMap(1);
+                if (yOffset < -12) world.incYMap(-1);
 
             }
-            break;
             
+            break;
         
     }
 
@@ -230,7 +264,13 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 uint8_t frame = 0;
                 uint8_t numberToShow = 67;
 
-                if (world.getChakanas() < world.getNextPortCost()) {
+                if (world.getCurrentPort() == world.getNextPort()) {
+
+                    frame = 4;
+                    SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
+
+                }
+                else if (world.getChakanas() < world.getNextPortCost()) {
 
                     numberToShow = world.getNextPortCost() - world.getChakanas();
                     frame = (numberToShow < 100 ? 2 : 3);
@@ -266,7 +306,8 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             break;
 
         case GameState::Map_MoveBoat:
-            SpritesU::drawPlusMaskFX((world.getXBoat() / 2) - world.getXMap(), (world.getYBoat() / 2) - world.getYMap(), Images::Boat_Small, (world.getBoatDirection4() * 3) + currentPlane);
+            // SpritesU::drawPlusMaskFX((world.getXBoat() / 2) - world.getXMap(), (world.getYBoat() / 2) - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
+            SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
             break;
         
     }

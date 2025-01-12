@@ -28,6 +28,18 @@ enum class MusicSFX : uint8_t {
     SFX_BigBlind,
 };
 
+enum class BoatDirection : uint8_t {
+    Up,
+    UpRight,
+    Right,
+    DownRight,
+    Down,
+    DownLeft,
+    Left,
+    UpLeft,
+    None = 255,
+};
+
 enum class Direction : uint8_t {
     Backward,
     Right,
