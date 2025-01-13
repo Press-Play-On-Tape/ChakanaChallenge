@@ -167,4 +167,4 @@ convert_sym('../music/click', 'SFX_Click', tracks=1)
 convert_sym('../music/smallBlind', 'SFX_SmallBlind', tracks=1)
 convert_sym('../music/bigBlind', 'SFX_BigBlind', tracks=1)
 
-convert_sym('../music/cc-fast-intro', 'TheGambler', tracks=2)
+convert_sym('../music/cc-main-theme-v2', 'TheGambler', tracks=2)

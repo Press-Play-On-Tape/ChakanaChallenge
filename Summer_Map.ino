@@ -242,12 +242,19 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         for (uint8_t i = 0; i < 14; i++) {
 
-            FX::seekData(Constants::mapCoords + (i * 4));
+            FX::seekDataArray(Constants::mapCoords, i, 0, 4);
             Point pt;
             FX::readObject(pt);
             FX::readEnd();
 
             SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::Beach, currentPlane);
+
+            // FX::seekData(Constants::portNames_Coords + (i * 4));
+            // pt;
+            // FX::readObject(pt);
+            // FX::readEnd();
+
+            // SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, (i * 3) + currentPlane);
 
         }
 
@@ -256,7 +263,20 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     switch (world.getGameState()) {
 
         case GameState::Map:
+            
             SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, currentPlane);
+
+            for (uint8_t i = 0; i < 14; i++) {
+
+                FX::seekDataArray(Constants::portNames_Coords, i, 0, 4);
+                Point pt;
+                FX::readObject(pt);
+                FX::readEnd();
+
+                SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, (i * 3) + currentPlane);
+
+            }
+            
             break;
 
         case GameState::Map_ShowDialogue:
