@@ -18,6 +18,7 @@ struct World {
         Enemy enemy[Constants::EnemyCount];
         Item items[10];
 
+        uint16_t portsVisited = 0;
         uint16_t frameCount = 0;
         uint16_t xMap = 0;
         uint16_t yMap = 0;
@@ -32,7 +33,6 @@ struct World {
         uint8_t nextPort = 11; //SJH 255
         uint8_t nextPortCost = 0;
         uint16_t portCompleted = 1;
-        uint8_t chakanas = 230;
 
         int16_t wave = 0;
         int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
@@ -61,7 +61,6 @@ struct World {
         uint8_t  getCurrentPort()                       { return this->currentPort; }
         uint8_t  getNextPort()                          { return this->nextPort; }
         uint8_t  getNextPortCost()                      { return this->nextPortCost; }
-        uint8_t  getChakanas()                          { return this->chakanas; }
 
         int16_t getX()                                  { return this->x; }
         int16_t getY()                                  { return this->y; }
@@ -86,7 +85,6 @@ struct World {
         void setCurrentPort(uint8_t val)                { this->currentPort = val; }
         void setNextPort(uint8_t val)                   { this->nextPort = val; }
         void setNextPortCost(uint8_t val)               { this->nextPortCost = val; }
-        void setChakanas(uint8_t val)                   { this->chakanas = val; }
 
         void setX(int16_t val)                          { this->x = val; }
         void setY(int16_t val)                          { this->y = val; }
@@ -97,6 +95,18 @@ struct World {
         void setWaveIdx(uint16_t val)                   { this->waveIdx = val; }
 
     public:
+
+        void setPortVisited(uint8_t portId) {
+
+            this->portsVisited = this->portsVisited | (1 < portId);
+
+        }
+
+        bool getPortVisited(uint8_t portId) {
+
+            return this->portsVisited & (1 < portId) > 0;
+
+        }
 
         void reset() {
 
@@ -155,9 +165,9 @@ struct World {
                     this->yBoat = this->yBoat + y;
                     this-boatCounter++;
                 }
-                else {
-                    DEBUG_BREAK
-                }
+                // else {
+                //     DEBUG_BREAK
+                // }
 
             }
         

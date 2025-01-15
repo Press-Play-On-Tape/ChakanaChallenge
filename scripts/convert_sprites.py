@@ -114,6 +114,7 @@ deleteFile(BASE + 'Images.hpp')
 convert_header(IMAGES + 'Numbers/Numbers_5x3_2D_BW.png',                                       BASE + 'Images.hpp', 'Numbers_5x3_2D_BW', 4, 7, 8, maskImage=False)
 convert_header(IMAGES + 'Numbers/Numbers_5x3_3D_BW.png',                                       BASE + 'Images.hpp', 'Numbers_5x3_3D_BW', 4, 11, 8, maskImage=False)
 convert_header(IMAGES + 'Numbers/Numbers_6x4_3D_BW.png',                                       BASE + 'Images.hpp', 'Numbers_6x4_3D_BW', 4, 16, 8, maskImage=False)
+convert_header(IMAGES + 'Numbers/Numbers_6x4_3D_WB.png',                                       BASE + 'Images.hpp', 'Numbers_6x4_3D_WB', 4, 16, 8, maskImage=False)
 
 convert_header(IMAGES + 'Chakana.png',                                                         BASE + 'Images.hpp', 'Chakana', 4, 32, 32)
 convert_header(IMAGES + 'Titles/PPOT.png',                                                     BASE + 'Images.hpp', 'PPOT', 4, 128, 64)
@@ -124,7 +125,8 @@ convert_header(IMAGES + 'Titles/Title_Base.png',                                
 convert_header(IMAGES + 'Titles/Title_Options.png',                                            BASE + 'Images.hpp', 'Title_Options', 4, 68, 32)
 convert_header(IMAGES + 'Titles/Pause.png',                                                    BASE + 'Images.hpp', 'Pause', 4, 128, 64)
 
-convert_header(IMAGES + 'HUD.png',                                                             BASE + 'Images.hpp', 'HUD', 4, 68, 16)
+convert_header(IMAGES + 'HUD_BW.png',                                                             BASE + 'Images.hpp', 'HUD_BW', 4, 68, 16)
+convert_header(IMAGES + 'HUD_WB.png',                                                             BASE + 'Images.hpp', 'HUD_WB', 4, 66, 16)
 convert_header(IMAGES + 'PortNames.png',                                                       BASE + 'Images.hpp', 'PortNames', 4, 31, 8)
 convert_header(IMAGES + 'PortNames_WB.png',                                                       BASE + 'Images.hpp', 'PortNames_WB', 4, 29, 8)
 convert_header(IMAGES + 'ArrowUpDown.png',                                                     BASE + 'Images.hpp', 'ArrowUpDown', 4)
@@ -183,6 +185,7 @@ convert_header(IMAGES + 'Item_22.png',                                          
 
 convert_header(IMAGES + 'Map.png',                                                            BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Scroll.png',                                                            BASE + 'Images.hpp', 'Scroll', 4, 56, 64, maskImage=True)
+convert_header(IMAGES + 'Scroll_Map.png',                                                            BASE + 'Images.hpp', 'Scroll_Map', 4, 56, 64, maskImage=True)
 convert_header(IMAGES + 'Crate_00.png',                                                        BASE + 'Images.hpp', 'Crate_00', 4, maskImage=True)
 convert_header(IMAGES + 'Crate_01.png',                                                        BASE + 'Images.hpp', 'Crate_01', 4, maskImage=True)
 convert_header(IMAGES + 'Crate_01_02.png',                                                        BASE + 'Images.hpp', 'Crate_01_02', 4, maskImage=True)

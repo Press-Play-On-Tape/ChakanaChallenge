@@ -1482,6 +1482,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 puff.setY(item.getY());
                                 puff.setFrame(0);
                                 item.setCounter(3);
+                                player.setChakanas(player.getChakanas() + item.getData());
 
                             }
 

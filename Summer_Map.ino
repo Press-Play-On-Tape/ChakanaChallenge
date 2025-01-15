@@ -17,8 +17,10 @@ void map_Init() {
 
 void map_Update() {
 
+    Player &player = world.getPlayer();
     uint8_t pressed = getPressedButtons();
     uint8_t justPressed = getJustPressedButtons();
+
     world.incFrameCount();
 
     switch (world.getGameState()) {
@@ -112,18 +114,74 @@ void map_Update() {
 
             if (justPressed & B_BUTTON) {
             
-                Point pt = { 0, 0 };
+                // Point pt = { 0, 0 };
 
-                if (world.getCurrentPort() != 255) {
+                // if (world.getCurrentPort() != 255) {
 
-                    FX::seekDataArray(Constants::BeachDetails, world.getCurrentPort(), 0, 6);
-                    FX::readObject(pt);
-                    FX::readEnd();
+                //     FX::seekDataArray(Constants::BeachDetails, world.getCurrentPort(), 0, 6);
+                //     FX::readObject(pt);
+                //     FX::readEnd();
 
-                }
+                // }
                 
-                world.setXMap(pt.x);
-                world.setYMap(pt.y);
+                // world.setXMap(pt.x);
+                // world.setYMap(pt.y);
+
+                world.setGameState(GameState::Map_ShowMenu_1);
+
+            }
+
+            break;
+
+        case GameState::Map_ShowMenu_1:
+
+            if (justPressed & A_BUTTON) {
+
+                world.setGameState(GameState::Map_ShowMenu_2);
+
+            }
+
+            if (justPressed & B_BUTTON) {
+
+                world.setGameState(GameState::Map);
+
+            }
+
+            break;
+
+        case GameState::Map_ShowMenu_2:
+
+            if (justPressed & DOWN_BUTTON) {
+
+                world.setGameState(GameState::Map_ShowMenu_3);
+
+            }
+
+            if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+
+                world.setGameState(GameState::Map_ShowMenu_1);
+
+            }
+
+            break;
+
+        case GameState::Map_ShowMenu_3:
+
+            if (justPressed & UP_BUTTON) {
+
+                world.setGameState(GameState::Map_ShowMenu_2);
+
+            }
+
+            if (justPressed & B_BUTTON) {
+
+                world.setGameState(GameState::Map_ShowMenu_1);
+
+            }
+
+            if (justPressed & A_BUTTON) {
+
+                world.setGameState(GameState::Title_Init);
 
             }
 
@@ -133,11 +191,11 @@ void map_Update() {
 
             if (justPressed & A_BUTTON) {
 
-                if (world.getChakanas() >= world.getNextPortCost() && world.getCurrentPort() != world.getNextPort()) {
+                if (player.getChakanas() >= world.getNextPortCost() && world.getCurrentPort() != world.getNextPort()) {
 
                     world.setGameState(GameState::Map_MoveBoat);
                     world.setFrameCount(0);
-                    world.setChakanas(world.getChakanas() - world.getNextPortCost());
+                    player.setChakanas(player.getChakanas() - world.getNextPortCost());
 
 
                     // Swap port positions as we are about to move!
@@ -222,6 +280,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     if (a.needsUpdate()) map_Update();
 
+    Player &player = world.getPlayer();
     uint8_t currentPlane = a.currentPlane();
 
     uint8_t xInt = world.getXMap() / 128;
@@ -249,13 +308,6 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::Beach, currentPlane);
 
-            // FX::seekData(Constants::portNames_Coords + (i * 4));
-            // pt;
-            // FX::readObject(pt);
-            // FX::readEnd();
-
-            // SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, (i * 3) + currentPlane);
-
         }
 
     }
@@ -265,15 +317,29 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         case GameState::Map:
             
             SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, currentPlane);
+            renderPortNames(currentPlane);
+            
+            break;
 
-            for (uint8_t i = 0; i < 14; i++) {
+        case GameState::Map_ShowMenu_1:
 
-                FX::seekDataArray(Constants::portNames_Coords, i, 0, 4);
-                Point pt;
-                FX::readObject(pt);
-                FX::readEnd();
+            SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, currentPlane);
+            renderPortNames(currentPlane);
+            SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map,  (player.getHealth() * 3) + currentPlane);
+            SpritesU::drawOverwriteFX(99, 16,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
 
-                SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, (i * 3) + currentPlane);
+            break;
+
+        case GameState::Map_ShowMenu_2:
+        case GameState::Map_ShowMenu_3:
+            
+            SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, currentPlane);
+            renderPortNames(currentPlane);
+            SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map,  (15 * 3) + currentPlane);
+
+            if (world.getFrameCount() % 64 < 32) {
+
+                SpritesU::drawPlusMaskFX(90, 6 + 24 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2)) * 8, Images::InventoryPanel_Cursor, currentPlane);
 
             }
             
@@ -286,23 +352,23 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 if (world.getCurrentPort() == world.getNextPort()) {
 
+                    frame = 5;
+                    SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
+
+                }
+                else if (world.getPortVisited(world.getNextPort())) {
+
                     frame = 4;
                     SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
 
                 }
-                else if (world.getChakanas() < world.getNextPortCost()) {
+                else if (player.getChakanas() < world.getNextPortCost()) {
 
-                    numberToShow = world.getNextPortCost() - world.getChakanas();
+                    numberToShow = world.getNextPortCost() - player.getChakanas();
                     frame = (numberToShow < 100 ? 2 : 3);
 
                     SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
-
-                    if (numberToShow < 100) {
-                        SpritesU::drawOverwriteFX(15 + (leftDialogue ? 0 : 73), 27, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
-                    }
-                    else {
-                        SpritesU::drawOverwriteFX(13 + (leftDialogue ? 0 : 73), 27, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
-                    }
+                    renderNumber(numberToShow, 13, 27, currentPlane);
 
                 }
                 else {
@@ -313,12 +379,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
                     SpritesU::drawOverwriteFX(12 + (leftDialogue ? 0 : 73), 23, Images::PortNames, (world.getNextPort() * 3) + currentPlane);
 
-                    if (numberToShow < 100) {
-                        SpritesU::drawOverwriteFX(33 + (leftDialogue ? 0 : 73), 32, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
-                    }
-                    else {
-                        SpritesU::drawOverwriteFX(31 + (leftDialogue ? 0 : 73), 32, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
-                    }
+                    renderNumber(numberToShow, 31, 32, currentPlane);
 
                 }
 
@@ -326,7 +387,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             break;
 
         case GameState::Map_MoveBoat:
-            // SpritesU::drawPlusMaskFX((world.getXBoat() / 2) - world.getXMap(), (world.getYBoat() / 2) - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
+
             SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
             break;
         
@@ -334,3 +395,28 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 }
 
+void renderPortNames(uint8_t currentPlane) {
+
+    for (uint8_t i = 0; i < 14; i++) {
+
+        FX::seekDataArray(Constants::portNames_Coords, i, 0, 4);
+        Point pt;
+        FX::readObject(pt);
+        FX::readEnd();
+
+        SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, (i * 3) + currentPlane);
+
+    }
+
+}
+
+void renderNumber(uint8_t numberToShow, uint8_t x, uint8_t y, uint8_t currentPlane) {
+
+    if (numberToShow < 100) {
+        SpritesU::drawOverwriteFX(x + 2 + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
+    }
+    else {
+        SpritesU::drawOverwriteFX(x + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
+    }
+
+}

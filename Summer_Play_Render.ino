@@ -621,7 +621,7 @@ void renderWorld(uint8_t currentPlane) {
                 }
 
                 SpritesU::drawPlusMaskFX(menu.getX(), 0,  Images::InventoryPanel, (frame * 3) + currentPlane);
-                SpritesU::drawPlusMaskFX(0, (128 - menu.getX() - 32) / 3,  Images::HUD, (player.getHealth() * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(0, (128 - menu.getX() - 32) / 3,  Images::HUD_BW, (player.getHealth() * 3) + currentPlane);
                 SpritesU::drawOverwriteFX(10, ((128 - menu.getX() - 32) / 3) + 2,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
 
 
