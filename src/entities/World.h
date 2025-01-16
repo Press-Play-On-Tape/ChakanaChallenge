@@ -29,8 +29,8 @@ struct World {
         int16_t x = 0;
         int16_t y = 0;
 
-        uint8_t currentPort = 11; //SJH 255
-        uint8_t nextPort = 11; //SJH 255
+        uint8_t currentPort = 255; //SJH 255
+        uint8_t nextPort = 255; //SJH 255
         uint8_t nextPortCost = 0;
         uint16_t portCompleted = 1;
 

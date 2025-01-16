@@ -15,21 +15,26 @@ void renderWorld(uint8_t currentPlane) {
 
     if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
 
-    // SpritesU::drawOverwriteFX(world.getBackground() - 128, yOffset - Constants::GroundY, Images::Background, currentPlane);    
-    // SpritesU::drawOverwriteFX(world.getBackground(), yOffset - Constants::GroundY, Images::Background, currentPlane);    
-    // SpritesU::drawOverwriteFX(world.getBackground() + 128, yOffset - Constants::GroundY, Images::Background, currentPlane);    
 
-    // SpritesU::drawOverwriteFX(world.getBackground() - 128, ((yOffset - Constants::GroundY) / 4) - 8, Images::Background_Above, currentPlane);    
-    SpritesU::drawOverwriteFX(world.getBackground(), ((yOffset - Constants::GroundY) / 4) - 8, Images::Background_Above, currentPlane);    
-    SpritesU::drawOverwriteFX(world.getBackground() + 128, ((yOffset - Constants::GroundY) / 4) - 8, Images::Background_Above, currentPlane);    
+    {
+        int8_t y = (yOffset - Constants::GroundY) / 4;
 
-    // SpritesU::drawOverwriteFX(world.getBackground() - 128, (yOffset - Constants::GroundY)/4, Images::Background, currentPlane);    
-    SpritesU::drawOverwriteFX(world.getBackground(), (yOffset - Constants::GroundY)/4, Images::Background, currentPlane);    
-    SpritesU::drawOverwriteFX(world.getBackground() + 128, (yOffset - Constants::GroundY)/4, Images::Background, currentPlane);    
+        for (uint8_t i = 0; i < 2; i++) {
+
+            int16_t x = world.getBackground() + (i * 128);
+
+            SpritesU::drawOverwriteFX(x, y - 8, Images::Background_Above, currentPlane);    
+            SpritesU::drawOverwriteFX(x, y, Images::Background, currentPlane);    
+
+        }
+
+    }
 
     for (uint8_t i = 4; i < 8; i++) {    
+
         uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
         SpritesU::drawPlusMaskFX(world.getPalm(i), 20 + yOffset - Constants::GroundY, palmIdx, currentPlane);
+        
     }
 
 

@@ -21,7 +21,7 @@ class Player {
         uint8_t health = Constants::HealthMax;
         uint8_t enemyIdx = 255;
         uint8_t swordWound = 0;
-        uint8_t chakanas = 100;
+        uint8_t chakanas = 200;
 		
         Stance fromStance = Stance::None;
         Stance toStance = Stance::None;
