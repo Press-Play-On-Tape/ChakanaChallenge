@@ -34,7 +34,7 @@ void renderWorld(uint8_t currentPlane) {
 
         uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
         SpritesU::drawPlusMaskFX(world.getPalm(i), 20 + yOffset - Constants::GroundY, palmIdx, currentPlane);
-        
+
     }
 
 
@@ -53,6 +53,7 @@ void renderWorld(uint8_t currentPlane) {
             uint8_t tile11 = world.getTile(i + 1, y + 1);
 
             uint24_t imgTile = 0;
+            uint8_t frame = 0;
 
 
             // Is the first tile a solid?
@@ -185,43 +186,65 @@ void renderWorld(uint8_t currentPlane) {
             // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
 
 
-            // Rollers R then L
-
-            else if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_32, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
-            }
-
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_34, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
-            }
-
-            else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_33, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
-            }
-
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_35, ((world.getFrameCount() % 24) / 6 * 3) + currentPlane);
-            }
-
-            // Water
-
-            else if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_39, ((world.getFrameCount() % 48) / 3 * 3) + currentPlane);
-            }
-
-            else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_40, ((world.getFrameCount() % 48) / 3 * 3) + currentPlane);
-            }
-
-            else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                SpritesU::drawPlusMaskFX(renderX, renderY, Images::Crate_41, ((world.getFrameCount() % 48) / 3 * 3) + currentPlane);
-            }
 
 
             // Render image?
 
             if (imgTile != 0) {
                 SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, currentPlane);
+            }
+            else {
+
+
+                // Rollers R then L
+
+                frame = ((world.getFrameCount() % 24) / 6 * 3);
+
+                if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                    imgTile = Images::Crate_32;
+                }
+
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
+                    imgTile = Images::Crate_34;
+                }
+
+                else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                    imgTile = Images::Crate_33;
+                }
+
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
+                    imgTile = Images::Crate_35;
+                }
+
+                if (imgTile != 0) {
+                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
+                }
+
+            }
+
+
+            // Water
+
+            if (imgTile == 0) {
+
+                frame = ((world.getFrameCount() % 48) / 3 * 3);
+                
+                if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                    imgTile = Images::Crate_39;
+                }
+
+                else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                    imgTile = Images::Crate_40;
+                }
+
+                else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                    imgTile = Images::Crate_41;
+                }
+
+                if (imgTile != 0) {
+                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
+                }
+
             }
 
         }
@@ -239,8 +262,7 @@ void renderWorld(uint8_t currentPlane) {
         if (renderX <= -16 || renderX > 127) continue;
         if (renderY <= -16 || renderY > 127) continue;
 
-        uint24_t imageIdx = 0;
-        imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
+        uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
          
         uint8_t frame = item.getFrame();
 
@@ -274,7 +296,7 @@ void renderWorld(uint8_t currentPlane) {
                 switch (item.getFrame()) {
 
                     case 3 ... 21:
-                        frame = (item.getFrame() / 3);
+                        frame = item.getFrame() / 3;
                         break;
 
                     default:
@@ -336,14 +358,8 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Walk_FallLandSpring_BK_24:
             {
                 uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-
-                if (world.isSpringTile_LH(tile)) {
-                    SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, currentPlane);
-                }
-                else {
-                    SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, 3 + currentPlane);
-                }
-
+                uint8_t frame = world.isSpringTile_LH(tile) ? 3 : 0;
+                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player_Bounce, frame + currentPlane);
             }
             break;
 
@@ -358,13 +374,13 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_RH_01 ... Stance::Man_Sword_Walk_BK_RH_04:
         case Stance::Man_Sword_StandingJump_RH_01 ... Stance::Man_Sword_StandingJump_RH_07:
             {
-                FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
-                uint8_t stanceImg = FX::readPendingUInt8();
-                FX::readEnd();
+                // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
+                // uint8_t stanceImg = FX::readPendingUInt8();
+                // FX::readEnd();
+                uint8_t stanceImg = getStanceImg(player.getStance());
                 
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
                 SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
-
                 SpritesU::drawPlusMaskFX(56 + x - 1, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, ((Constants::HealthMax - player.getHealth()) * 3) + currentPlane);
 
             }
@@ -376,13 +392,13 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_LH_01 ... Stance::Man_Sword_Walk_BK_LH_04:
         case Stance::Man_Sword_StandingJump_LH_01 ... Stance::Man_Sword_StandingJump_LH_07:
             {
-                FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
-                uint8_t stanceImg = FX::readPendingUInt8();
-                FX::readEnd();
+                // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
+                // uint8_t stanceImg = FX::readPendingUInt8();
+                // FX::readEnd();
+                uint8_t stanceImg = getStanceImg(player.getStance());
                 
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
                 SpritesU::drawPlusMaskFX(56 - x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
-
                 SpritesU::drawPlusMaskFX(56 - x + 2, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, ((Constants::HealthMax - player.getHealth()) * 3) + currentPlane);
 
             }
@@ -390,9 +406,10 @@ void renderWorld(uint8_t currentPlane) {
 
         default:
             {
-                FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
-                uint8_t stanceImg = FX::readPendingUInt8();
-                FX::readEnd();
+                // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
+                // uint8_t stanceImg = FX::readPendingUInt8();
+                // FX::readEnd();
+                uint8_t stanceImg = getStanceImg(player.getStance());
 
                 SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
 
@@ -442,9 +459,10 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_Walk_BK_LH_01 ... Stance::Enemy_Sword_Walk_BK_LH_04:
                 case Stance::Enemy_Sword_StandingJump_LH_01 ... Stance::Enemy_Sword_StandingJump_LH_07:
                     {
-                        FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
-                        uint8_t stanceImg = FX::readPendingUInt8();
-                        FX::readEnd();
+                        // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
+                        // uint8_t stanceImg = FX::readPendingUInt8();
+                        // FX::readEnd();
+                        uint8_t stanceImg = getStanceImg(enemy.getStance());
 
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
@@ -463,9 +481,10 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_Walk_BK_RH_01 ... Stance::Enemy_Sword_Walk_BK_RH_04:
                 case Stance::Enemy_Sword_StandingJump_RH_01 ... Stance::Enemy_Sword_StandingJump_RH_07:
                     {
-                        FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
-                        uint8_t stanceImg = FX::readPendingUInt8();
-                        FX::readEnd();
+                        // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
+                        // uint8_t stanceImg = FX::readPendingUInt8();
+                        // FX::readEnd();
+                        uint8_t stanceImg = getStanceImg(enemy.getStance());
 
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
@@ -480,9 +499,10 @@ void renderWorld(uint8_t currentPlane) {
                     
                 default:
                     {
-                        FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
-                        uint8_t stanceImg = FX::readPendingUInt8();
-                        FX::readEnd();
+                        // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
+                        // uint8_t stanceImg = FX::readPendingUInt8();
+                        // FX::readEnd();
+                        uint8_t stanceImg = getStanceImg(enemy.getStance());
 
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
 
@@ -727,4 +747,11 @@ void renderWorld(uint8_t currentPlane) {
 
 }
 
+uint8_t getStanceImg(Stance stance) {
 
+    FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(stance));
+    uint8_t stanceImg = FX::readPendingUInt8();
+    FX::readEnd();
+
+    return stanceImg;
+}
