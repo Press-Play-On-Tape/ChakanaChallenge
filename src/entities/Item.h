@@ -185,7 +185,7 @@ class Item {
                         this->counter--;
 
                         if (this->counter == 0) {
-                            return ItemAction::ChangeToHidden;
+                            return ItemAction::Remove;
                         }
 
                     }

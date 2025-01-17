@@ -374,15 +374,9 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_RH_01 ... Stance::Man_Sword_Walk_BK_RH_04:
         case Stance::Man_Sword_StandingJump_RH_01 ... Stance::Man_Sword_StandingJump_RH_07:
             {
-                // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
-                // uint8_t stanceImg = FX::readPendingUInt8();
-                // FX::readEnd();
                 uint8_t stanceImg = getStanceImg(player.getStance());
-                
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
-                SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
-                SpritesU::drawPlusMaskFX(56 + x - 1, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, ((Constants::HealthMax - player.getHealth()) * 3) + currentPlane);
-
+                renderPlayerAndHealth(stanceImg, 56 + x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
             }
             break;
 
@@ -392,27 +386,16 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_LH_01 ... Stance::Man_Sword_Walk_BK_LH_04:
         case Stance::Man_Sword_StandingJump_LH_01 ... Stance::Man_Sword_StandingJump_LH_07:
             {
-                // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
-                // uint8_t stanceImg = FX::readPendingUInt8();
-                // FX::readEnd();
                 uint8_t stanceImg = getStanceImg(player.getStance());
-                
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
-                SpritesU::drawPlusMaskFX(56 - x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
-                SpritesU::drawPlusMaskFX(56 - x + 2, yOffset - Constants::GroundY + player.getY() - 5, Images::Health, ((Constants::HealthMax - player.getHealth()) * 3) + currentPlane);
-
+                renderPlayerAndHealth(stanceImg, 56 - x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
             }
             break;
 
         default:
             {
-                // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(player.getStance()));
-                // uint8_t stanceImg = FX::readPendingUInt8();
-                // FX::readEnd();
                 uint8_t stanceImg = getStanceImg(player.getStance());
-
                 SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
-
             }
             break;
         
@@ -459,17 +442,12 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_Walk_BK_LH_01 ... Stance::Enemy_Sword_Walk_BK_LH_04:
                 case Stance::Enemy_Sword_StandingJump_LH_01 ... Stance::Enemy_Sword_StandingJump_LH_07:
                     {
-                        // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
-                        // uint8_t stanceImg = FX::readPendingUInt8();
-                        // FX::readEnd();
                         uint8_t stanceImg = getStanceImg(enemy.getStance());
-
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
-                        
+                        renderPlayerAndHealth(stanceImg, enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), enemy.getHealth(), currentPlane);
+
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Glint, (enemy.getItem().getFrame() * 3) + currentPlane);
+                            renderGlint(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), enemy.getItem().getFrame(), currentPlane);
                         }                        
 
                     }
@@ -481,17 +459,12 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_Walk_BK_RH_01 ... Stance::Enemy_Sword_Walk_BK_RH_04:
                 case Stance::Enemy_Sword_StandingJump_RH_01 ... Stance::Enemy_Sword_StandingJump_RH_07:
                     {
-                        // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
-                        // uint8_t stanceImg = FX::readPendingUInt8();
-                        // FX::readEnd();
                         uint8_t stanceImg = getStanceImg(enemy.getStance());
-
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
+                        renderPlayerAndHealth(stanceImg, enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), enemy.getHealth(), currentPlane);
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() + 15, yOffset - enemy.getItem().getY(), Images::Glint, (enemy.getItem().getFrame() * 3) + currentPlane);
+                            renderGlint(enemy.getItem().getX() + world.getMiddleground() + 15, yOffset - enemy.getItem().getY(), enemy.getItem().getFrame(), currentPlane);
                         }                        
 
                     }
@@ -499,11 +472,7 @@ void renderWorld(uint8_t currentPlane) {
                     
                 default:
                     {
-                        // FX::seekData(Constants::StanceImgIdx + static_cast<uint16_t>(enemy.getStance()));
-                        // uint8_t stanceImg = FX::readPendingUInt8();
-                        // FX::readEnd();
                         uint8_t stanceImg = getStanceImg(enemy.getStance());
-
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
 
                         if (enemy.getItem().getItemType() == ItemType::Arrow_RH) {
@@ -647,7 +616,7 @@ void renderWorld(uint8_t currentPlane) {
 
                 SpritesU::drawPlusMaskFX(menu.getX(), 0,  Images::InventoryPanel, (frame * 3) + currentPlane);
                 SpritesU::drawPlusMaskFX(0, (128 - menu.getX() - 32) / 3,  Images::HUD_BW, (player.getHealth() * 3) + currentPlane);
-                SpritesU::drawOverwriteFX(10, ((128 - menu.getX() - 32) / 3) + 2,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
+                SpritesU::drawOverwriteFX(8, ((128 - menu.getX() - 32) / 3),  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
 
 
                 if (menu.getTop() == 0) {
@@ -679,14 +648,16 @@ void renderWorld(uint8_t currentPlane) {
                             InventoryItem &item = player.getItem(i - 2);
                             if (item.getItemType() == ItemType::None)   break;
 
-                            uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
-                            uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
-                            SpritesU::drawPlusMaskFX(menu.getX() + 13, -12 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
+                            // uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
+                            // uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
+                            // SpritesU::drawPlusMaskFX(menu.getX() + 13, -12 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
+                            renderItem(item.getItemType(), menu.getX() + 13, -12 + ((i - menu.getTop()) * 18), currentPlane);
 
                             if (menu.getY() >= 2 && world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
-                                SpritesU::drawPlusMaskFX(menu.getX() + 12, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
-                                SpritesU::drawPlusMaskFX(menu.getX() + 27, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
+                                // SpritesU::drawPlusMaskFX(menu.getX() + 12, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
+                                // SpritesU::drawPlusMaskFX(menu.getX() + 27, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
+                                renderItemCursor(menu.getX() + 12, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), currentPlane);
 
                             }
                             
@@ -702,16 +673,19 @@ void renderWorld(uint8_t currentPlane) {
                         InventoryItem &item = player.getItem(i - 2);
                         if (item.getItemType() == ItemType::None)   break;
 
-                        uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
-                        uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
-                        SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
+                        // uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
+                        // uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
+                        // SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
+
+                        renderItem(item.getItemType(), menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), currentPlane);
 
                     }
 
                     if (world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
-                        SpritesU::drawPlusMaskFX(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
-                        SpritesU::drawPlusMaskFX(menu.getX() + 27, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
+                        // SpritesU::drawPlusMaskFX(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
+                        // SpritesU::drawPlusMaskFX(menu.getX() + 27, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
+                        renderItemCursor(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), currentPlane);
 
                     }
                 }
@@ -754,4 +728,33 @@ uint8_t getStanceImg(Stance stance) {
     FX::readEnd();
 
     return stanceImg;
+
+}
+
+void renderItem(ItemType itemType, uint8_t x, uint8_t y, uint8_t currentPlane) {
+
+    uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(itemType));
+    uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(itemType));
+    SpritesU::drawPlusMaskFX(x, y, imageIdx, imgFrame + currentPlane);
+
+}
+
+void renderItemCursor(uint8_t x, uint8_t y, uint8_t currentPlane) {
+
+    SpritesU::drawPlusMaskFX(x, y, Images::Cursor_00, currentPlane);
+    SpritesU::drawPlusMaskFX(x + 15, y, Images::Cursor_01, currentPlane);
+
+}
+
+void renderPlayerAndHealth(uint8_t stanceImg, uint8_t x, uint8_t y, uint8_t health, uint8_t currentPlane) {
+
+    SpritesU::drawPlusMaskFX(x, y, Images::Player, (stanceImg * 3) + currentPlane);
+    SpritesU::drawPlusMaskFX(x - 1, y - 5, Images::Health, ((Constants::HealthMax - health) * 3) + currentPlane);
+
+}
+
+void renderGlint(uint8_t x, uint8_t y, uint8_t frame, uint8_t currentPlane) {
+
+    SpritesU::drawPlusMaskFX(x, y, Images::Glint, (frame * 3) + currentPlane);
+
 }

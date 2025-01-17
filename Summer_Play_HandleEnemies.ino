@@ -283,6 +283,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                                 enemy.insert(Stance::Enemy_Walk_RH_00);
                                                 break;
 
+                                            default: break;
+
                                         }
 
 
@@ -304,6 +306,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                                         player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
                                                         break;
 
+                                                    default: break;
+
                                                 }
 
                                                 break;
@@ -321,6 +325,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                                         player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
                                                         break;
+
+                                                    default: break;
 
                                                 }
 
@@ -375,7 +381,9 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                 playGame_HandleEnemies_SwordFighter(player, enemy, Stance::Man_LH_Start - Stance::Man_RH_Start, 0, dist);
                                 break;
-                                
+                              
+                            default: break;
+  
                         }
 
                     }
@@ -472,7 +480,7 @@ int16_t getDistanceBetween(Player &player, EnemyType enemyType) {
     }
 
     if (player.getEnemyIdx() != Constants::NoEnemy) {
-
+    
         Enemy &enemy = world.getEnemy(player.getEnemyIdx());
         return -world.getMiddleground() + 56 - enemy.getX();
 

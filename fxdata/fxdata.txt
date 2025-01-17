@@ -77,21 +77,34 @@ namespace Constants
 
     uint16_t portNames_Coords[] = { 
     
-        17408, 24064,    // Port 0
-        7424, 41984,     // Port 1
-        15360, 60928,    // Port 2
-        48640, 53248,    // Port 3
-        17152, 19969,    // Port 4
-        39936, 2305,     // Port 5
-        45824, 26625,    // Port 6
-        1, 5121,         // Port 7
-        11521, 20737,    // Port 8
-        18177, 50688,    // Port 9
-        17409, 32768,    // Port 10
-        513, 15104,      // Port 11
-        49408, 27136,    // Port 12
-        37632, 3072,     // Port 13
-
+//        17408, 24064,    // Port 0
+//        7424, 41984,     // Port 1
+//        15360, 60928,    // Port 2
+//        48640, 53248,    // Port 3
+//        17152, 19969,    // Port 4
+//        39936, 2305,     // Port 5
+//        45824, 26625,    // Port 6
+//        1, 5121,         // Port 7
+//        11521, 20737,    // Port 8
+//        18177, 50688,    // Port 9
+//        17409, 32768,    // Port 10
+//        513, 15104,      // Port 11
+//        49408, 27136,    // Port 12
+//        37632, 3072,     // Port 13
+7168, 24320, // Port 0
+7424, 41984, // Port 1
+15360, 60928, // Port 2
+48640, 53248, // Port 3
+17152, 19969, // Port 4
+39936, 2305, // Port 5
+45824, 26625, // Port 6
+1, 5121, // Port 7
+11521, 20737, // Port 8
+18177, 50688, // Port 9
+17409, 32768, // Port 10
+513, 15104, // Port 11
+49408, 27136, // Port 12
+37632, 3072, // Port 13
     };
 
     uint16_t BeachDetails[] = {
@@ -321,17 +334,50 @@ namespace Levels
     
     uint24_t Levels[] = {
         Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
     };
 
     uint24_t Level_Items[] = {
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
         Level_00_Items,  
     };
 
     uint24_t Level_Enemies[] = {
         Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
     };
 
     uint24_t Level_PlayerStart[] = {
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
         Level_00_PlayerStart,  
     };
 
@@ -342,41 +388,3 @@ savesection  // Anything below here will be stored in the save block
 
 uint16_t 0xFFFF // Save state  end marker
 
-
-/*
-        -- Life Saver ---------------------------------------------------------------
-
-        51,                             // ItemType::LifeSaver
-        16,                             // Position X 
-        0,                              // Position Y
-        0,                              // Frame
-        0,                              // Data  
-        0,                              // Counter
-
-        -- Trebochet ----------------------------------------------------------------
-
-        Enemies:
-
-        2,                              // EnemyType::TrebochetOperator
-        220,                            // Position X 
-        16,                             // Position Y
-        903,                            // Stance::Enemy_Trebochet_Release_LH_01
-        33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden
-
-        Items:
-
-        28,                             // ItemType::Trebochet_Left
-        208,                            // Position X 
-        16,                             // Position Y
-        0,                              // Frame
-        0,                              // Data  
-        0,                              // Counter 
-
-        33,                             // ItemType::Trebochet_Ball_Left_Hidden
-        208,                            // Position X 
-        16,                             // Position Y
-        0,                              // Frame
-        0,                              // Data 
-        0,                              // Counter  
-
-*/

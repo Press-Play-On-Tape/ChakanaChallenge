@@ -125,7 +125,7 @@ convert_header(IMAGES + 'Titles/Title_Base.png',                                
 convert_header(IMAGES + 'Titles/Title_Options.png',                                            BASE + 'Images.hpp', 'Title_Options', 4, 68, 32)
 convert_header(IMAGES + 'Titles/Pause.png',                                                    BASE + 'Images.hpp', 'Pause', 4, 128, 64)
 
-convert_header(IMAGES + 'HUD_BW.png',                                                             BASE + 'Images.hpp', 'HUD_BW', 4, 68, 16)
+convert_header(IMAGES + 'HUD_BW.png',                                                             BASE + 'Images.hpp', 'HUD_BW', 4, 73, 16)
 convert_header(IMAGES + 'HUD_WB.png',                                                             BASE + 'Images.hpp', 'HUD_WB', 4, 66, 16)
 convert_header(IMAGES + 'PortNames.png',                                                       BASE + 'Images.hpp', 'PortNames', 4, 31, 8)
 convert_header(IMAGES + 'PortNames_WB.png',                                                       BASE + 'Images.hpp', 'PortNames_WB', 4, 29, 8)

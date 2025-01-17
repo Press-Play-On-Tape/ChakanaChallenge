@@ -59,7 +59,7 @@ void title_Update() {
             
             case GameState::Title_ShowCredits:
 
-                if (justPressed & B_BUTTON || justPressed & A_BUTTON) {
+                if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
 
                     world.setGameState(GameState::Title_OptCredits);
 

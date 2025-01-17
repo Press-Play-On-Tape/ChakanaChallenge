@@ -130,6 +130,10 @@ void playGame_Init() {
 
     world.setBackground(-29);
 
+    // player.addInventoryItem(ItemType::Sword);
+    // player.addInventoryItem(ItemType::Amulet);
+    // player.addInventoryItem(ItemType::Hammer);
+
 }
 
 void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
@@ -1397,7 +1401,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case GameState::PlayGame:
 
-                    if (justPressed & B_BUTTON || pressed & B_BUTTON) {
+                    if (pressed & B_BUTTON) {
                         playGame_HandleMenu();
                     }
                     else {
@@ -1411,9 +1415,16 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     break;
 
                 case GameState::Chakana_Open:
+
+                    if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+                        world.setGameState(GameState::Map_Init);
+                        world.setPortVisited(world.getCurrentPort());
+                    }
+
                     break;
 
                 case GameState::Play_Battle:
+
                     playGame_HandleSwordFight_Player(player, pressed, justPressed);          
                     break;
 

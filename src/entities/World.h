@@ -32,7 +32,6 @@ struct World {
         uint8_t currentPort = 255; //SJH 255
         uint8_t nextPort = 255; //SJH 255
         uint8_t nextPortCost = 0;
-        uint16_t portCompleted = 1;
 
         int16_t wave = 0;
         int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
@@ -98,13 +97,13 @@ struct World {
 
         void setPortVisited(uint8_t portId) {
 
-            this->portsVisited = this->portsVisited | (1 < portId);
+            this->portsVisited = this->portsVisited | (1 << portId);
 
         }
 
         bool getPortVisited(uint8_t portId) {
 
-            return this->portsVisited & (1 < portId) > 0;
+            return (this->portsVisited & (1 << portId)) > 0;
 
         }
 
