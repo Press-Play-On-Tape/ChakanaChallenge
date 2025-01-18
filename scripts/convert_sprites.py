@@ -141,6 +141,7 @@ convert_header(IMAGES + 'Health.png',                                           
 convert_header(IMAGES + 'Glint.png',                                                                    BASE + 'Images.hpp', 'Glint', 4, 16, 16)
 convert_header(IMAGES + 'Sword_Wound.png',                                                              BASE + 'Images.hpp', 'Sword_Wound', 4, 6, 16)
 convert_header(IMAGES + 'EndOfLevel.png',                                                               BASE + 'Images.hpp', 'EndOfLevel', 4, 56, 64)
+convert_header(IMAGES + 'EndOfLife.png',                                                                BASE + 'Images.hpp', 'EndOfLife', 4, 56, 64)
 
 convert_header(IMAGES + 'Palm1.png',                                                                    BASE + 'Images.hpp', 'Palm1', 4)
 convert_header(IMAGES + 'Palm2.png',                                                                    BASE + 'Images.hpp', 'Palm2', 4)

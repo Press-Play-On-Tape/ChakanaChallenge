@@ -9,8 +9,12 @@
 
 struct World {
 
-    private:
+    public:
 
+        uint8_t mapData[Constants::Map_Y_Count][Constants::Map_X_Count];
+
+    private:
+        
         GameState gameState = GameState::SplashScreen_Start;
         GameState prevGameState = GameState::SplashScreen_Start;
 
@@ -95,6 +99,25 @@ struct World {
 
     public:
 
+        void init() {
+
+            this->portsVisited = 0;
+            this->frameCount = 0;
+            this->xMap = 0;
+            this->yMap = 0;
+            this->xBoat = 14;
+            this->yBoat = 6;
+            this->boatDirection = BoatDirection::None;
+            this->boatCounter = 0;
+            this->x = 0;
+            this->y = 0;
+
+            this->currentPort = 255; //SJH 255
+            this->nextPort = 255; //SJH 255
+            this->nextPortCost = 0;
+
+        }
+
         void setPortVisited(uint8_t portId) {
 
             this->portsVisited = this->portsVisited | (1 << portId);
@@ -104,10 +127,6 @@ struct World {
         bool getPortVisited(uint8_t portId) {
 
             return (this->portsVisited & (1 << portId)) > 0;
-
-        }
-
-        void reset() {
 
         }
 

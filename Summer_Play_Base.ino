@@ -12,7 +12,7 @@ uint8_t ignoreKeyPress = 0;
 void playGame_Init() {
 
     Player &player = world.getPlayer();
-    world.setGameState(GameState::PlayGame);
+    world.setGameState(GameState::Play_Game);
     world.setFrameCount(0);
     menu.reset();
 
@@ -26,7 +26,7 @@ void playGame_Init() {
                 
             FX::seekDataArray(levelStart, y, 0, Constants::Map_X_Count_Full);
             
-            FX::readObject(mapData[Constants::Map_Y_Count - y - 1]);
+            FX::readObject(world.mapData[Constants::Map_Y_Count - y - 1]);
             FX::readEnd();
 
         }
@@ -133,6 +133,9 @@ void playGame_Init() {
     // player.addInventoryItem(ItemType::Sword);
     // player.addInventoryItem(ItemType::Amulet);
     // player.addInventoryItem(ItemType::Hammer);
+
+    cookie.hasSavedGame = true;
+    saveCookie(true);
 
 }
 
@@ -1281,7 +1284,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
 
-        world.setGameState(GameState::PlayGame);
+        world.setGameState(GameState::Play_Game);
         player.setStance(Stance::Man_Walk_RH_00);
 
     }
@@ -1402,7 +1405,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     break;
 
-                case GameState::PlayGame:
+                case GameState::Play_Game:
 
                     if (pressed & B_BUTTON) {
                         playGame_HandleMenu();
@@ -1427,6 +1430,30 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     break;
 
+                case GameState::Play_Dead:
+
+                    if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+
+                        if (player.getLives() > 1) {
+
+                            FX::loadGameState((uint8_t*)&cookie, sizeof(cookie));
+                            player.setHealth(Constants::HealthMax);
+                            player.setLives(player.getLives() - 1);
+
+                        }
+                        else {
+
+                            cookie.hasSavedGame = false;
+                            world.setGameState(GameState::Title_Init);
+
+                        }
+
+                        saveCookie(true);
+
+                    }
+
+                    break;
+
                 case GameState::Play_Battle:
 
                     playGame_HandleSwordFight_Player(player, pressed, justPressed);          
@@ -1439,7 +1466,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             switch (world.getGameState()) {
 
-                case GameState::PlayGame:
+                case GameState::Play_Game:
                     playGame_HandleJump(player, pressed, justPressed);
                     break;
 
@@ -2033,7 +2060,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             else {
 
                                 int16_t dist = getDistanceBetween(enemy);
-                                world.setGameState(GameState::PlayGame);
+                                world.setGameState(GameState::Play_Game);
 
                                 player.removeInventoryItem(menu.getY());
                                 if (menu.getY() > 0) menu.setY(menu.getY() - 1);
@@ -2102,6 +2129,29 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         }
 
                     }
+
+                    break;
+
+                case Stance::Man_Die_Fire_LH_12:
+                case Stance::Man_Die_Fire_RH_12:
+                case Stance::Man_Die_Arrow_FallForward_LH_04:
+                case Stance::Man_Die_Arrow_FallForward_RH_04:
+                case Stance::Man_Die_Arrow_FallBackward_LH_04:
+                case Stance::Man_Die_Arrow_FallBackward_RH_04:
+                case Stance::Man_Die_Fall_LH_04:
+                case Stance::Man_Die_Fall_RH_04:
+                case Stance::Man_Die_Water_LH_07:
+                case Stance::Man_Die_Water_RH_07:
+                case Stance::Man_Die_Water_LH_02_07:
+                case Stance::Man_Die_Water_RH_02_07:
+                case Stance::Man_Die_BWD_LH_04:
+                case Stance::Man_Die_BWD_RH_04:
+                case Stance::Man_Die_FWD_LH_04:
+                case Stance::Man_Die_FWD_RH_04:
+
+                    player.setHealth(0);
+                    world.setGameState(GameState::Play_Dead);
+                    endOfLevel_Counter = 0;
 
                     break;
 
@@ -2194,25 +2244,21 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     switch (world.getGameState()) {
 
-        case GameState::PlayGame:
-        case GameState::Inventory_Open:
-        case GameState::Inventory_Open_Exit_0:
-        case GameState::Inventory_Open_Exit_1:
-        case GameState::Inventory_Open_Reset_0:
-        case GameState::Inventory_Open_Reset_1:
-        case GameState::Inventory_Open_Reset_Exit_0:
-        case GameState::Inventory_Open_Reset_Exit_1:
-            break;
-
         case GameState::Chakana_Open:
 
             SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (endOfLevel_Counter * 3) + currentPlane);
 
-            if (endOfLevel_Counter == 14) {
+            if (endOfLevel_Counter == 13) {
                 SpritesU::drawOverwriteFX(63, 37, Images::Numbers_6x4_2D_BW, (titleCounter * 3) + currentPlane);
             }
 
             break;
+
+        case GameState::Play_Dead:
+            SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLife, ((endOfLevel_Counter + (player.getLives() == 1 ? 16 : 0)) * 3) + currentPlane);
+            break;
+
+        default:    break;
 
     }
 

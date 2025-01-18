@@ -565,4 +565,3 @@ namespace Constants {
 };
 
 
-uint8_t mapData[Constants::Map_Y_Count][Constants::Map_X_Count];

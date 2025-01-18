@@ -59,6 +59,7 @@ void setup() {
     
     FX::begin(FX_DATA_PAGE, FX_SAVE_PAGE);
     FX::loadGameState((uint8_t*)&cookie, sizeof(cookie));
+    world.setGameState(GameState::SplashScreen_Start);
 
     #ifndef DEBUG_SOUND
     audioInit();
@@ -73,7 +74,7 @@ void loop() {
 
     switch (world.getGameState()) {
 
-        case GameState::PlayGame:
+        case GameState::Play_Game:
         case GameState::Inventory_Open:
         case GameState::Inventory_Open_Exit_0:
         case GameState::Inventory_Open_Exit_1:
@@ -127,11 +128,12 @@ void loop() {
             play(a);
             break;
 
-        case GameState::PlayGame_Init:
+        case GameState::Play_Game_Init:
             playGame_Init();
             [[fallthrough]];
 
-        case GameState::PlayGame:
+        case GameState::Play_Game:
+        case GameState::Play_Dead:
         case GameState::Inventory_Open:
         case GameState::Inventory_Open_More_Reset:
         case GameState::Inventory_Open_More_Exit:

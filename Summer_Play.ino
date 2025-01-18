@@ -21,14 +21,14 @@ void play_Update() {
         img++;
 
         if (img == 91 ) {
-            world.setGameState(GameState::PlayGame_Init);
+            world.setGameState(GameState::Play_Game_Init);
         }
 
     }
 
     if (justPressed & A_BUTTON) {
 
-        world.setGameState(GameState::PlayGame_Init);
+        world.setGameState(GameState::Play_Game_Init);
 
     }
     

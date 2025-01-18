@@ -225,7 +225,7 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         item.setCounter(0);
         item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
         item.setY(player.getY() - 1);   
-        removeInventoryItem(GameState::PlayGame);
+        removeInventoryItem(GameState::Play_Game);
 
     }
 
@@ -238,27 +238,27 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         item.setCounter(0);
         item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
         item.setY(player.getY() - 1);     
-        removeInventoryItem(GameState::PlayGame);
+        removeInventoryItem(GameState::Play_Game);
 
     }
 
     else if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
 
         player.pushSequence(Stance::Man_Hammering_RH_00 + stanceOffset, Stance::Man_Hammering_RH_10 + stanceOffset);
-        removeWorldandInventoryItem(ItemType::WoodenBarrier, GameState::PlayGame);
+        removeWorldandInventoryItem(ItemType::WoodenBarrier, GameState::Play_Game);
 
     }
 
     else if (world.isMysteryCrate(tile) && selectedItem == ItemType::PinchBar) {
 
         player.pushSequence(Stance::Man_Levering_RH_00 + stanceOffset, Stance::Man_Levering_RH_10 + stanceOffset);
-        removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::PlayGame);
+        removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::Play_Game);
 
     }
 
     else if (world.isLockedDoor(tile) && selectedItem == ItemType::Key1) {
 
-        removeWorldandInventoryItem(ItemType::LockedDoor, GameState::PlayGame);
+        removeWorldandInventoryItem(ItemType::LockedDoor, GameState::Play_Game);
 
     }
 
@@ -337,7 +337,7 @@ void playGame_HandleMenu() {
 
         world.setGameState(GameState::Inventory_Open);
         menu.setDirection(Direction::Right);
-        menu.setGameState(GameState::PlayGame);
+        menu.setGameState(GameState::Play_Game);
 
     }
     
