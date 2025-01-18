@@ -44,7 +44,7 @@ void title_Update() {
 
             if (justPressed & A_BUTTON) {
                 
-                world.getPlayer().init();
+                //world.getPlayer().init();
                 cookie.hasSavedGame = false;
                 saveCookie(true);
                 // prevGameState = GameState::Title_OptPlay;
