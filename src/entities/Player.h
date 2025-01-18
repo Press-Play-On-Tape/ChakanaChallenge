@@ -12,16 +12,14 @@ class Player {
         Stance stance = Stance::Man_Walk_BK_01;
         InventoryItem items[Constants::ItemCount];
 
-        uint8_t xSeq = 0;
-        uint8_t ySeq = 0;
-        uint8_t falling = 0;
         int8_t y = 37;
         uint8_t falls = 0;
         uint8_t itemCount = 0;
         uint8_t health = Constants::HealthMax;
-        uint8_t enemyIdx = 255;
+        uint8_t enemyIdx = Constants::NoEnemy;
         uint8_t swordWound = 0;
-        uint8_t chakanas = 200;
+        uint8_t chakanas = 0;
+        uint8_t lives = 3;
 		
         Stance fromStance = Stance::None;
         Stance toStance = Stance::None;
@@ -33,9 +31,6 @@ class Player {
         Stance getStance()                                  { return this->stance; }
         InventoryItem &getItem(uint8_t idx)                 { return this->items[idx]; }
 
-        uint8_t getXSeq()                                   { return this->xSeq; }
-        uint8_t getYSeq()                                   { return this->ySeq; }
-        uint8_t getFalling()                                { return this->falling; }
         int8_t getY()                                       { return this->y; }
         uint8_t getFalls()                                  { return this->falls; }
         uint8_t getLevel()                                  { return (37 - y) / 8; }
@@ -44,13 +39,10 @@ class Player {
         uint8_t getEnemyIdx()                               { return this->enemyIdx; }
         uint8_t getSwordWound()                             { return this->swordWound; }
         uint8_t getChakanas()                               { return this->chakanas; }
+        uint8_t getLives()                                  { return this->lives; }
 
         void setStance(Stance val)                          { this->stance = val; }
 
-        void setXSeq(uint8_t val)                           { this->xSeq = val; }
-        void setYSeq(uint8_t val)                           { this->ySeq = val; }
-        void setFalling(uint8_t val)                        { this->falling = val; }
-        void incFalling()                                   { this->falling++; }
         void setY(int8_t val)                               { this->y = val; }
         void setFalls(uint8_t val)                          { this->falls = val; }
         void setItemCount(uint8_t val)                      { this->itemCount = val; }
@@ -58,14 +50,20 @@ class Player {
         void setEnemyIdx(uint8_t val)                       { this->enemyIdx = val; }
         void setSwordWound(uint8_t val)                     { this->swordWound = val; }
         void setChakanas(uint8_t val)                       { this->chakanas = val; }
+        void setLives(uint8_t val)                          { this->lives = val; }
 
         void incY(int8_t val)                               { this->y = this->y + val; }
         void incFalls()                                     { this->falls++; }
 
         void init() {
 
-            this->health = 14;
+            this->lives = 3;
             this->chakanas = 100;
+            this->falls = 0;
+            this->itemCount = 0;
+            this->health = Constants::HealthMax;
+            this->enemyIdx = Constants::NoEnemy;
+            this->swordWound = 0;
 
         }
 

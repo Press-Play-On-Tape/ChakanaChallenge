@@ -145,11 +145,12 @@ convert_header(IMAGES + 'Enemy.png',                                            
 convert_header(IMAGES + 'Player_Bounce.png',                                                     BASE + 'Images.hpp', 'Player_Bounce', 4, 16, 24)
 convert_header(IMAGES + 'Waves.png',                                                            BASE + 'Images.hpp', 'Waves', 4, 128, 8)
 convert_header(IMAGES + 'Pulse.png',                                                            BASE + 'Images.hpp', 'Pulse', 4, 32, 32)
-convert_header(IMAGES + 'Beach.png',                                                            BASE + 'Images.hpp', 'Beach', 4)
+convert_header(IMAGES + 'Beach.png',                                                            BASE + 'Images.hpp', 'Beach', 4, 4, 8)
 convert_header(IMAGES + 'Beach_LH.png',                                                            BASE + 'Images.hpp', 'Beach_LH', 4, 50, 32)
 convert_header(IMAGES + 'Boat.png',                                                            BASE + 'Images.hpp', 'Boat', 4)
 convert_header(IMAGES + 'Boat_Small.png',                                                            BASE + 'Images.hpp', 'Boat_Small', 4, 10, 16)
 convert_header(IMAGES + 'Arrow.png',                                                            BASE + 'Images.hpp', 'Arrow', 4, 11, 8)
+convert_header(IMAGES + 'Hearts.png',                                                            BASE + 'Images.hpp', 'Hearts', 4, 17, 8)
 
 convert_header(IMAGES + 'InventoryPanel.png',                                                            BASE + 'Images.hpp', 'InventoryPanel', 4, 32, 64)
 convert_header(IMAGES + 'InventoryPanel_Cursor.png',                                                            BASE + 'Images.hpp', 'InventoryPanel_Cursor', 4)

@@ -408,7 +408,7 @@ void renderWorld(uint8_t currentPlane) {
 
         uint8_t enemyIdx = player.getEnemyIdx();
 
-        if (enemyIdx != 255) {
+        if (enemyIdx != Constants::NoEnemy) {
 
             Enemy &enemy = world.getEnemy(enemyIdx);
 

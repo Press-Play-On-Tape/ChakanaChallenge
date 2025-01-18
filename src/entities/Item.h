@@ -29,10 +29,7 @@ class Item {
         void setX(int16_t val)                          { this->x = val; }
         void setY(int8_t val)                           { this->y = val; }
         void setFrame(uint8_t val)                      { this->frame = val; }
-        void setData(int16_t val)                       { 
-            // Serial.print("Data ");
-            // Serial.println(val); 
-            this->data = val; }
+        void setData(int16_t val)                       { this->data = val; }
         void setCounter(uint16_t val)                   { this->counter = val; }
 
         ItemAction update() {
