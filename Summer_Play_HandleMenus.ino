@@ -20,11 +20,11 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                 switch  (menu.getY()) {
 
                     case 0:
-                        world.setGameState(GameState::Inventory_Open_Reset_0);
+                        world.setGameState(GameState::Inventory_Open_More_Reset);
                         break;
 
                     case 1:
-                        world.setGameState(GameState::Inventory_Open_Exit_0);
+                        playGame_HandleMenu();
                         break;
                         
                     default:
@@ -47,6 +47,14 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
                 }
 
+                break;
+
+            case GameState::Inventory_Open_More_Reset:     
+                world.setGameState(GameState::Inventory_Open_Reset_0);
+                break;
+
+            case GameState::Inventory_Open_More_Exit:     
+                world.setGameState(GameState::Inventory_Open_Exit_0);
                 break;
 
             case GameState::Inventory_Open_Exit_0:
@@ -113,6 +121,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Exit_1:
             case GameState::Inventory_Open_Reset_1:
             case GameState::Inventory_Open_Reset_Exit_1:
+            case GameState::Inventory_Open_More_Exit:  
                 world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) - 1));
                 break;
 
@@ -180,6 +189,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Exit_0:
             case GameState::Inventory_Open_Reset_0:
             case GameState::Inventory_Open_Reset_Exit_0:
+            case GameState::Inventory_Open_More_Reset:  
                 world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) + 1));
                 break;
 

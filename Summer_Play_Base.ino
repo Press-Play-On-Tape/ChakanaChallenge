@@ -1374,7 +1374,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 
                 case GameState::Inventory_Open:
 
-                    if (justPressed & B_BUTTON || pressed & B_BUTTON) {
+                    if (justPressed & B_BUTTON) {
                         playGame_HandleMenu();
                     }
                     else {
@@ -1383,6 +1383,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     break;
                 
+                case GameState::Inventory_Open_More_Reset:
+                case GameState::Inventory_Open_More_Exit:
                 case GameState::Inventory_Open_Exit_0:
                 case GameState::Inventory_Open_Exit_1:
                 case GameState::Inventory_Open_Reset_0:
@@ -1392,6 +1394,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     if (justPressed & B_BUTTON) {
                         world.setGameState(GameState::Inventory_Open);
+                        // a.pollButtons();
                     }
                     else {
                         playGame_HandleMenu(player, pressed, justPressed);

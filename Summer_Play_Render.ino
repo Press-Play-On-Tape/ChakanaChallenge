@@ -582,7 +582,7 @@ void renderWorld(uint8_t currentPlane) {
 
     if (menu.getX() != 128) {
 
-        uint8_t frame = 0;
+        uint8_t frame = 3;
 
         switch (world.getGameState()) {
 
@@ -608,15 +608,8 @@ void renderWorld(uint8_t currentPlane) {
                     frame = 2;
 
                 }
-                else {
-
-                    frame = 3;
-
-                }
 
                 SpritesU::drawPlusMaskFX(menu.getX(), 0,  Images::InventoryPanel, (frame * 3) + currentPlane);
-                SpritesU::drawPlusMaskFX(0, (128 - menu.getX() - 32) / 3,  Images::HUD_BW, (player.getHealth() * 3) + currentPlane);
-                SpritesU::drawOverwriteFX(8, ((128 - menu.getX() - 32) / 3),  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
 
 
                 if (menu.getTop() == 0) {
@@ -629,14 +622,7 @@ void renderWorld(uint8_t currentPlane) {
 
                                 if (world.getFrameCount() % 64 < 32) {
 
-                                    if (menu.getY() == 0) {
-                                        SpritesU::drawPlusMaskFX(menu.getX() + 8, 1, Images::InventoryPanel_Cursor, currentPlane);
-
-                                    }
-                                    else {
-                                        SpritesU::drawPlusMaskFX(menu.getX() + 8, 9, Images::InventoryPanel_Cursor, currentPlane);
-
-                                    }
+                                    SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (menu.getY() * 8), Images::InventoryPanel_Cursor, currentPlane);
 
                                 }
 
@@ -647,16 +633,10 @@ void renderWorld(uint8_t currentPlane) {
 
                             InventoryItem &item = player.getItem(i - 2);
                             if (item.getItemType() == ItemType::None)   break;
-
-                            // uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
-                            // uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
-                            // SpritesU::drawPlusMaskFX(menu.getX() + 13, -12 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
                             renderItem(item.getItemType(), menu.getX() + 13, -12 + ((i - menu.getTop()) * 18), currentPlane);
 
                             if (menu.getY() >= 2 && world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
-                                // SpritesU::drawPlusMaskFX(menu.getX() + 12, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
-                                // SpritesU::drawPlusMaskFX(menu.getX() + 27, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
                                 renderItemCursor(menu.getX() + 12, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), currentPlane);
 
                             }
@@ -673,22 +653,31 @@ void renderWorld(uint8_t currentPlane) {
                         InventoryItem &item = player.getItem(i - 2);
                         if (item.getItemType() == ItemType::None)   break;
 
-                        // uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
-                        // uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(item.getItemType()));
-                        // SpritesU::drawPlusMaskFX(menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), imageIdx, imgFrame + currentPlane);
-
                         renderItem(item.getItemType(), menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), currentPlane);
 
                     }
 
                     if (world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
-                        // SpritesU::drawPlusMaskFX(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_00, currentPlane);
-                        // SpritesU::drawPlusMaskFX(menu.getX() + 27, 5 + ((menu.getY() - menu.getTop()) * 18), Images::Cursor_01, currentPlane);
                         renderItemCursor(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), currentPlane);
 
                     }
                 }
+                break;
+
+            case GameState::Inventory_Open_More_Reset:
+            case GameState::Inventory_Open_More_Exit:
+
+                SpritesU::drawPlusMaskFX(menu.getX(), 0,  Images::InventoryPanel, ((7 + player.getHealth()) * 3) + currentPlane);
+                SpritesU::drawOverwriteFX(menu.getX() + 14, 32, Images::Numbers_5x3_3D_BW, (player.getChakanas() * 3) + currentPlane);
+                SpritesU::drawOverwriteFX(menu.getX() + 11, 47,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
+
+                if (world.getFrameCount() % 64 < 32) {
+
+                    SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8), Images::InventoryPanel_Cursor, currentPlane);
+
+                }
+
                 break;
 
             default:

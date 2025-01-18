@@ -133,6 +133,8 @@ void loop() {
 
         case GameState::PlayGame:
         case GameState::Inventory_Open:
+        case GameState::Inventory_Open_More_Reset:
+        case GameState::Inventory_Open_More_Exit:
         case GameState::Inventory_Open_Exit_0:
         case GameState::Inventory_Open_Exit_1:
         case GameState::Inventory_Open_Reset_0:

@@ -1436,6 +1436,8 @@ enum class GameState : uint8_t {
     PlayGame_Start,
         PlayGame,
         Inventory_Open,
+        Inventory_Open_More_Reset,
+        Inventory_Open_More_Exit,
         Inventory_Open_Reset_0,
         Inventory_Open_Reset_1,
         Inventory_Open_Reset_Exit_0,

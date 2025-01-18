@@ -116,8 +116,6 @@ convert_header(IMAGES + 'Numbers/Numbers_5x3_3D_BW.png',                        
 convert_header(IMAGES + 'Numbers/Numbers_6x4_3D_BW.png',                                                BASE + 'Images.hpp', 'Numbers_6x4_3D_BW', 4, 16, 8, maskImage=False)
 convert_header(IMAGES + 'Numbers/Numbers_6x4_2D_BW.png',                                                BASE + 'Images.hpp', 'Numbers_6x4_2D_BW', 4, 9, 8, maskImage=False)
 convert_header(IMAGES + 'Numbers/Numbers_6x4_3D_WB.png',                                                BASE + 'Images.hpp', 'Numbers_6x4_3D_WB', 4, 16, 8, maskImage=False)
-convert_header(IMAGES + 'HUD_BW.png',                                                                   BASE + 'Images.hpp', 'HUD_BW', 4, 73, 16)
-convert_header(IMAGES + 'HUD_WB.png',                                                                   BASE + 'Images.hpp', 'HUD_WB', 4, 66, 16)
 
 convert_header(IMAGES + 'Titles/PPOT.png',                                                              BASE + 'Images.hpp', 'PPOT', 4, 128, 64)
 convert_header(IMAGES + 'Titles/Sound_Volume_Grey.png',                                                 BASE + 'Images.hpp', 'Sound_Volume_Grey', 4, 22, 16)
