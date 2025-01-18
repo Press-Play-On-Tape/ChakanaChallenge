@@ -138,7 +138,7 @@ void playGame_Init() {
 
 void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    #ifndef DEBUG
+    // #ifndef DEBUG
 
     player.stageSequence(Stance::None, Stance::None);
     
@@ -1054,7 +1054,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
-    #endif
+    // #endif
 }
 
 void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
@@ -1417,6 +1417,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case GameState::Chakana_Open:
 
                     if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+                        player.setChakanas(player.getChakanas() + titleCounter);
                         world.setGameState(GameState::Map_Init);
                         world.setPortVisited(world.getCurrentPort());
                     }
@@ -1533,6 +1534,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             world.setGameState(GameState::Chakana_Open);
                             endOfLevel_Counter = 0;
+                            titleCounter = a.randomLFSR(15, 30);
                             
                         }
                         break;
@@ -2200,7 +2202,13 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             break;
 
         case GameState::Chakana_Open:
+
             SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (endOfLevel_Counter * 3) + currentPlane);
+
+            if (endOfLevel_Counter == 14) {
+                SpritesU::drawOverwriteFX(63, 37, Images::Numbers_6x4_2D_BW, (titleCounter * 3) + currentPlane);
+            }
+
             break;
 
     }

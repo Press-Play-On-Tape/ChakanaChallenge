@@ -383,7 +383,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 if (frame <= 3) {
 
                     if (frame < 2) {
-                        SpritesU::drawOverwriteFX(12 + (leftDialogue ? 0 : 73), 23, Images::PortNames, (world.getNextPort() * 3) + currentPlane);
+                        SpritesU::drawOverwriteFX(12 + (leftDialogue ? 0 : 73), 24, Images::PortNames, (world.getNextPort() * 3) + currentPlane);
                     }
 
                     renderNumber(numberToShow, x, y, currentPlane);
