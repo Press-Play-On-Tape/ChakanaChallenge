@@ -577,7 +577,7 @@ struct World {
                 
             }
 
-            if (tile == Tiles::WoddenBarrier) { 
+            if (tile == Tiles::WoodenBarrier) { 
 
                 for (uint8_t i = 0; i < Constants::ItemCount; i++) {
                     
@@ -837,7 +837,7 @@ struct World {
 
         bool isWoodenBarrier(uint8_t tile) {
 
-            return tile == Tiles::WoddenBarrier;
+            return tile == Tiles::WoodenBarrier;
             
         }
 

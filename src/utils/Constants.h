@@ -473,7 +473,7 @@ enum Tiles : uint8_t {
     No image, place ItemType::WoodenBarrier in same location.
 
     */
-   WoddenBarrier = 24,
+   WoodenBarrier = 24,
 
 
     /* Water
@@ -538,6 +538,14 @@ enum Tiles : uint8_t {
 
     */
    Rollers_Left = 28,
+
+    /* Poker
+  
+    41, 41,
+    41, 41,
+
+    */
+   Poker = 41,
 
 
 };
