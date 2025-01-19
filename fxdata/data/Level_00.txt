@@ -33,20 +33,27 @@ uint16_t Level_00_Items[] = {
 0,                             // Counter
 
 41,                             // ItemType::Chakana
-192,                             // Position X
+256,                             // Position X
 0,                             // Position Y
 9,                             // Frame
 0,                             // Data
 0,                             // Counter
 
 20,                             // ItemType::Flame
-112,                             // Position X
+32,                             // Position X
 0,                             // Position Y
 0,                             // Frame
 0,                             // Data
 0,                             // Counter
 
-61,                             // ItemType::Puff
+61,                             // ItemType::Poker
+192,                             // Position X
+0,                             // Position Y
+0,                             // Frame
+0,                             // Data
+0,                             // Counter
+
+63,                             // ItemType::Puff
 0,                             // Position X
 0,                             // Position Y
 255,                             // Frame

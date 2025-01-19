@@ -195,6 +195,7 @@ convert_header(IMAGES + 'Items/Item_21.png',                                    
 convert_header(IMAGES + 'Items/Item_21_Action_LH.png',                                                  BASE + 'Images.hpp', 'Item_21_Action_LH', 4, 38, 32, maskImage=True)
 convert_header(IMAGES + 'Items/Item_21_Action_RH.png',                                                  BASE + 'Images.hpp', 'Item_21_Action_RH', 4, 38, 32, maskImage=True)
 convert_header(IMAGES + 'Items/Item_22.png',                                                            BASE + 'Images.hpp', 'Item_22', 4, 16, 16, maskImage=True)
+convert_header(IMAGES + 'Items/Item_23.png',                                                            BASE + 'Images.hpp', 'Item_23', 4, 16, 16, maskImage=True)
 
 convert_header(IMAGES + 'Crates/Crate_00.png',                                                          BASE + 'Images.hpp', 'Crate_00', 4, maskImage=True)
 convert_header(IMAGES + 'Crates/Crate_01.png',                                                          BASE + 'Images.hpp', 'Crate_01', 4, maskImage=True)

@@ -36,6 +36,15 @@ class Item {
 
             switch (this->getItemType()) {
 
+                case ItemType::Poker:
+
+                    this->counter++;
+                    if (this->counter == (8 * 12))   this->counter = 0;
+
+                    this->frame = this->counter / 12;
+
+                    break;
+
                 case ItemType::Key1:
                 case ItemType::PinchBar:
                 case ItemType::Potion:

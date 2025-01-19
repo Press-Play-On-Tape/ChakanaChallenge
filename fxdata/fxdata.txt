@@ -255,7 +255,9 @@ namespace Images
         Item_21_Action_LH,      // LifeSaver_Dissolve_InWater_LH,
         Item_21_Action_RH,      // LifeSaver_Dissolve_InWater_RH,
         Item_22,                // Chakana_Small,
-        0,                      // hakana_Small_Hidden,
+        0,                      // Chakana_Small_Hidden,
+        Item_23,                // Poker,
+        0,                      // Poker_Hidden,
         Item_00,                // Puff,
         Item_00,                // None,
     };
@@ -321,7 +323,9 @@ namespace Images
         0,                // LifeSaver_Dissolve_InWater_LH,
         0,                // LifeSaver_Dissolve_InWater_RH,
         0,                // Chakana_Small,
-        0,               // hakana_Small_Hidden,
+        0,                // Chakana_Small_Hidden,
+        0,                // Poker,
+        0,                // Poker_Hidden,
         0,                // Puff,
         0,                // None,
     };

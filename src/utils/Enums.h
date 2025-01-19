@@ -117,6 +117,8 @@ enum class ItemType : uint8_t {
     LifeSaver_Dissolve_InWater_RH,
     Chakana_Small,
     Chakana_Small_Hidden,
+    Poker,
+    Poker_Hidden,
     Puff,
     None,
 };
