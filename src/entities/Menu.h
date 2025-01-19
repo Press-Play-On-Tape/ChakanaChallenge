@@ -30,6 +30,11 @@ class Menu {
         void setDirection(Direction val)                { this->direction = val; }
         void setGameState(GameState val)                { this->gameState = val; }
 
+        void incX()                                     { this->x = this->x + 2; }
+        void decX()                                     { if (this->x >= 2) this->x = this->x - 2; }
+        void incY()                                     { this->y++; }
+        void decY()                                     { if (this->y > 0) this->y--; }
+
         void reset() {
 
             x = 128;

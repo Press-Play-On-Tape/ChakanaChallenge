@@ -24,8 +24,7 @@ void playGame_Init() {
 
         for (uint8_t y = 0; y < Constants::Map_Y_Count; y++) {
                 
-            FX::seekDataArray(levelStart, y, 0, Constants::Map_X_Count_Full);
-            
+            FX::seekDataArray(levelStart, y, 0, Constants::Map_X_Count_Full);            
             FX::readObject(world.mapData[Constants::Map_Y_Count - y - 1]);
             FX::readEnd();
 
@@ -2063,7 +2062,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 world.setGameState(GameState::Play_Game);
 
                                 player.removeInventoryItem(menu.getY());
-                                if (menu.getY() > 0) menu.setY(menu.getY() - 1);
+                                menu.decY();
                                 enemy.clear();
 
                                 // player puts away sword ..

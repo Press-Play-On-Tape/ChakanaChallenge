@@ -121,10 +121,10 @@ void loop() {
             play_Init();
             [[fallthrough]];
 
-        case GameState::Play:
         case GameState::Play_BoatEnters:
         case GameState::Play_PlayerJumps:
         case GameState::Play_PlayerCenters:
+        case GameState::Play:
             play(a);
             break;
 
@@ -132,19 +132,19 @@ void loop() {
             playGame_Init();
             [[fallthrough]];
 
-        case GameState::Play_Game:
+        case GameState::Play_Battle:
         case GameState::Play_Dead:
+        case GameState::Play_Game:
         case GameState::Inventory_Open:
         case GameState::Inventory_Open_More_Reset:
         case GameState::Inventory_Open_More_Exit:
-        case GameState::Inventory_Open_Exit_0:
-        case GameState::Inventory_Open_Exit_1:
         case GameState::Inventory_Open_Reset_0:
         case GameState::Inventory_Open_Reset_1:
         case GameState::Inventory_Open_Reset_Exit_0:
         case GameState::Inventory_Open_Reset_Exit_1:
+        case GameState::Inventory_Open_Exit_0:
+        case GameState::Inventory_Open_Exit_1:
         case GameState::Chakana_Open:
-        case GameState::Play_Battle:
             playGame(a);
             break;
 

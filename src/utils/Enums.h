@@ -2,6 +2,15 @@
 
 #include <Arduboy2.h>
 
+struct BoatMovement {
+
+    int8_t x;
+    int8_t y;        
+    uint8_t direction;
+};
+
+
+
 enum class MusicSong : uint8_t {
     MainTheme
 };

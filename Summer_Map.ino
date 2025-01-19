@@ -190,7 +190,7 @@ void map_Update() {
                     world.setFrameCount(0);
 
                 }
-                else if (player.getChakanas() >= world.getNextPortCost() && world.getCurrentPort() != world.getNextPort()) {
+                else if (player.getChakanas() >= world.getNextPortCost()) {
 
                     world.setGameState(GameState::Map_MoveBoat);
                     world.setFrameCount(0);
@@ -290,12 +290,11 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     for (uint8_t i = 0; i < 3; i++) {
 
-        SpritesU::drawOverwriteFX(xLeft, yTop + (i * 64), Images::Map, ((xInt + ((yInt + i) * 3)) * 3) + currentPlane);    
+        SpritesU::drawOverwriteFX(xLeft,       yTop + (i * 64), Images::Map, (((xInt + 0) + ((yInt + i) * 3)) * 3) + currentPlane);    
         SpritesU::drawOverwriteFX(xLeft + 128, yTop + (i * 64), Images::Map, (((xInt + 1) + ((yInt + i) * 3)) * 3) + currentPlane);    
         SpritesU::drawOverwriteFX(xLeft + 256, yTop + (i * 64), Images::Map, (((xInt + 2) + ((yInt + i) * 3)) * 3) + currentPlane);    
 
     }
-
 
     for (uint8_t i = 0; i < 14; i++) {
 
@@ -405,11 +404,17 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 void renderNumber(uint8_t numberToShow, uint8_t x, uint8_t y, uint8_t currentPlane) {
 
+    uint24_t font = Images::Numbers_5x3_2D_BW;
+
     if (numberToShow < 100) {
-        SpritesU::drawOverwriteFX(x + 2 + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
+        x = x + 2;
+        // SpritesU::drawOverwriteFX(x + 2 + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
     }
     else {
-        SpritesU::drawOverwriteFX(x + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
+        font = Images::Numbers_5x3_3D_BW;
+        // SpritesU::drawOverwriteFX(x + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
     }
+
+    SpritesU::drawOverwriteFX(x + (leftDialogue ? 0 : 73), y, font, (numberToShow * 3) + currentPlane);
 
 }

@@ -69,9 +69,6 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                 world.setGameState(GameState::Inventory_Open);
                 break;
 
-            case GameState::Inventory_Open_Reset_1:
-                break;
-
             case GameState::Inventory_Open_Reset_Exit_0:
                 world.setGameState(GameState::Inventory_Open);
                 break;
@@ -79,6 +76,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Reset_Exit_1:
                 world.setGameState(GameState::Title_Init);
                 break;
+
+            default: break;
 
         }
 
@@ -91,22 +90,20 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                         
                 if (menu.getTop() == 0) {
 
-                    if (menu.getY() > 0) {
-                        menu.setY(menu.getY() - 1);
-                    }
+                    menu.decY();
 
                 }
                 else  if (menu.getTop() >= 2) {
 
                     if (menu.getY() - 1 == player.getItemCount()) {
 
-                        menu.setY(menu.getY() - 1);
+                        menu.decY();
 
                     }
                     else {
 
                         menu.setTop(menu.getTop() - 1);
-                        menu.setY(menu.getY() - 1);
+                        menu.decY();
 
                         if (menu.getY() == 2) {
                             menu.setTop(0);
@@ -139,26 +136,26 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
                 // Showing top 2 items and top row is selected, move down ..
                 else if (menu.getTop() == 0 && menu.getY() == 0 && menu.getY() < player.getItemCount() + 2) {
-                    menu.setY(menu.getY() + 1);
+                    menu.incY();
                 }
 
                 // Showing all 2 items ..
                 else if (menu.getTop() == 0 && menu.getY() < player.getItemCount() - 1 && player.getItemCount() == 2) {
-                    menu.setY(menu.getY() + 1);
+                    menu.incY();
                 }
 
                 // Showing top 2 items and top row is selected, move down ..
                 else if (menu.getY() == 0) {
-                    menu.setY(menu.getY() + 1);
+                    menu.incY();
                 }
                 // Showing top 2 items and top row is selected, move down ..
                 else if (menu.getY() == 1 && player.getItemCount() > 1) {
-                    menu.setY(menu.getY() + 1);
+                    menu.incY();
                 }
 
                 // Showing bottom 3 items and bottom 
                 else if (menu.getTop() == player.getItemCount() - 1) {
-                    menu.setY(menu.getY() + 1);
+                    menu.incY();
                 }
 
                 // Otherwise scroll top and selected down ..
@@ -179,7 +176,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                     else {
 
                         menu.setTop(menu.getTop() + 1);
-                        menu.setY(menu.getY() + 1);
+                        menu.incY();
+                        
                     }
 
                 }
@@ -293,7 +291,7 @@ void playGame_HandleMenu_OpenClose() {
         case Direction::Left:
 
             if (menu.getX() > 128 - 32) {
-                menu.setX(menu.getX() - 2);
+                menu.decX();
             }
             else {
                 menu.setDirection(Direction::None);
@@ -305,7 +303,7 @@ void playGame_HandleMenu_OpenClose() {
         case Direction::Right:
 
             if (menu.getX() < 128) {
-                menu.setX(menu.getX() + 2);
+                menu.incX();
             }
             else {
                 menu.setDirection(Direction::None);

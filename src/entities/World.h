@@ -148,9 +148,7 @@ struct World {
 
                 if (this->getCurrentPort() < 255 && this->getNextPort() < 255 && this->getCurrentPort() < this->getNextPort()) offset = 1;
 
-                FX::seekDataArray(Constants::BoatCoords, (this->getCurrentPort() * 2) + offset, 0, 3);
-                uint24_t boatCoords = FX::readPendingUInt24();
-                FX::readEnd();
+                uint24_t boatCoords = FX::readIndexedUInt24(Constants::BoatCoords, (this->getCurrentPort() * 2) + offset);
 
                 #ifdef DEBUG_BOATS
                 DEBUG_PRINT("UpdateBoat ");   
@@ -164,10 +162,9 @@ struct World {
                 DEBUG_PRINT(" ");
                 #endif
 
+                BoatMovement boatMovement;
                 FX::seekData(boatCoords + (this->boatCounter * 3));
-                int8_t x = FX::readPendingUInt8();
-                int8_t y = FX::readPendingUInt8();                
-                uint8_t direction = FX::readPendingUInt8();                
+                FX::readObject(boatMovement);          
                 FX::readEnd();
 
                 #ifdef DEBUG_BOATS
@@ -176,11 +173,11 @@ struct World {
                 DEBUG_PRINTLN(y);
                 #endif
 
-                this->boatDirection = static_cast<BoatDirection>(direction);
+                this->boatDirection = static_cast<BoatDirection>(boatMovement.direction);
 
-                if (x != 0 || y !=0) {
-                    this->xBoat = this->xBoat + x;
-                    this->yBoat = this->yBoat + y;
+                if (boatMovement.x != 0 || boatMovement.y !=0) {
+                    this->xBoat = this->xBoat + boatMovement.x;
+                    this->yBoat = this->yBoat + boatMovement.y;
                     this-boatCounter++;
                 }
                 // else {
