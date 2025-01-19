@@ -13,7 +13,7 @@ class Menu {
         uint8_t top = 0;
 
         Direction direction = Direction::None;
-        GameState gameState = GameState::Inventory_Open;//SJH Necessary?
+        GameState gameState = GameState::Inventory_Open;
 
 
     public:

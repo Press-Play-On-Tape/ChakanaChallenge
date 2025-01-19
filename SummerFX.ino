@@ -145,6 +145,7 @@ void loop() {
         case GameState::Inventory_Open_Exit_0:
         case GameState::Inventory_Open_Exit_1:
         case GameState::Chakana_Open:
+        case GameState::Play_Gamble_Start ... GameState::Play_Gamble_End:
             playGame(a);
             break;
 

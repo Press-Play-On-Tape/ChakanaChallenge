@@ -340,7 +340,7 @@ void renderWorld(uint8_t currentPlane) {
 
         }
 
-        if (imageIdx != 0){
+        if (imageIdx != 0) {
             
             SpritesU::drawPlusMaskFX(renderX, renderY, imageIdx, (frame * 3) + currentPlane);
 
@@ -415,15 +415,28 @@ void renderWorld(uint8_t currentPlane) {
         if (enemyIdx != Constants::NoEnemy) {
 
             Enemy &enemy = world.getEnemy(enemyIdx);
+            uint8_t frame = player.getSwordWound() / 3;
+            uint8_t y = yOffset - Constants::GroundY + player.getY() + 2;
 
+            // switch (enemy.getDirection()) {
+
+            //     case Direction::Left:
+            //         SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) + 4) * 3) + currentPlane);
+            //         break;
+
+            //     case Direction::Right:
+            //         SpritesU::drawPlusMaskFX(56 + 11, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) ) * 3) + currentPlane);
+            //         break;
+
+            // }
             switch (enemy.getDirection()) {
 
                 case Direction::Left:
-                    SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) + 4) * 3) + currentPlane);
+                    SpritesU::drawPlusMaskFX(56, y, Images::Sword_Wound, ((frame + 4) * 3) + currentPlane);
                     break;
 
                 case Direction::Right:
-                    SpritesU::drawPlusMaskFX(56 + 11, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) ) * 3) + currentPlane);
+                    SpritesU::drawPlusMaskFX(56 + 11, y, Images::Sword_Wound, (frame * 3) + currentPlane);
                     break;
 
             }
@@ -477,24 +490,23 @@ void renderWorld(uint8_t currentPlane) {
                 default:
                     {
                         uint8_t stanceImg = getStanceImg(enemy.getStance());
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
+                        uint8_t y = yOffset - enemy.getY();
 
-                        if (enemy.getItem().getItemType() == ItemType::Arrow_RH) {
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, y, Images::Enemy, (stanceImg * 3) + currentPlane);
 
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Arrow, currentPlane);
+                        y = yOffset - enemy.getItem().getY();
 
-                        }
-
-                        else if (enemy.getItem().getItemType() == ItemType::Arrow_LH) {
-
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Arrow, 3 + currentPlane);
+                        if (enemy.getItem().getItemType() == ItemType::Arrow_RH || enemy.getItem().getItemType() == ItemType::Arrow_LH) {
+                            
+                            uint8_t frame = (enemy.getItem().getItemType() == ItemType::Arrow_LH ? 3 : 0);
+                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, y, Images::Arrow, frame + currentPlane);
 
                         }
 
                         else if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
                                  (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
 
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
+                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, y, Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
 
                         }
                         
@@ -648,7 +660,8 @@ void renderWorld(uint8_t currentPlane) {
 
                             if (menu.getY() >= 2 && world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
-                                renderItemCursor(menu.getX() + 12, -18 + 5 + ((menu.getY() - menu.getTop()) * 18), currentPlane);
+                                uint8_t y = -13 + ((menu.getY() - menu.getTop()) * 18);
+                                renderItemCursor(menu.getX() + 12, y, currentPlane);
 
                             }
                             
@@ -664,13 +677,15 @@ void renderWorld(uint8_t currentPlane) {
                         InventoryItem &item = player.getItem(i - 2);
                         if (item.getItemType() == ItemType::None)   break;
 
-                        renderItem(item.getItemType(), menu.getX() + 13, 6 + ((i - menu.getTop()) * 18), currentPlane);
+                        uint8_t y = 6 + ((i - menu.getTop()) * 18);
+                        renderItem(item.getItemType(), menu.getX() + 13, y, currentPlane);
 
                     }
 
                     if (world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
-                        renderItemCursor(menu.getX() + 12, 5 + ((menu.getY() - menu.getTop()) * 18), currentPlane);
+                        uint8_t y = 5 + ((menu.getY() - menu.getTop()) * 18);
+                        renderItemCursor(menu.getX() + 12, y, currentPlane);
 
                     }
                 }
@@ -698,18 +713,28 @@ void renderWorld(uint8_t currentPlane) {
 
                 if (world.getFrameCount() % 64 < 32) {
 
-                    uint8_t y = 0;
+                    switch (world.getGameState()) {
 
-                    if (world.getGameState() == GameState::Inventory_Open_Reset_0)                 y = 19;
-                    else if (world.getGameState() == GameState::Inventory_Open_Reset_1)            y = 27;
-                    else if (world.getGameState() == GameState::Inventory_Open_Reset_Exit_0)       y = 39;
-                    else if (world.getGameState() == GameState::Inventory_Open_Reset_Exit_1)       y = 47;
-                    else if (world.getGameState() == GameState::Inventory_Open_Exit_0)             y = 19;
-                    else if (world.getGameState() == GameState::Inventory_Open_Exit_1)             y = 27;
+                        case GameState::Inventory_Open_Reset_0 ... GameState::Inventory_Open_Exit_1:
+                            {
+                                uint8_t y = FX::readIndexedUInt8(Constants::InventoryCursorY, static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Inventory_Open_Reset_0));
+                                SpritesU::drawPlusMaskFX(menu.getX() + 8, y, Images::InventoryPanel_Cursor, currentPlane);
 
-                    if (y > 0) {
-                        SpritesU::drawPlusMaskFX(menu.getX() + 8, y, Images::InventoryPanel_Cursor, currentPlane);
+                            }
+
+                            break;
                     }
+
+                    // if (world.getGameState() == GameState::Inventory_Open_Reset_0)                 y = 19;
+                    // else if (world.getGameState() == GameState::Inventory_Open_Reset_1)            y = 27;
+                    // else if (world.getGameState() == GameState::Inventory_Open_Reset_Exit_0)       y = 39;
+                    // else if (world.getGameState() == GameState::Inventory_Open_Reset_Exit_1)       y = 47;
+                    // else if (world.getGameState() == GameState::Inventory_Open_Exit_0)             y = 19;
+                    // else if (world.getGameState() == GameState::Inventory_Open_Exit_1)             y = 27;
+
+                    // if (y > 0) {
+                    //     SpritesU::drawPlusMaskFX(menu.getX() + 8, y, Images::InventoryPanel_Cursor, currentPlane);
+                    // }
 
                 }
                 
