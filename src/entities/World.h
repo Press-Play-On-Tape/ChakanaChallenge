@@ -523,6 +523,8 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile, Direction direction) {
             
+            if (tile == Tiles::Solid_Blocking) return false;
+
             if (tile == Tiles::Lever_Portal_LH && direction == Direction::Left) { 
 
                 return true;

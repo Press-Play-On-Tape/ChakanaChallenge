@@ -622,7 +622,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_LH_01, Stance::Man_DescendStairs_LH_04);
 
                         }                                    
-                        else if (world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0) {  
+                        else if (tile_L != Tiles::Solid_Blocking && (world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0)) {  
 
                             player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
 
@@ -907,7 +907,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_RH_01, Stance::Man_DescendStairs_RH_04);
 
                         }                                
-                        else if (world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0) {  
+                        else if (tile_R != Tiles::Solid_Blocking && (world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0)) {  
 
                             player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 

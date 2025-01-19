@@ -138,7 +138,7 @@ void renderWorld(uint8_t currentPlane) {
             else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_06;
 
 
-            else if (tile00 == 18 && tile01 == 18 && tile10 == 18 && tile11 == 18)     imgTile = Images::Crate_22;
+            else if (tile00 == Tiles::Solid_Blocking && tile01 == Tiles::Solid_Blocking && tile10 == Tiles::Solid_Blocking && tile11 == Tiles::Solid_Blocking)                                  imgTile = Images::Crate_22;
             else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                              imgTile = Images::Crate_07;
             else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                                 imgTile = Images::Crate_07;
            // else if (tile00 == 6 && tile01 == 5 && tile10 == Tiles::Blank && tile11 == Tiles::Blank)         imgTile = Images::Crate_11;
