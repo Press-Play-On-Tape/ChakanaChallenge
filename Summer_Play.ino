@@ -9,6 +9,7 @@
 void play_Init() { 
 
     titleCounter = 0;
+    world.setGameState(GameState::Play_BoatEnters);
 
 }
 
