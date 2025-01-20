@@ -2352,7 +2352,10 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         case GameState::Play_Gamble_Select_Spin:
             {
                 uint8_t frame = FX::readIndexedUInt8(Constants::GambleFrames, titleCounter);
-                titleCounter++;
+
+                if (currentPlane == 2) {
+                    titleCounter++;
+                }
 
                 if (frame != 255) {
                     SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((1 + frame) * 3) + currentPlane);

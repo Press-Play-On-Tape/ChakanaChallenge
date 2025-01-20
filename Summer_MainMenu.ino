@@ -23,10 +23,7 @@ void title_StartNewGame() {
     world.getPlayer().init();
     cookie.hasSavedGame = false;
     saveCookie(true);
-    // prevGameState = GameState::Title_OptPlay;
-    // world.setGameState(GameState::Play_Init);
     world.setGameState(GameState::Map_Init);
-    // world.setGameState(GameState::Play_Game_Init);
 
 }
 

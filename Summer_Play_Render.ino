@@ -429,17 +429,24 @@ void renderWorld(uint8_t currentPlane) {
             //         break;
 
             // }
+            uint8_t xOffset = 0;
+            uint8_t frameOffset = 0;
+            
             switch (enemy.getDirection()) {
 
                 case Direction::Left:
-                    SpritesU::drawPlusMaskFX(56, y, Images::Sword_Wound, ((frame + 4) * 3) + currentPlane);
+                    // SpritesU::drawPlusMaskFX(56, y, Images::Sword_Wound, ((frame + 4) * 3) + currentPlane);
+                    frameOffset = 4;
                     break;
 
                 case Direction::Right:
-                    SpritesU::drawPlusMaskFX(56 + 11, y, Images::Sword_Wound, (frame * 3) + currentPlane);
+                    // SpritesU::drawPlusMaskFX(56 + 11, y, Images::Sword_Wound, (frame * 3) + currentPlane);
+                    xOffset = 11;
                     break;
 
             }
+
+            SpritesU::drawPlusMaskFX(56 + xOffset, y, Images::Sword_Wound, ((frame + frameOffset) * 3) + currentPlane);
 
         }
 
@@ -451,6 +458,11 @@ void renderWorld(uint8_t currentPlane) {
 
         if (enemy.getX() > 0) {
 
+            int16_t xEnemy = enemy.getX() + world.getMiddleground() - 4;
+            int16_t xEnenmyItem = enemy.getItem().getX() + world.getMiddleground();
+            uint8_t yEnemy = yOffset - enemy.getY();
+            uint8_t yEnemyItem = yOffset - enemy.getItem().getY();
+
             switch (enemy.getStance()) {
 
                 case Stance::Enemy_Sword_Stationary_LH:
@@ -461,10 +473,10 @@ void renderWorld(uint8_t currentPlane) {
                     {
                         uint8_t stanceImg = getStanceImg(enemy.getStance());
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
-                        renderPlayerAndHealth(stanceImg, enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), enemy.getHealth(), currentPlane);
+                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
 
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            renderGlint(enemy.getItem().getX() + world.getMiddleground() - 4, yOffset - enemy.getItem().getY(), enemy.getItem().getFrame(), currentPlane);
+                            renderGlint(xEnenmyItem - 4, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
                     }
@@ -478,10 +490,10 @@ void renderWorld(uint8_t currentPlane) {
                     {
                         uint8_t stanceImg = getStanceImg(enemy.getStance());
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
-                        renderPlayerAndHealth(stanceImg, enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), enemy.getHealth(), currentPlane);
+                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            renderGlint(enemy.getItem().getX() + world.getMiddleground() + 15, yOffset - enemy.getItem().getY(), enemy.getItem().getFrame(), currentPlane);
+                            renderGlint(xEnenmyItem + 15, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
                     }
@@ -490,23 +502,19 @@ void renderWorld(uint8_t currentPlane) {
                 default:
                     {
                         uint8_t stanceImg = getStanceImg(enemy.getStance());
-                        uint8_t y = yOffset - enemy.getY();
-
-                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, y, Images::Enemy, (stanceImg * 3) + currentPlane);
-
-                        y = yOffset - enemy.getItem().getY();
+                        SpritesU::drawPlusMaskFX(xEnemy, yEnemy, Images::Enemy, (stanceImg * 3) + currentPlane);
 
                         if (enemy.getItem().getItemType() == ItemType::Arrow_RH || enemy.getItem().getItemType() == ItemType::Arrow_LH) {
                             
                             uint8_t frame = (enemy.getItem().getItemType() == ItemType::Arrow_LH ? 3 : 0);
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, y, Images::Arrow, frame + currentPlane);
+                            SpritesU::drawPlusMaskFX(xEnenmyItem - 4, yEnemyItem, Images::Arrow, frame + currentPlane);
 
                         }
 
                         else if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
                                  (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
 
-                            SpritesU::drawPlusMaskFX(enemy.getItem().getX() + world.getMiddleground() - 4, y, Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
+                            SpritesU::drawPlusMaskFX(xEnenmyItem - 4, yEnemyItem, Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
 
                         }
                         
@@ -520,26 +528,26 @@ void renderWorld(uint8_t currentPlane) {
 
             if (enemy.getSwordWound() != 0) {
 
-                int16_t x = enemy.getX() + world.getMiddleground();
-                uint8_t offset = 0;
+                int8_t xOffset = 0;
+                uint8_t frameOffset = 0;
 
                 switch (player.getDirection()) {
 
                     case Direction::Left:
                    
                         // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - enemy.getY() + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + 4) * 3) + currentPlane);
-                        x = x - 4;
-                        offset = 4;
+                        xOffset = -4;
+                        frameOffset = 4;
                         break;
 
                     case Direction::Right:
-                        x = x + 6;
+                        xOffset = 6;
                         // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() + 6, yOffset - enemy.getY()+ 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) ) * 3) + currentPlane);
                         break;
 
                 }
 
-                SpritesU::drawPlusMaskFX(x, yOffset - enemy.getY() + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + offset) * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(xEnenmyItem + xOffset, yEnemy + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + frameOffset) * 3) + currentPlane);
 
             }
 
