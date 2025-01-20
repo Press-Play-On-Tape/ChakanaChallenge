@@ -217,57 +217,16 @@ class Player {
         }
 
         bool push(Stance item) {
-
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F("Stack count "));
-            DEBUG_PRINTLN(this->stack.getCount());
-            #endif
-
             return this->stack.push(static_cast<uint16_t>(item));
         }
 
         void insertSequence(Stance fromStance, Stance toStance) {
 
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F("Seq "));
-            DEBUG_PRINT(toStance);
-            DEBUG_PRINT(F(" to "));
-            DEBUG_PRINT(fromStance);
-            DEBUG_PRINT(F(" - "));  
-            #endif
-            
-            if (fromStance < toStance) {
+            for (uint16_t x = toStance; x >= fromStance; x--) {
 
-                for (uint16_t x = toStance; x >= fromStance; x--) {
-
-                    #if defined(DEBUG) && defined(DEBUG_STACK)
-                    DEBUG_PRINT(x); 
-                    DEBUG_PRINT(" ");        
-                    #endif
-
-                    this->stack.insert(static_cast<uint16_t>(x));
-
-                }
+                this->stack.insert(static_cast<uint16_t>(x));
 
             }
-            else {
-
-                for (uint16_t x = toStance; x <= fromStance; x++) {
-
-                    #if defined(DEBUG) && defined(DEBUG_STACK)
-                    DEBUG_PRINT(x); 
-                    DEBUG_PRINT(" ");                         
-                    #endif
-
-                    this->stack.insert(static_cast<uint16_t>(-x));
-                }
-
-            }
-
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F(", count "));
-            DEBUG_PRINTLN(this->stack.getCount());
-            #endif
 
         }
 
@@ -312,46 +271,11 @@ class Player {
                 this->stack.clear();
             }
 
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F("Seq "));
-            DEBUG_PRINT(toStance);
-            DEBUG_PRINT(F(" to "));
-            DEBUG_PRINT(fromStance);
-            DEBUG_PRINT(F(" - "));  
-            #endif
-            
-            if (fromStance < toStance) {
+            for (uint16_t x = toStance; x >= fromStance; x--) {
 
-                for (uint16_t x = toStance; x >= fromStance; x--) {
-
-                    #if defined(DEBUG) && defined(DEBUG_STACK)
-                    DEBUG_PRINT(x); 
-                    DEBUG_PRINT(" ");        
-                    #endif
-
-                    this->stack.push(static_cast<uint16_t>(x));
-
-                }
+                this->stack.push(static_cast<uint16_t>(x));
 
             }
-            else {
-
-                for (uint16_t x = toStance; x <= fromStance; x++) {
-
-                    #if defined(DEBUG) && defined(DEBUG_STACK)
-                    DEBUG_PRINT(x); 
-                    DEBUG_PRINT(" ");                         
-                    #endif
-
-                    this->stack.push(static_cast<uint16_t>(-x));
-                }
-
-            }
-
-            #if defined(DEBUG) && defined(DEBUG_STACK)
-            DEBUG_PRINT(F(", count "));
-            DEBUG_PRINTLN(this->stack->getCount());
-            #endif
 
         }
 };

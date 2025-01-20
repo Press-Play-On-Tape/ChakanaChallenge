@@ -6,9 +6,11 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-uint8_t img = 0;
+void play_Init() { 
 
-void play_Init() { }
+    titleCounter = 0;
+
+}
 
 void play_Update() {
 
@@ -18,9 +20,9 @@ void play_Update() {
 
     if (world.getFrameCount() % 4 == 0) {
 
-        img++;
+        titleCounter++;
 
-        if (img == 91 ) {
+        if (titleCounter == 91 ) {
             world.setGameState(GameState::Play_Game_Init);
         }
 
@@ -42,6 +44,6 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     uint8_t currentPlane = a.currentPlane();
 
-    SpritesU::drawOverwriteFX(0, 0, Images::BoatEnters, (img * 3) + currentPlane);    
+    SpritesU::drawOverwriteFX(0, 0, Images::BoatEnters, (titleCounter * 3) + currentPlane);    
 
 }

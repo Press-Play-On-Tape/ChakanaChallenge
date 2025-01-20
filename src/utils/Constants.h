@@ -7,7 +7,6 @@
 #define DEBUG_BREAK    asm volatile("break\n");
 
 #define _DEBUG
-#define _DEBUG_STACK
 #define _DEBUG_SOUND
 #define GAMBLE
 

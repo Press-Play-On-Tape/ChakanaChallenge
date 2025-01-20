@@ -1459,7 +1459,7 @@ enum class GameState : uint8_t {
         Chakana_Open,
     PlayGame_End,
 
-    #ifdef GAMBLE
+    #ifndef GAMBLE
     Play_Gamble_Start,
         Play_Gamble_Select_Exit = Play_Gamble_Start,
         Play_Gamble_Select_Play,

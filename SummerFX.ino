@@ -45,8 +45,6 @@ uint8_t titleCounter = 0;
 World &world = cookie.world;
 Menu menu;
 
-Stance stanceOld = Stance::Man_Walk_RH_01;
-
 #ifdef DEBUG_FIXED_RAND
 uint16_t seed = 72;
 #endif
@@ -97,12 +95,6 @@ void loop() {
 
     Player &player = world.getPlayer();
 
-    if (player.getStance() != stanceOld) {
-        printDetails();
-        stanceOld = player.getStance();
-
-    }
-
     switch (world.getGameState()) {
 
         case GameState::SplashScreen_Start ... GameState::SplashScreen_End:
@@ -145,9 +137,11 @@ void loop() {
         case GameState::Inventory_Open_Exit_0:
         case GameState::Inventory_Open_Exit_1:
         case GameState::Chakana_Open:
+        
         #ifdef GAMBLE
         case GameState::Play_Gamble_Start ... GameState::Play_Gamble_End:
         #endif
+
             playGame(a);
             break;
 
@@ -170,25 +164,4 @@ void loop() {
     audioUpdate();
     #endif
 
-}
-
-
-void printDetails() {
-    
-    // Player &player = world.getPlayer();
-
-    // DEBUG_PRINT("S");
-    // DEBUG_PRINT(player.getStance());
-    // DEBUG_PRINT(" y");
-    // DEBUG_PRINT(Constants::GroundY - player.getY());
-    // DEBUG_PRINT(" (");
-    // DEBUG_PRINT((Constants::GroundY - player.getY()) % 8);
-    // DEBUG_PRINT(") M");
-    // DEBUG_PRINT(world.getMiddleground());
-    // DEBUG_PRINT(" (");
-    // DEBUG_PRINT(world.getMiddleground() % 8);
-    // DEBUG_PRINT(")");
-    // DEBUG_PRINTLN(" ");
-
-    
 }
