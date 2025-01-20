@@ -348,7 +348,9 @@ void renderWorld(uint8_t currentPlane) {
 
     }
 
-    switch (player.getStance()) {
+    Stance stance = player.getStance();
+
+    switch (stance) {
 
         case Stance::Man_BounceJump_RH_03:
         case Stance::Man_BounceJump_RH_11:
@@ -378,8 +380,8 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_RH_01 ... Stance::Man_Sword_Walk_BK_RH_04:
         case Stance::Man_Sword_StandingJump_RH_01 ... Stance::Man_Sword_StandingJump_RH_07:
             {
-                uint8_t stanceImg = getStanceImg(player.getStance());
-                uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
+                uint8_t stanceImg = getStanceImg(stance);
+                uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
                 renderPlayerAndHealth(stanceImg, 56 + x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
             }
             break;
@@ -390,15 +392,15 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_LH_01 ... Stance::Man_Sword_Walk_BK_LH_04:
         case Stance::Man_Sword_StandingJump_LH_01 ... Stance::Man_Sword_StandingJump_LH_07:
             {
-                uint8_t stanceImg = getStanceImg(player.getStance());
-                uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(player.getStance()) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
+                uint8_t stanceImg = getStanceImg(stance);
+                uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
                 renderPlayerAndHealth(stanceImg, 56 - x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
             }
             break;
 
         default:
             {
-                uint8_t stanceImg = getStanceImg(player.getStance());
+                uint8_t stanceImg = getStanceImg(stance);
                 SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
             }
             break;
@@ -459,9 +461,10 @@ void renderWorld(uint8_t currentPlane) {
         if (enemy.getX() > 0) {
 
             int16_t xEnemy = enemy.getX() + world.getMiddleground() - 4;
-            int16_t xEnenmyItem = enemy.getItem().getX() + world.getMiddleground();
+            int16_t xEnemyItem = enemy.getItem().getX() + world.getMiddleground();
             uint8_t yEnemy = yOffset - enemy.getY();
             uint8_t yEnemyItem = yOffset - enemy.getItem().getY();
+            uint8_t stanceImg = getStanceImg(enemy.getStance());
 
             switch (enemy.getStance()) {
 
@@ -471,12 +474,11 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_Walk_BK_LH_01 ... Stance::Enemy_Sword_Walk_BK_LH_04:
                 case Stance::Enemy_Sword_StandingJump_LH_01 ... Stance::Enemy_Sword_StandingJump_LH_07:
                     {
-                        uint8_t stanceImg = getStanceImg(enemy.getStance());
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
                         renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
 
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            renderGlint(xEnenmyItem - 4, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
+                            renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
                     }
@@ -488,12 +490,11 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_Walk_BK_RH_01 ... Stance::Enemy_Sword_Walk_BK_RH_04:
                 case Stance::Enemy_Sword_StandingJump_RH_01 ... Stance::Enemy_Sword_StandingJump_RH_07:
                     {
-                        uint8_t stanceImg = getStanceImg(enemy.getStance());
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
                         renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            renderGlint(xEnenmyItem + 15, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
+                            renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
                     }
@@ -501,20 +502,19 @@ void renderWorld(uint8_t currentPlane) {
                     
                 default:
                     {
-                        uint8_t stanceImg = getStanceImg(enemy.getStance());
                         SpritesU::drawPlusMaskFX(xEnemy, yEnemy, Images::Enemy, (stanceImg * 3) + currentPlane);
 
                         if (enemy.getItem().getItemType() == ItemType::Arrow_RH || enemy.getItem().getItemType() == ItemType::Arrow_LH) {
                             
                             uint8_t frame = (enemy.getItem().getItemType() == ItemType::Arrow_LH ? 3 : 0);
-                            SpritesU::drawPlusMaskFX(xEnenmyItem - 4, yEnemyItem, Images::Arrow, frame + currentPlane);
+                            SpritesU::drawPlusMaskFX(xEnemyItem - 4, yEnemyItem, Images::Arrow, frame + currentPlane);
 
                         }
 
                         else if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
                                  (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
 
-                            SpritesU::drawPlusMaskFX(xEnenmyItem - 4, yEnemyItem, Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
+                            SpritesU::drawPlusMaskFX(xEnemyItem - 4, yEnemyItem, Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
 
                         }
                         
@@ -547,7 +547,7 @@ void renderWorld(uint8_t currentPlane) {
 
                 }
 
-                SpritesU::drawPlusMaskFX(xEnenmyItem + xOffset, yEnemy + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + frameOffset) * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(xEnemyItem + xOffset, yEnemy + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + frameOffset) * 3) + currentPlane);
 
             }
 
@@ -564,6 +564,9 @@ void renderWorld(uint8_t currentPlane) {
         SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (item.getFrame() / 16 * 3) +  currentPlane);
 
     }
+
+
+    // Door RHS ..
 
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 

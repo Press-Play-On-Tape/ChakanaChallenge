@@ -18,9 +18,7 @@ void playGame_HandleEnemies_LaunchArrow(Enemy &enemy, Direction direction) {
 
 void playGame_HandleEnemies_Trebochet_SetFrame(uint8_t idx, ItemType itemType) {
 
-    FX::seekData(Constants::TrebochetImgs + idx);
-    uint8_t frame = FX::readPendingUInt8();
-    FX::readEnd();
+    uint8_t frame = FX::readIndexedUInt8(Constants::TrebochetImgs, idx);
 
     idx = world.getItem(itemType);
     Item &item = world.getItem(idx);
@@ -158,21 +156,21 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         if (!enemy.isEmpty()) {
 
             Point offset;
-            uint16_t newStance = enemy.pop();
+            uint16_t stance = enemy.pop();
 
-            enemy.setStance(newStance);
+            enemy.setStance(stance);
 
-            FX::seekData(Constants::StanceY + static_cast<uint16_t>(enemy.getStance()));
+            FX::seekData(Constants::StanceY + static_cast<uint16_t>(stance));
             int8_t stanceY = FX::readPendingUInt8();
             enemy.setY(enemy.getY() - stanceY);
             FX::readEnd();
             
-            FX::seekData(Constants::xForeground + static_cast<uint16_t>(enemy.getStance()));
+            FX::seekData(Constants::xForeground + static_cast<uint16_t>(stance));
             int8_t b = FX::readPendingUInt8();
             world.incForeground(b);
             FX::readEnd();
 
-            FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(enemy.getStance()));
+            FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(stance));
             b = FX::readPendingUInt8();
             enemy.setX(enemy.getX() + b);
             FX::readEnd();
@@ -181,7 +179,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case EnemyType::Archer:
                         
-                    switch (newStance) {
+                    switch (stance) {
 
                         case Stance::Enemy_Fire_LH_07:
 
@@ -199,12 +197,12 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case EnemyType::TrebochetOperator:
 
-                    switch (newStance) {
+                    switch (stance) {
                                 
                         case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_04:
                         case Stance::Enemy_Trebochet_Release_LH_06 ... Stance::Enemy_Trebochet_Release_LH_14:
                             {
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
+                                uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
                                 playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left); 
                                 
                             }
@@ -212,7 +210,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                         case Stance::Enemy_Trebochet_Release_LH_05:
                             {
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
+                                uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
                                 playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left);
 
                                 Item &item = enemy.getItem();
@@ -228,7 +226,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_04:
                         case Stance::Enemy_Trebochet_Release_RH_06 ... Stance::Enemy_Trebochet_Release_RH_14:
                             {
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
+                                uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
                                 playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
                                 
                             }
@@ -236,7 +234,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                         case Stance::Enemy_Trebochet_Release_RH_05:
                             {
-                                uint8_t idx = static_cast<uint8_t>(newStance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
+                                uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
                                 playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
 
                                 Item &item = enemy.getItem();
@@ -255,7 +253,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case EnemyType::SwordFighter:
 
-                    switch (newStance) {
+                    switch (stance) {
                                 
                         case Stance::Enemy_Sword_Lunge_LH_03:
                         case Stance::Enemy_Sword_Lunge_RH_03:
@@ -348,7 +346,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             }
 
-            FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(enemy.getStance()) * 2));
+            FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(stance) * 2));
             uint16_t subsituteStance = FX::readPendingUInt16();
             FX::readEnd();
 
@@ -414,16 +412,17 @@ bool playGame_EnemyStabsPlayer(Player &player) {
     }
 
     Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+    Stance stance = enemy.getStance();
     Rect playerRect = { 61, - Constants::GroundY + player.getY(), 6, 16 };
 
-    if (enemy.getStance() == Stance::Enemy_Sword_Lunge_LH_03) {
+    if (stance == Stance::Enemy_Sword_Lunge_LH_03) {
 
         Point enemyPoint = { enemy.getX() + world.getMiddleground() - 10, - enemy.getY() + 12 };
         return collide(enemyPoint, playerRect);
 
     }
 
-    if (enemy.getStance() == Stance::Enemy_Sword_Lunge_RH_03) {
+    if (stance == Stance::Enemy_Sword_Lunge_RH_03) {
 
         Point enemyPoint = { enemy.getX() + world.getMiddleground() + 17, - enemy.getY() + 12 };
         return collide(enemyPoint, playerRect);

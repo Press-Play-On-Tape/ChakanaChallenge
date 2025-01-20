@@ -143,6 +143,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     // #ifndef DEBUG
 
     player.stageSequence(Stance::None, Stance::None);
+    Stance stance = player.getStance();
     
     if (justPressed & UP_BUTTON || pressed & UP_BUTTON) {
 
@@ -169,11 +170,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_08, Stance::Man_ClimbLadder_BK_LH_UP_14);
                         }
 
-                        else if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                        else if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_08, Stance::Man_ClimbLadder_BK_RH_UP_14);
                         }
 
-                        else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                        else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_08, Stance::Man_ClimbLadder_BK_LH_UP_14);
                         }
 
@@ -201,14 +202,14 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R))) {
 
                         // Climb further up ..
-                        if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                        if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
 
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
                             
                         }
                         
-                        else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                        else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
 
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_06, Stance::Man_ClimbLadder_BK_LH_UP_07);
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_06, Stance::Man_ClimbLadder_BK_LH_UP_07);
@@ -297,11 +298,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                         }
 
-                        else if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                        else if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                         }
 
-                        else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                        else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
                         }
                         
@@ -323,11 +324,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                             }
 
-                            else if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                            else if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                             }
 
-                            else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                            else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
                             }
 
@@ -338,14 +339,14 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     else if ((world.isLadderTile_Middle(tile_D) && world.isLadderTile_Middle(tile_RD)) ||
                             (world.isVerticalVine_Middle(tile_D) && world.isVerticalVine_Middle(tile_RD))) {
 
-                        if (player.getStance() == Stance::Man_ClimbLadder_BK_RH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                        if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
 
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_06, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_06, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
                             
                         }
                         
-                        else if (player.getStance() == Stance::Man_ClimbLadder_BK_LH_UP_07 || player.getStance() == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                        else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
 
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_06, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_06, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
@@ -353,7 +354,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         }
 
                     }
-                    else if (player.getStance() == Stance::Man_Rope_Start_RH_07 || player.getStance() == Stance::Man_Rope_Start_LH_07) {
+                    else if (stance == Stance::Man_Rope_Start_RH_07 || stance == Stance::Man_Rope_Start_LH_07) {
                 
                         player.setFalls(0);
                         player.push(Stance::Man_Walk_FallMore_BK_02);
@@ -442,7 +443,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             uint8_t tile_L3D = world.getTile_RelativeToPlayer(-3, -1);
                             uint8_t tile_L3D2 = world.getTile_RelativeToPlayer(-3, -2);
 
-                            if (world.isVineTile_RH(tile_L) && (player.getStance() < Stance::Man_Vine_LH_01 || player.getStance() > Stance::Man_Vine_LH_20)) {
+                            if (world.isVineTile_RH(tile_L) && (stance < Stance::Man_Vine_LH_01 || stance > Stance::Man_Vine_LH_20)) {
 
                                 Item &item = world.getItem(world.getItem(ItemType::Swinging_Vine));
 
@@ -755,7 +756,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             uint8_t tile_R3D = world.getTile_RelativeToPlayer(3, -1);
                             uint8_t tile_R3D2 = world.getTile_RelativeToPlayer(3, -2);
 
-                            if (world.isVineTile_LH(tile_R) && (player.getStance() < Stance::Man_Vine_RH_01 || player.getStance() > Stance::Man_Vine_RH_20)) {
+                            if (world.isVineTile_LH(tile_R) && (stance < Stance::Man_Vine_RH_01 || stance > Stance::Man_Vine_RH_20)) {
 
                                 Item &item = world.getItem(world.getItem(ItemType::Swinging_Vine));
 
@@ -1039,7 +1040,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
             case Direction::Backward:
 
-                switch (player.getStance()) {
+                switch (stance) {
 
                     case Stance::Man_ClimbLadder_BK_LH_UP_01 ... Stance::Man_ClimbLadder_BK_LH_UP_14:
                     case Stance::Man_ClimbLadder_BK_RH_UP_01 ... Stance::Man_ClimbLadder_BK_RH_UP_14:
@@ -1206,9 +1207,11 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
 
 void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
 
+    Stance stance = player.getStance();
+
     if (pressed & A_BUTTON) {
 
-        switch (player.getStance()) {
+        switch (stance) {
 
             case Stance::Man_Walk_RH_01:
                 {
@@ -1563,11 +1566,11 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         if (!player.isEmpty() || player.hasStagedSequence()) {
 
             Point offset;
-            uint16_t newStance = player.getStance();
+            uint16_t stance = player.getStance();;
 
             if (!player.isEmpty()) {
 
-                newStance = playGame_PopEntry(player);
+                stance = playGame_PopEntry(player);
 
             }
 
@@ -1749,7 +1752,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                 case Direction::Left:
 
-                                    switch (player.getStance()) {
+                                    switch (stance) {
 
                                         case Stance::Man_WalkingJump_LH_2_08:
                                             {
@@ -1785,7 +1788,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                 case Direction::Right:
 
-                                    switch (player.getStance()) {
+                                    switch (stance) {
 
                                         case Stance::Man_WalkingJump_RH_2_08:
                                             {
@@ -1836,14 +1839,14 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             if (player.commitSequence()) {
 
-                newStance = playGame_PopEntry(player);
+                stance = playGame_PopEntry(player);
 
             }
 
 
             // Handle falling and other special actions ..
 
-            switch (static_cast<Stance>(newStance)) {
+            switch (static_cast<Stance>(stance)) {
 
                 case Stance::Man_Walk_RH_04:
                 case Stance::Man_Walk_LH_04:
@@ -1862,26 +1865,38 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
 
                         if (world.isRollerTile_RH(tile_D) && world.isRollerTile_RH(tile_RD)) {
+
                             player.pushSequence(Stance::Man_Rollers_RH_01, Stance::Man_Rollers_RH_04);
+
                         }
                         else if (world.isRollerTile_LH(tile_D) && world.isRollerTile_LH(tile_LD)) {
+
                             player.pushSequence(Stance::Man_Rollers_LH_01, Stance::Man_Rollers_LH_04);
+
                         }
 
                         else if (world.isRollerTile_RH(tile_D) && world.canWalkOnTile(tile_RD)) {
+
                             player.pushSequence(Stance::Man_Rollers_Stand_RH_01, Stance::Man_Rollers_Stand_RH_04);
+
                         }
                         else if (world.isRollerTile_LH(tile_D) && world.canWalkOnTile(tile_LD)) {
+
                             player.pushSequence(Stance::Man_Rollers_Stand_LH_01, Stance::Man_Rollers_Stand_LH_04);
+
                         }
 
                         else if (world.isRollerTile_RH(tile_D) && world.isEmptyTile(tile_RD)) {
+
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Rollers_Fall_RH_01, Stance::Man_Rollers_Fall_RH_04);
+
                         }
                         else if (world.isRollerTile_LH(tile_D) && world.isEmptyTile(tile_LD)) {
+
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Rollers_Fall_LH_01, Stance::Man_Rollers_Fall_LH_04);
+                            
                         }
 
                     }
@@ -2243,7 +2258,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 default:
                     {
-                        FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(player.getStance()) * 2));
+                        FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(stance) * 2));
                         uint16_t subsituteStance = FX::readPendingUInt16();
                         FX::readEnd();
 
@@ -2286,31 +2301,31 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 uint16_t playGame_PopEntry(Player &player) {
 
-    uint16_t newStance = player.pop();
+    uint16_t stance = player.pop();
 
-    player.setStance(newStance);
+    player.setStance(stance);
 
-    FX::seekData(Constants::StanceY + static_cast<uint16_t>(player.getStance()));
+    FX::seekData(Constants::StanceY + static_cast<uint16_t>(stance));
     int8_t stanceY = FX::readPendingUInt8();
     player.setY(player.getY() - stanceY);
     FX::readEnd();
 
-    FX::seekData(Constants::xForeground + static_cast<uint16_t>(player.getStance()));
+    FX::seekData(Constants::xForeground + static_cast<uint16_t>(stance));
     int8_t b = FX::readPendingUInt8();
     world.incForeground(b);
     FX::readEnd();
 
-    FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(player.getStance()));
+    FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(stance));
     b = FX::readPendingUInt8();
     world.incMiddleground(b);
     FX::readEnd();
 
-    FX::seekData(Constants::xBackground + static_cast<uint16_t>(player.getStance()));
+    FX::seekData(Constants::xBackground + static_cast<uint16_t>(stance));
     b = FX::readPendingUInt8();
     world.incBackground(b);
     FX::readEnd();
 
-    return newStance;
+    return stance;
 
 }
 
