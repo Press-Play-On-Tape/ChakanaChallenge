@@ -318,7 +318,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     
     }
 
-    SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
+    SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap() - 1, Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
 
     switch (world.getGameState()) {
 
@@ -394,7 +394,6 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Map_MoveBoat:
 
-            // SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
             break;
         
     }
@@ -408,11 +407,9 @@ void renderNumber(uint8_t numberToShow, uint8_t x, uint8_t y, uint8_t currentPla
 
     if (numberToShow < 100) {
         x = x + 2;
-        // SpritesU::drawOverwriteFX(x + 2 + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_2D_BW, (numberToShow * 3) + currentPlane);
     }
     else {
         font = Images::Numbers_5x3_3D_BW;
-        // SpritesU::drawOverwriteFX(x + (leftDialogue ? 0 : 73), y, Images::Numbers_5x3_3D_BW, (numberToShow * 3) + currentPlane);
     }
 
     SpritesU::drawOverwriteFX(x + (leftDialogue ? 0 : 73), y, font, (numberToShow * 3) + currentPlane);
