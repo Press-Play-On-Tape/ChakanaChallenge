@@ -2258,7 +2258,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 default:
                     {
-                        FX::seekData(Constants::subsititueStance + (static_cast<uint16_t>(stance) * 2));
+                        FX::seekData(Constants::SubsititueStance + (static_cast<uint16_t>(stance) * 2));
                         uint16_t subsituteStance = FX::readPendingUInt16();
                         FX::readEnd();
 
@@ -2305,22 +2305,16 @@ uint16_t playGame_PopEntry(Player &player) {
 
     player.setStance(stance);
 
-    FX::seekData(Constants::StanceY + static_cast<uint16_t>(stance));
+    FX::seekData(Constants::StanceDetails + (static_cast<uint16_t>(stance) * 4));
     int8_t stanceY = FX::readPendingUInt8();
     player.setY(player.getY() - stanceY);
-    FX::readEnd();
 
-    FX::seekData(Constants::xForeground + static_cast<uint16_t>(stance));
     int8_t b = FX::readPendingUInt8();
     world.incForeground(b);
-    FX::readEnd();
 
-    FX::seekData(Constants::xMiddleground + static_cast<uint16_t>(stance));
     b = FX::readPendingUInt8();
     world.incMiddleground(b);
-    FX::readEnd();
 
-    FX::seekData(Constants::xBackground + static_cast<uint16_t>(stance));
     b = FX::readPendingUInt8();
     world.incBackground(b);
     FX::readEnd();

@@ -10,6 +10,15 @@ struct BoatMovement {
 };
 
 
+struct PlayerMovement {
+
+    int8_t stanceY;
+    int8_t foreground;        
+    int8_t middleground;        
+    int8_t background;        
+
+};
+
 
 enum class MusicSong : uint8_t {
     MainTheme

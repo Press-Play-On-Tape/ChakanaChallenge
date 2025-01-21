@@ -48,11 +48,8 @@ namespace Constants
   constexpr uint24_t BeachDetails = 0x000FCA;
   constexpr uint24_t PortCosts = 0x00101E;
   constexpr uint24_t StanceImgIdx = 0x0010FF;
-  constexpr uint24_t StanceY = 0x001509;
-  constexpr uint24_t xForeground = 0x001913;
-  constexpr uint24_t xMiddleground = 0x001D1D;
-  constexpr uint24_t xBackground = 0x002127;
-  constexpr uint24_t subsititueStance = 0x002531;
+  constexpr uint24_t SubsititueStance = 0x001509;
+  constexpr uint24_t StanceDetails = 0x001D1D;
   constexpr uint24_t swingyThing_X = 0x002D45;
   constexpr uint24_t swingyThing_Y = 0x002D55;
   constexpr uint24_t Ball_X = 0x002D65;
