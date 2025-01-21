@@ -221,7 +221,7 @@ void map_Update() {
 
                     FX::seekDataArray(Constants::BoatCoords_Start, (world.getCurrentPort() * 2) + offset, 0, 4);
                     world.setXBoat(FX::readPendingUInt16());
-                    world.setYBoat(FX::readPendingUInt16());
+                    world.setYBoat(FX::readPendingUInt16() - 1);
                     world.setBoatCounter(0);
                     world.setBoatDirection(BoatDirection::Left);
                     FX::readEnd();
@@ -318,7 +318,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     
     }
 
-    SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, currentPlane);
+    SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
 
     switch (world.getGameState()) {
 
@@ -394,7 +394,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Map_MoveBoat:
 
-            SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
+            // SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap(), Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
             break;
         
     }
