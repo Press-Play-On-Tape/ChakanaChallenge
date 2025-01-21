@@ -28,7 +28,7 @@ struct World {
         uint16_t yMap = 0;
         uint16_t xBoat = 14;
         uint16_t yBoat = 6;
-        BoatDirection boatDirection = BoatDirection::None;
+        BoatDirection boatDirection = BoatDirection::Down;
         uint8_t boatCounter = 0;
         int16_t x = 0;
         int16_t y = 0;
@@ -107,7 +107,7 @@ struct World {
             this->yMap = 0;
             this->xBoat = 14;
             this->yBoat = 6;
-            this->boatDirection = BoatDirection::None;
+            this->boatDirection = BoatDirection::Down;
             this->boatCounter = 0;
             this->x = 0;
             this->y = 0;
