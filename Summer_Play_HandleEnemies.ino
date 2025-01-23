@@ -160,16 +160,25 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             enemy.setStance(stance);
 
+            // FX::seekData(Constants::StanceDetails + (static_cast<uint16_t>(stance) * 4));
+            // int8_t stanceY = FX::readPendingUInt8();
+            // enemy.setY(enemy.getY() - stanceY);
+
+            // int8_t b = FX::readPendingUInt8();
+            // world.incForeground(b);
+
+            // b = FX::readPendingUInt8();
+            // enemy.setX(enemy.getX() + stanceDetails.middleground);
+            // FX::readEnd();
+
+            StanceDetails stanceDetails;
+
             FX::seekData(Constants::StanceDetails + (static_cast<uint16_t>(stance) * 4));
-            int8_t stanceY = FX::readPendingUInt8();
-            enemy.setY(enemy.getY() - stanceY);
-
-            int8_t b = FX::readPendingUInt8();
-            world.incForeground(b);
-
-            b = FX::readPendingUInt8();
-            enemy.setX(enemy.getX() + b);
+            FX::readObject(stanceDetails);
             FX::readEnd();
+
+            enemy.setY(enemy.getY() - stanceDetails.stanceY);
+            enemy.setX(enemy.getX() + stanceDetails.middleground);
 
             switch (enemy.getEnemyType()) {
 

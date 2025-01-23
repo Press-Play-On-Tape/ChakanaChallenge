@@ -2305,19 +2305,16 @@ uint16_t playGame_PopEntry(Player &player) {
 
     player.setStance(stance);
 
+    StanceDetails stanceDetails;
+
     FX::seekData(Constants::StanceDetails + (static_cast<uint16_t>(stance) * 4));
-    int8_t stanceY = FX::readPendingUInt8();
-    player.setY(player.getY() - stanceY);
-
-    int8_t b = FX::readPendingUInt8();
-    world.incForeground(b);
-
-    b = FX::readPendingUInt8();
-    world.incMiddleground(b);
-
-    b = FX::readPendingUInt8();
-    world.incBackground(b);
+    FX::readObject(stanceDetails);
     FX::readEnd();
+
+    player.setY(player.getY() - stanceDetails.stanceY);
+    world.incForeground(stanceDetails.foreground);
+    world.incMiddleground(stanceDetails.middleground);
+    world.incBackground(stanceDetails.background);
 
     return stance;
 
@@ -2356,8 +2353,10 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         #ifdef GAMBLE
 
         case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_Select_Play:
-            SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((player.getChakanas() >= 5 ? 0 : 12) * 3) + currentPlane);
+            renderGamblePanel(player.getChakanas() >= 5 ? 0 : 12, currentPlane);
+            // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((player.getChakanas() >= 5 ? 0 : 12) * 3) + currentPlane);
             SpritesU::drawPlusMaskFX(104, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, Images::InventoryPanel_Cursor, currentPlane);
+            renderChakanaBalance(player.getChakanas(), currentPlane);
             break;
 
         case GameState::Play_Gamble_Select_Spin:
@@ -2366,7 +2365,8 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 if (frame != 255) {
 
-                    SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((1 + frame) * 3) + currentPlane);
+                    renderGamblePanel(1 + frame, currentPlane);
+                    // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((1 + frame) * 3) + currentPlane);
 
                     if (currentPlane == 2) {
                         titleCounter++;
@@ -2378,10 +2378,16 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 else {
 
                     if (titleCounter > 104) {  
+
                         world.setGameState(GameState::Play_Gamble_Select_Lose);
+
                     }
                     else {
+
                         world.setGameState(GameState::Play_Gamble_Select_Win);
+                        titleCounter = 20 + (a.randomLFSR(1, 10) * 5);
+                        player.setChakanas(player.getChakanas() + titleCounter);
+
                     }
 
                     titleCounter = 0;
@@ -2394,15 +2400,26 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Play_Gamble_Select_Win:
             {
-                uint8_t frame = (titleCounter / 16) % 4;
-                SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((11 + frame) * 3) + currentPlane);
+                uint8_t frame = (world.getFrameCount() % 48) < 24;
+                renderGamblePanel(11 + frame, currentPlane);
+                // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((11 + frame) * 3) + currentPlane);
+
+                if (frame == 0) {
+                    SpritesU::drawOverwriteFX(108, 12, Images::Numbers_5x3_2D_BW, (titleCounter * 3) + currentPlane);
+                }
+
+                renderChakanaBalance(player.getChakanas(), currentPlane);
+
             }
             break;
 
         case GameState::Play_Gamble_Select_Lose:
             {
-                uint8_t frame = (titleCounter / 16) % 4;
-                SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((9 + frame) * 3) + currentPlane);
+                uint8_t frame = (world.getFrameCount() % 48) < 24;
+                renderGamblePanel(9 + frame, currentPlane);
+                // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((9 + frame) * 3) + currentPlane);
+                renderChakanaBalance(player.getChakanas(), currentPlane);
+
             }
             break;
 
@@ -2414,6 +2431,18 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     world.update(true);
 
+
+}
+
+void renderChakanaBalance(uint8_t balance, uint8_t currentPlane){
+                    
+    SpritesU::drawOverwriteFX(111, 56, Images::Numbers_5x3_3D_BW, (balance * 3) + currentPlane);
+
+}
+
+void renderGamblePanel(uint8_t frame, uint8_t currentPlane) {
+    
+    SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, (frame * 3) + currentPlane);
 
 }
 

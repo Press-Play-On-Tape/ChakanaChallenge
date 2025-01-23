@@ -16,12 +16,17 @@ void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed)
 
             case GameState::Play_Gamble_Select_Play:     
                 world.setGameState(GameState::Play_Gamble_Select_Spin);
-                titleCounter = (a.randomLFSR(0, 10) == 1 ? 0 : 104);
+                titleCounter = (a.randomLFSR(0, 10) > 1 ? 0 : 104);
                 break;
 
             case GameState::Play_Gamble_Select_Exit:     
                 a.pollButtons();
                 world.setGameState(GameState::Play_Game);
+                break;
+
+            case GameState::Play_Gamble_Select_Win:     
+            case GameState::Play_Gamble_Select_Lose:     
+                world.setGameState(GameState::Play_Gamble_Select_Play);
                 break;
 
             default: break;
