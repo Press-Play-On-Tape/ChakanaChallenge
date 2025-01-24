@@ -129,9 +129,9 @@ void playGame_Init() {
 
     world.setBackground(-29);
 
-    // player.addInventoryItem(ItemType::Sword);
-    // player.addInventoryItem(ItemType::Amulet);
-    // player.addInventoryItem(ItemType::Hammer);
+    player.addInventoryItem(ItemType::Sword);
+    player.addInventoryItem(ItemType::Amulet);
+    player.addInventoryItem(ItemType::Hammer);
 
     cookie.hasSavedGame = true;
     saveCookie(true);
@@ -2353,10 +2353,14 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         #ifdef GAMBLE
 
         case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_Select_Play:
-            renderGamblePanel(player.getChakanas() >= 5 ? 0 : 12, currentPlane);
-            // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((player.getChakanas() >= 5 ? 0 : 12) * 3) + currentPlane);
-            SpritesU::drawPlusMaskFX(104, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, Images::InventoryPanel_Cursor, currentPlane);
-            renderChakanaBalance(player.getChakanas(), currentPlane);
+            renderGamblePanel(player.getChakanas() >= 5 ? 0 : 13, currentPlane);
+
+            if (player.getChakanas() >= 5) {
+                // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((player.getChakanas() >= 5 ? 0 : 12) * 3) + currentPlane);
+                renderInventoryPanelCursor(104, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, currentPlane);
+                // SpritesU::drawPlusMaskFX(104, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, Images::InventoryPanel_Cursor, currentPlane);
+                renderChakanaBalance(player.getChakanas(), currentPlane);
+            }
             break;
 
         case GameState::Play_Gamble_Select_Spin:
@@ -2379,6 +2383,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     if (titleCounter > 104) {  
 
+                        titleCounter = 0;
                         world.setGameState(GameState::Play_Gamble_Select_Lose);
 
                     }
@@ -2389,8 +2394,6 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         player.setChakanas(player.getChakanas() + titleCounter);
 
                     }
-
-                    titleCounter = 0;
 
                 }
 
@@ -2405,7 +2408,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((11 + frame) * 3) + currentPlane);
 
                 if (frame == 0) {
-                    SpritesU::drawOverwriteFX(108, 12, Images::Numbers_5x3_2D_BW, (titleCounter * 3) + currentPlane);
+                    SpritesU::drawOverwriteFX(107, 13, Images::Numbers_5x3_2D_BW, (titleCounter * 3) + currentPlane);
                 }
 
                 renderChakanaBalance(player.getChakanas(), currentPlane);
@@ -2434,15 +2437,16 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 }
 
-void renderChakanaBalance(uint8_t balance, uint8_t currentPlane){
-                    
-    SpritesU::drawOverwriteFX(111, 56, Images::Numbers_5x3_3D_BW, (balance * 3) + currentPlane);
 
-}
 
-void renderGamblePanel(uint8_t frame, uint8_t currentPlane) {
-    
-    SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, (frame * 3) + currentPlane);
+void removeInventoryItem(GameState gameState) {
+
+    menu.setDirection(Direction::Right);
+    menu.setGameState(gameState);
+
+    world.getPlayer().removeInventoryItem(menu.getY() - 2);
+    menu.setTop(0);
+    menu.setY(0);    
 
 }
 
@@ -2463,16 +2467,3 @@ void removeWorldandInventoryItem(ItemType itemType, GameState gameState) {
     menu.setY(0);
 
 }
-
-
-void removeInventoryItem(GameState gameState) {
-
-    menu.setDirection(Direction::Right);
-    menu.setGameState(gameState);
-
-    world.getPlayer().removeInventoryItem(menu.getY() - 2);
-    menu.setTop(0);
-    menu.setY(0);    
-
-}
-

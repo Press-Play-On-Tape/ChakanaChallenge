@@ -656,7 +656,8 @@ void renderWorld(uint8_t currentPlane) {
 
                                 if (world.getFrameCount() % 64 < 32) {
 
-                                    SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (menu.getY() * 8), Images::InventoryPanel_Cursor, currentPlane);
+                                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (menu.getY() * 8), currentPlane);
+                                    // SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (menu.getY() * 8), Images::InventoryPanel_Cursor, currentPlane);
 
                                 }
 
@@ -711,7 +712,8 @@ void renderWorld(uint8_t currentPlane) {
 
                 if (world.getFrameCount() % 64 < 32) {
 
-                    SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8), Images::InventoryPanel_Cursor, currentPlane);
+                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8), currentPlane);
+                    // SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8), Images::InventoryPanel_Cursor, currentPlane);
 
                 }
 
@@ -729,7 +731,8 @@ void renderWorld(uint8_t currentPlane) {
                         case GameState::Inventory_Open_Reset_0 ... GameState::Inventory_Open_Exit_1:
                             {
                                 uint8_t y = FX::readIndexedUInt8(Constants::InventoryCursorY, static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Inventory_Open_Reset_0));
-                                SpritesU::drawPlusMaskFX(menu.getX() + 8, y, Images::InventoryPanel_Cursor, currentPlane);
+                                renderInventoryPanelCursor(menu.getX() + 8, y, currentPlane);
+                                // SpritesU::drawPlusMaskFX(menu.getX() + 8, y, Images::InventoryPanel_Cursor, currentPlane);
 
                             }
 
@@ -792,5 +795,23 @@ void renderPlayerAndHealth(uint8_t stanceImg, uint8_t x, uint8_t y, uint8_t heal
 void renderGlint(uint8_t x, uint8_t y, uint8_t frame, uint8_t currentPlane) {
 
     SpritesU::drawPlusMaskFX(x, y, Images::Glint, (frame * 3) + currentPlane);
+
+}
+
+void renderChakanaBalance(uint8_t balance, uint8_t currentPlane){
+                    
+    SpritesU::drawOverwriteFX(111, 56, Images::Numbers_5x3_3D_BW, (balance * 3) + currentPlane);
+
+}
+
+void renderGamblePanel(uint8_t frame, uint8_t currentPlane) {
+    
+    SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, (frame * 3) + currentPlane);
+
+}
+
+void renderInventoryPanelCursor(uint8_t x, uint8_t y, uint8_t currentPlane) {
+
+    SpritesU::drawPlusMaskFX(x, y, Images::InventoryPanel_Cursor, currentPlane);
 
 }

@@ -337,7 +337,8 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             if (world.getFrameCount() % 64 < 32) {
 
-                SpritesU::drawPlusMaskFX(90, 6 + 24 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2)) * 8, Images::InventoryPanel_Cursor, currentPlane);
+                renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2)) * 8, currentPlane);
+                // SpritesU::drawPlusMaskFX(90, 6 + 24 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2)) * 8, Images::InventoryPanel_Cursor, currentPlane);
 
             }
             

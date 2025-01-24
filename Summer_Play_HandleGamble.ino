@@ -15,8 +15,16 @@ void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed)
         switch (world.getGameState()) {
 
             case GameState::Play_Gamble_Select_Play:     
-                world.setGameState(GameState::Play_Gamble_Select_Spin);
-                titleCounter = (a.randomLFSR(0, 10) > 1 ? 0 : 104);
+
+                if (player.getChakanas() >= 5) {
+                    world.setGameState(GameState::Play_Gamble_Select_Spin);
+                    player.setChakanas(player.getChakanas() - 5);
+                    titleCounter = (a.randomLFSR(0, 10) == 1 ? 0 : 104);
+                }
+                else {
+                    world.setGameState(GameState::Play_Game);
+                }
+
                 break;
 
             case GameState::Play_Gamble_Select_Exit:     
