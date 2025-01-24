@@ -58,7 +58,7 @@ class Player {
         void init() {
 
             this->lives = 3;
-            this->chakanas = 26;
+            this->chakanas = 100;
             this->falls = 0;
             this->itemCount = 0;
             this->health = Constants::HealthMax;

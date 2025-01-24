@@ -92,13 +92,24 @@ void map_Update() {
 
                 if (world.getNextPort() != 255) {
 
-                    uint8_t from = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
+                    uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
                     uint8_t toPort = world.getNextPort() + 1;
 
-                    FX::seekData(Constants::PortCosts + (from * 15) + toPort);
+                    if (toPort < fromPort) toPort = toPort + 13;
+
+                    FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
                     world.setNextPortCost(FX::readPendingUInt8());
                     FX::readEnd();
+world.setXMap(fromPort);
+world.setYMap(toPort);
+DEBUG_BREAK
 
+                    FX::seekData(Constants::PortCosts + (toPort * 29) + fromPort);
+                    world.setNextPortCost(FX::readPendingUInt8());
+                    FX::readEnd();
+world.setXMap(fromPort);
+world.setYMap(toPort);
+DEBUG_BREAK
                     world.setGameState(GameState::Map_ShowDialogue);
                     world.setFrameCount(0);
 

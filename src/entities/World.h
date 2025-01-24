@@ -112,8 +112,8 @@ struct World {
             this->x = 0;
             this->y = 0;
 
-            this->currentPort = 255; //SJH 255
-            this->nextPort = 255; //SJH 255
+            this->currentPort = 11; //SJH 255
+            this->nextPort = 11; //SJH 255
             this->nextPortCost = 0;
 
         }
