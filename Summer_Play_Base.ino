@@ -2451,15 +2451,9 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 }
 
 
-
 void removeInventoryItem(GameState gameState) {
 
-    menu.setDirection(Direction::Right);
-    menu.setGameState(gameState);
-
-    world.getPlayer().removeInventoryItem(menu.getY() - 2);
-    menu.setTop(0);
-    menu.setY(0);    
+    removeWorldandInventoryItem(ItemType::None, gameState);
 
 }
 

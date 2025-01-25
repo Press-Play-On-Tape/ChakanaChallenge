@@ -118,12 +118,8 @@ convert_header(IMAGES + 'Numbers/Numbers_6x4_2D_BW.png',                        
 convert_header(IMAGES + 'Numbers/Numbers_6x4_3D_WB.png',                                                BASE + 'Images.hpp', 'Numbers_6x4_3D_WB', 4, 16, 8, maskImage=False)
 
 convert_header(IMAGES + 'Titles/PPOT.png',                                                              BASE + 'Images.hpp', 'PPOT', 4, 128, 64)
-convert_header(IMAGES + 'Titles/Sound_Volume_Grey.png',                                                 BASE + 'Images.hpp', 'Sound_Volume_Grey', 4, 22, 16)
-convert_header(IMAGES + 'Titles/Sound_Volume_White.png',                                                BASE + 'Images.hpp', 'Sound_Volume_White', 4, 22, 16)
-convert_header(IMAGES + 'Titles/Sound_Checkbox.png',                                                    BASE + 'Images.hpp', 'Sound_Checkbox', 4)
 convert_header(IMAGES + 'Titles/Title_Base.png',                                                        BASE + 'Images.hpp', 'Title_Base', 4, 128, 64, maskImage=False)
 convert_header(IMAGES + 'Titles/Title_Options.png',                                                     BASE + 'Images.hpp', 'Title_Options', 4, 68, 32)
-convert_header(IMAGES + 'Titles/Pause.png',                                                             BASE + 'Images.hpp', 'Pause', 4, 128, 64)
 
 convert_header(IMAGES + 'BoatEnters/BoatEnters.png',                                                    BASE + 'Images.hpp', 'BoatEnters', 4, 128, 64)
 convert_header(IMAGES + 'Maps/PortNames.png',                                                           BASE + 'Images.hpp', 'PortNames', 4, 31, 8)

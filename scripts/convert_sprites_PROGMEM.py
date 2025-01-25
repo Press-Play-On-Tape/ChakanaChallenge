@@ -99,8 +99,4 @@ IMAGES = '../images/'
 
 deleteFile(BASE + 'Images.h')
 openFile(BASE + 'Images.h', 'Images')
-
-# convert_header_PROGMEM(IMAGES + 'Numbers/Numbers_5x3_2D_MB.png',                                  BASE + 'Images.h', 'Numbers_5x3_2D_MB', 4, 7, 8)
-# convert_header_PROGMEM(IMAGES + 'Numbers/Numbers_5x3_2D_WB.png',                                  BASE + 'Images.h', 'Numbers_5x3_2D_WB', 4, 7, 8)
-
 closeFile(BASE + 'Images.h')
