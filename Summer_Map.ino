@@ -29,9 +29,7 @@ void map_Update() {
 
             if (world.getFrameCount() % 2 == 0) {
 
-                world.updateBoat();
-
-                if (world.getBoatDirection() == BoatDirection::None) {
+                if (world.updateBoat()) {
                     world.setGameState(GameState::Play_Init);
                 }
 
@@ -96,20 +94,12 @@ void map_Update() {
                     uint8_t toPort = world.getNextPort() + 1;
 
                     if (toPort < fromPort) toPort = toPort + 13;
+                    if (toPort - fromPort > 6) toPort = toPort - 13;
 
                     FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
                     world.setNextPortCost(FX::readPendingUInt8());
                     FX::readEnd();
-world.setXMap(fromPort);
-world.setYMap(toPort);
-DEBUG_BREAK
 
-                    FX::seekData(Constants::PortCosts + (toPort * 29) + fromPort);
-                    world.setNextPortCost(FX::readPendingUInt8());
-                    FX::readEnd();
-world.setXMap(fromPort);
-world.setYMap(toPort);
-DEBUG_BREAK
                     world.setGameState(GameState::Map_ShowDialogue);
                     world.setFrameCount(0);
 
@@ -309,10 +299,12 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     for (uint8_t i = 0; i < 14; i++) {
 
+        Point pt;
+
          if (world.getFrameCount() % 36 < 18) {
 
             FX::seekDataArray(Constants::mapCoords, i, 0, 4);
-            Point pt;
+            // Point pt;
             FX::readObject(pt);
             FX::readEnd();
 
@@ -321,7 +313,6 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         }
 
         FX::seekDataArray(Constants::portNames_Coords, i, 0, 4);
-        Point pt;
         FX::readObject(pt);
         FX::readEnd();
 

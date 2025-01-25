@@ -140,7 +140,7 @@ void playGame_Init() {
 
 void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    // #ifndef DEBUG
+    #ifndef DEBUG
 
     player.stageSequence(Stance::None, Stance::None);
     Stance stance = player.getStance();
@@ -461,21 +461,21 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                 }
 
                             }
-                            else if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) && 
-                                world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.canWalkOnTile(tile_L3D)) {     
+                            else if (/*world.isEmptyTile(tile_L) && */world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) && 
+                                /*world.isEmptyTile(tile_LD) && */world.isEmptyTile(tile_L2D) && world.canWalkOnTile(tile_L3D)) {     
 
                                 player.pushSequence(Stance::Man_WalkingJump_LH_25_01, Stance::Man_WalkingJump_LH_25_11);
 
                             }    
-                            else if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
-                                    world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D) && !world.isEmptyTile(tile_L3D2)) {     
+                            else if (/*world.isEmptyTile(tile_L) && */world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
+                                    /*world.isEmptyTile(tile_LD) && */world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D) && !world.isEmptyTile(tile_L3D2)) {     
 
                                 player.setFalls(0);
                                 player.pushSequence(Stance::Man_WalkingJump_LH_1D_25_01, Stance::Man_WalkingJump_LH_1D_25_11);
 
                             }                     
-                            else if (world.isEmptyTile(tile_L) && world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
-                                    world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
+                            else if (/*world.isEmptyTile(tile_L) && */world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
+                                    /*world.isEmptyTile(tile_LD) && */world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
 
                                 if (world.isWaterTile(tile_L2D2)) {
                                     
@@ -774,21 +774,21 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                                 }
 
                             }
-                            else if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
-                                    world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.canWalkOnTile(tile_R3D)) {     
+                            else if (/*world.isEmptyTile(tile_R) && */world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
+                                    /*world.isEmptyTile(tile_RD) && */world.isEmptyTile(tile_R2D) && world.canWalkOnTile(tile_R3D)) {     
 
                                 player.pushSequence(Stance::Man_WalkingJump_RH_25_01, Stance::Man_WalkingJump_RH_25_11);
 
                             }    
-                            else if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
-                                    world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.isEmptyTile(tile_R3D) && !world.isEmptyTile(tile_R3D2)) {     
+                            else if (/*world.isEmptyTile(tile_R) && */world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
+                                    /*world.isEmptyTile(tile_RD) && */world.isEmptyTile(tile_R2D) && world.isEmptyTile(tile_R3D) && !world.isEmptyTile(tile_R3D2)) {     
 
                                 player.setFalls(0);
                                 player.pushSequence(Stance::Man_WalkingJump_RH_1D_25_01, Stance::Man_WalkingJump_RH_1D_25_11);
 
                             }                     
-                            else if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
-                                    world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.isEmptyTile(tile_R3D)) {     
+                            else if (/*world.isEmptyTile(tile_R) && */world.isEmptyTile(tile_R2) && world.isEmptyTile(tile_R3) &&
+                                    /*world.isEmptyTile(tile_RD) && */world.isEmptyTile(tile_R2D) && world.isEmptyTile(tile_R3D)) {     
 
                                 if (world.isWaterTile(tile_R2D2)) {
 
@@ -1137,7 +1137,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
-    // #endif
+    #endif
 }
 
 void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
@@ -1504,9 +1504,21 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case GameState::Chakana_Open:
 
                     if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
-                        player.setChakanas(player.getChakanas() + titleCounter);
-                        world.setGameState(GameState::Map_Init);
-                        world.setPortVisited(world.getCurrentPort());
+
+                        if (world.allPortsComplete()) {
+
+                            cookie.hasSavedGame = false;
+                            saveCookie(true);
+                            world.setGameState(GameState::Title_Init);
+
+                        }
+                        else {
+
+                            player.setChakanas(player.getChakanas() + titleCounter);
+                            world.setGameState(GameState::Map_Init);
+
+                        }
+
                     }
 
                     break;
@@ -1652,6 +1664,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             player.stageSequence(Stance::None, Stance::None);
 
                             world.setGameState(GameState::Chakana_Open);
+                            world.setPortVisited(world.getCurrentPort());
                             endOfLevel_Counter = 0;
                             titleCounter = a.randomLFSR(15, 30);
                             
@@ -2338,10 +2351,19 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Chakana_Open:
 
-            SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (endOfLevel_Counter * 3) + currentPlane);
+            if (world.allPortsComplete()) {
 
-            if (endOfLevel_Counter == 13) {
-                SpritesU::drawOverwriteFX(63, 37, Images::Numbers_6x4_2D_BW, (titleCounter * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, ((16 + endOfLevel_Counter) * 3) + currentPlane);
+
+            }
+            else {
+
+                SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (endOfLevel_Counter * 3) + currentPlane);
+
+                if (endOfLevel_Counter > 12) {
+                    SpritesU::drawOverwriteFX(63, 37, Images::Numbers_6x4_2D_BW, (titleCounter * 3) + currentPlane);
+                }
+
             }
 
             break;
@@ -2353,13 +2375,14 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         #ifdef GAMBLE
 
         case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_Select_Play:
+
             renderGamblePanel(player.getChakanas() >= 5 ? 0 : 13, currentPlane);
 
             if (player.getChakanas() >= 5) {
-                // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((player.getChakanas() >= 5 ? 0 : 12) * 3) + currentPlane);
+
                 renderInventoryPanelCursor(104, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, currentPlane);
-                // SpritesU::drawPlusMaskFX(104, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, Images::InventoryPanel_Cursor, currentPlane);
                 renderChakanaBalance(player.getChakanas(), currentPlane);
+
             }
             break;
 
@@ -2370,7 +2393,6 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 if (frame != 255) {
 
                     renderGamblePanel(1 + frame, currentPlane);
-                    // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((1 + frame) * 3) + currentPlane);
 
                     if (currentPlane == 2) {
                         titleCounter++;
@@ -2402,25 +2424,17 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             [[fallthrough]];
 
         case GameState::Play_Gamble_Select_Win:
+        case GameState::Play_Gamble_Select_Lose:
             {
-                uint8_t frame = (world.getFrameCount() % 48) < 24;
-                renderGamblePanel(11 + frame, currentPlane);
-                // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((11 + frame) * 3) + currentPlane);
+                uint8_t frame = ((world.getGameState() == GameState::Play_Gamble_Select_Win) ? Constants::GamblePanel_Win : Constants::GamblePanel_Lose);
+                frame = frame + ((world.getFrameCount() % 48) < 24);
 
-                if (frame == 0) {
+                renderGamblePanel(frame, currentPlane);
+
+                if (frame == Constants::GamblePanel_Win) {
                     SpritesU::drawOverwriteFX(107, 13, Images::Numbers_5x3_2D_BW, (titleCounter * 3) + currentPlane);
                 }
 
-                renderChakanaBalance(player.getChakanas(), currentPlane);
-
-            }
-            break;
-
-        case GameState::Play_Gamble_Select_Lose:
-            {
-                uint8_t frame = (world.getFrameCount() % 48) < 24;
-                renderGamblePanel(9 + frame, currentPlane);
-                // SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, ((9 + frame) * 3) + currentPlane);
                 renderChakanaBalance(player.getChakanas(), currentPlane);
 
             }
@@ -2433,7 +2447,6 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     }
 
     world.update(true);
-
 
 }
 

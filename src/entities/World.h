@@ -101,7 +101,7 @@ struct World {
 
         void init() {
 
-            this->portsVisited = 0;
+            this->portsVisited = 0; //16382;
             this->frameCount = 0;
             this->xMap = 0;
             this->yMap = 0;
@@ -130,6 +130,12 @@ struct World {
 
         }
 
+        bool allPortsComplete() {
+
+            return (this->portsVisited == Constants::AllPortsComplete);
+
+        }
+
         int16_t getPalm(uint8_t idx) { return this->palm[idx]; }
 
         int16_t setPalm(uint8_t idx, int16_t val) { this->palm[idx] = val; }
@@ -140,7 +146,7 @@ struct World {
 
         }
 
-        void updateBoat() {
+        boolean updateBoat() { // true - end of sequence
 
             if (this->frameCount % 4 == 0) {
 
@@ -173,16 +179,16 @@ struct World {
                 DEBUG_PRINTLN(y);
                 #endif
 
-                this->boatDirection = static_cast<BoatDirection>(boatMovement.direction);
-
                 if (boatMovement.x != 0 || boatMovement.y !=0) {
+
                     this->xBoat = this->xBoat + boatMovement.x;
                     this->yBoat = this->yBoat + boatMovement.y;
-                    this-boatCounter++;
+                    this->boatDirection = static_cast<BoatDirection>(boatMovement.direction);
+                    this->boatCounter++;
+                    return false;
                 }
-                // else {
-                //     DEBUG_BREAK
-                // }
+
+                return true;
 
             }
         

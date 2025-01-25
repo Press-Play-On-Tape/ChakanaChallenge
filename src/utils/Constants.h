@@ -585,6 +585,10 @@ namespace Constants {
     constexpr uint8_t Puff_Max = 7 * 16;
     constexpr uint8_t Glint_Max = 8;
 
+    constexpr uint8_t GamblePanel_Win = 11;
+    constexpr uint8_t GamblePanel_Lose = 9;
+    constexpr uint16_t AllPortsComplete = 16383;
+
 };
 
 

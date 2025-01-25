@@ -349,6 +349,7 @@ void renderWorld(uint8_t currentPlane) {
     }
 
     Stance stance = player.getStance();
+    uint8_t stanceImg = getStanceImg(stance);
 
     switch (stance) {
 
@@ -380,7 +381,7 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_RH_01 ... Stance::Man_Sword_Walk_BK_RH_04:
         case Stance::Man_Sword_StandingJump_RH_01 ... Stance::Man_Sword_StandingJump_RH_07:
             {
-                uint8_t stanceImg = getStanceImg(stance);
+                // uint8_t stanceImg = getStanceImg(stance);
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
                 renderPlayerAndHealth(stanceImg, 56 + x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
             }
@@ -392,7 +393,7 @@ void renderWorld(uint8_t currentPlane) {
         case Stance::Man_Sword_Walk_BK_LH_01 ... Stance::Man_Sword_Walk_BK_LH_04:
         case Stance::Man_Sword_StandingJump_LH_01 ... Stance::Man_Sword_StandingJump_LH_07:
             {
-                uint8_t stanceImg = getStanceImg(stance);
+                // uint8_t stanceImg = getStanceImg(stance);
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
                 renderPlayerAndHealth(stanceImg, 56 - x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
             }
@@ -400,7 +401,7 @@ void renderWorld(uint8_t currentPlane) {
 
         default:
             {
-                uint8_t stanceImg = getStanceImg(stance);
+                // uint8_t stanceImg = getStanceImg(stance);
                 SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
             }
             break;
@@ -555,6 +556,7 @@ void renderWorld(uint8_t currentPlane) {
 
     }
 
+
     // Render a puff ?
 
     Item &item = world.getItem(world.getItem(ItemType::Puff));
@@ -586,7 +588,6 @@ void renderWorld(uint8_t currentPlane) {
     // Render waves and foreground ..
 
     if (world.getWaveIdx() != Constants::NoWaves) {
-        // SpritesU::drawOverwriteFX(world.getWave() - 128, 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
         SpritesU::drawOverwriteFX(world.getWave(), 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
         SpritesU::drawOverwriteFX(world.getWave() + 128, 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
     }
@@ -607,9 +608,6 @@ void renderWorld(uint8_t currentPlane) {
 
 
 
-
-                    // a.drawRect(56 + 3, yOffset - Constants::GroundY + player.getY(), 10,16, WHITE);
-                    // a.drawRect(world.getItem(0).getX() + world.getMiddleground() - 4 + 1, yOffset - world.getItem(0).getY() + 1, 14, 14, WHITE);
 
 
     // Render Menu -----------------------------------------------------------------------------------------------------
