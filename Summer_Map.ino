@@ -210,9 +210,7 @@ void map_Update() {
 
                     // Reposition boat ..
 
-                    uint8_t offset = 0;
-
-                    if (world.getCurrentPort() < 255 && world.getNextPort() < 255 && world.getCurrentPort() < world.getNextPort()) offset = 1;
+                    uint8_t offset = world.getBoatCoords_Offset();
 
                     FX::seekDataArray(Constants::BoatCoords_Start, (world.getCurrentPort() * 2) + offset, 0, 4);
                     world.setXBoat(FX::readPendingUInt16());

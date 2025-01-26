@@ -673,11 +673,11 @@ void renderWorld(uint8_t currentPlane) {
 
     // Front palms  SJH should be enabled
 
-    // for (uint8_t i = 0; i < 4; i++) {
-    //     uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
-    //     SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10 + yOffset - Constants::GroundY, palmIdx, currentPlane);
+    for (uint8_t i = 0; i < 2; i++) {
+        uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
+        SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10 + yOffset - Constants::GroundY, palmIdx, currentPlane);
 
-    // }
+    }
 
 
 

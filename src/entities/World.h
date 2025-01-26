@@ -152,14 +152,27 @@ struct World {
 
         }
 
+        uint8_t getBoatCoords_Offset() {
+
+            if (this->getCurrentPort() < 255 && this->getNextPort() < 255) {
+
+                if (this->getCurrentPort() < this->getNextPort() && (this->getNextPort() - this->getCurrentPort() <= 6)) {
+
+                    return 1;
+
+                }
+
+            }
+            
+            return 0;
+
+        }
+
         boolean updateBoat() { // true - end of sequence
 
             if (this->frameCount % 4 == 0) {
 
-                uint8_t offset = 0;
-
-                if (this->getCurrentPort() < 255 && this->getNextPort() < 255 && this->getCurrentPort() < this->getNextPort()) offset = 1;
-
+                uint8_t offset = getBoatCoords_Offset();
                 uint24_t boatCoords = FX::readIndexedUInt24(Constants::BoatCoords, (this->getCurrentPort() * 2) + offset);
 
                 BoatMovement boatMovement;
