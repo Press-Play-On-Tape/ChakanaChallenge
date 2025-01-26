@@ -101,7 +101,7 @@ struct World {
 
         void init() {
 
-            this->portsVisited = 0; //16382;
+            this->portsVisited = 0;
             this->frameCount = 0;
             this->xMap = 0;
             this->yMap = 0;
@@ -143,6 +143,12 @@ struct World {
         void incFrameCount() {
 
             this->frameCount++;
+
+        }
+
+        void incGameState() {
+
+            this->gameState++;
 
         }
 
@@ -191,6 +197,8 @@ struct World {
                 return true;
 
             }
+
+            return false;
         
         }
 
@@ -676,7 +684,12 @@ struct World {
             }
             else {
     
-                return tile == Tiles::Solid_Walkable || tile == Tiles::Single_Stair_LH_Upper_TL || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
+                return tile == Tiles::Solid_Walkable || 
+                       tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
+                       tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
+                       tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
+                       tile == Tiles::Single_Stair_LH_Upper_TL || 
+                       tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
             }
             
@@ -691,7 +704,11 @@ struct World {
         bool canJumpUpOntoTile(uint8_t tile) {
 
             // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable;
-            return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
+            return tile == Tiles::Solid_Walkable || 
+                   tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
+                   tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
+                   tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
+                   tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
             
         }
 

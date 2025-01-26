@@ -1484,6 +1484,9 @@ enum class GameState : uint8_t {
     Map_ShowMenu_1,
     Map_ShowMenu_2,
     Map_ShowMenu_3,
+    Map_ShowMenu_4,
+    Map_ShowMenu_Back,
+    Map_ShowMenu_Exit,
     Map_MoveBoat,
 };
 

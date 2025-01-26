@@ -2350,20 +2350,15 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     switch (world.getGameState()) {
 
         case GameState::Chakana_Open:
+            {
+                uint8_t frame = (world.allPortsComplete() ? 16 : 0) + endOfLevel_Counter;
 
-            if (world.allPortsComplete()) {
+                SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (frame * 3) + currentPlane);
 
-                SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, ((16 + endOfLevel_Counter) * 3) + currentPlane);
-
-            }
-            else {
-
-                SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, (endOfLevel_Counter * 3) + currentPlane);
-
-                if (endOfLevel_Counter > 12) {
+                if (frame < 16 && endOfLevel_Counter > 12) {
                     SpritesU::drawOverwriteFX(63, 37, Images::Numbers_6x4_2D_BW, (titleCounter * 3) + currentPlane);
                 }
-
+                
             }
 
             break;

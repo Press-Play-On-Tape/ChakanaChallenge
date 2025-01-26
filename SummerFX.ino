@@ -154,6 +154,9 @@ void loop() {
         case GameState::Map_ShowMenu_1:
         case GameState::Map_ShowMenu_2:
         case GameState::Map_ShowMenu_3:
+        case GameState::Map_ShowMenu_4:
+        case GameState::Map_ShowMenu_Back:
+        case GameState::Map_ShowMenu_Exit:
         case GameState::Map_MoveBoat:
             map(a);
             break;

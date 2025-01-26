@@ -45,7 +45,8 @@ void renderWorld(uint8_t currentPlane) {
             int16_t renderX = (i * 8) + world.getMiddleground() - 4;
             int16_t renderY = yOffset - (y * 8);
 
-            if (renderY <= -16 || renderY > 127) continue;
+//            if (renderY <= -16 || renderY > 127) continue;
+            if (renderY <= -16 || renderY > 64) continue;
 
             uint8_t tile00 = world.getTile(i, y);
             uint8_t tile01 = world.getTile(i + 1, y);
@@ -58,133 +59,179 @@ void renderWorld(uint8_t currentPlane) {
 
             // Is the first tile a solid?
 
-            if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable) {
+            // if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable) {
 
-                uint8_t tile02 = world.getTile(i + 2, y);
-                uint8_t tile03 = world.getTile(i + 3, y);
-                uint8_t tile12 = world.getTile(i + 2, y + 1);
-                uint8_t tile13 = world.getTile(i + 3, y + 1);
+            //     uint8_t tile02 = world.getTile(i + 2, y);
+            //     uint8_t tile03 = world.getTile(i + 3, y);
+            //     uint8_t tile12 = world.getTile(i + 2, y + 1);
+            //     uint8_t tile13 = world.getTile(i + 3, y + 1);
 
-                // Is the second tile solid?
+            //     // Is the second tile solid?
 
-                if (tile02 == Tiles::Solid_NonWalkable && tile03 == Tiles::Solid_NonWalkable && tile12 == Tiles::Solid_Walkable && tile13 == Tiles::Solid_Walkable && renderX > -16) {
+            //     if (tile02 == Tiles::Solid_NonWalkable && tile03 == Tiles::Solid_NonWalkable && tile12 == Tiles::Solid_Walkable && tile13 == Tiles::Solid_Walkable && renderX > -16) {
 
-                    uint8_t tile04 = world.getTile(i + 4, y);
-                    uint8_t tile05 = world.getTile(i + 5, y);
-                    uint8_t tile14 = world.getTile(i + 4, y + 1);
-                    uint8_t tile15 = world.getTile(i + 5, y + 1);
+            //         uint8_t tile04 = world.getTile(i + 4, y);
+            //         uint8_t tile05 = world.getTile(i + 5, y);
+            //         uint8_t tile14 = world.getTile(i + 4, y + 1);
+            //         uint8_t tile15 = world.getTile(i + 5, y + 1);
 
-                    // Is the third tile solid?
+            //         // Is the third tile solid?
 
-                    if (tile04 == Tiles::Solid_NonWalkable && tile05 == Tiles::Solid_NonWalkable && tile14 == Tiles::Solid_Walkable && tile15 == Tiles::Solid_Walkable && renderX > -32) {
+            //         if (tile04 == Tiles::Solid_NonWalkable && tile05 == Tiles::Solid_NonWalkable && tile14 == Tiles::Solid_Walkable && tile15 == Tiles::Solid_Walkable && renderX > -32) {
 
-                        uint8_t tile06 = world.getTile(i + 6, y);
-                        uint8_t tile07 = world.getTile(i + 7, y);
-                        uint8_t tile16 = world.getTile(i + 6, y + 1);
-                        uint8_t tile17 = world.getTile(i + 7, y + 1);
+            //             uint8_t tile06 = world.getTile(i + 6, y);
+            //             uint8_t tile07 = world.getTile(i + 7, y);
+            //             uint8_t tile16 = world.getTile(i + 6, y + 1);
+            //             uint8_t tile17 = world.getTile(i + 7, y + 1);
 
-                        // Is the fourth tile solid?
+            //             // Is the fourth tile solid?
 
-                        if (tile06 == Tiles::Solid_NonWalkable && tile07 == Tiles::Solid_NonWalkable && tile16 == Tiles::Solid_Walkable && tile17 == Tiles::Solid_Walkable && renderX > -48) {
+            //             if (tile06 == Tiles::Solid_NonWalkable && tile07 == Tiles::Solid_NonWalkable && tile16 == Tiles::Solid_Walkable && tile17 == Tiles::Solid_Walkable && renderX > -48) {
 
-                            imgTile = Images::Crate_01_04;
-                            i = i + 6;
+            //                 imgTile = Images::Crate_01_04;
+            //                 i = i + 6;
 
-                        }
-                        else {
+            //             }
+            //             else {
 
-                            imgTile = Images::Crate_01_03;
-                            i = i + 4;
+            //                 imgTile = Images::Crate_01_03;
+            //                 i = i + 4;
 
-                        }
+            //             }
 
-                    }
-                    else {
+            //         }
+            //         else {
 
-                        imgTile = Images::Crate_01_02;
-                        i = i + 2;
+            //             imgTile = Images::Crate_01_02;
+            //             i = i + 2;
 
-                    }
+            //         }
 
-                }
-                else {
+            //     }
+            //     else {
 
-                    if (renderX <= -16 || renderX > 127) continue;
+            //         if (renderX <= -16 || renderX > 127) continue;
 
-                    imgTile = Images::Crate_01;
+            //         imgTile = Images::Crate_01;
 
-                }
+            //     }
 
-            }
+            // }
             
 
-            if (renderX <= -16 || renderX > 127) continue;
-            if (renderY <= -16 || renderY > 127) continue;
+            // if (renderX <= -16 || renderX > 127) continue;
+            // if (renderY <= -16 || renderY > 127) continue;
+            if (renderX <= -64 || renderX > 127) continue;
+            
 
-            if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                         imgTile = Images::Crate_10;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                imgTile = Images::Crate_20;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                imgTile = Images::Crate_21;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                           imgTile = Images::Crate_00;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_00;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_03;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_04;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                  imgTile = Images::Crate_05;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_02;
-
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Spikes && tile11 == Tiles::Spikes)                                            imgTile = Images::Spikes_Top;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                  imgTile = Images::Crate_09;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_02;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                                              imgTile = Images::Crate_06;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_06;
+            if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                 imgTile = Images::Crate_01;
+            else if (tile00 == Tiles::Solid_2_Wide && tile01 == Tiles::Solid_2_Wide)                                                                                                            { imgTile = Images::Crate_01_02; i = i + 2; }
+            else if (tile00 == Tiles::Solid_3_Wide && tile01 == Tiles::Solid_3_Wide)                                                                                                            { imgTile = Images::Crate_01_03; i = i + 4; }
+            else if (tile00 == Tiles::Solid_4_Wide && tile01 == Tiles::Solid_4_Wide)                                                                                                            { imgTile = Images::Crate_01_04; i = i + 6; }
 
 
-            else if (tile00 == Tiles::Solid_Blocking && tile01 == Tiles::Solid_Blocking && tile10 == Tiles::Solid_Blocking && tile11 == Tiles::Solid_Blocking)                                  imgTile = Images::Crate_22;
-            else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                              imgTile = Images::Crate_07;
-            else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                                 imgTile = Images::Crate_07;
-           // else if (tile00 == 6 && tile01 == 5 && tile10 == Tiles::Blank && tile11 == Tiles::Blank)         imgTile = Images::Crate_11;
-            else if (tile00 == Tiles::Blank && tile01 == Tiles::Single_Stair_RH_Lower && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                      imgTile = Images::Crate_11;
-            else if (tile00 == Tiles::Spikes && tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                                    imgTile = Images::Spikes_Bottom;
+            if (imgTile == 0) {
 
-            else if (tile00 == Tiles::Single_Stair_LH_Lower && tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                      imgTile = Images::Crate_11a;
+                if (renderX <= -16 || renderX > 127) continue;
+
+                // if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                         imgTile = Images::Crate_10;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                imgTile = Images::Crate_20;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                imgTile = Images::Crate_21;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                           imgTile = Images::Crate_00;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_00;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_03;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_04;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                  imgTile = Images::Crate_05;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_02;
+                if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                    imgTile = Images::Crate_10;
+                else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && */ tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_20;
+                else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && */ tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                           imgTile = Images::Crate_21;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_00;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_03;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_04;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                  imgTile = Images::Crate_05;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_02;
+
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Spikes && tile11 == Tiles::Spikes)                                            imgTile = Images::Spikes_Top;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                  imgTile = Images::Crate_09;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_02;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_06;
+                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Spikes && */ tile11 == Tiles::Spikes)                                            imgTile = Images::Spikes_Top;
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                  imgTile = Images::Crate_09;
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_02;
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_06;
 
 
-            // ladders
-
-            else if (tile00 == Tiles::Ladder_Lower && tile01 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper && tile11 == Tiles::Ladder_Upper)                                          imgTile = Images::Crate_13;
-            else if (tile00 == Tiles::Ladder_Lower && tile01 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle && tile11 == Tiles::Ladder_Middle)                                        imgTile = Images::Crate_14;
-            else if (tile00 == Tiles::Ladder_Middle && tile01 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper && tile11 == Tiles::Ladder_Upper)                                        imgTile = Images::Crate_15;
-            else if (tile00 == Tiles::Ladder_Middle && tile01 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle && tile11 == Tiles::Ladder_Middle)                                      imgTile = Images::Crate_16;
-
-
-            // Rope
-
-            else if (tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                                                   imgTile = Images::Crate_17;
-            else if (tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                                                   imgTile = Images::Crate_18;
-            else if (tile00 == Tiles::Blank && tile01 == Tiles::Blank && tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                                                        imgTile = Images::Crate_19;
-            else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                                        imgTile = Images::Crate_23;
+                // else if (tile00 == Tiles::Solid_Blocking && tile01 == Tiles::Solid_Blocking && tile10 == Tiles::Solid_Blocking && tile11 == Tiles::Solid_Blocking)                                  imgTile = Images::Crate_22;
+                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                              imgTile = Images::Crate_07;
+                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                                 imgTile = Images::Crate_07;
+                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Single_Stair_RH_Lower && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                      imgTile = Images::Crate_11;
+                // else if (tile00 == Tiles::Spikes && tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                                    imgTile = Images::Spikes_Bottom;
+                // else if (tile00 == Tiles::Single_Stair_LH_Lower && tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                      imgTile = Images::Crate_11a;
+                else if (tile00 == Tiles::Solid_Blocking /*&& tile01 == Tiles::Solid_Blocking && tile10 == Tiles::Solid_Blocking && tile11 == Tiles::Solid_Blocking*/)                                  imgTile = Images::Crate_22;
+                else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                                 imgTile = Images::Crate_07;
+                else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                      imgTile = Images::Crate_11;
+                else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                                    imgTile = Images::Spikes_Bottom;
+                else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                      imgTile = Images::Crate_11a;
 
 
-            // Stairs
+                // ladders
 
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Single_Stair_RH_Upper_TL && tile11 == Tiles::Single_Stair_RH_Upper_TR)           imgTile = Images::Crate_08;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Single_Stair_LH_Upper_TL && tile11 == Tiles::Single_Stair_LH_Upper_TR)           imgTile = Images::Crate_12;
+                // else if (tile00 == Tiles::Ladder_Lower && tile01 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper && tile11 == Tiles::Ladder_Upper)                                          imgTile = Images::Crate_13;
+                // else if (tile00 == Tiles::Ladder_Lower && tile01 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle && tile11 == Tiles::Ladder_Middle)                                        imgTile = Images::Crate_14;
+                // else if (tile00 == Tiles::Ladder_Middle && tile01 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper && tile11 == Tiles::Ladder_Upper)                                        imgTile = Images::Crate_15;
+                // else if (tile00 == Tiles::Ladder_Middle && tile01 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle && tile11 == Tiles::Ladder_Middle)                                      imgTile = Images::Crate_16;
+                else if (tile00 == Tiles::Ladder_Lower  /*&& tile01 == Tiles::Ladder_Lower */ && tile10 == Tiles::Ladder_Upper  /*&& tile11 == Tiles::Ladder_Upper */)                                 imgTile = Images::Crate_13;
+                else if (tile00 == Tiles::Ladder_Lower  /*&& tile01 == Tiles::Ladder_Lower */ && tile10 == Tiles::Ladder_Middle /*&& tile11 == Tiles::Ladder_Middle*/)                                 imgTile = Images::Crate_14;
+                else if (tile00 == Tiles::Ladder_Middle /*&& tile01 == Tiles::Ladder_Middle*/ && tile10 == Tiles::Ladder_Upper  /*&& tile11 == Tiles::Ladder_Upper */)                                 imgTile = Images::Crate_15;
+                else if (tile00 == Tiles::Ladder_Middle /*&& tile01 == Tiles::Ladder_Middle*/ && tile10 == Tiles::Ladder_Middle /*&& tile11 == Tiles::Ladder_Middle*/)                                 imgTile = Images::Crate_16;
 
 
-            // Slide
+                // Rope
 
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_24;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                            imgTile = Images::Crate_28;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full && tile11 == Tiles::Blank)                                          imgTile = Images::Crate_29;
-            else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Slide_RH_Upper)                                                 imgTile = Images::Crate_25;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Slide_RH_Upper && tile11 == Tiles::Solid_Walkable)                            imgTile = Images::Crate_30;
-            else if (tile00 == Tiles::Slide_RH_Full && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Slide_RH_Full)                                          imgTile = Images::Crate_31;
+                // else if (tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                                                imgTile = Images::Crate_17;
+                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                                                   imgTile = Images::Crate_18;
+                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Blank && tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                                                        imgTile = Images::Crate_19;
+                // else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                                        imgTile = Images::Crate_23;
+                else if (/*tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                                           imgTile = Images::Crate_17;
+                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                                                   imgTile = Images::Crate_18;
+                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                                                        imgTile = Images::Crate_19;
+                else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                                        imgTile = Images::Crate_23;
 
-            // Vertical Vines
 
-            else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                              imgTile = Images::Crate_36;
-            else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                                imgTile = Images::Crate_37;
-            else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Upper && tile11 == Tiles::Vine_Upper)                                                imgTile = Images::Crate_38;
+                // Stairs
 
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Single_Stair_RH_Upper_TL && tile11 == Tiles::Single_Stair_RH_Upper_TR)           imgTile = Images::Crate_08;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Single_Stair_LH_Upper_TL && tile11 == Tiles::Single_Stair_LH_Upper_TR)           imgTile = Images::Crate_12;
+                else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Single_Stair_RH_Upper_TL && */ tile11 == Tiles::Single_Stair_RH_Upper_TR)           imgTile = Images::Crate_08;
+                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Single_Stair_LH_Upper_TL && */ tile11 == Tiles::Single_Stair_LH_Upper_TR)           imgTile = Images::Crate_12;
+
+
+                // Slide
+
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_24;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                            imgTile = Images::Crate_28;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full && tile11 == Tiles::Blank)                                          imgTile = Images::Crate_29;
+                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Slide_RH_Upper)                                                 imgTile = Images::Crate_25;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Slide_RH_Upper && tile11 == Tiles::Solid_Walkable)                            imgTile = Images::Crate_30;
+                // else if (tile00 == Tiles::Slide_RH_Full && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Slide_RH_Full)                                          imgTile = Images::Crate_31;
+                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank &&*/ tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_24;
+                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && */tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                            imgTile = Images::Crate_28;
+                else if (/*tile00 == Tiles::Solid_NonWalkable && */tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full /*&& tile11 == Tiles::Blank*/)                                          imgTile = Images::Crate_29;
+                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && */ tile11 == Tiles::Slide_RH_Upper)                                                 imgTile = Images::Crate_25;
+                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && */ tile10 == Tiles::Slide_RH_Upper /*&& tile11 == Tiles::Solid_Walkable*/)                            imgTile = Images::Crate_30;
+                else if (tile00 == Tiles::Slide_RH_Full /*&& tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank */ && tile11 == Tiles::Slide_RH_Full)                                          imgTile = Images::Crate_31;
+
+                // Vertical Vines
+
+                // else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                              imgTile = Images::Crate_36;
+                // else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                                imgTile = Images::Crate_37;
+                // else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Upper && tile11 == Tiles::Vine_Upper)                                                imgTile = Images::Crate_38;
+                else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle /*&& tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle*/)                                              imgTile = Images::Crate_36;
+                else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower /*&& tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle*/)                                                imgTile = Images::Crate_37;
+                else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle /*&& tile10 == Tiles::Vine_Upper && tile11 == Tiles::Vine_Upper*/)                                                imgTile = Images::Crate_38;
+
+            }
 
             // Lever Portal
             // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
@@ -204,21 +251,37 @@ void renderWorld(uint8_t currentPlane) {
 
                 frame = ((world.getFrameCount() % 24) / 6 * 3);
 
-                if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
                     imgTile = Images::Crate_32;
                 }
 
-                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
+                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable &&*/ world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
                     imgTile = Images::Crate_34;
                 }
 
-                else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
                     imgTile = Images::Crate_33;
                 }
 
-                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
+                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable &&*/ world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
                     imgTile = Images::Crate_35;
                 }
+
+                // if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                //     imgTile = Images::Crate_32;
+                // }
+
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
+                //     imgTile = Images::Crate_34;
+                // }
+
+                // else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                //     imgTile = Images::Crate_33;
+                // }
+
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
+                //     imgTile = Images::Crate_35;
+                // }
 
                 if (imgTile != 0) {
                     SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
@@ -233,17 +296,29 @@ void renderWorld(uint8_t currentPlane) {
 
                 frame = ((world.getFrameCount() % 48) / 3 * 3);
                 
-                if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
                     imgTile = Images::Crate_39;
                 }
 
-                else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
                     imgTile = Images::Crate_40;
                 }
 
-                else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
                     imgTile = Images::Crate_41;
                 }
+
+                // if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                //     imgTile = Images::Crate_39;
+                // }
+
+                // else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                //     imgTile = Images::Crate_40;
+                // }
+
+                // else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
+                //     imgTile = Images::Crate_41;
+                // }
 
                 if (imgTile != 0) {
                     SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);

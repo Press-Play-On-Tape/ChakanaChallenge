@@ -122,10 +122,13 @@ void map_Update() {
             break;
 
         case GameState::Map_ShowMenu_1:
+        case GameState::Map_ShowMenu_2:
+        case GameState::Map_ShowMenu_3:
+        case GameState::Map_ShowMenu_4:
 
             if (justPressed & A_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowMenu_2);
+                world.incGameState();
 
             }
 
@@ -136,34 +139,34 @@ void map_Update() {
             }
 
             break;
-
-        case GameState::Map_ShowMenu_2:
+            
+        case GameState::Map_ShowMenu_Back:
 
             if (justPressed & DOWN_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowMenu_3);
+                world.setGameState(GameState::Map_ShowMenu_Exit);
 
             }
 
             if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowMenu_1);
+                world.setGameState(GameState::Map);
 
             }
 
             break;
 
-        case GameState::Map_ShowMenu_3:
+        case GameState::Map_ShowMenu_Exit:
 
             if (justPressed & UP_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowMenu_2);
+                world.setGameState(GameState::Map_ShowMenu_Back);
 
             }
 
-            if (justPressed & B_BUTTON) {
+            if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowMenu_1);
+                world.setGameState(GameState::Map);
 
             }
 
@@ -232,7 +235,7 @@ void map_Update() {
                     DEBUG_PRINT(",");
                     DEBUG_PRINTLN(world.getYBoat());
                     #endif
-                    
+                   
                 }
                 else {
 
@@ -334,13 +337,36 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Map_ShowMenu_2:
         case GameState::Map_ShowMenu_3:
-            
+        case GameState::Map_ShowMenu_4:
+            {
+                uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2);
+                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, ((frame + 16) * 3) + currentPlane);
+
+                for (uint8_t i = 0; i < 5; i++) {
+
+                    uint8_t port = i + (frame * 5);
+
+                    if (port == 14) break;
+
+                    if (world.getPortVisited(port)) {
+
+                        SpritesU::drawPlusMaskFX(86, 15 + (7 * i), Images::Checkbox, currentPlane);
+                        // SpritesU::drawPlusMaskFX(100, 15 , Images::Beach, currentPlane);
+                    }
+                    
+                }
+
+            }
+            break;
+
+        case GameState::Map_ShowMenu_Back:
+        case GameState::Map_ShowMenu_Exit:
+
             SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map,  (15 * 3) + currentPlane);
 
             if (world.getFrameCount() % 64 < 32) {
 
-                renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2)) * 8, currentPlane);
-                // SpritesU::drawPlusMaskFX(90, 6 + 24 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2)) * 8, Images::InventoryPanel_Cursor, currentPlane);
+                renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8, currentPlane);
 
             }
             
