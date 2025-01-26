@@ -162,28 +162,10 @@ struct World {
 
                 uint24_t boatCoords = FX::readIndexedUInt24(Constants::BoatCoords, (this->getCurrentPort() * 2) + offset);
 
-                #ifdef DEBUG_BOATS
-                DEBUG_PRINT("UpdateBoat ");   
-                DEBUG_PRINT(this->getCurrentPort());
-                DEBUG_PRINT(" ");     
-                DEBUG_PRINT(this->getNextPort());
-                DEBUG_PRINT(" ");     
-                DEBUG_PRINT(offset);
-                DEBUG_PRINT(" ");     
-                DEBUG_PRINT((uint32_t)boatCoords);
-                DEBUG_PRINT(" ");
-                #endif
-
                 BoatMovement boatMovement;
                 FX::seekData(boatCoords + (this->boatCounter * 3));
                 FX::readObject(boatMovement);          
                 FX::readEnd();
-
-                #ifdef DEBUG_BOATS
-                DEBUG_PRINT(x);
-                DEBUG_PRINT(" ");
-                DEBUG_PRINTLN(y);
-                #endif
 
                 if (boatMovement.x != 0 || boatMovement.y !=0) {
 

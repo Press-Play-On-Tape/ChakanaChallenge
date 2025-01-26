@@ -214,27 +214,12 @@ void map_Update() {
 
                     if (world.getCurrentPort() < 255 && world.getNextPort() < 255 && world.getCurrentPort() < world.getNextPort()) offset = 1;
 
-                    #ifdef DEBUG_BOATS
-                    DEBUG_PRINT("Position Boat ");
-                    DEBUG_PRINT(world.getCurrentPort());
-                    DEBUG_PRINT(" ");
-                    DEBUG_PRINT(world.getNextPort());
-                    DEBUG_PRINT(" ");
-                    DEBUG_PRINTLN(offset? 1 : 0);
-                    #endif
-
                     FX::seekDataArray(Constants::BoatCoords_Start, (world.getCurrentPort() * 2) + offset, 0, 4);
                     world.setXBoat(FX::readPendingUInt16());
                     world.setYBoat(FX::readPendingUInt16() - 1);
                     world.setBoatCounter(0);
                     world.setBoatDirection(BoatDirection::Left);
                     FX::readEnd();
-
-                    #ifdef DEBUG_BOATS
-                    DEBUG_PRINT(world.getXBoat());
-                    DEBUG_PRINT(",");
-                    DEBUG_PRINTLN(world.getYBoat());
-                    #endif
                    
                 }
                 else {
@@ -268,8 +253,8 @@ void map_Update() {
 
                 if (xOffset > 16)  world.incXMap(1);        // SJH Was 20 & 12
                 if (xOffset < -16) world.incXMap(-1);
-                if (yOffset > 10)  world.incYMap(1);
-                if (yOffset < -10) world.incYMap(-1);
+                if (yOffset > 6)  world.incYMap(1);
+                if (yOffset < -6) world.incYMap(-1);
 
             }
             
