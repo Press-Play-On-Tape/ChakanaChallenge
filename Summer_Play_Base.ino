@@ -1223,7 +1223,7 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
 }
 
 
-void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
+void playGame_HandleJump(Player &player, uint8_t pressed) {
 
     Stance stance = player.getStance();
 
@@ -1362,9 +1362,11 @@ void playGame_HandleJump(Player &player, uint8_t pressed, uint8_t justPressed) {
 
 void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-     int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
+    uint8_t justPressedAndPressed = pressed | justPressed;
+    int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
 
-    if (justPressed & A_BUTTON || pressed & A_BUTTON) {
+    // if (justPressed & A_BUTTON || pressed & A_BUTTON) {
+    if (justPressedAndPressed & A_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1382,14 +1384,16 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
+    // else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
+    else if (justPressedAndPressed & DOWN_BUTTON) {
 
         world.setGameState(GameState::Play_Game);
         player.setStance(Stance::Man_Walk_RH_00);
 
     }
 
-    else if (justPressed & B_BUTTON || pressed & B_BUTTON) {
+    // else if (justPressed & B_BUTTON || pressed & B_BUTTON) {
+    else if (justPressedAndPressed & B_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1407,7 +1411,8 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
+    // else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
+    else if (justPressedAndPressed & RIGHT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1433,7 +1438,8 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
+    // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
+    else if (justPressedAndPressed & LEFT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1521,7 +1527,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case GameState::Chakana_Open:
 
-                    if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+                    // if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+                    if (justPressed & AB_BUTTON) {
 
                         if (world.allPortsComplete()) {
 
@@ -1543,7 +1550,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case GameState::Play_Dead:
 
-                    if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+                    // if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
+                    if (justPressed & AB_BUTTON) {
 
                         if (player.getLives() > 1) {
 
@@ -1572,7 +1580,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_End:
 
-                    playGame_HandleGamble(player, pressed, justPressed);
+                    playGame_HandleGamble(player, justPressed);
                     pressed = 0;
                     justPressed = 0;
                     break;
@@ -1585,7 +1593,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             switch (world.getGameState()) {
 
                 case GameState::Play_Game:
-                    playGame_HandleJump(player, pressed, justPressed);
+                    playGame_HandleJump(player, pressed);
                     break;
 
             }
@@ -1628,7 +1636,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 // Otherwise check if we have collided ..
 
                 Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };
-                Item &puff = world.getItem(world.getItem(ItemType::Puff));
+                // Item &puff = world.getItem(world.getItem(ItemType::Puff));
 
                 switch (item.getItemType()) {
 
@@ -1638,10 +1646,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             if (item.getCounter() == 0) {
 
-                                puff.setX(item.getX());
-                                puff.setY(item.getY());
-                                puff.setFrame(0);
-                                item.setCounter(3);
+                                launchPuff(item);
                                 player.setChakanas(player.getChakanas() + item.getData());
 
                             }
@@ -1663,10 +1668,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             if (item.getCounter() == 0) {
 
-                                puff.setX(item.getX());
-                                puff.setY(item.getY());
-                                puff.setFrame(0);
-                                item.setCounter(3);
+                                launchPuff(item);
 
                             }
 
@@ -2482,5 +2484,16 @@ void removeWorldandInventoryItem(ItemType itemType, GameState gameState) {
     world.getPlayer().removeInventoryItem(menu.getY() - 2);
     menu.setTop(0);
     menu.setY(0);
+
+}
+
+void launchPuff(Item &item) {
+
+    Item &puff = world.getItem(world.getItem(ItemType::Puff));
+
+    puff.setX(item.getX());
+    puff.setY(item.getY());
+    puff.setFrame(0);
+    item.setCounter(3);
 
 }

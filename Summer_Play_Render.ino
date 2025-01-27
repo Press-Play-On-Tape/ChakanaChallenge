@@ -22,9 +22,7 @@ void renderWorld(uint8_t currentPlane) {
         for (uint8_t i = 0; i < 2; i++) {
 
             int16_t x = world.getBackground() + (i * 128);
-
-            SpritesU::drawOverwriteFX(x, y - 8, Images::Background_Above, currentPlane);    
-            SpritesU::drawOverwriteFX(x, y, Images::Background, currentPlane);    
+            SpritesU::drawOverwriteFX(x, y - 8, Images::Background, currentPlane);    
 
         }
 
@@ -451,6 +449,7 @@ void renderWorld(uint8_t currentPlane) {
     for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
 
         Enemy &enemy = world.getEnemy(i);
+        
 
         if (enemy.getX() > 0) {
 
@@ -459,6 +458,7 @@ void renderWorld(uint8_t currentPlane) {
             uint8_t yEnemy = yOffset - enemy.getY();
             uint8_t yEnemyItem = yOffset - enemy.getItem().getY();
             uint8_t stanceImg = getStanceImg(enemy.getStance());
+            ItemType enemyItemType = enemy.getItem().getItemType();
 
             switch (enemy.getStance()) {
 
@@ -471,7 +471,7 @@ void renderWorld(uint8_t currentPlane) {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
                         renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
 
-                        if (enemy.getItem().getItemType() == ItemType::Glint) {
+                        if (enemyItemType == ItemType::Glint) {
                             renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
@@ -487,7 +487,7 @@ void renderWorld(uint8_t currentPlane) {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
                         renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
                         
-                        if (enemy.getItem().getItemType() == ItemType::Glint) {
+                        if (enemyItemType == ItemType::Glint) {
                             renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
@@ -498,15 +498,15 @@ void renderWorld(uint8_t currentPlane) {
                     {
                         SpritesU::drawPlusMaskFX(xEnemy, yEnemy, Images::Enemy, (stanceImg * 3) + currentPlane);
 
-                        if (enemy.getItem().getItemType() == ItemType::Arrow_RH || enemy.getItem().getItemType() == ItemType::Arrow_LH) {
+                        if (enemyItemType == ItemType::Arrow_RH || enemyItemType == ItemType::Arrow_LH) {
                             
-                            uint8_t frame = (enemy.getItem().getItemType() == ItemType::Arrow_LH ? 3 : 0);
+                            uint8_t frame = (enemyItemType == ItemType::Arrow_LH ? 3 : 0);
                             SpritesU::drawPlusMaskFX(xEnemyItem - 4, yEnemyItem, Images::Arrow, frame + currentPlane);
 
                         }
 
-                        else if ((enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Left_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Left_3) || 
-                                 (enemy.getItem().getItemType() >= ItemType::Trebochet_Ball_Right_1 && enemy.getItem().getItemType() <= ItemType::Trebochet_Ball_Right_3)) {
+                        else if ((enemyItemType >= ItemType::Trebochet_Ball_Left_1 && enemyItemType <= ItemType::Trebochet_Ball_Left_3) || 
+                                 (enemyItemType >= ItemType::Trebochet_Ball_Right_1 && enemyItemType <= ItemType::Trebochet_Ball_Right_3)) {
 
                             SpritesU::drawPlusMaskFX(xEnemyItem - 4, yEnemyItem, Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
 
@@ -769,9 +769,7 @@ void renderItem(ItemType itemType, uint8_t x, uint8_t y, uint8_t currentPlane) {
 
 void renderItemCursor(uint8_t x, uint8_t y, uint8_t currentPlane) {
 
-    SpritesU::drawPlusMaskFX(x, y, Images::Cursor_02, currentPlane);
-    // SpritesU::drawPlusMaskFX(x, y, Images::Cursor_00, currentPlane);
-    // SpritesU::drawPlusMaskFX(x + 15, y, Images::Cursor_01, currentPlane);
+    SpritesU::drawPlusMaskFX(x, y, Images::Cursor, currentPlane);
 
 }
 

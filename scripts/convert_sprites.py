@@ -149,7 +149,6 @@ convert_header(IMAGES + 'Palm5.png',                                            
 convert_header(IMAGES + 'Palm6.png',                                                                    BASE + 'Images.hpp', 'Palm6', 4)
 
 convert_header(IMAGES + 'Background.png',                                                               BASE + 'Images.hpp', 'Background', 4)
-convert_header(IMAGES + 'Background_Above.png',                                                         BASE + 'Images.hpp', 'Background_Above', 4)
 convert_header(IMAGES + 'Players/Player.png',                                                           BASE + 'Images.hpp', 'Player', 4, 16, 16)
 convert_header(IMAGES + 'Players/Enemy.png',                                                            BASE + 'Images.hpp', 'Enemy', 4, 16, 16)
 convert_header(IMAGES + 'Players/Player_Bounce.png',                                                    BASE + 'Images.hpp', 'Player_Bounce', 4, 16, 24)
@@ -164,9 +163,7 @@ convert_header(IMAGES + 'Hearts.png',                                           
 
 convert_header(IMAGES + 'InventoryPanel.png',                                                           BASE + 'Images.hpp', 'InventoryPanel', 4, 32, 64)
 convert_header(IMAGES + 'InventoryPanel_Cursor.png',                                                    BASE + 'Images.hpp', 'InventoryPanel_Cursor', 4)
-convert_header(IMAGES + 'Cursor_00.png',                                                                BASE + 'Images.hpp', 'Cursor_00', 4)
-convert_header(IMAGES + 'Cursor_01.png',                                                                BASE + 'Images.hpp', 'Cursor_01', 4)
-convert_header(IMAGES + 'Cursor_02.png',                                                                BASE + 'Images.hpp', 'Cursor_02', 4)
+convert_header(IMAGES + 'Cursor.png',                                                                   BASE + 'Images.hpp', 'Cursor', 4)
 
 convert_header(IMAGES + 'Items/Item_00.png',                                                            BASE + 'Images.hpp', 'Item_00', 4, 16, 16)
 convert_header(IMAGES + 'Items/Item_01.png',                                                            BASE + 'Images.hpp', 'Item_01', 4, 16, 16)

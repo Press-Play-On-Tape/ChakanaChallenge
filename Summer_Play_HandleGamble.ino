@@ -6,7 +6,7 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed) {
+void playGame_HandleGamble(Player &player, uint8_t justPressed) {
 
     if (justPressed & A_BUTTON) {
                 
