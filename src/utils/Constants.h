@@ -8,7 +8,6 @@
 
 #define _DEBUG
 #define _DEBUG_SOUND
-#define GAMBLE
 
 enum Tiles : uint8_t {
 

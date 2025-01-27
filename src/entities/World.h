@@ -500,11 +500,8 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile, Direction direction) {
             
-            #ifdef GAMBLE
-            if (tile == Tiles::Poker) return true;
-            #endif
-
-            if (tile == Tiles::Solid_Blocking) return false;
+            if (tile == Tiles::Poker)               return true;
+            if (tile == Tiles::Solid_Blocking)      return false;
 
             if (tile == Tiles::Lever_Portal_LH && direction == Direction::Left) { 
 

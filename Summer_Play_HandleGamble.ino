@@ -6,8 +6,6 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-#ifdef GAMBLE
-
 void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed) {
 
     if (justPressed & A_BUTTON) {
@@ -26,7 +24,7 @@ void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed)
                 }
                 else {
 
-                    world.setGameState(GameState::Play_Game);
+                    playGame_HandleMenu(world.getGameState());
 
                 }
 
@@ -34,7 +32,7 @@ void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed)
 
             case GameState::Play_Gamble_Select_Exit:     
                 a.pollButtons();
-                world.setGameState(GameState::Play_Game);
+                playGame_HandleMenu(world.getGameState());
                 break;
 
             case GameState::Play_Gamble_Select_Win:     
@@ -80,7 +78,7 @@ void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed)
 
             case GameState::Play_Gamble_Select_Play:
             case GameState::Play_Gamble_Select_Exit:
-                world.setGameState(GameState::Play_Game);
+                playGame_HandleMenu(world.getGameState());
                 break;
 
         }
@@ -88,4 +86,3 @@ void playGame_HandleGamble(Player &player, uint8_t pressed, uint8_t justPressed)
     }
         
 }
-#endif
