@@ -215,6 +215,11 @@ enum Stance : uint16_t {
             Man_ClimbLadder_BK_RH_UP_13,
             Man_ClimbLadder_BK_RH_UP_14,
 
+            Man_ClimbLadder_More_BK_RH_UP_01,
+            Man_ClimbLadder_More_BK_RH_UP_02,
+            Man_ClimbLadder_More_BK_RH_UP_03,
+            Man_ClimbLadder_More_BK_RH_UP_04,
+
             Man_ClimbLadder_BK_RH_DOWN_01,
             Man_ClimbLadder_BK_RH_DOWN_02,
             Man_ClimbLadder_BK_RH_DOWN_03,
@@ -229,6 +234,11 @@ enum Stance : uint16_t {
             Man_ClimbLadder_BK_RH_DOWN_12,
             Man_ClimbLadder_BK_RH_DOWN_13,
             Man_ClimbLadder_BK_RH_DOWN_14,
+
+            Man_ClimbLadder_More_BK_RH_DOWN_01,
+            Man_ClimbLadder_More_BK_RH_DOWN_02,
+            Man_ClimbLadder_More_BK_RH_DOWN_03,
+            Man_ClimbLadder_More_BK_RH_DOWN_04,
 
             Man_ClimbLadder_BK_LH_UP_01,
             Man_ClimbLadder_BK_LH_UP_02,
@@ -245,6 +255,11 @@ enum Stance : uint16_t {
             Man_ClimbLadder_BK_LH_UP_13,
             Man_ClimbLadder_BK_LH_UP_14,
 
+            Man_ClimbLadder_More_BK_LH_UP_01,
+            Man_ClimbLadder_More_BK_LH_UP_02,
+            Man_ClimbLadder_More_BK_LH_UP_03,
+            Man_ClimbLadder_More_BK_LH_UP_04,
+
             Man_ClimbLadder_BK_LH_DOWN_01,
             Man_ClimbLadder_BK_LH_DOWN_02,
             Man_ClimbLadder_BK_LH_DOWN_03,
@@ -259,6 +274,11 @@ enum Stance : uint16_t {
             Man_ClimbLadder_BK_LH_DOWN_12,
             Man_ClimbLadder_BK_LH_DOWN_13,
             Man_ClimbLadder_BK_LH_DOWN_14,
+
+            Man_ClimbLadder_More_BK_LH_DOWN_01,
+            Man_ClimbLadder_More_BK_LH_DOWN_02,
+            Man_ClimbLadder_More_BK_LH_DOWN_03,
+            Man_ClimbLadder_More_BK_LH_DOWN_04,
 
             Man_Walk_FallMore_BK_01,
             Man_Walk_FallMore_BK_02,

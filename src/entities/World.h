@@ -230,9 +230,19 @@ struct World {
 
         }
 
-        void incMiddleground(int8_t val) {
+        bool incMiddleground(int8_t val) {
+
+            if (this->middleground + val > 0) {
+                this->middleground = 0;
+                return false;
+            }
+            if (this->middleground + val <= -496) {
+                this->middleground = -496;
+                return false;
+            }
 
             this->middleground = this->middleground + val;
+            return true;
 
         }
 
@@ -466,7 +476,8 @@ struct World {
 
         uint8_t getTile(int8_t xOffset, int8_t yOffset) {
 
-            return mapData[yOffset][xOffset];
+            if (xOffset < 18) return Tiles::Blank;
+            return mapData[yOffset][xOffset - 18];
 
         }
 
@@ -476,7 +487,8 @@ struct World {
 
             int16_t tileIdx = (-this->getMiddleground() + 65 + (xOffset * 8)) / 8;
 
-            return mapData[this->player.getLevel() + yOffset][tileIdx];
+            if (tileIdx < 18) return Tiles::Blank;
+            return mapData[this->player.getLevel() + yOffset][tileIdx - 18];
 
         }
 
@@ -709,7 +721,9 @@ struct World {
 
         bool isEmptyTile(uint8_t tile) {
 
-            return tile == Tiles::Blank || tile == Tiles::Spikes || tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || tile == Tiles::Water_Bubbling_2;
+            return tile == Tiles::Blank || tile == Tiles::Spikes || tile == Tiles::Swinging_Vine_LH || 
+                   tile == Tiles::Swinging_Vine_RH || tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
+                   tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker;
             
         }
 
@@ -915,7 +929,7 @@ struct World {
 
                     case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
 
-                        if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
+                        if (enemy.getCount() == 0 && a.randomLFSR(0, 140) == 0) {
 
                             switch (enemy.getDirection()) {
 
@@ -935,17 +949,21 @@ struct World {
 
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
 
-                        if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
+                        if (this->gameState != GameState::Play_Dead) {
+                                
+                            if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
 
-                            switch (enemy.getDirection()) {
+                                switch (enemy.getDirection()) {
 
-                                case Direction::Left:
-                                    enemy.pushSequence(Stance::Enemy_Trebochet_Release_LH_01, Stance::Enemy_Trebochet_Release_LH_14);
-                                    break;
+                                    case Direction::Left:
+                                        enemy.pushSequence(Stance::Enemy_Trebochet_Release_LH_01, Stance::Enemy_Trebochet_Release_LH_14);
+                                        break;
 
-                                case Direction::Right:
-                                    enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01, Stance::Enemy_Trebochet_Release_RH_14);
-                                    break;
+                                    case Direction::Right:
+                                        enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01, Stance::Enemy_Trebochet_Release_RH_14);
+                                        break;
+
+                                }
 
                             }
 
@@ -957,38 +975,71 @@ struct World {
 
                 switch (item.getItemType()) {
 
-                    case ItemType::Arrow_LH:
-                        {
-                            enemy.getItem().update();
+                    // case ItemType::Arrow_LH:
+                    //     {
+                    //         enemy.getItem().update();
 
-                            uint8_t yOffset = Constants::GroundY;
-                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+                    //         uint8_t yOffset = Constants::GroundY;
+                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
 
-                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                            Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
                             
-                            if (collide(playerRect, arrowRect)) {
+                    //         if (collide(playerRect, arrowRect)) {
 
-                                enemy.getItem().setItemType(ItemType::None);
+                    //             enemy.getItem().setItemType(ItemType::None);
 
-                                switch (this->player.getDirection()) {
+                    //             switch (this->player.getDirection()) {
 
-                                    case Direction::Right:
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
-                                        break;
+                    //                 case Direction::Right:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
+                    //                     break;
 
-                                    case Direction::Left:
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
-                                        break;
+                    //                 case Direction::Left:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
+                    //                     break;
                                         
-                                }
+                    //             }
 
-                            }
+                    //         }
 
-                        }
+                    //     }
 
-                        break;
+                    //     break;
 
+                    // case ItemType::Arrow_RH:
+                    //     {
+                    //         enemy.getItem().update();
+
+                    //         uint8_t yOffset = Constants::GroundY;
+                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+                            
+                    //         if (collide(playerRect, arrowRect)) {
+
+                    //             enemy.getItem().setItemType(ItemType::None);
+
+                    //             switch (this->player.getDirection()) {
+
+                    //                 case Direction::Right:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
+                    //                     break;
+
+                    //                 case Direction::Left:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
+                    //                     break;
+                                        
+                    //             }
+
+                    //         }
+
+                    //     }
+
+                    //     break;
+
+                    case ItemType::Arrow_LH:
                     case ItemType::Arrow_RH:
                         {
                             enemy.getItem().update();
@@ -1001,18 +1052,62 @@ struct World {
                             
                             if (collide(playerRect, arrowRect)) {
 
-                                enemy.getItem().setItemType(ItemType::None);
+                                if (this->player.getHealth() < 4) {
 
-                                switch (this->player.getDirection()) {
+                                    if (item.getItemType() == ItemType::Arrow_LH) {
 
-                                    case Direction::Right:
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
-                                        break;
+                                        enemy.getItem().setItemType(ItemType::Arrow_LH_Hidden);
+                                                
+                                        switch (this->player.getDirection()) {
 
-                                    case Direction::Left:
-                                        this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
-                                        break;
-                                        
+                                            case Direction::Right:
+                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
+                                                break;
+
+                                            case Direction::Left:
+                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
+                                                break;
+                                                
+                                        }
+
+                                    }
+                                    else {
+
+                                        enemy.getItem().setItemType(ItemType::Arrow_RH_Hidden);
+        
+                                        switch (this->player.getDirection()) {
+
+                                            case Direction::Right:
+                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
+                                                break;
+
+                                            case Direction::Left:
+                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
+                                                break;
+                                                
+                                        }
+
+                                    }
+
+                                }
+                                else {
+
+                                    this->player.setWound(12);
+                                    this->player.setEnemyIdx(0);
+
+                                    if (item.getItemType() == ItemType::Arrow_LH) {
+
+                                        enemy.getItem().setItemType(ItemType::Arrow_LH_Hidden);
+
+                                    }
+                                    else {
+
+                                        enemy.getItem().setItemType(ItemType::Arrow_RH_Hidden);
+
+                                    }
+
+                                    this->player.setHealth(this->player.getHealth() - 4);
+
                                 }
 
                             }
@@ -1020,7 +1115,8 @@ struct World {
                         }
 
                         break;
-                    
+
+
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                     // case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
                         {
@@ -1106,9 +1202,9 @@ struct World {
         bool collide(Rect rect1, Rect rect2) {
 
             return !(rect2.x                >= rect1.x + rect1.width  ||
-                        rect2.x + rect2.width  <= rect1.x                ||
-                        rect2.y                >= rect1.y + rect1.height ||
-                        rect2.y + rect2.height <= rect1.y);
+                     rect2.x + rect2.width  <= rect1.x                ||
+                     rect2.y                >= rect1.y + rect1.height ||
+                     rect2.y + rect2.height <= rect1.y);
 
         }
 
@@ -1118,8 +1214,8 @@ struct World {
             puff.setX(x);
             puff.setY(y);
             puff.setFrame(0);
-        }
 
+        }
 
         uint8_t getClosestEnemy(EnemyType enemyType) {
             

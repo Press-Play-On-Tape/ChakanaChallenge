@@ -17,7 +17,7 @@ class Player {
         uint8_t itemCount = 0;
         uint8_t health = Constants::HealthMax;
         uint8_t enemyIdx = Constants::NoEnemy;
-        uint8_t swordWound = 0;
+        uint8_t wound = 0;
         uint8_t chakanas = 100;
         uint8_t lives = 3;
 		
@@ -37,7 +37,7 @@ class Player {
         uint8_t getItemCount()                              { return this->itemCount; }
         uint8_t getHealth()                                 { return this->health; }
         uint8_t getEnemyIdx()                               { return this->enemyIdx; }
-        uint8_t getSwordWound()                             { return this->swordWound; }
+        uint8_t getWound()                                  { return this->wound; }
         uint8_t getChakanas()                               { return this->chakanas; }
         uint8_t getLives()                                  { return this->lives; }
 
@@ -48,7 +48,7 @@ class Player {
         void setItemCount(uint8_t val)                      { this->itemCount = val; }
         void setHealth(uint8_t val)                         { this->health = val; }
         void setEnemyIdx(uint8_t val)                       { this->enemyIdx = val; }
-        void setSwordWound(uint8_t val)                     { this->swordWound = val; }
+        void setWound(uint8_t val)                          { this->wound = val; }
         void setChakanas(uint8_t val)                       { this->chakanas = val; }
         void setLives(uint8_t val)                          { this->lives = val; }
 
@@ -63,7 +63,7 @@ class Player {
             this->itemCount = 0;
             this->health = Constants::HealthMax;
             this->enemyIdx = Constants::NoEnemy;
-            this->swordWound = 0;
+            this->wound = 0;
 
         }
 
@@ -73,9 +73,9 @@ class Player {
             
         }
 
-        void decSwordWound(uint8_t i) {
+        void decWound(uint8_t i) {
 
-            this->swordWound = this->swordWound - i;
+            this->wound = this->wound - i;
             
         }
 
@@ -148,7 +148,7 @@ class Player {
 
             // Housekeeping ..
 
-            if (this->swordWound > 0) this->swordWound--;
+            if (this->wound > 0) this->wound--;
 
         }
 

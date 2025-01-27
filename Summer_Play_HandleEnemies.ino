@@ -8,6 +8,8 @@
 
 void playGame_HandleEnemies_LaunchArrow(Enemy &enemy, Direction direction) {
 
+    if (world.getGameState() == GameState::Play_Dead) return;
+
     Item &item = enemy.getItem();
     item.setItemType(direction == Direction::Left ? ItemType::Arrow_LH : ItemType::Arrow_RH);
     item.setCounter(25 * 4);
@@ -263,10 +265,10 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         case Stance::Enemy_Sword_Lunge_LH_03:
                         case Stance::Enemy_Sword_Lunge_RH_03:
                             {
-                                if (player.getSwordWound() == 0 && playGame_EnemyStabsPlayer(player)) {
+                                if (player.getWound() == 0 && playGame_EnemyStabsPlayer(player)) {
 
                                     player.decHealth(1);
-                                    player.setSwordWound(12);
+                                    player.setWound(12);
 
                                     if (player.getHealth() == 0) {
 

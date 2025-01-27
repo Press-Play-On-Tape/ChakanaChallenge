@@ -1,0 +1,68 @@
+
+namespace Levels
+
+    include "data/Level_00.txt"
+    
+    uint24_t Levels[] = {
+        Level_00,  
+        Level_00,     
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+        Level_00,  
+    };
+
+    uint24_t Level_Items[] = {
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+        Level_00_Items,  
+    };
+
+    uint24_t Level_Enemies[] = {
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+        Level_00_Enemies,  
+    };
+
+    uint24_t Level_PlayerStart[] = {
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+        Level_00_PlayerStart,  
+    };
+
+namespace_end

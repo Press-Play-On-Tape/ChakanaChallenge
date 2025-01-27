@@ -40,7 +40,7 @@ void renderWorld(uint8_t currentPlane) {
 
     for (uint8_t y = 0; y < 16; y = y + 2) {
 
-        for (uint8_t i = 0; i < Constants::Map_X_Count - 1; i = i + 2) {
+        for (uint8_t i = 0; i < Constants::Map_X_Count + 18; i = i + 2) {
 
             int16_t renderX = (i * 8) + world.getMiddleground() - 4;
             int16_t renderY = yOffset - (y * 8);
@@ -484,41 +484,28 @@ void renderWorld(uint8_t currentPlane) {
     }
 
 
-    // Render Sword Wound if applicable ..
+    // Render Wound if applicable ..
 
-    if (player.getSwordWound() != 0) {
+    if (player.getWound() != 0) {
 
         uint8_t enemyIdx = player.getEnemyIdx();
 
         if (enemyIdx != Constants::NoEnemy) {
 
             Enemy &enemy = world.getEnemy(enemyIdx);
-            uint8_t frame = player.getSwordWound() / 3;
+            uint8_t frame = player.getWound() / 3;
             uint8_t y = yOffset - Constants::GroundY + player.getY() + 2;
 
-            // switch (enemy.getDirection()) {
-
-            //     case Direction::Left:
-            //         SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) + 4) * 3) + currentPlane);
-            //         break;
-
-            //     case Direction::Right:
-            //         SpritesU::drawPlusMaskFX(56 + 11, yOffset - Constants::GroundY + player.getY() + 2, Images::Sword_Wound, (((player.getSwordWound() / 3) ) * 3) + currentPlane);
-            //         break;
-
-            // }
             uint8_t xOffset = 0;
             uint8_t frameOffset = 0;
             
             switch (enemy.getDirection()) {
 
                 case Direction::Left:
-                    // SpritesU::drawPlusMaskFX(56, y, Images::Sword_Wound, ((frame + 4) * 3) + currentPlane);
                     frameOffset = 4;
                     break;
 
                 case Direction::Right:
-                    // SpritesU::drawPlusMaskFX(56 + 11, y, Images::Sword_Wound, (frame * 3) + currentPlane);
                     xOffset = 11;
                     break;
 
@@ -611,14 +598,12 @@ void renderWorld(uint8_t currentPlane) {
 
                     case Direction::Left:
                    
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4, yOffset - enemy.getY() + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + 4) * 3) + currentPlane);
                         xOffset = -4;
                         frameOffset = 4;
                         break;
 
                     case Direction::Right:
                         xOffset = 6;
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() + 6, yOffset - enemy.getY()+ 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) ) * 3) + currentPlane);
                         break;
 
                 }

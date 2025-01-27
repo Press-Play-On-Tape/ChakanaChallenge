@@ -113,10 +113,6 @@ void playGame_Init() {
     }
 
     world.setX(0);
-    // world.setPalm1(-240);
-    // world.setPalm2(-130);
-    // world.setPalm3(0);
-    // world.setPalm4(130);
     world.setPalm(0, -27);
     world.setPalm(1, 93);
     world.setPalm(2, 253);
@@ -129,9 +125,11 @@ void playGame_Init() {
 
     world.setBackground(-29);
 
-    player.addInventoryItem(ItemType::Sword);
-    player.addInventoryItem(ItemType::Amulet);
-    player.addInventoryItem(ItemType::Hammer);
+    // player.addInventoryItem(ItemType::Sword);
+    // player.addInventoryItem(ItemType::Amulet);
+    // player.addInventoryItem(ItemType::Hammer);
+
+    // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
     cookie.hasSavedGame = true;
     saveCookie(true);
@@ -194,25 +192,23 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     }
                     else if (world.isVerticalVine_Upper(tile_U2) && world.isVerticalVine_Upper(tile_RU2)) {
 
-                        player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
-                        player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
+                        player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_UP_01, Stance::Man_ClimbLadder_More_BK_RH_UP_04);
 
                     }
                     else if ((world.isLadderTile_Middle(tile) && world.isLadderTile_Middle(tile_R)) ||
                             (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R))) {
 
                         // Climb further up ..
+
                         if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
 
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_06, Stance::Man_ClimbLadder_BK_RH_UP_07);
+                            player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_UP_01, Stance::Man_ClimbLadder_More_BK_RH_UP_04);
                             
                         }
                         
                         else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
 
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_06, Stance::Man_ClimbLadder_BK_LH_UP_07);
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_06, Stance::Man_ClimbLadder_BK_LH_UP_07);
+                            player.pushSequence(Stance::Man_ClimbLadder_More_BK_LH_UP_01, Stance::Man_ClimbLadder_More_BK_LH_UP_04);
                             
                         }
 
@@ -341,15 +337,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
 
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_06, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_06, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
+                            player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_DOWN_01, Stance::Man_ClimbLadder_More_BK_RH_DOWN_04);
                             
                         }
                         
                         else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
 
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_06, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
-                            player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_06, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
+                            player.pushSequence(Stance::Man_ClimbLadder_More_BK_LH_DOWN_01, Stance::Man_ClimbLadder_More_BK_LH_DOWN_04);
                             
                         }
 
@@ -2325,9 +2319,11 @@ uint16_t playGame_PopEntry(Player &player) {
     FX::readEnd();
 
     player.setY(player.getY() - stanceDetails.stanceY);
-    world.incForeground(stanceDetails.foreground);
-    world.incMiddleground(stanceDetails.middleground);
-    world.incBackground(stanceDetails.background);
+    
+    if (world.incMiddleground(stanceDetails.middleground)) {
+        world.incForeground(stanceDetails.foreground);
+        world.incBackground(stanceDetails.background);
+    }
 
     return stance;
 

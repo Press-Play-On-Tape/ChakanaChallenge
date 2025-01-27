@@ -514,13 +514,13 @@ enum Tiles : uint8_t {
 
 	/* Rollers Right
 
-		0,  0,
+	0,  0,
 	27, 27,
 
 	or
 
 	27, 27, 
-		2,  2,
+	2,  2,
 
 	*/
 	Rollers_Right = 27,
@@ -528,13 +528,13 @@ enum Tiles : uint8_t {
 
 	/* Rollers Left
 
-		0,  0,
+	0,  0,
 	28, 28,
 
 	or
 
 	28, 28, 
-		2,  2,
+	2,  2,
 
 	*/
 	Rollers_Left = 28,
