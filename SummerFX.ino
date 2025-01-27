@@ -43,7 +43,7 @@ SoundSettings &soundSettings = cookie.soundSettings;
 uint8_t titleCounter = 0;
 
 World &world = cookie.world;
-Menu menu;
+Menu &menu = cookie.menu;
 
 #ifdef DEBUG_FIXED_RAND
 uint16_t seed = 72;
