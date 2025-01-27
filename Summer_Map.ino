@@ -294,7 +294,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             FX::readObject(pt);
             FX::readEnd();
 
-            SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::Beach, (world.getPortVisited(i) ? 3 : 0) + currentPlane);
+            SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortLocation, (world.getPortVisited(i) ? 3 : 0) + currentPlane);
 
         }
 
@@ -334,7 +334,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     if (world.getPortVisited(port)) {
 
                         SpritesU::drawPlusMaskFX(86, 15 + (7 * i), Images::Checkbox, currentPlane);
-                        // SpritesU::drawPlusMaskFX(100, 15 , Images::Beach, currentPlane);
+
                     }
                     
                 }

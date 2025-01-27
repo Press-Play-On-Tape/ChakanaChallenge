@@ -69,6 +69,10 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                 world.setGameState(GameState::Inventory_Open);
                 break;
 
+            case GameState::Inventory_Open_Reset_1:
+                FX::loadGameState((uint8_t*)&cookie, sizeof(cookie));
+                break;
+
             case GameState::Inventory_Open_Reset_Exit_0:
                 world.setGameState(GameState::Inventory_Open);
                 break;
@@ -275,6 +279,15 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
             removeInventoryItem(GameState::Play_Battle);
 
         }
+
+    }
+
+    
+    else if (selectedItem == ItemType::Potion) {
+    
+        player.incHealth(5);
+        removeInventoryItem(GameState::Play_Game);
+        launchPuff(player);
 
     }
 

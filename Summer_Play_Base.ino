@@ -125,7 +125,7 @@ void playGame_Init() {
 
     world.setBackground(-29);
 
-    player.addInventoryItem(ItemType::Sword);
+    player.addInventoryItem(ItemType::Potion);
     player.addInventoryItem(ItemType::Amulet);
     player.addInventoryItem(ItemType::Hammer);
     player.setStance(Stance::Man_Walk_RH_00);
@@ -142,10 +142,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     player.stageSequence(Stance::None, Stance::None);
     Stance stance = player.getStance();
-    uint8_t justPressedAndPressed = pressed | justPressed;
+    uint8_t justPressedOrPressed = pressed | justPressed;
 
     // if (justPressed & UP_BUTTON || pressed & UP_BUTTON) {
-    if (justPressedAndPressed & UP_BUTTON) {
+    if (justPressedOrPressed & UP_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -179,11 +179,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         // }
 
                         // if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) || (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07)) {
-                        if ((justPressedAndPressed & RIGHT_BUTTON) || (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07)) {
+                        if ((justPressedOrPressed & RIGHT_BUTTON) || (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07)) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_08, Stance::Man_ClimbLadder_BK_RH_UP_14);
                         } 
                         // else if ((justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) || (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07)) {
-                        else if ((justPressedAndPressed & LEFT_BUTTON) || (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07)) {
+                        else if ((justPressedOrPressed & LEFT_BUTTON) || (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07)) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_08, Stance::Man_ClimbLadder_BK_LH_UP_14);
                         }
 
@@ -191,13 +191,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     else if (world.isVerticalVine_Upper(tile_U) && world.isVerticalVine_Upper(tile_RU)) {
 
                         // if ((justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
-                        if ((justPressedAndPressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
+                        if ((justPressedOrPressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
                         }
 
                         // else if ((justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
-                        else if ((justPressedAndPressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
+                        else if ((justPressedOrPressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
                         }
@@ -286,7 +286,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     }
 
     // else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
-    else if (justPressedAndPressed & DOWN_BUTTON) {
+    else if (justPressedOrPressed & DOWN_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -317,11 +317,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         // }
                         
                         // if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
-                        if (justPressedAndPressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                        if (justPressedOrPressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
                         } 
                         // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
-                        else if (justPressedAndPressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                        else if (justPressedOrPressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                         }
 
@@ -351,11 +351,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             // }
 
                             // if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
-                            if (justPressedAndPressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                            if (justPressedOrPressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
                             } 
                             // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
-                            else if (justPressedAndPressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                            else if (justPressedOrPressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                             }
 
@@ -446,7 +446,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     }
 
     // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
-    else if (justPressedAndPressed & LEFT_BUTTON) {
+    else if (justPressedOrPressed & LEFT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -460,7 +460,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     if (world.isEmptyTile(tile_LD) && world.isEmptyTile(tile_L)) {
 
                         // if (justPressed & A_BUTTON || pressed & A_BUTTON) { 
-                        if (justPressedAndPressed & A_BUTTON) { 
+                        if (justPressedOrPressed & A_BUTTON) { 
 
                             uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
                             uint8_t tile_L3 = world.getTile_RelativeToPlayer(-3, 0);
@@ -653,7 +653,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         else if (tile == Tiles::Poker || tile_L == Tiles::Poker) {
 
                             // if (justPressed & A_BUTTON || pressed & A_BUTTON) {
-                            if (justPressedAndPressed & A_BUTTON) {
+                            if (justPressedOrPressed & A_BUTTON) {
 
                                 world.setGameState(GameState::Play_Gamble_Select_Open);
                                 playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
@@ -674,7 +674,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         else {
 
                             // if (justPressed & A_BUTTON || pressed & A_BUTTON) {
-                            if (justPressedAndPressed & A_BUTTON) {
+                            if (justPressedOrPressed & A_BUTTON) {
 
                                 if (!world.canWalkPastTile(tile_L) && world.isEmptyTile(tile_U)) {     
 
@@ -761,7 +761,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     }
 
     // else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
-    else if (justPressedAndPressed & RIGHT_BUTTON) {
+    else if (justPressedOrPressed & RIGHT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -774,7 +774,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     if (world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R)) {
 
                         // if (justPressed & A_BUTTON || pressed & A_BUTTON) { 
-                        if (justPressedAndPressed & A_BUTTON) { 
+                        if (justPressedOrPressed & A_BUTTON) { 
 
                             uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                             uint8_t tile_R3 = world.getTile_RelativeToPlayer(3, 0);
@@ -957,7 +957,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         else if (tile == Tiles::Poker || tile_R == Tiles::Poker) {
 
                             // if (justPressed & A_BUTTON || pressed & A_BUTTON) {
-                            if (justPressedAndPressed & A_BUTTON) {
+                            if (justPressedOrPressed & A_BUTTON) {
 
                                 world.setGameState(GameState::Play_Gamble_Select_Open);
                                 playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
@@ -978,7 +978,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         else {
 
                             // if (justPressed & A_BUTTON || pressed & A_BUTTON) {
-                            if (justPressedAndPressed & A_BUTTON) {
+                            if (justPressedOrPressed & A_BUTTON) {
 
                                 if (!world.canWalkPastTile(tile_R)) {     
 
@@ -1062,7 +1062,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     }
 
 //    else if (justPressed & A_BUTTON || pressed & A_BUTTON) {
-    else if (justPressedAndPressed & A_BUTTON) {
+    else if (justPressedOrPressed & A_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1362,11 +1362,11 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
 
 void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    uint8_t justPressedAndPressed = pressed | justPressed;
+    uint8_t justPressedOrPressed = pressed | justPressed;
     int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
 
     // if (justPressed & A_BUTTON || pressed & A_BUTTON) {
-    if (justPressedAndPressed & A_BUTTON) {
+    if (justPressedOrPressed & A_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1385,7 +1385,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
     }
 
     // else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
-    else if (justPressedAndPressed & DOWN_BUTTON) {
+    else if (justPressedOrPressed & DOWN_BUTTON) {
 
         world.setGameState(GameState::Play_Game);
         player.setStance(Stance::Man_Walk_RH_00);
@@ -1393,7 +1393,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
     }
 
     // else if (justPressed & B_BUTTON || pressed & B_BUTTON) {
-    else if (justPressedAndPressed & B_BUTTON) {
+    else if (justPressedOrPressed & B_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1412,7 +1412,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
     }
 
     // else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
-    else if (justPressedAndPressed & RIGHT_BUTTON) {
+    else if (justPressedOrPressed & RIGHT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1439,7 +1439,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
     }
 
     // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
-    else if (justPressedAndPressed & LEFT_BUTTON) {
+    else if (justPressedOrPressed & LEFT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -2426,7 +2426,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     else {
 
                         world.setGameState(GameState::Play_Gamble_Select_Win);
-                        titleCounter = 20 + (a.randomLFSR(1, 10) * 5);
+                        titleCounter = 10 + (a.randomLFSR(1, 8) * 5);
                         player.setChakanas(player.getChakanas() + titleCounter);
 
                     }
@@ -2494,6 +2494,19 @@ void launchPuff(Item &item) {
     puff.setX(item.getX());
     puff.setY(item.getY());
     puff.setFrame(0);
+    puff.setData(0);
     item.setCounter(3);
+
+}
+
+void launchPuff(Player &player) {
+
+    Item &puff = world.getItem(world.getItem(ItemType::Puff));
+
+    puff.setX(-world.getMiddleground() + 56 + 4);
+    puff.setY(Constants::GroundY - player.getY());
+
+    puff.setFrame(0);
+    puff.setData(1);
 
 }

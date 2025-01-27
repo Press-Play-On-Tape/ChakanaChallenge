@@ -185,6 +185,16 @@ class Player {
             
         }
 
+        void incHealth(uint8_t val) {
+
+            if (this->health + val <= Constants::HealthMax) {
+                this->health  = this->health + val;
+            }
+            else {
+                this->health = Constants::HealthMax;
+            }
+
+        }
 
         // Stack Methods ---------------------------------------
         

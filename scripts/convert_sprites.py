@@ -126,6 +126,7 @@ convert_header(IMAGES + 'Maps/PortNames.png',                                   
 convert_header(IMAGES + 'Maps/PortNames_WB.png',                                                        BASE + 'Images.hpp', 'PortNames_WB', 4, 29, 8)
 convert_header(IMAGES + 'Maps/Map.png',                                                                 BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Maps/Scroll_Map.png',                                                          BASE + 'Images.hpp', 'Scroll_Map', 4, 56, 64, maskImage=True)
+convert_header(IMAGES + 'Maps/PortLocation.png',                                                        BASE + 'Images.hpp', 'PortLocation', 4, 4, 8)
 convert_header(IMAGES + 'GamblePanel.png',                                                              BASE + 'Images.hpp', 'GamblePanel', 4, 32, 64, maskImage=True)
 
 convert_header(IMAGES + 'Scroll.png',                                                                   BASE + 'Images.hpp', 'Scroll', 4, 56, 64, maskImage=True)
@@ -153,8 +154,6 @@ convert_header(IMAGES + 'Players/Player.png',                                   
 convert_header(IMAGES + 'Players/Enemy.png',                                                            BASE + 'Images.hpp', 'Enemy', 4, 16, 16)
 convert_header(IMAGES + 'Players/Player_Bounce.png',                                                    BASE + 'Images.hpp', 'Player_Bounce', 4, 16, 24)
 convert_header(IMAGES + 'Waves.png',                                                                    BASE + 'Images.hpp', 'Waves', 4, 128, 8)
-convert_header(IMAGES + 'Pulse.png',                                                                    BASE + 'Images.hpp', 'Pulse', 4, 32, 32)
-convert_header(IMAGES + 'Beach.png',                                                                    BASE + 'Images.hpp', 'Beach', 4, 4, 8)
 convert_header(IMAGES + 'Beach_LH.png',                                                                 BASE + 'Images.hpp', 'Beach_LH', 4, 50, 32)
 convert_header(IMAGES + 'Boat.png',                                                                     BASE + 'Images.hpp', 'Boat', 4)
 convert_header(IMAGES + 'Boat_Small.png',                                                               BASE + 'Images.hpp', 'Boat_Small', 4, 10, 16)
