@@ -332,115 +332,188 @@ class Item {
                     }                    
                     break;
 
+                // case ItemType::Arrow_LH:
+
+                //     this->setCounter(this->getCounter() - 4);
+                //     this->setX(this->getX() - 4);
+
+                //     if (this->getCounter() == 0) {
+                //         this->itemType = ItemType::Arrow_LH_Hidden;
+                //     }
+
+                //     break;
+
+                // case ItemType::Arrow_RH:
+
+                //     this->setCounter(this->getCounter() + 4);
+                //     this->setX(this->getX() + 4);
+
+                //     if (this->getCounter() == 0) {
+                //         this->itemType = ItemType::Arrow_RH_Hidden;
+                //     }
+
+                //     break;
+
                 case ItemType::Arrow_LH:
-
-                    this->setCounter(this->getCounter() - 4);
-                    this->setX(this->getX() - 4);
-
-                    if (this->getCounter() == 0) {
-                        this->itemType = ItemType::Arrow_LH_Hidden;
-                    }
-
-                    break;
-
-                case ItemType::Arrow_RH:
-
-                    this->setCounter(this->getCounter() + 4);
-                    this->setX(this->getX() + 4);
-
-                    if (this->getCounter() == 0) {
-                        this->itemType = ItemType::Arrow_RH_Hidden;
-                    }
-
-                    break;
-
-                case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
-
-                    if (this->counter > 0) {
-
-                        int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
-                        this->setCounter(this->getCounter() - 1);
-                        this->setY(this->getY() + yOffset);
-
-                        switch (this->itemType) {
-
-                            case ItemType::Trebochet_Ball_Left_1:
-                                this->setX(this->getX() - 6);
-                                break;
-
-                            case ItemType::Trebochet_Ball_Left_2:
-                                this->setX(this->getX() - 6 - (this->counter % 2));
-                                break;
-
-                            case ItemType::Trebochet_Ball_Left_3:
-                                this->setX(this->getX() - 5);
-                                break;
-                                
-                        }
-
-                        if (this->counter == 0) {
-                            this->setX(this->getX() - 12);
-                        }
-
-                    }
-
-                    if (this->counter == 0) {
-
-                        this->frame++;
-
-                        if (this->frame == 9) {
-                            this->itemType = ItemType::Trebochet_Ball_Left_Hidden;
-                            this->frame = 0;
-                        }
-
-                    }
-
-                    break;
-
-                case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
-
-                    if (this->counter > 0) {
+                case ItemType::Arrow_RH: 
+                    {
                         
-                        int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
-                        this->setCounter(this->getCounter() - 1);
-                        this->setY(this->getY() + yOffset);
+                        int8_t direction = (this->itemType == ItemType::Arrow_LH) ? -1 : 1; 
 
-                        switch (this->itemType) {
+                        this->setCounter(this->getCounter() + (direction * 4));
+                        this->setX(this->getX() + (direction * 4));
 
-                            case ItemType::Trebochet_Ball_Right_1:
-                                this->setX(this->getX() + 6);
-                                break;
-
-                            case ItemType::Trebochet_Ball_Right_2:
-                                this->setX(this->getX() + 6 + (this->counter % 2));
-                                break;
-
-                            case ItemType::Trebochet_Ball_Right_3:
-                                this->setX(this->getX() + 5);
-                                break;
-                                
-                        }
-
-                        if (this->counter == 0) {
-                            this->setX(this->getX() + 4);
-                            this->frame = 8;
-                        }
-
-                    }
-
-                    if (this->counter == 0) {
-
-                        this->frame++;
-
-                        if (this->frame == 17) {
-                            this->itemType = ItemType::Trebochet_Ball_Right_Hidden;
-                            this->frame = 0;
+                        if (this->getCounter() == 0) {
+                            this->itemType = (this->itemType == ItemType::Arrow_LH) ? ItemType::Arrow_LH_Hidden : ItemType::Arrow_RH_Hidden;
                         }
 
                     }
 
                     break;
+                
+                // case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
 
+                //     if (this->counter > 0) {
+
+                //         int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
+                //         this->setCounter(this->getCounter() - 1);
+                //         this->setY(this->getY() + yOffset);
+
+                //         switch (this->itemType) {
+
+                //             case ItemType::Trebochet_Ball_Left_1:
+                //                 this->setX(this->getX() - 6);
+                //                 break;
+
+                //             case ItemType::Trebochet_Ball_Left_2:
+                //                 this->setX(this->getX() - 6 - (this->counter % 2));
+                //                 break;
+
+                //             case ItemType::Trebochet_Ball_Left_3:
+                //                 this->setX(this->getX() - 5);
+                //                 break;
+                                
+                //         }
+
+                //         if (this->counter == 0) {
+                //             this->setX(this->getX() - 12);
+                //         }
+
+                //     }
+
+                //     if (this->counter == 0) {
+
+                //         this->frame++;
+
+                //         if (this->frame == 9) {
+                //             this->itemType = ItemType::Trebochet_Ball_Left_Hidden;
+                //             this->frame = 0;
+                //         }
+
+                //     }
+
+                //     break;
+
+                // case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
+
+                //     if (this->counter > 0) {
+                        
+                //         int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
+                //         this->setCounter(this->getCounter() - 1);
+                //         this->setY(this->getY() + yOffset);
+
+                //         switch (this->itemType) {
+
+                //             case ItemType::Trebochet_Ball_Right_1:
+                //                 this->setX(this->getX() + 6);
+                //                 break;
+
+                //             case ItemType::Trebochet_Ball_Right_2:
+                //                 this->setX(this->getX() + 6 + (this->counter % 2));
+                //                 break;
+
+                //             case ItemType::Trebochet_Ball_Right_3:
+                //                 this->setX(this->getX() + 5);
+                //                 break;
+                                
+                //         }
+
+                //         if (this->counter == 0) {
+                //             this->setX(this->getX() + 4);
+                //             this->frame = 8;
+                //         }
+
+                //     }
+
+                //     if (this->counter == 0) {
+
+                //         this->frame++;
+
+                //         if (this->frame == 17) {
+                //             this->itemType = ItemType::Trebochet_Ball_Right_Hidden;
+                //             this->frame = 0;
+                //         }
+
+                //     }
+
+                //     break;
+                case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
+                case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3: 
+                    {
+                            
+                        bool isLeft = (this->itemType >= ItemType::Trebochet_Ball_Left_1 && this->itemType <= ItemType::Trebochet_Ball_Left_3);
+                        int8_t direction = isLeft ? -1 : 1;  // -1 for left, 1 for right
+
+                        if (this->counter > 0) {
+
+                            int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
+                            this->setCounter(this->getCounter() - 1);
+                            this->setY(this->getY() + yOffset);
+
+                            switch (this->itemType) {
+
+                                case ItemType::Trebochet_Ball_Left_1:
+                                case ItemType::Trebochet_Ball_Right_1:
+                                    this->setX(this->getX() + (direction * 6));
+                                    break;
+
+                                case ItemType::Trebochet_Ball_Left_2:
+                                case ItemType::Trebochet_Ball_Right_2:
+                                    this->setX(this->getX() + (direction * (6 + (this->counter % 2))));
+                                    break;
+
+                                case ItemType::Trebochet_Ball_Left_3:
+                                case ItemType::Trebochet_Ball_Right_3:
+                                    this->setX(this->getX() + (direction * 5));
+                                    break;
+
+                            }
+
+                            if (this->counter == 0) {
+
+                                this->setX(this->getX() + (isLeft ? -12 : 4));
+                                if (!isLeft) this->frame = 8;
+
+                            }
+
+                        }
+
+                        if (this->counter == 0) {
+
+                            this->frame++;
+                            uint8_t frameLimit = isLeft ? 9 : 17;
+
+                            if (this->frame == frameLimit) {
+                                this->itemType = isLeft ? ItemType::Trebochet_Ball_Left_Hidden : ItemType::Trebochet_Ball_Right_Hidden;
+                                this->frame = 0;
+                            }
+
+                        }
+
+                    }
+
+                    break;
+                
                 case ItemType::SwingyThing:
                 case ItemType::SwingyThing_2:
 

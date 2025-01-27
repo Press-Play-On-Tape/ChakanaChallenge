@@ -415,7 +415,7 @@ void renderWorld(uint8_t currentPlane) {
     }
 
 
-    // Render Wound if applicable ..
+    // Render wound if applicable ..
 
     if (player.getWound() != 0) {
 
