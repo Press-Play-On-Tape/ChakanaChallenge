@@ -28,6 +28,30 @@ void playGame_HandleEnemies_Trebochet_SetFrame(uint8_t idx, ItemType itemType) {
 
 }
 
+// void launchTrebochetBall(Enemy &enemy, ItemType itemType) {
+
+//     playGame_HandleEnemies_Trebochet_SetFrame(4, itemType);
+
+//     Item &item = enemy.getItem();
+//     uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+//     item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(itemType) + r));
+//     item.setCounter(20);
+
+//     if (itemType == ItemType::Trebochet_Ball_Left_1) {
+
+//         item.setX(enemy.getX() - 16);
+//         item.setY(enemy.getY() + 10);
+
+//     }
+//     else {
+
+//         item.setX(enemy.getX() + 28);
+//         item.setY(enemy.getY() + 10);
+
+//     }
+
+// }
+
 void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance stanceOffset, Stance stanceOffset2, int16_t dist) {
 
     switch (dist) {
@@ -76,6 +100,8 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
                             enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
+                            // enemy_PushSeqWalkLungeWalk(enemy, stanceOffset2);
+
 
                         }
 
@@ -91,6 +117,7 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
                         enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
+                        // enemy_PushSeqWalkLungeWalk(enemy, stanceOffset2);
 
                     }
 
@@ -107,6 +134,7 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
                         enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
+                        // enemy_PushSeqWalkLungeWalk(enemy, stanceOffset2);
 
                     }
 
@@ -128,6 +156,7 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
                 enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
                 enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
                 enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
+                // enemy_PushSeqWalkLungeWalk(enemy, stanceOffset2);
 
             }
             break;
@@ -142,6 +171,14 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
 
     }
 
+}
+
+void enemy_PushSeqWalkLungeWalk(Enemy& enemy, Stance stanceOffset2) {
+
+    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
+    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
+    enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
+    
 }
 
 
@@ -226,6 +263,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 item.setCounter(20);
                                 item.setX(enemy.getX() - 16);
                                 item.setY(enemy.getY() + 10);
+                                // launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Left_1);
 
                             }
                             break;
@@ -250,6 +288,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 item.setCounter(20);
                                 item.setX(enemy.getX() + 28);
                                 item.setY(enemy.getY() + 10);
+                                // launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Right_1);
 
                             }
                             break;

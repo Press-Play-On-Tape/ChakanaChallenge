@@ -458,7 +458,6 @@ void renderWorld(uint8_t currentPlane) {
             uint8_t yEnemy = yOffset - enemy.getY();
             uint8_t yEnemyItem = yOffset - enemy.getItem().getY();
             uint8_t stanceImg = getStanceImg(enemy.getStance());
-            ItemType enemyItemType = enemy.getItem().getItemType();
 
             switch (enemy.getStance()) {
 
@@ -471,7 +470,7 @@ void renderWorld(uint8_t currentPlane) {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
                         renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
 
-                        if (enemyItemType == ItemType::Glint) {
+                        if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
@@ -487,7 +486,7 @@ void renderWorld(uint8_t currentPlane) {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
                         renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
                         
-                        if (enemyItemType == ItemType::Glint) {
+                        if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
                         }                        
 
@@ -497,6 +496,7 @@ void renderWorld(uint8_t currentPlane) {
                 default:
                     {
                         SpritesU::drawPlusMaskFX(xEnemy, yEnemy, Images::Enemy, (stanceImg * 3) + currentPlane);
+                        ItemType enemyItemType = enemy.getItem().getItemType();
 
                         if (enemyItemType == ItemType::Arrow_RH || enemyItemType == ItemType::Arrow_LH) {
                             
@@ -583,19 +583,18 @@ void renderWorld(uint8_t currentPlane) {
         SpritesU::drawOverwriteFX(world.getWave() + 128, 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
     }
 
-    if (world.getX() < 30) {
-        // SpritesU::drawOverwriteFX(world.getWave(), 32, Images::Beach_LH, ((world.getWaveIdx() / 64) * 3) + currentPlane);
-    }
+    // if (world.getX() < 30) {
+    //     // SpritesU::drawOverwriteFX(world.getWave(), 32, Images::Beach_LH, ((world.getWaveIdx() / 64) * 3) + currentPlane);
+    // }
 
     // Front palms  SJH should be enabled
 
     for (uint8_t i = 0; i < 2; i++) {
+
         uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
         SpritesU::drawPlusMaskFX(world.getPalm(i) / 2, 10 + yOffset - Constants::GroundY, palmIdx, currentPlane);
 
     }
-
-
 
 
 
@@ -646,7 +645,6 @@ void renderWorld(uint8_t currentPlane) {
                                 if (world.getFrameCount() % 64 < 32) {
 
                                     renderInventoryPanelCursor(menu.getX() + 8, 1 + (menu.getY() * 8), currentPlane);
-                                    // SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (menu.getY() * 8), Images::InventoryPanel_Cursor, currentPlane);
 
                                 }
 
@@ -702,7 +700,6 @@ void renderWorld(uint8_t currentPlane) {
                 if (world.getFrameCount() % 64 < 32) {
 
                     renderInventoryPanelCursor(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8), currentPlane);
-                    // SpritesU::drawPlusMaskFX(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8), Images::InventoryPanel_Cursor, currentPlane);
 
                 }
 
@@ -721,23 +718,11 @@ void renderWorld(uint8_t currentPlane) {
                             {
                                 uint8_t y = FX::readIndexedUInt8(Constants::InventoryCursorY, static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Inventory_Open_Reset_0));
                                 renderInventoryPanelCursor(menu.getX() + 8, y, currentPlane);
-                                // SpritesU::drawPlusMaskFX(menu.getX() + 8, y, Images::InventoryPanel_Cursor, currentPlane);
 
                             }
 
                             break;
                     }
-
-                    // if (world.getGameState() == GameState::Inventory_Open_Reset_0)                 y = 19;
-                    // else if (world.getGameState() == GameState::Inventory_Open_Reset_1)            y = 27;
-                    // else if (world.getGameState() == GameState::Inventory_Open_Reset_Exit_0)       y = 39;
-                    // else if (world.getGameState() == GameState::Inventory_Open_Reset_Exit_1)       y = 47;
-                    // else if (world.getGameState() == GameState::Inventory_Open_Exit_0)             y = 19;
-                    // else if (world.getGameState() == GameState::Inventory_Open_Exit_1)             y = 27;
-
-                    // if (y > 0) {
-                    //     SpritesU::drawPlusMaskFX(menu.getX() + 8, y, Images::InventoryPanel_Cursor, currentPlane);
-                    // }
 
                 }
                 
