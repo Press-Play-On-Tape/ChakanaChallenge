@@ -40,13 +40,13 @@ void renderWorld(uint8_t currentPlane) {
 
     for (uint8_t y = 0; y < 16; y = y + 2) {
 
-        for (uint8_t i = 0; i < Constants::Map_X_Count + 18; i = i + 2) {
+        for (uint8_t i = 18; i < Constants::Map_X_Count + 18; i = i + 2) {
 
             int16_t renderX = (i * 8) + world.getMiddleground() - 4;
             int16_t renderY = yOffset - (y * 8);
 
-//            if (renderY <= -16 || renderY > 127) continue;
             if (renderY <= -16 || renderY > 64) continue;
+            if (renderX <= -64 || renderX > 127) continue;
 
             uint8_t tile00 = world.getTile(i, y);
             uint8_t tile01 = world.getTile(i + 1, y);
@@ -56,79 +56,10 @@ void renderWorld(uint8_t currentPlane) {
             uint24_t imgTile = 0;
             uint8_t frame = 0;
 
-
-            // Is the first tile a solid?
-
-            // if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable) {
-
-            //     uint8_t tile02 = world.getTile(i + 2, y);
-            //     uint8_t tile03 = world.getTile(i + 3, y);
-            //     uint8_t tile12 = world.getTile(i + 2, y + 1);
-            //     uint8_t tile13 = world.getTile(i + 3, y + 1);
-
-            //     // Is the second tile solid?
-
-            //     if (tile02 == Tiles::Solid_NonWalkable && tile03 == Tiles::Solid_NonWalkable && tile12 == Tiles::Solid_Walkable && tile13 == Tiles::Solid_Walkable && renderX > -16) {
-
-            //         uint8_t tile04 = world.getTile(i + 4, y);
-            //         uint8_t tile05 = world.getTile(i + 5, y);
-            //         uint8_t tile14 = world.getTile(i + 4, y + 1);
-            //         uint8_t tile15 = world.getTile(i + 5, y + 1);
-
-            //         // Is the third tile solid?
-
-            //         if (tile04 == Tiles::Solid_NonWalkable && tile05 == Tiles::Solid_NonWalkable && tile14 == Tiles::Solid_Walkable && tile15 == Tiles::Solid_Walkable && renderX > -32) {
-
-            //             uint8_t tile06 = world.getTile(i + 6, y);
-            //             uint8_t tile07 = world.getTile(i + 7, y);
-            //             uint8_t tile16 = world.getTile(i + 6, y + 1);
-            //             uint8_t tile17 = world.getTile(i + 7, y + 1);
-
-            //             // Is the fourth tile solid?
-
-            //             if (tile06 == Tiles::Solid_NonWalkable && tile07 == Tiles::Solid_NonWalkable && tile16 == Tiles::Solid_Walkable && tile17 == Tiles::Solid_Walkable && renderX > -48) {
-
-            //                 imgTile = Images::Crate_01_04;
-            //                 i = i + 6;
-
-            //             }
-            //             else {
-
-            //                 imgTile = Images::Crate_01_03;
-            //                 i = i + 4;
-
-            //             }
-
-            //         }
-            //         else {
-
-            //             imgTile = Images::Crate_01_02;
-            //             i = i + 2;
-
-            //         }
-
-            //     }
-            //     else {
-
-            //         if (renderX <= -16 || renderX > 127) continue;
-
-            //         imgTile = Images::Crate_01;
-
-            //     }
-
-            // }
-            
-
-            // if (renderX <= -16 || renderX > 127) continue;
-            // if (renderY <= -16 || renderY > 127) continue;
-            if (renderX <= -64 || renderX > 127) continue;
-            
-
             if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                 imgTile = Images::Crate_01;
             else if (tile00 == Tiles::Solid_2_Wide && tile01 == Tiles::Solid_2_Wide)                                                                                                            { imgTile = Images::Crate_01_02; i = i + 2; }
             else if (tile00 == Tiles::Solid_3_Wide && tile01 == Tiles::Solid_3_Wide)                                                                                                            { imgTile = Images::Crate_01_03; i = i + 4; }
             else if (tile00 == Tiles::Solid_4_Wide && tile01 == Tiles::Solid_4_Wide)                                                                                                            { imgTile = Images::Crate_01_04; i = i + 6; }
-
 
             if (imgTile == 0) {
 
@@ -838,8 +769,9 @@ void renderItem(ItemType itemType, uint8_t x, uint8_t y, uint8_t currentPlane) {
 
 void renderItemCursor(uint8_t x, uint8_t y, uint8_t currentPlane) {
 
-    SpritesU::drawPlusMaskFX(x, y, Images::Cursor_00, currentPlane);
-    SpritesU::drawPlusMaskFX(x + 15, y, Images::Cursor_01, currentPlane);
+    SpritesU::drawPlusMaskFX(x, y, Images::Cursor_02, currentPlane);
+    // SpritesU::drawPlusMaskFX(x, y, Images::Cursor_00, currentPlane);
+    // SpritesU::drawPlusMaskFX(x + 15, y, Images::Cursor_01, currentPlane);
 
 }
 
@@ -858,13 +790,13 @@ void renderGlint(uint8_t x, uint8_t y, uint8_t frame, uint8_t currentPlane) {
 
 void renderChakanaBalance(uint8_t balance, uint8_t currentPlane){
                     
-    SpritesU::drawOverwriteFX(111, 56, Images::Numbers_5x3_3D_BW, (balance * 3) + currentPlane);
+    SpritesU::drawOverwriteFX(menu.getX() + 15, 56, Images::Numbers_5x3_3D_BW, (balance * 3) + currentPlane);
 
 }
 
 void renderGamblePanel(uint8_t frame, uint8_t currentPlane) {
     
-    SpritesU::drawPlusMaskFX(128 - 32, 0, Images::GamblePanel, (frame * 3) + currentPlane);
+    SpritesU::drawPlusMaskFX(menu.getX(), 0, Images::GamblePanel, (frame * 3) + currentPlane);
 
 }
 

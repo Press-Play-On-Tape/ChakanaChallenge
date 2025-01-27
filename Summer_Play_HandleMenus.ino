@@ -17,14 +17,14 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
             case GameState::Inventory_Open:     
 
-                switch  (menu.getY()) {
+                switch (menu.getY()) {
 
                     case 0:
                         world.setGameState(GameState::Inventory_Open_More_Reset);
                         break;
 
                     case 1:
-                        playGame_HandleMenu();
+                        playGame_HandleMenu(GameState::Inventory_Open);
                         break;
                         
                     default:
@@ -322,18 +322,19 @@ void playGame_HandleMenu_OpenClose() {
 }
 
 
-void playGame_HandleMenu() {
+void playGame_HandleMenu(GameState gameState) {
 
     if (menu.getX() == 128) {
 
         menu.setGameState(world.getGameState());
         menu.setDirection(Direction::Left);
-        world.setGameState(GameState::Inventory_Open);
+        world.setGameState(gameState);
+        menu.setX(126);//SJH
 
     }
     else if (menu.getX() == 128 - 32) {
 
-        world.setGameState(GameState::Inventory_Open);
+        world.setGameState(gameState);
         menu.setDirection(Direction::Right);
         menu.setGameState(GameState::Play_Game);
 

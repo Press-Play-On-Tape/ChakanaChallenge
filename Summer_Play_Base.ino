@@ -125,10 +125,10 @@ void playGame_Init() {
 
     world.setBackground(-29);
 
-    // player.addInventoryItem(ItemType::Sword);
-    // player.addInventoryItem(ItemType::Amulet);
-    // player.addInventoryItem(ItemType::Hammer);
-
+    player.addInventoryItem(ItemType::Sword);
+    player.addInventoryItem(ItemType::Amulet);
+    player.addInventoryItem(ItemType::Hammer);
+    player.setStance(Stance::Man_Walk_RH_00);
     // player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
 
     cookie.hasSavedGame = true;
@@ -618,12 +618,12 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_LH_01, Stance::Man_DescendStairs_LH_04);
 
                         }   
-#ifdef GAMBLE
                         else if (tile == Tiles::Poker || tile_L == Tiles::Poker) {
 
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
-                                world.setGameState(GameState::Play_Gamble_Select_Exit);
+                                world.setGameState(GameState::Play_Gamble_Select_Open);
+                                playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
 
                             }
                             else if (tile_L != Tiles::Solid_Blocking && (world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0)) {  
@@ -633,9 +633,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             }
 
                         }
-    
-#endif     
-
                         else if (tile_L != Tiles::Solid_Blocking && (world.canWalkPastTile(tile_L, Direction::Left) || player.getLevel() == 0)) {  
 
                             player.pushSequence(Stance::Man_Walk_LH_01, Stance::Man_Walk_LH_04);
@@ -921,12 +918,12 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_RH_01, Stance::Man_DescendStairs_RH_04);
 
                         }   
-#ifdef GAMBLE
                         else if (tile == Tiles::Poker || tile_R == Tiles::Poker) {
 
                             if (justPressed & A_BUTTON || pressed & A_BUTTON) {
 
-                                world.setGameState(GameState::Play_Gamble_Select_Exit);
+                                world.setGameState(GameState::Play_Gamble_Select_Open);
+                                playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
 
                             }
                             else if (tile_R != Tiles::Solid_Blocking && (world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0)) {  
@@ -936,8 +933,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             }
 
                         }
-    
-#endif                                                         
                         else if (tile_R != Tiles::Solid_Blocking && (world.canWalkPastTile(tile_R, Direction::Right) || player.getLevel() == 0)) {  
 
                             player.pushSequence(Stance::Man_Walk_RH_01, Stance::Man_Walk_RH_04);
@@ -1056,10 +1051,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 break;
 
             case Direction::Right:
-
-                
                 {
-#ifdef GAMBLE
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
@@ -1067,7 +1059,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         if (justPressed & A_BUTTON) {
 
-                            world.setGameState(GameState::Play_Gamble_Select_Exit);
+                            world.setGameState(GameState::Play_Gamble_Select_Open);
+                            playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
 
                         }
 
@@ -1076,10 +1069,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         playGame_HandleGamePlay_Basics(player, Stance::Man_Start);
                     }
     
-#else   
-                        playGame_HandleGamePlay_Basics(player, Stance::Man_Start);
-   
-#endif                    
                 }                
                 break;
 
@@ -1103,7 +1092,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
             case Direction::Left:
                 {
-#ifdef GAMBLE
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                     uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
 
@@ -1111,7 +1099,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         if (justPressed & A_BUTTON) {
 
-                            world.setGameState(GameState::Play_Gamble_Select_Exit);
+                            world.setGameState(GameState::Play_Gamble_Select_Open);
+                            playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
 
                         }
 
@@ -1119,11 +1108,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     else {
                         playGame_HandleGamePlay_Basics(player, Stance::Man_LH_Start - Stance::Man_RH_Start);
                     }
-    
-#else   
-                    playGame_HandleGamePlay_Basics(player, Stance::Man_LH_Start - Stance::Man_RH_Start);
-   
-#endif                    
+
                 }
                 break;
 
@@ -1454,7 +1439,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case GameState::Inventory_Open:
 
                     if (justPressed & B_BUTTON) {
-                        playGame_HandleMenu();
+                        playGame_HandleMenu(GameState::Inventory_Open);
                     }
                     else {
                         playGame_HandleMenu(player, pressed, justPressed);
@@ -1483,7 +1468,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case GameState::Play_Game:
 
                     if (justPressed & B_BUTTON) {
-                        playGame_HandleMenu();
+                        playGame_HandleMenu(GameState::Inventory_Open);
                     }
                     else {
 
@@ -1546,13 +1531,12 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     playGame_HandleSwordFight_Player(player, pressed, justPressed);          
                     break;
 
-                #ifdef GAMBLE
                 case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_End:
+
                     playGame_HandleGamble(player, pressed, justPressed);
                     pressed = 0;
                     justPressed = 0;
                     break;
-                #endif
 
             }
 
@@ -2363,15 +2347,13 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLife, ((endOfLevel_Counter + (player.getLives() == 1 ? 16 : 0)) * 3) + currentPlane);
             break;
 
-        #ifdef GAMBLE
-
         case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_Select_Play:
 
             renderGamblePanel(player.getChakanas() >= 5 ? 0 : 13, currentPlane);
 
             if (player.getChakanas() >= 5) {
 
-                renderInventoryPanelCursor(104, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, currentPlane);
+                renderInventoryPanelCursor(menu.getX() + 8, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, currentPlane);
                 renderChakanaBalance(player.getChakanas(), currentPlane);
 
             }
@@ -2430,8 +2412,6 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             }
             break;
-
-        #endif
 
         default:    break;
 
