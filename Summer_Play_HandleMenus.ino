@@ -38,7 +38,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
                             case Direction::Left:
 
-                                playGame_HandleMenu_LR(player, Direction::Left, Stance::Man_LH_Start - Stance::Man_RH_Start);
+                                playGame_HandleMenu_LR(player, Direction::Left, Constants::Player_Stance_Offset);
                                 break;
 
                         }
@@ -337,6 +337,8 @@ void playGame_HandleMenu_OpenClose() {
 
 void playGame_HandleMenu(GameState gameState) {
 
+    #ifndef DEBUG
+
     if (menu.getX() == 128) {
 
         menu.setGameState(world.getGameState());
@@ -352,5 +354,7 @@ void playGame_HandleMenu(GameState gameState) {
         menu.setGameState(GameState::Play_Game);
 
     }
+
+    #endif
     
 }

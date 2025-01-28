@@ -655,7 +655,7 @@ struct World {
 
             return tile == 0 || tile == 1 || tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == 13 /*rope lh*/ || 
                    tile == 14 /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
-                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH;
+                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
             
         }
 
@@ -718,8 +718,10 @@ struct World {
 
         bool isEmptyTile(uint8_t tile) {
 
-            return tile == Tiles::Blank || tile == Tiles::Spikes || tile == Tiles::Swinging_Vine_LH || 
-                   tile == Tiles::Swinging_Vine_RH || tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
+            return tile == Tiles::Blank || tile == Tiles::Spikes || 
+                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || 
+                   tile == Tiles::Vine_Lower ||
+                   tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
                    tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker;
             
         }

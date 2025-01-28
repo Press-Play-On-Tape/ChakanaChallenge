@@ -423,7 +423,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             case Direction::Right:
 
-                                playGame_HandleEnemies_SwordFighter(player, enemy, Stance::Man_LH_Start - Stance::Man_RH_Start, 0, dist);
+                                playGame_HandleEnemies_SwordFighter(player, enemy, Constants::Player_Stance_Offset, 0, dist);
                                 break;
                               
                             default: break;

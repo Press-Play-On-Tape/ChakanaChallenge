@@ -136,6 +136,20 @@ void playGame_Init() {
 
 }
 
+boolean isMidLadderOrVineStance_RH(Stance stance) {
+
+    return stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07 ||
+           stance == Stance::Man_ClimbLadder_More_BK_RH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_RH_DOWN_04;
+
+}
+
+boolean isMidLadderOrVineStance_LH(Stance stance) {
+
+    return stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07 ||
+           stance == Stance::Man_ClimbLadder_More_BK_LH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_LH_DOWN_04;
+
+}
+
 void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
 
     #ifndef DEBUG
@@ -213,13 +227,17 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         // Climb further up ..
 
-                        if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                        // if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07 ||
+                        //     stance == Stance::Man_ClimbLadder_More_BK_RH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_RH_DOWN_04) {
+                        if (isMidLadderOrVineStance_RH(stance)) {
 
                             player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_UP_01, Stance::Man_ClimbLadder_More_BK_RH_UP_04);
                             
                         }
                         
-                        else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                        // else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07 ||
+                        //          stance == Stance::Man_ClimbLadder_More_BK_LH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_LH_DOWN_04) {
+                        else if (isMidLadderOrVineStance_LH(stance)) {  
 
                             player.pushSequence(Stance::Man_ClimbLadder_More_BK_LH_UP_01, Stance::Man_ClimbLadder_More_BK_LH_UP_04);
                             
@@ -334,30 +352,34 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         }
                         else {
                                 
-                            // if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
-                            //     player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
-                            // }
-
-                            // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
-                            //     player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
-                            // }
-
-                            // else if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
-                            //     player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
-                            // }
-
-                            // else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
-                            //     player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
-                            // }
-
-                            // if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
-                            if (justPressedOrPressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                            if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
-                            } 
-                            // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
-                            else if (justPressedOrPressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                            }
+
+                            else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                             }
+
+                            // else if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07 ||
+                            //          stance == Stance::Man_ClimbLadder_More_BK_RH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_RH_DOWN_04) {
+                            else if (isMidLadderOrVineStance_RH(stance)) {                                        
+                                player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
+                            }
+
+                            // else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07 ||
+                            //          stance == Stance::Man_ClimbLadder_More_BK_LH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_LH_DOWN_04) {
+                            else if (isMidLadderOrVineStance_LH(stance)) {                                          
+                                player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
+                            }
+
+                            // // if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                            // if (justPressedOrPressed & RIGHT_BUTTON || stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                            //     player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
+                            // } 
+                            // // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                            // else if (justPressedOrPressed & LEFT_BUTTON || stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
+                            //     player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
+                            // }
 
                         }
 
@@ -365,13 +387,16 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     else if ((world.isLadderTile_Middle(tile_D) && world.isLadderTile_Middle(tile_RD)) ||
                             (world.isVerticalVine_Middle(tile_D) && world.isVerticalVine_Middle(tile_RD))) {
 
-                        if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07) {
-
+                        // if (stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07 ||
+                        //     stance == Stance::Man_ClimbLadder_More_BK_RH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_RH_DOWN_04) {
+                        if (isMidLadderOrVineStance_RH(stance)) {   
                             player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_DOWN_01, Stance::Man_ClimbLadder_More_BK_RH_DOWN_04);
                             
                         }
                         
-                        else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07) {
+                        // else if (stance == Stance::Man_ClimbLadder_BK_LH_UP_07 || stance == Stance::Man_ClimbLadder_BK_LH_DOWN_07 ||
+                        //          stance == Stance::Man_ClimbLadder_More_BK_LH_UP_04 || stance == Stance::Man_ClimbLadder_More_BK_LH_DOWN_04) {
+                        else if (isMidLadderOrVineStance_LH(stance)) {  
 
                             player.pushSequence(Stance::Man_ClimbLadder_More_BK_LH_DOWN_01, Stance::Man_ClimbLadder_More_BK_LH_DOWN_04);
                             
@@ -1145,7 +1170,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
                     else {
-                        playGame_HandleGamePlay_Basics(player, Stance::Man_LH_Start - Stance::Man_RH_Start);
+                        playGame_HandleGamePlay_Basics(player, Constants::Player_Stance_Offset);
                     }
 
                 }
@@ -1364,23 +1389,27 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     uint8_t justPressedOrPressed = pressed | justPressed;
     int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
+    
+    uint16_t offset = 0;
+    if (player.getDirection() == Direction::Left) offset = Constants::Player_Stance_Offset;
 
     // if (justPressed & A_BUTTON || pressed & A_BUTTON) {
     if (justPressedOrPressed & A_BUTTON) {
 
-        switch (player.getDirection()) {
+        // switch (player.getDirection()) {
 
-            case Direction::Left:
+        //     case Direction::Left:
 
-                player.pushSequence(Stance::Man_Sword_StandingJump_LH_01, Stance::Man_Sword_StandingJump_LH_07);
-                break;
+        //         player.pushSequence(Stance::Man_Sword_StandingJump_LH_01, Stance::Man_Sword_StandingJump_LH_07);
+        //         break;
 
-            case Direction::Right:
+        //     case Direction::Right:
 
-                player.pushSequence(Stance::Man_Sword_StandingJump_RH_01, Stance::Man_Sword_StandingJump_RH_07);
-                break;
+        //         player.pushSequence(Stance::Man_Sword_StandingJump_RH_01, Stance::Man_Sword_StandingJump_RH_07);
+        //         break;
 
-        }
+        // }
+        player.pushSequence(Stance::Man_Sword_StandingJump_RH_01 + offset, Stance::Man_Sword_StandingJump_RH_07 + offset);
 
     }
 
@@ -1395,20 +1424,23 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
     // else if (justPressed & B_BUTTON || pressed & B_BUTTON) {
     else if (justPressedOrPressed & B_BUTTON) {
 
-        switch (player.getDirection()) {
+        // switch (player.getDirection()) {
 
-            case Direction::Left:
+        //     case Direction::Left:
 
-                player.pushSequence(Stance::Man_Sword_Lunge_LH_01, Stance::Man_Sword_Lunge_LH_06);
-                break;
+        //         player.pushSequence(Stance::Man_Sword_Lunge_LH_01, Stance::Man_Sword_Lunge_LH_06);
+        //         break;
 
-            case Direction::Right:
+        //     case Direction::Right:
 
-                player.pushSequence(Stance::Man_Sword_Lunge_RH_01, Stance::Man_Sword_Lunge_RH_06);
-                break;
+        //         player.pushSequence(Stance::Man_Sword_Lunge_RH_01, Stance::Man_Sword_Lunge_RH_06);
+        //         break;
 
-        }
+        // }
 
+        // uint16_t offset = 0;
+        // if (player.getDirection() == Direction::Left) offset = static_cast<uint16_t>(Stance::Man_Sword_Lunge_LH_01) - static_cast<uint16_t>(Stance::Man_Sword_Lunge_RH_01);
+        player.pushSequence(Stance::Man_Sword_Lunge_RH_01 + offset, Stance::Man_Sword_Lunge_RH_06 + offset);
     }
 
     // else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
@@ -1757,6 +1789,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         if (item.getCounter() == 0 && collide(playerRect, itemRect)) {
 
                             item.setCounter(1);
+                            // uint16_t offset = (player.getDirection() == Direction::Left ? Constants::Player_Stance_Offset : 0);
+                            // player.pushSequence(Stance::Man_Die_Fall_RH_01 + offset, Stance::Man_Die_Fall_RH_04 + offset, true);
 
                             switch (player.getDirection()) {
 

@@ -156,9 +156,9 @@ void renderWorld(uint8_t currentPlane) {
                 // else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                              imgTile = Images::Crate_36;
                 // else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                                imgTile = Images::Crate_37;
                 // else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Upper && tile11 == Tiles::Vine_Upper)                                                imgTile = Images::Crate_38;
-                else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle /*&& tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle*/)                                              imgTile = Images::Crate_36;
+                else if (tile00 == Tiles::Vine_Middle /*&& tile01 == Tiles::Vine_Middle*/ && tile10 == Tiles::Vine_Middle /*&& tile11 == Tiles::Vine_Middle*/)                                              imgTile = Images::Crate_36;
                 else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower /*&& tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle*/)                                                imgTile = Images::Crate_37;
-                else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle /*&& tile10 == Tiles::Vine_Upper && tile11 == Tiles::Vine_Upper*/)                                                imgTile = Images::Crate_38;
+                else if (/*tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Upper && */tile11 == Tiles::Vine_Upper)                                                imgTile = Images::Crate_38;
 
             }
 

@@ -583,8 +583,8 @@ namespace Constants {
 
     constexpr uint8_t HealthMax = 14;
 
-    constexpr uint8_t EnemyCount = 3;
-    constexpr uint8_t ItemCount = 10;
+    constexpr uint8_t EnemyCount = 4;
+    constexpr uint8_t ItemCount = 11;
 
     constexpr uint8_t StackSize_Enemy = 15;
     constexpr uint8_t StackSize_Player = 35;
@@ -596,6 +596,8 @@ namespace Constants {
     constexpr uint8_t GamblePanel_Win = 11;
     constexpr uint8_t GamblePanel_Lose = 9;
     constexpr uint16_t AllPortsComplete = 16383;
+
+	constexpr uint16_t Player_Stance_Offset = Stance::Man_LH_Start - Stance::Man_RH_Start;
 
 };
 
