@@ -35,16 +35,20 @@ void renderWorld(uint8_t currentPlane) {
 
     }
 
+    uint8_t xMin = 18;
+    uint8_t xMax = Constants::Map_X_Count + 18;
 
     for (uint8_t y = 0; y < 16; y = y + 2) {
 
-        for (uint8_t i = 18; i < Constants::Map_X_Count + 18; i = i + 2) {
+        int16_t renderY = yOffset - (y * 8);
+        if (renderY <= -16 || renderY > 64) continue;
+
+        for (uint8_t i = xMin; i < xMax; i = i + 2) {
 
             int16_t renderX = (i * 8) + world.getMiddleground() - 4;
-            int16_t renderY = yOffset - (y * 8);
 
-            if (renderY <= -16 || renderY > 64) continue;
-            if (renderX <= -64 || renderX > 127) continue;
+            if (renderX <= -64)             { xMin = i + 2; continue; }
+            if (renderX > menu.getX())      { xMax = i;     break; }
 
             uint8_t tile00 = world.getTile(i, y);
             uint8_t tile01 = world.getTile(i + 1, y);
@@ -61,7 +65,8 @@ void renderWorld(uint8_t currentPlane) {
 
             if (imgTile == 0) {
 
-                if (renderX <= -16 || renderX > 127) continue;
+                // if (renderX <= -16 || renderX > 127) continue;
+                if (renderX <= -16) continue;
 
                 // if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                         imgTile = Images::Crate_10;
                 // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                imgTile = Images::Crate_20;
@@ -748,7 +753,7 @@ uint8_t getStanceImg(Stance stance) {
 void renderItem(ItemType itemType, uint8_t x, uint8_t y, uint8_t currentPlane) {
 
     uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(itemType));
-    uint24_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(itemType));
+    uint8_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(itemType));
     SpritesU::drawPlusMaskFX(x, y, imageIdx, imgFrame + currentPlane);
 
 }
