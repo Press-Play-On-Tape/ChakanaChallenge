@@ -800,6 +800,12 @@ struct World {
 
         // Vertical vine ---------------------------
 
+        bool isVerticalVine_CanClimbUp(uint8_t tile) {
+
+            return tile == Tiles::Vine_Lower || tile == Tiles::Vine_Middle;
+            
+        }
+
         bool isVerticalVine_Lower(uint8_t tile) {
 
             return tile == Tiles::Vine_Lower;

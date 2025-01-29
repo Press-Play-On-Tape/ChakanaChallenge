@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xf0f8;
-constexpr uint24_t FX_DATA_BYTES = 980926;
+constexpr uint16_t FX_DATA_PAGE  = 0xf0f4;
+constexpr uint24_t FX_DATA_BYTES = 981973;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -210,15 +210,19 @@ namespace Levels
 {
   constexpr uint24_t Level_00 = 0x0EF044;
   constexpr uint24_t Level_00_Items = 0x0EF364;
-  constexpr uint24_t Level_00_Enemies = 0x0EF37C;
-  constexpr uint24_t Level_00_PlayerStart = 0x0EF3A4;
-  constexpr uint24_t Level_01 = 0x0EF3AA;
-  constexpr uint24_t Level_01_Items = 0x0EF6CA;
-  constexpr uint24_t Level_01_Enemies = 0x0EF6FA;
-  constexpr uint24_t Level_01_PlayerStart = 0x0EF722;
-  constexpr uint24_t Levels = 0x0EF728;
-  constexpr uint24_t Level_Items = 0x0EF752;
-  constexpr uint24_t Level_Enemies = 0x0EF776;
-  constexpr uint24_t Level_PlayerStart = 0x0EF79A;
+  constexpr uint24_t Level_00_Enemies = 0x0EF3C4;
+  constexpr uint24_t Level_00_PlayerStart = 0x0EF3EC;
+  constexpr uint24_t Level_01 = 0x0EF3F2;
+  constexpr uint24_t Level_01_Items = 0x0EF712;
+  constexpr uint24_t Level_01_Enemies = 0x0EF742;
+  constexpr uint24_t Level_01_PlayerStart = 0x0EF76A;
+  constexpr uint24_t Level_02 = 0x0EF770;
+  constexpr uint24_t Level_02_Items = 0x0EFA90;
+  constexpr uint24_t Level_02_Enemies = 0x0EFB08;
+  constexpr uint24_t Level_02_PlayerStart = 0x0EFB30;
+  constexpr uint24_t Levels = 0x0EFB36;
+  constexpr uint24_t Level_Items = 0x0EFB60;
+  constexpr uint24_t Level_Enemies = 0x0EFB87;
+  constexpr uint24_t Level_PlayerStart = 0x0EFBAE;
 }
 
