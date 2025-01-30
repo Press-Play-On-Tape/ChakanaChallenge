@@ -28,10 +28,10 @@ void renderWorld(uint8_t currentPlane) {
 
     }
 
-    for (uint8_t i = 4; i < 8; i++) {    
+    for (uint8_t i = 0; i < 4; i++) {    
 
         uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
-        SpritesU::drawPlusMaskFX(world.getPalm(i), 20 + yOffset - Constants::GroundY, palmIdx, currentPlane);
+        SpritesU::drawPlusMaskFX(world.getPalm(i + 4), 20 + yOffset - Constants::GroundY, palmIdx, currentPlane);
 
     }
 

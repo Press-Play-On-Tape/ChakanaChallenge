@@ -252,37 +252,54 @@ struct World {
 
         }
 
+        // void incBackgroundVal(int8_t val) {
+
+        //     this->background = this->background + val;
+
+        //     if (this->background == -128) { 
+                
+        //         this->background = 0; 
+                
+        //     }
+        //     else if (this->background == 128) { 
+                
+        //         background = 0; 
+
+        //     }
+
+        // }
+        
         void incBackgroundVal(int8_t val) {
 
-            this->background = this->background + val;
+            this->background += val;
 
-            if (this->background == -128) { 
-                
-                this->background = 0; 
-                
+            if (this->background == 128 || background == -128) {
+                this->background = 0;
             }
-            else if (this->background == 128) { 
-                
-                background = 0; 
-
-            }
-
+                    
         }
+
+        // void incWave(int8_t val) {
+
+        //     this->wave = this->wave + val;
+
+        //     if (this->wave <= -256) { 
+                
+        //         this->wave = this->wave + 256;
+                
+        //     }
+        //     else if (this->wave >= 256) { 
+                
+        //         this->wave = this->wave - 256;
+
+        //     }
+
+        // }
 
         void incWave(int8_t val) {
 
-            this->wave = this->wave + val;
-
-            if (this->wave <= -256) { 
-                
-                this->wave = this->wave + 256;
-                
-            }
-            else if (this->wave >= 256) { 
-                
-                this->wave = this->wave - 256;
-
-            }
+            this->wave += val;
+            this->wave = (wave + 256) % 512 - 256;
 
         }
 
