@@ -1496,17 +1496,27 @@ enum class GameState : uint8_t {
         Play_Gamble_Select_Win,
         Play_Gamble_Select_Lose,
     Play_Gamble_End = Play_Gamble_Select_Lose,
-    
-    Map_Init,
-    Map,
-    Map_ShowDialogue,
-    Map_ShowMenu_1,
-    Map_ShowMenu_2,
-    Map_ShowMenu_3,
-    Map_ShowMenu_4,
-    Map_ShowMenu_Back,
-    Map_ShowMenu_Exit,
-    Map_MoveBoat,
+
+    #ifdef MAP_SHOW_PORTS_VISITED    
+        Map_Init,
+        Map,
+        Map_ShowDialogue,
+        Map_ShowMenu_1,
+        Map_ShowMenu_2,
+        Map_ShowMenu_3,
+        Map_ShowMenu_4,
+        Map_ShowMenu_Back,
+        Map_ShowMenu_Exit,
+        Map_MoveBoat,
+    #else
+        Map_Init,
+        Map,
+        Map_ShowDialogue,
+        Map_ShowMenu,
+        Map_ShowMenu_Back,
+        Map_ShowMenu_Exit,
+        Map_MoveBoat,
+    #endif
 };
 
 inline GameState &operator++(GameState &c) {
@@ -1530,3 +1540,12 @@ inline GameState operator--( GameState & c, int ) {
   --c;
   return result;
 };
+
+
+namespace Constants {
+
+	constexpr uint16_t Player_Stance_Offset = Stance::Man_LH_Start - Stance::Man_RH_Start;
+
+};
+
+

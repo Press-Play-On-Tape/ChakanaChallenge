@@ -115,11 +115,21 @@ void map_Update() {
 
             if (justPressed & B_BUTTON) {
  
-                world.setGameState(GameState::Map_ShowMenu_1);
+                #ifdef MAP_SHOW_PORTS_VISITED
+                
+                    world.setGameState(GameState::Map_ShowMenu_1);
+                
+                #else
+
+                    world.setGameState(GameState::Map_ShowMenu);
+
+                #endif
 
             }
 
             break;
+
+        #ifdef MAP_SHOW_PORTS_VISITED
 
         case GameState::Map_ShowMenu_1:
         case GameState::Map_ShowMenu_2:
@@ -139,6 +149,26 @@ void map_Update() {
             }
 
             break;
+
+        #else
+
+        case GameState::Map_ShowMenu:
+
+            if (justPressed & A_BUTTON) {
+
+                world.incGameState();
+
+            }
+
+            if (justPressed & B_BUTTON) {
+
+                world.setGameState(GameState::Map);
+
+            }
+
+            break;
+
+        #endif
             
         case GameState::Map_ShowMenu_Back:
 
@@ -310,52 +340,80 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap() - 1, Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
 
+        
     switch (world.getGameState()) {
 
-        case GameState::Map_ShowMenu_1:
+        #ifdef MAP_SHOW_PORTS_VISITED
 
-            SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, (player.getHealth() * 3) + currentPlane);
-            SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
-            SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
+            case GameState::Map_ShowMenu_1:
 
-            break;
+                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, (player.getHealth() * 3) + currentPlane);
+                SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
+                SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
 
-        case GameState::Map_ShowMenu_2:
-        case GameState::Map_ShowMenu_3:
-        case GameState::Map_ShowMenu_4:
-            {
-                uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2);
-                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, ((frame + 16) * 3) + currentPlane);
+                break;
 
-                for (uint8_t i = 0; i < 5; i++) {
+            case GameState::Map_ShowMenu_2:
+            case GameState::Map_ShowMenu_3:
+            case GameState::Map_ShowMenu_4:
+                {
+                    uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2);
+                    SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, ((frame + 16) * 3) + currentPlane);
 
-                    uint8_t port = i + (frame * 5);
+                    for (uint8_t i = 0; i < 5; i++) {
 
-                    if (port == 14) break;
+                        uint8_t port = i + (frame * 5);
 
-                    if (world.getPortVisited(port)) {
+                        if (port == 14) break;
 
-                        SpritesU::drawPlusMaskFX(86, 15 + (7 * i), Images::Checkbox, currentPlane);
+                        if (world.getPortVisited(port)) {
 
+                            SpritesU::drawPlusMaskFX(86, 15 + (7 * i), Images::Checkbox, currentPlane);
+
+                        }
+                        
                     }
-                    
+
                 }
+                break;
 
-            }
-            break;
+            case GameState::Map_ShowMenu_Back:
+            case GameState::Map_ShowMenu_Exit:
 
-        case GameState::Map_ShowMenu_Back:
-        case GameState::Map_ShowMenu_Exit:
+                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map,  (15 * 3) + currentPlane);
 
-            SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map,  (15 * 3) + currentPlane);
+                if (world.getFrameCount() % 64 < 32) {
 
-            if (world.getFrameCount() % 64 < 32) {
+                    renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8, currentPlane);
 
-                renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8, currentPlane);
+                }
+                
+                break;
 
-            }
-            
-            break;
+        #else
+
+            case GameState::Map_ShowMenu:
+
+                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map_Orig, (player.getHealth() * 3) + currentPlane);
+                SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
+                SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
+
+                break;
+
+            case GameState::Map_ShowMenu_Back:
+            case GameState::Map_ShowMenu_Exit:
+
+                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map_Orig,  (15 * 3) + currentPlane);
+
+                if (world.getFrameCount() % 64 < 32) {
+
+                    renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8, currentPlane);
+
+                }
+                
+                break;
+
+        #endif
 
         case GameState::Map_ShowDialogue:
             {

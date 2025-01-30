@@ -10,6 +10,9 @@
 #define _DEBUG_SOUND
 #define AB_BUTTON 12
 
+// 136 bytes
+#define MAP_SHOW_PORTS_VISITED
+
 enum Tiles : uint8_t {
 
 	Blank = 0,
@@ -559,10 +562,6 @@ enum Tiles : uint8_t {
 };
 
 
-// 18 Like 01 but you cannot walk past it.
-
-
-
 namespace Constants {
 
     #ifdef DEBUG
@@ -596,8 +595,6 @@ namespace Constants {
     constexpr uint8_t GamblePanel_Win = 11;
     constexpr uint8_t GamblePanel_Lose = 9;
     constexpr uint16_t AllPortsComplete = 16383;
-
-	constexpr uint16_t Player_Stance_Offset = Stance::Man_LH_Start - Stance::Man_RH_Start;
 
 };
 

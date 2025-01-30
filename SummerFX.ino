@@ -6,8 +6,8 @@
 #include <ArduboyFX.h>  
 #include <FixedPointsCommon.h>
 #include "src/utils/ArduboyG.h"
-#include "src/utils/Enums.h"
 #include "src/utils/Constants.h"
+#include "src/utils/Enums.h"
 #include "fxdata/fxdata.h"
 #include "fxdata/images/Images.h"
 #include "src/entities/Entities.h"
@@ -72,16 +72,12 @@ void loop() {
 
     switch (world.getGameState()) {
 
+        case GameState::Play_Battle:
         case GameState::Play_Game:
         case GameState::Inventory_Open:
-        case GameState::Inventory_Open_Exit_0:
-        case GameState::Inventory_Open_Exit_1:
-        case GameState::Inventory_Open_Reset_0:
-        case GameState::Inventory_Open_Reset_1:
-        case GameState::Inventory_Open_Reset_Exit_0:
-        case GameState::Inventory_Open_Reset_Exit_1:
+        case GameState::Inventory_Open_Reset_0 ... GameState::Inventory_Open_Reset_Exit_1:
         case GameState::Chakana_Open:
-        case GameState::Play_Battle:
+        case GameState::Inventory_Open_Exit_0 ... GameState::Inventory_Open_Exit_1:
             a.waitForNextPlane(WHITE);
             break;
 
@@ -126,17 +122,7 @@ void loop() {
 
         case GameState::Play_Battle:
         case GameState::Play_Dead:
-        case GameState::Play_Game:
-        case GameState::Inventory_Open:
-        case GameState::Inventory_Open_More_Reset:
-        case GameState::Inventory_Open_More_Exit:
-        case GameState::Inventory_Open_Reset_0:
-        case GameState::Inventory_Open_Reset_1:
-        case GameState::Inventory_Open_Reset_Exit_0:
-        case GameState::Inventory_Open_Reset_Exit_1:
-        case GameState::Inventory_Open_Exit_0:
-        case GameState::Inventory_Open_Exit_1:
-        case GameState::Chakana_Open:
+        case GameState::PlayGame_Start ... GameState::PlayGame_End:
         case GameState::Play_Gamble_Start ... GameState::Play_Gamble_End:
             playGame(a);
             break;
@@ -145,15 +131,7 @@ void loop() {
             map_Init();
             [[fallthrough]];
 
-        case GameState::Map:
-        case GameState::Map_ShowDialogue:
-        case GameState::Map_ShowMenu_1:
-        case GameState::Map_ShowMenu_2:
-        case GameState::Map_ShowMenu_3:
-        case GameState::Map_ShowMenu_4:
-        case GameState::Map_ShowMenu_Back:
-        case GameState::Map_ShowMenu_Exit:
-        case GameState::Map_MoveBoat:
+        case GameState::Map ... GameState::Map_ShowMenu_4:
             map(a);
             break;
 

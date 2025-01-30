@@ -127,6 +127,7 @@ convert_header(IMAGES + 'Maps/PortNames_WB.png',                                
 ##convert_header(IMAGES + 'Maps/Map.png',                                                                 BASE + 'Images.hpp', 'Map', 4, 128, 64)
 convert_header(IMAGES + 'Maps/Map.png',                                                                 BASE + 'Images.hpp', 'Map', 4, 192, 192)
 convert_header(IMAGES + 'Maps/Scroll_Map.png',                                                          BASE + 'Images.hpp', 'Scroll_Map', 4, 56, 64, maskImage=True)
+convert_header(IMAGES + 'Maps/Scroll_Map_Orig.png',                                                     BASE + 'Images.hpp', 'Scroll_Map_Orig', 4, 56, 64, maskImage=True)
 convert_header(IMAGES + 'Maps/PortLocation.png',                                                        BASE + 'Images.hpp', 'PortLocation', 4, 4, 8)
 convert_header(IMAGES + 'GamblePanel.png',                                                              BASE + 'Images.hpp', 'GamblePanel', 4, 32, 64, maskImage=True)
 
