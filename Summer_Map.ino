@@ -269,17 +269,19 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     Player &player = world.getPlayer();
     uint8_t currentPlane = a.currentPlane();
 
-    uint8_t xInt = world.getXMap() / 128;
-    int16_t xLeft = -(world.getXMap() - (xInt * 128));
+    uint8_t xInt = world.getXMap() / 192;
+    int16_t xLeft = -(world.getXMap() - (xInt * 192));
 
-    uint8_t yInt = world.getYMap() / 64;
-    int16_t yTop = -(world.getYMap() - (yInt * 64));
+    uint8_t yInt = world.getYMap() / 192;
+    int16_t yTop = -(world.getYMap() - (yInt * 192));
 
-    for (uint8_t i = 0; i < 3; i++) {
+    for (uint8_t i = 0; i < 2; i++) {
 
-        SpritesU::drawOverwriteFX(xLeft,       yTop + (i * 64), Images::Map, (((xInt + 0) + ((yInt + i) * 3)) * 3) + currentPlane);    
-        SpritesU::drawOverwriteFX(xLeft + 128, yTop + (i * 64), Images::Map, (((xInt + 1) + ((yInt + i) * 3)) * 3) + currentPlane);    
-        SpritesU::drawOverwriteFX(xLeft + 256, yTop + (i * 64), Images::Map, (((xInt + 2) + ((yInt + i) * 3)) * 3) + currentPlane);    
+        // SpritesU::drawOverwriteFX(xLeft,       yTop + (i * 64), Images::Map, (((xInt + 0) + ((yInt + i) * 3)) * 3) + currentPlane);    
+        // SpritesU::drawOverwriteFX(xLeft + 128, yTop + (i * 64), Images::Map, (((xInt + 1) + ((yInt + i) * 3)) * 3) + currentPlane);    
+        // SpritesU::drawOverwriteFX(xLeft + 256, yTop + (i * 64), Images::Map, (((xInt + 2) + ((yInt + i) * 3)) * 3) + currentPlane);    
+        SpritesU::drawOverwriteFX(xLeft,       yTop + (i * 192), Images::Map, (((xInt + 0) + ((yInt + i) * 2)) * 3) + currentPlane);    
+        SpritesU::drawOverwriteFX(xLeft + 192, yTop + (i * 192), Images::Map, (((xInt + 1) + ((yInt + i) * 2)) * 3) + currentPlane);    
 
     }
 

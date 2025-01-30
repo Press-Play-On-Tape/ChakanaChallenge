@@ -264,6 +264,7 @@ void renderWorld(uint8_t currentPlane) {
 
     }
 
+
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
         Item &item = world.getItem(i);
@@ -272,8 +273,8 @@ void renderWorld(uint8_t currentPlane) {
         int16_t renderX = item.getX() + world.getMiddleground() - 4;
         int16_t renderY = yOffset - item.getY();
 
-        if (renderX <= -16 || renderX > 127) continue;
-        if (renderY <= -16 || renderY > 127) continue;
+        if (renderX <= -48 || renderX > 127) continue;
+        if (renderY <= -32 || renderY > 64) continue;
 
         uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(item.getItemType()));
          

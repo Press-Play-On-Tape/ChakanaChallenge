@@ -776,19 +776,19 @@ struct World {
 
         bool isLadderTile_Lower(uint8_t tile) {
 
-            return tile == 7;
+            return tile == Tiles::Ladder_Lower;
             
         }
 
         bool isLadderTile_Middle(uint8_t tile) {
 
-            return tile == 12;
+            return tile == Tiles::Ladder_Middle;
             
         }
 
         bool isLadderTile_Upper(uint8_t tile) {
 
-            return tile == 8;
+            return tile == Tiles::Ladder_Upper;
             
         }
 
