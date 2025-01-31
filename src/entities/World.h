@@ -38,7 +38,7 @@ struct World {
         uint8_t nextPortCost = 0;
 
         int16_t wave = 0;
-        int16_t palm[8] = { -240, -130,0, 130, 116, 66, -20, -80 };
+        int16_t palm[8];
 
         uint16_t waveIdx = 0;
         int16_t background = 0;
