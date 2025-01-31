@@ -118,6 +118,15 @@ struct World {
 
         }
 
+        uint8_t getYOffsetForRendering() {
+
+            uint8_t yOffset = Constants::GroundY;
+            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+            return yOffset;
+
+        }
+
         void setPortVisited(uint8_t portId) {
 
             this->portsVisited = this->portsVisited | (1 << portId);
@@ -336,10 +345,10 @@ struct World {
 
                 }
 
-                uint8_t yOffset = Constants::GroundY;
-                if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
- 
-                Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                uint8_t yOffset = this->getYOffsetForRendering();
+
+                // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
                 
                 switch (item.getItemType()) {
 
@@ -1066,11 +1075,13 @@ struct World {
                         {
                             enemy.getItem().update();
 
-                            uint8_t yOffset = Constants::GroundY;
-                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+                            // uint8_t yOffset = this->getYOffsetForRendering();
 
-                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                            Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+                            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                            // Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+
+                            Rect playerRect = { 59, Constants::GroundY + player.getY(), 10, 16 };
+                            Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, enemy.getItem().getY() - 1, 9, 3 };
                             
                             if (collide(playerRect, arrowRect)) {
 
@@ -1140,15 +1151,14 @@ struct World {
 
 
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
-                    // case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
                         {
                             enemy.getItem().update(); 
 
-                            uint8_t yOffset = Constants::GroundY;
-                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-
-                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                            // uint8_t yOffset = this->getYOffsetForRendering();
+                            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                            // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
                             
                             if (collide(playerRect, trebochetRect)) {
 
@@ -1175,16 +1185,15 @@ struct World {
                         }
                         break;   
 
-                    // case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                     case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
                         {
                             enemy.getItem().update(); 
 
-                            uint8_t yOffset = Constants::GroundY;
-                            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-
-                            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                            // uint8_t yOffset = this->getYOffsetForRendering();
+                            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                            // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
                             
                             if (collide(playerRect, trebochetRect)) {
 

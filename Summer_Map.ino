@@ -248,7 +248,7 @@ void map_Update() {
                     world.setBoatCounter(0);
                     world.setBoatDirection(BoatDirection::Left);
                     FX::readEnd();
-                   
+
                 }
                 else {
 

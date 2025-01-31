@@ -1668,9 +1668,9 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             // Has the player collided with an item?
 
-            uint8_t yOffset = Constants::GroundY;
-            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-            Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+            // uint8_t yOffset = world.getYOffsetForRendering();
+            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
 
             for (uint8_t i = 0; i < Constants::ItemCount; i++) {
           
@@ -1689,8 +1689,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 // Otherwise check if we have collided ..
 
-                Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };
-                // Item &puff = world.getItem(world.getItem(ItemType::Puff));
+                // Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };
+                Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, item.getY() + 1, 14, 14 };
 
                 switch (item.getItemType()) {
 
@@ -1806,7 +1806,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                         }
 
-                        itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+                        // itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+                        itemRect = { item.getX() + world.getMiddleground() - 4 + 4, item.getY() + 14, 8, 2 };
 
                         if (item.getCounter() == 0 && collide(playerRect, itemRect)) {
 
@@ -1832,13 +1833,16 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     case ItemType::Flame:
                         
-                        itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+                        // itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
+                        itemRect = { item.getX() + world.getMiddleground() - 4 + 4, item.getY() + 14, 8, 2 };
 
                         if (collide(playerRect, itemRect)) {
 
                             switch (player.getDirection()) {
 
                                 case Direction::Left:
+
+                                    player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
 
                                     switch (stance) {
 
@@ -1848,13 +1852,13 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                                 if (xPos == 56) {
 
-                                                    player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
+                                                    // player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
                                                     player.push(Stance::Man_Die_Fire_Adj_LH_02);
 
                                                 }
                                                 else if (xPos == 64) {
 
-                                                    player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
+                                                    // player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
                                                     player.push(Stance::Man_Die_Fire_Adj_LH_01);
 
                                                 }
@@ -1864,7 +1868,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                         case Stance::Man_Walk_LH_02:
 
-                                            player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
+                                            // player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
                                             player.pushSequence(Man_Walk_LH_03, Stance::Man_Walk_LH_06);
 
                                             break;
@@ -1878,19 +1882,21 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                     switch (stance) {
 
+                                        player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
+
                                         case Stance::Man_WalkingJump_RH_2_08:
                                             {
                                                 uint8_t xPos = item.getX() + world.getMiddleground();
 
                                                 if (xPos == 56) {
 
-                                                    player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
+                                                    // player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
                                                     player.push(Stance::Man_Die_Fire_Adj_RH_01);
 
                                                 }
                                                 else if (xPos == 64) {
 
-                                                    player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
+                                                    // player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
                                                     player.push(Stance::Man_Die_Fire_Adj_RH_02);
 
                                                 }
@@ -1900,7 +1906,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                         case Stance::Man_Walk_RH_03:
 
-                                            player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
+                                            // player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
                                             player.pushSequence(Man_Walk_RH_04, Stance::Man_Walk_RH_06);
 
                                             break;
@@ -2416,10 +2422,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     if (a.needsUpdate()) playGame_Update(a);
 
-    uint8_t yOffset = Constants::GroundY;
-
-    if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-
+    uint8_t yOffset = world.getYOffsetForRendering();
     uint8_t currentPlane = a.currentPlane();
 
     renderWorld(currentPlane);

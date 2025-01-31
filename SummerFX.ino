@@ -131,7 +131,7 @@ void loop() {
             map_Init();
             [[fallthrough]];
 
-        case GameState::Map ... GameState::Map_ShowMenu_4:
+        case GameState::Map ... GameState::Map_MoveBoat:
             map(a);
             break;
 
