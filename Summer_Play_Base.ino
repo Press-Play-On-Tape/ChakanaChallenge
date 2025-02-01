@@ -99,18 +99,18 @@ void playGame_Init() {
 
 
     // Load Player Starting Details ..
-    {
+    // {
 
-        uint24_t Level_PlayerStart = FX::readIndexedUInt24(Levels::Level_PlayerStart, world.getCurrentPort());
-        FX::seekData(Level_PlayerStart);
+    //     uint24_t Level_PlayerStart = FX::readIndexedUInt24(Levels::Level_PlayerStart, world.getCurrentPort());
+    //     FX::seekData(Level_PlayerStart);
 
-        world.setMiddleground(FX::readPendingUInt16());
-        player.setY(Constants::GroundY - FX::readPendingUInt16());
-        player.setStance(FX::readPendingUInt16());
+    //     world.setMiddleground(FX::readPendingUInt16());
+    //     player.setY(Constants::GroundY - FX::readPendingUInt16());
+    //     player.setStance(FX::readPendingUInt16());
 
-        FX::readEnd();
+    //     FX::readEnd();
 
-    }
+    // }
 
     // world.setX(0);
     world.setPalm(0, -27);

@@ -9,7 +9,7 @@ namespace Levels
     include "data/Level_05.txt"
     
     uint24_t Levels[] = {
-        Level_00,  
+        Level_03,  
         Level_01,     
         Level_02,  
         Level_03,  
@@ -26,7 +26,7 @@ namespace Levels
     };
 
     uint24_t Level_Items[] = {
-        Level_00_Items,  
+        Level_03_Items,  
         Level_01_Items,  
         Level_02_Items,  
         Level_03_Items,  
@@ -42,7 +42,7 @@ namespace Levels
     };
 
     uint24_t Level_Enemies[] = {
-        Level_00_Enemies,  
+        Level_03_Enemies,  
         Level_01_Enemies,  
         Level_02_Enemies,  
         Level_03_Enemies,  
@@ -58,7 +58,7 @@ namespace Levels
     };
 
     uint24_t Level_PlayerStart[] = {
-        Level_00_PlayerStart,  
+        Level_03_PlayerStart,  
         Level_01_PlayerStart,  
         Level_02_PlayerStart,  
         Level_03_PlayerStart,  
