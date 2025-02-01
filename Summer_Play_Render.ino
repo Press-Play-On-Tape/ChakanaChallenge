@@ -12,6 +12,11 @@ void renderWorld() {
     Player &player = world.getPlayer();
     uint8_t yOffset = world.getYOffsetForRendering();
 
+
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Rneder background ..
+
     {
         int8_t y = (yOffset - Constants::GroundY) / 4;
 
@@ -24,12 +29,22 @@ void renderWorld() {
 
     }
 
+
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Render palms ..
+
     for (uint8_t i = 4; i < 8; i++) {    
 
         uint24_t palmIdx = FX::readIndexedUInt24(Images::PalmImages, i);
         SpritesU::drawPlusMaskFX(world.getPalm(i), 20 + yOffset - Constants::GroundY, palmIdx, currentPlane);
 
     }
+
+
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Render foreground ..
 
     uint8_t xMin = 18;
     uint8_t xMax = Constants::Map_X_Count + 18;
@@ -54,19 +69,19 @@ void renderWorld() {
             uint24_t imgTile = 0;
             uint8_t frame = 0;
 
-            if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                 imgTile = Images::Crate_01;
-            else if (tile00 == Tiles::Solid_2_Wide && tile01 == Tiles::Solid_2_Wide)                                                                                                            { imgTile = Images::Crate_01_02; i = i + 2; }
-            else if (tile00 == Tiles::Solid_3_Wide && tile01 == Tiles::Solid_3_Wide)                                                                                                            { imgTile = Images::Crate_01_03; i = i + 4; }
-            else if (tile00 == Tiles::Solid_4_Wide && tile01 == Tiles::Solid_4_Wide)                                                                                                            { imgTile = Images::Crate_01_04; i = i + 6; }
-            else if (tile00 == Tiles::Solid_Blocking)                                                                                                                                          imgTile = Images::Crate_22;
+            if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)             imgTile = Images::Crate_01;
+            else if (tile00 == Tiles::Solid_2_Wide && tile01 == Tiles::Solid_2_Wide)                                                                                        { imgTile = Images::Crate_01_02; i = i + 2; }
+            else if (tile00 == Tiles::Solid_3_Wide && tile01 == Tiles::Solid_3_Wide)                                                                                        { imgTile = Images::Crate_01_03; i = i + 4; }
+            else if (tile00 == Tiles::Solid_4_Wide && tile01 == Tiles::Solid_4_Wide)                                                                                        { imgTile = Images::Crate_01_04; i = i + 6; }
+            else if (tile00 == Tiles::Solid_Blocking)                                                                                                                       imgTile = Images::Crate_22;
 
 
             // ladders
 
-            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper)                                                                                                            imgTile = Images::Crate_13;
-            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle)                                                                                                           imgTile = Images::Crate_14;
-            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper)                                                                                                           imgTile = Images::Crate_15;
-            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle)                                                                                                          imgTile = Images::Crate_16;
+            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper)                                                                                        imgTile = Images::Crate_13;
+            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle)                                                                                       imgTile = Images::Crate_14;
+            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper)                                                                                       imgTile = Images::Crate_15;
+            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle)                                                                                      imgTile = Images::Crate_16;
 
             if (imgTile != 0) {
                 SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);
@@ -78,59 +93,54 @@ void renderWorld() {
                 // if (renderX <= -16 || renderX > 127) continue;
                 if (renderX <= -16) continue;
 
-                if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                    imgTile = Images::Crate_10;
-                else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && */ tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_20;
-                else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && */ tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                           imgTile = Images::Crate_21;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_00;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_03;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_04;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                  imgTile = Images::Crate_05;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_02;
-
-                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Spikes && */ tile11 == Tiles::Spikes)                                            imgTile = Images::Spikes_Top;
-                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                  imgTile = Images::Crate_09;
-                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_02;
-                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_06;
-
-
-                else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                                 imgTile = Images::Crate_07;
-                else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                      imgTile = Images::Crate_11;
-                else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                                    imgTile = Images::Spikes_Bottom;
-                else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                      imgTile = Images::Crate_11a;
+                if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                 imgTile = Images::Crate_10;
+                else if (tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                                                              imgTile = Images::Crate_20;
+                else if (tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                                                              imgTile = Images::Crate_21;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_00;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_03;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_04;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)          imgTile = Images::Crate_05;
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                   imgTile = Images::Crate_02;
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)          imgTile = Images::Crate_09;
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_02;
+                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                         imgTile = Images::Crate_06;
+                else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                         imgTile = Images::Crate_07;
+                else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                      imgTile = Images::Crate_11;
+                else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                          imgTile = Images::Crate_11a;
+                else if (tile11 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Top;
+                else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                        imgTile = Images::Spikes_Bottom;
 
 
 
 
                 // Rope
 
-                else if (/*tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                                           imgTile = Images::Crate_17;
-                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                                                   imgTile = Images::Crate_18;
-                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                                                        imgTile = Images::Crate_19;
-                else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                                        imgTile = Images::Crate_23;
+                else if (/*tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                      imgTile = Images::Crate_17;
+                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                      imgTile = Images::Crate_18;
+                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                           imgTile = Images::Crate_19;
+                else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                            imgTile = Images::Crate_23;
 
 
                 // Stairs
 
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Single_Stair_RH_Upper_TL && tile11 == Tiles::Single_Stair_RH_Upper_TR)           imgTile = Images::Crate_08;
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Single_Stair_LH_Upper_TL && tile11 == Tiles::Single_Stair_LH_Upper_TR)           imgTile = Images::Crate_12;
-                else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Single_Stair_RH_Upper_TL && */ tile11 == Tiles::Single_Stair_RH_Upper_TR)           imgTile = Images::Crate_08;
-                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Single_Stair_LH_Upper_TL && */ tile11 == Tiles::Single_Stair_LH_Upper_TR)           imgTile = Images::Crate_12;
+                else if (tile11 == Tiles::Single_Stair_RH_Upper_TR)                                                                                                         imgTile = Images::Crate_08;
+                else if (tile11 == Tiles::Single_Stair_LH_Upper_TR)                                                                                                         imgTile = Images::Crate_12;
 
 
                 // Slide
 
-                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank &&*/ tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_24;
-                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && */tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                            imgTile = Images::Crate_28;
-                else if (/*tile00 == Tiles::Solid_NonWalkable && */tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full /*&& tile11 == Tiles::Blank*/)                                          imgTile = Images::Crate_29;
-                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && */ tile11 == Tiles::Slide_RH_Upper)                                                 imgTile = Images::Crate_25;
-                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && */ tile10 == Tiles::Slide_RH_Upper /*&& tile11 == Tiles::Solid_Walkable*/)                            imgTile = Images::Crate_30;
-                else if (tile00 == Tiles::Slide_RH_Full /*&& tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank */ && tile11 == Tiles::Slide_RH_Full)                                          imgTile = Images::Crate_31;
+                else if (tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                                                         imgTile = Images::Crate_24;
+                else if (tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                                                                                imgTile = Images::Crate_28;
+                else if (tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full)                                                                                  imgTile = Images::Crate_29;
+                else if (tile11 == Tiles::Slide_RH_Upper)                                                                                                                   imgTile = Images::Crate_25;
+                else if (tile10 == Tiles::Slide_RH_Upper)                                                                                                                   imgTile = Images::Crate_30;
+                else if (tile00 == Tiles::Slide_RH_Full && tile11 == Tiles::Slide_RH_Full)                                                                                  imgTile = Images::Crate_31;
 
                 // Vertical Vines
 
-                else if (tile00 == Tiles::Vine_Middle /*&& tile01 == Tiles::Vine_Middle*/ && tile10 == Tiles::Vine_Middle /*&& tile11 == Tiles::Vine_Middle*/)                                              imgTile = Images::Crate_36;
-                else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower /*&& tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle*/)                                                imgTile = Images::Crate_37;
-                else if (/*tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Upper && */tile11 == Tiles::Vine_Upper)                                                imgTile = Images::Crate_38;
+                else if (tile00 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Middle)                                                                                      imgTile = Images::Crate_36;
+                else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower)                                                                                        imgTile = Images::Crate_37;
+                else if (tile11 == Tiles::Vine_Upper)                                                                                                                       imgTile = Images::Crate_38;
 
             }
 
@@ -138,12 +148,12 @@ void renderWorld() {
             // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
 
 
-
-
             // Render image?
 
             if (imgTile != 0) {
+
                 SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, currentPlane);
+
             }
             else {
 
@@ -153,12 +163,14 @@ void renderWorld() {
 
                 frame = ((world.getFrameCount() % 24) / 6 * 3);
 
-                if (world.isRollerTile_RH(tile00))                          { imgTile = Images::Crate_32; yOffset = 8; }
-                else if (world.isRollerTile_RH(tile10))                     { imgTile = Images::Crate_34; }
-                else if (world.isRollerTile_LH(tile00))                     { imgTile = Images::Crate_33; yOffset = 8; }
-                else if (world.isRollerTile_LH(tile10))                     { imgTile = Images::Crate_35; }
+                if (world.isRollerTile_RH(tile00))                                                                                                                          { imgTile = Images::Crate_32; yOffset = 8; }
+                else if (world.isRollerTile_RH(tile10))                                                                                                                     { imgTile = Images::Crate_34; }
+                else if (world.isRollerTile_LH(tile00))                                                                                                                     { imgTile = Images::Crate_33; yOffset = 8; }
+                else if (world.isRollerTile_LH(tile10))                                                                                                                     { imgTile = Images::Crate_35; }
 
-                if (imgTile != 0)                                           SpritesU::drawOverwriteFX(renderX, renderY + 9, imgTile, frame + currentPlane);
+                if (imgTile != 0) {
+                    SpritesU::drawOverwriteFX(renderX, renderY + 9, imgTile, frame + currentPlane);
+                }
 
             }
 
@@ -169,29 +181,9 @@ void renderWorld() {
 
                 frame = ((world.getFrameCount() % 48) / 3 * 3);
                 
-                if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
-                    imgTile = Images::Crate_39;
-                }
-
-                else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
-                    imgTile = Images::Crate_40;
-                }
-
-                else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
-                    imgTile = Images::Crate_41;
-                }
-
-                // if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                //     imgTile = Images::Crate_39;
-                // }
-
-                // else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                //     imgTile = Images::Crate_40;
-                // }
-
-                // else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2 && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                //     imgTile = Images::Crate_41;
-                // }
+                if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain)                                                                                           imgTile = Images::Crate_39;
+                else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1)                                                                            imgTile = Images::Crate_40;
+                else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2)                                                                            imgTile = Images::Crate_41;
 
                 if (imgTile != 0) {
                     SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
@@ -203,6 +195,10 @@ void renderWorld() {
 
     }
 
+
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Rneder items ..
 
     for (uint8_t i = 0; i < Constants::ItemCount; i++) {
 
@@ -297,6 +293,11 @@ void renderWorld() {
 
     }
 
+
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Render player ..
+
     Stance stance = player.getStance();
     uint8_t stanceImg = getStanceImg(stance);
 
@@ -358,6 +359,8 @@ void renderWorld() {
     }
 
 
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
     // Render wound if applicable ..
 
     if (player.getWound() != 0) {
@@ -390,6 +393,11 @@ void renderWorld() {
         }
 
     }
+
+
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Render enemies ..
 
     for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
 
@@ -522,18 +530,14 @@ void renderWorld() {
     }
 
 
-    // Render waves and foreground ..
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Render palms, waves and foreground ..
 
     if (world.getWaveIdx() != Constants::NoWaves) {
         SpritesU::drawOverwriteFX(world.getWave(), 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
         SpritesU::drawOverwriteFX(world.getWave() + 128, 55 + yOffset - Constants::GroundY, Images::Waves, ((world.getWaveIdx() / 64) * 3) + currentPlane);
     }
-
-    // if (world.getX() < 30) {
-    //     // SpritesU::drawOverwriteFX(world.getWave(), 32, Images::Beach_LH, ((world.getWaveIdx() / 64) * 3) + currentPlane);
-    // }
-
-    // Front palms  SJH should be enabled
 
     for (uint8_t i = 0; i < 2; i++) {
 
@@ -543,10 +547,9 @@ void renderWorld() {
     }
 
 
-
-
-
-    // Render Menu -----------------------------------------------------------------------------------------------------
+    // ____________________________________________________________________________________________________________________________________________________________________________________
+    //
+    // Render menu if open ..
 
     if (menu.getX() != 128) {
 
