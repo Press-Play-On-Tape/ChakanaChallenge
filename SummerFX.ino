@@ -41,7 +41,7 @@ ARDUBOY_NO_USB
 Cookie cookie;
 SoundSettings &soundSettings = cookie.soundSettings;
 uint8_t titleCounter = 0;
-
+uint8_t currentPlane;
 World &world = cookie.world;
 Menu &menu = cookie.menu;
 
@@ -74,10 +74,7 @@ void loop() {
 
         case GameState::Play_Battle:
         case GameState::Play_Game:
-        case GameState::Inventory_Open:
-        case GameState::Inventory_Open_Reset_0 ... GameState::Inventory_Open_Reset_Exit_1:
-        case GameState::Chakana_Open:
-        case GameState::Inventory_Open_Exit_0 ... GameState::Inventory_Open_Exit_1:
+        case GameState::Inventory_Open ... GameState::Chakana_Open:
             a.waitForNextPlane(WHITE);
             break;
 

@@ -30,7 +30,7 @@ struct World {
         uint16_t yBoat = 6;
         BoatDirection boatDirection = BoatDirection::Down;
         uint8_t boatCounter = 0;
-        int16_t x = 0;
+        // int16_t x = 0;
         int16_t y = 0;
 
         uint8_t currentPort = 255; //SJH 255
@@ -65,7 +65,7 @@ struct World {
         uint8_t  getNextPort()                          { return this->nextPort; }
         uint8_t  getNextPortCost()                      { return this->nextPortCost; }
 
-        int16_t getX()                                  { return this->x; }
+        // int16_t getX()                                  { return this->x; }
         int16_t getY()                                  { return this->y; }
 
         int16_t getWave()                               { return this->wave; }
@@ -89,7 +89,7 @@ struct World {
         void setNextPort(uint8_t val)                   { this->nextPort = val; }
         void setNextPortCost(uint8_t val)               { this->nextPortCost = val; }
 
-        void setX(int16_t val)                          { this->x = val; }
+        // void setX(int16_t val)                          { this->x = val; }
         void setY(int16_t val)                          { this->y = val; }
 
         void setWave(int16_t val)                       { this->wave = val; }
@@ -109,7 +109,7 @@ struct World {
             this->yBoat = 6;
             this->boatDirection = BoatDirection::Down;
             this->boatCounter = 0;
-            this->x = 0;
+            // this->x = 0;
             this->y = 0;
 
             this->currentPort = 11; //SJH 255
@@ -234,8 +234,14 @@ struct World {
                 this->incPalm(i, val);
             }
 
-            this->incBackgroundVal(val);
-            this->x = this->x - val;
+            // this->incBackgroundVal(val);
+            // this->x = this->x - val;
+
+             this->background += val;
+
+            if (this->background == 128 || background == -128) {
+                this->background = 0;
+            }
 
         }
 
@@ -278,15 +284,15 @@ struct World {
 
         // }
         
-        void incBackgroundVal(int8_t val) {
+        // void incBackgroundVal(int8_t val) {
 
-            this->background += val;
+        //     this->background += val;
 
-            if (this->background == 128 || background == -128) {
-                this->background = 0;
-            }
+        //     if (this->background == 128 || background == -128) {
+        //         this->background = 0;
+        //     }
                     
-        }
+        // }
 
         // void incWave(int8_t val) {
 
@@ -797,6 +803,12 @@ struct World {
         bool isStairTile_L2(uint8_t tile) {
 
             return tile == Tiles::Single_Stair_LH_Upper_TL;
+            
+        }
+
+        bool isLadderTile(uint8_t tile) {
+
+            return tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Ladder_Upper;
             
         }
 

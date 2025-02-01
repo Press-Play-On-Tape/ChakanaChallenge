@@ -32,6 +32,24 @@ class Item {
         void setData(int16_t val)                       { this->data = val; }
         void setCounter(uint16_t val)                   { this->counter = val; }
 
+        bool processItem() {
+
+            this->frame++;
+
+            if (this->counter > 0 && this->frame % 8 == 0) {
+
+                this->counter--;
+
+                if (this->counter == 0) {
+                    return true;
+                }
+
+            }
+
+            return false;
+
+        }
+
         ItemAction update() {
 
             switch (this->getItemType()) {
@@ -40,7 +58,6 @@ class Item {
 
                     this->counter++;
                     if (this->counter == (8 * 12))   this->counter = 0;
-
                     this->frame = this->counter / 12;
 
                     break;
@@ -69,7 +86,6 @@ class Item {
 
                     this->counter++;
                     if (this->counter == (6 * 8))   this->counter = 0;
-
                     this->frame = this->counter / 8;
 
                     break;
@@ -78,7 +94,6 @@ class Item {
 
                     this->counter++;
                     if (this->counter == (16 * 12))   this->counter = 0;
-
                     this->frame = this->counter / 16;
 
                     break;
@@ -166,38 +181,53 @@ class Item {
                 case ItemType::Lever_LH:
                 case ItemType::Lever_RH:
 
-                    this->frame++;
+                    // this->frame++;
 
-                    if (this->counter > 0 && this->frame % 8 == 0) {
+                    // if (this->counter > 0 && this->frame % 8 == 0) {
 
-                        this->counter--;
+                    //     this->counter--;
 
-                        if (this->counter == 0) {
-                            return ItemAction::Remove_AddToInventory;
-                        }
+                    //     if (this->counter == 0) {
+                    //         return ItemAction::Remove_AddToInventory;
+                    //     }
 
-                    }
-
+                    // }
+                    if (this->processItem()) return ItemAction::Remove_AddToInventory;
                     break;
 
                 case ItemType::LifeSaver:
                 case ItemType::LifeSaver_Dissolve:
+
+                    // this->frame++;
+
+                    // if (this->counter > 0 && this->frame % 8 == 0) {
+
+                    //     this->counter--;
+
+                    //     if (this->counter == 0) {
+                    //         return ItemAction::ChangeToHidden;
+                    //     }
+
+                    // }
+                    if (this->processItem()) return ItemAction::ChangeToHidden;
+                    break;
+
                 case ItemType::Chakana_Small:
 
-                    this->frame++;
+                    // this->frame++;
 
-                    if (this->counter > 0 && this->frame % 8 == 0) {
+                    // if (this->counter > 0 && this->frame % 8 == 0) {
 
-                        this->counter--;
+                    //     this->counter--;
 
-                        if (this->counter == 0) {
-                            return ItemAction::ChangeToHidden;
-                        }
+                    //     if (this->counter == 0) {
+                    //         return ItemAction::Remove;
+                    //     }
 
-                    }
-
+                    // }
+                    if (this->processItem()) return ItemAction::Remove;
                     break;
-                   
+
                 case ItemType::LifeSaver_InWater_RH:
                 case ItemType::LifeSaver_InWater_LH:
 

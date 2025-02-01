@@ -112,7 +112,7 @@ void playGame_Init() {
 
     }
 
-    world.setX(0);
+    // world.setX(0);
     world.setPalm(0, -27);
     world.setPalm(1, 93);
     world.setPalm(2, 253);
@@ -2423,9 +2423,9 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     if (a.needsUpdate()) playGame_Update(a);
 
     uint8_t yOffset = world.getYOffsetForRendering();
-    uint8_t currentPlane = a.currentPlane();
+    currentPlane = a.currentPlane();
 
-    renderWorld(currentPlane);
+    renderWorld();
 
     switch (world.getGameState()) {
 
@@ -2449,12 +2449,12 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_Select_Play:
 
-            renderGamblePanel(player.getChakanas() >= 5 ? 0 : 13, currentPlane);
+            renderGamblePanel(player.getChakanas() >= 5 ? 0 : 13);
 
             if (player.getChakanas() >= 5) {
 
-                renderInventoryPanelCursor(menu.getX() + 8, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8, currentPlane);
-                renderChakanaBalance(player.getChakanas(), currentPlane);
+                renderInventoryPanelCursor(menu.getX() + 8, 1 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Play_Gamble_Select_Exit)) * 8);
+                renderChakanaBalance(player.getChakanas());
 
             }
             break;
@@ -2465,7 +2465,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 if (frame != 255) {
 
-                    renderGamblePanel(1 + frame, currentPlane);
+                    renderGamblePanel(1 + frame);
 
                     if (currentPlane == 2) {
                         titleCounter++;
@@ -2502,13 +2502,13 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 uint8_t frame = ((world.getGameState() == GameState::Play_Gamble_Select_Win) ? Constants::GamblePanel_Win : Constants::GamblePanel_Lose);
                 frame = frame + ((world.getFrameCount() % 48) < 24);
 
-                renderGamblePanel(frame, currentPlane);
+                renderGamblePanel(frame);
 
                 if (frame == Constants::GamblePanel_Win) {
                     SpritesU::drawOverwriteFX(107, 13, Images::Numbers_5x3_2D_BW, (titleCounter * 3) + currentPlane);
                 }
 
-                renderChakanaBalance(player.getChakanas(), currentPlane);
+                renderChakanaBalance(player.getChakanas());
 
             }
             break;

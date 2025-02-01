@@ -297,7 +297,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     if (a.needsUpdate()) map_Update();
 
     Player &player = world.getPlayer();
-    uint8_t currentPlane = a.currentPlane();
+    currentPlane = a.currentPlane();
 
     uint8_t xInt = world.getXMap() / 192;
     int16_t xLeft = -(world.getXMap() - (xInt * 192));
@@ -384,7 +384,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 if (world.getFrameCount() % 64 < 32) {
 
-                    renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8, currentPlane);
+                    renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8);
 
                 }
                 
@@ -407,7 +407,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 if (world.getFrameCount() % 64 < 32) {
 
-                    renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8, currentPlane);
+                    renderInventoryPanelCursor(90, 30 + (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) * 8);
 
                 }
                 
@@ -457,7 +457,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         SpritesU::drawOverwriteFX(12 + (leftDialogue ? 0 : 73), 24, Images::PortNames, (world.getNextPort() * 3) + currentPlane);
                     }
 
-                    renderNumber(numberToShow, x, y, currentPlane);
+                    renderNumber(numberToShow, x, y);
 
                 }
 
@@ -473,7 +473,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 }
 
 
-void renderNumber(uint8_t numberToShow, uint8_t x, uint8_t y, uint8_t currentPlane) {
+void renderNumber(uint8_t numberToShow, uint8_t x, uint8_t y) {
 
     uint24_t font = Images::Numbers_5x3_2D_BW;
 

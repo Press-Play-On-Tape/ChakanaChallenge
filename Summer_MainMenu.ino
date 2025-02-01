@@ -179,7 +179,7 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     
     if (a.needsUpdate()) title_Update();
 
-    uint8_t currentPlane = a.currentPlane();
+    currentPlane = a.currentPlane();
 
     switch (world.getGameState()) {
 
@@ -207,9 +207,3 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
 
 }
-
-// void renderTitleBase(uint8_t frame, uint8_t currentPlane) {
-
-//     SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, frame + currentPlane);
-
-// }

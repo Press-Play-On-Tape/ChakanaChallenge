@@ -7,7 +7,7 @@
 #include "src/utils/SpritesU.hpp"
 
 
-void renderWorld(uint8_t currentPlane) {
+void renderWorld() {
 
     Player &player = world.getPlayer();
     uint8_t yOffset = world.getYOffsetForRendering();
@@ -15,7 +15,7 @@ void renderWorld(uint8_t currentPlane) {
     {
         int8_t y = (yOffset - Constants::GroundY) / 4;
 
-        for (uint8_t i = 0; i < 2; i++) {
+        for (int8_t i = -1; i < 2; i++) {
 
             int16_t x = world.getBackground() + (i * 128);
             SpritesU::drawOverwriteFX(x, y - 8, Images::Background, currentPlane);    
@@ -58,21 +58,26 @@ void renderWorld(uint8_t currentPlane) {
             else if (tile00 == Tiles::Solid_2_Wide && tile01 == Tiles::Solid_2_Wide)                                                                                                            { imgTile = Images::Crate_01_02; i = i + 2; }
             else if (tile00 == Tiles::Solid_3_Wide && tile01 == Tiles::Solid_3_Wide)                                                                                                            { imgTile = Images::Crate_01_03; i = i + 4; }
             else if (tile00 == Tiles::Solid_4_Wide && tile01 == Tiles::Solid_4_Wide)                                                                                                            { imgTile = Images::Crate_01_04; i = i + 6; }
+            else if (tile00 == Tiles::Solid_Blocking)                                                                                                                                          imgTile = Images::Crate_22;
+
+
+            // ladders
+
+            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper)                                                                                                            imgTile = Images::Crate_13;
+            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle)                                                                                                           imgTile = Images::Crate_14;
+            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper)                                                                                                           imgTile = Images::Crate_15;
+            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle)                                                                                                          imgTile = Images::Crate_16;
+
+            if (imgTile != 0) {
+                SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);
+                imgTile = 0;
+            }
 
             if (imgTile == 0) {
 
                 // if (renderX <= -16 || renderX > 127) continue;
                 if (renderX <= -16) continue;
 
-                // if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                         imgTile = Images::Crate_10;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                imgTile = Images::Crate_20;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                imgTile = Images::Crate_21;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                           imgTile = Images::Crate_00;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_00;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                     imgTile = Images::Crate_03;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_04;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                  imgTile = Images::Crate_05;
-                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_02;
                 if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                    imgTile = Images::Crate_10;
                 else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && */ tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_20;
                 else if (/*tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && */ tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                           imgTile = Images::Crate_21;
@@ -82,47 +87,22 @@ void renderWorld(uint8_t currentPlane) {
                 else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)                                  imgTile = Images::Crate_05;
                 else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                           imgTile = Images::Crate_02;
 
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Spikes && tile11 == Tiles::Spikes)                                            imgTile = Images::Spikes_Top;
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                  imgTile = Images::Crate_09;
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_02;
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_06;
                 else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Spikes && */ tile11 == Tiles::Spikes)                                            imgTile = Images::Spikes_Top;
                 else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                  imgTile = Images::Crate_09;
                 else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                        imgTile = Images::Crate_02;
                 else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_06;
 
 
-                // else if (tile00 == Tiles::Solid_Blocking && tile01 == Tiles::Solid_Blocking && tile10 == Tiles::Solid_Blocking && tile11 == Tiles::Solid_Blocking)                                  imgTile = Images::Crate_22;
-                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)                                              imgTile = Images::Crate_07;
-                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                                 imgTile = Images::Crate_07;
-                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Single_Stair_RH_Lower && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                      imgTile = Images::Crate_11;
-                // else if (tile00 == Tiles::Spikes && tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                                    imgTile = Images::Spikes_Bottom;
-                // else if (tile00 == Tiles::Single_Stair_LH_Lower && tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                      imgTile = Images::Crate_11a;
-                else if (tile00 == Tiles::Solid_Blocking /*&& tile01 == Tiles::Solid_Blocking && tile10 == Tiles::Solid_Blocking && tile11 == Tiles::Solid_Blocking*/)                                  imgTile = Images::Crate_22;
                 else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                                                 imgTile = Images::Crate_07;
                 else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                      imgTile = Images::Crate_11;
                 else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                                    imgTile = Images::Spikes_Bottom;
                 else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                                      imgTile = Images::Crate_11a;
 
 
-                // ladders
-
-                // else if (tile00 == Tiles::Ladder_Lower && tile01 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper && tile11 == Tiles::Ladder_Upper)                                          imgTile = Images::Crate_13;
-                // else if (tile00 == Tiles::Ladder_Lower && tile01 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle && tile11 == Tiles::Ladder_Middle)                                        imgTile = Images::Crate_14;
-                // else if (tile00 == Tiles::Ladder_Middle && tile01 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper && tile11 == Tiles::Ladder_Upper)                                        imgTile = Images::Crate_15;
-                // else if (tile00 == Tiles::Ladder_Middle && tile01 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle && tile11 == Tiles::Ladder_Middle)                                      imgTile = Images::Crate_16;
-                else if (tile00 == Tiles::Ladder_Lower  /*&& tile01 == Tiles::Ladder_Lower */ && tile10 == Tiles::Ladder_Upper  /*&& tile11 == Tiles::Ladder_Upper */)                                 imgTile = Images::Crate_13;
-                else if (tile00 == Tiles::Ladder_Lower  /*&& tile01 == Tiles::Ladder_Lower */ && tile10 == Tiles::Ladder_Middle /*&& tile11 == Tiles::Ladder_Middle*/)                                 imgTile = Images::Crate_14;
-                else if (tile00 == Tiles::Ladder_Middle /*&& tile01 == Tiles::Ladder_Middle*/ && tile10 == Tiles::Ladder_Upper  /*&& tile11 == Tiles::Ladder_Upper */)                                 imgTile = Images::Crate_15;
-                else if (tile00 == Tiles::Ladder_Middle /*&& tile01 == Tiles::Ladder_Middle*/ && tile10 == Tiles::Ladder_Middle /*&& tile11 == Tiles::Ladder_Middle*/)                                 imgTile = Images::Crate_16;
 
 
                 // Rope
 
-                // else if (tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                                                imgTile = Images::Crate_17;
-                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                                                   imgTile = Images::Crate_18;
-                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Blank && tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                                                        imgTile = Images::Crate_19;
-                // else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                                                        imgTile = Images::Crate_23;
                 else if (/*tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                                           imgTile = Images::Crate_17;
                 else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                                                   imgTile = Images::Crate_18;
                 else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                                                        imgTile = Images::Crate_19;
@@ -139,12 +119,6 @@ void renderWorld(uint8_t currentPlane) {
 
                 // Slide
 
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_24;
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                            imgTile = Images::Crate_28;
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full && tile11 == Tiles::Blank)                                          imgTile = Images::Crate_29;
-                // else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Slide_RH_Upper)                                                 imgTile = Images::Crate_25;
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Slide_RH_Upper && tile11 == Tiles::Solid_Walkable)                            imgTile = Images::Crate_30;
-                // else if (tile00 == Tiles::Slide_RH_Full && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Slide_RH_Full)                                          imgTile = Images::Crate_31;
                 else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank &&*/ tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                 imgTile = Images::Crate_24;
                 else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && */tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                            imgTile = Images::Crate_28;
                 else if (/*tile00 == Tiles::Solid_NonWalkable && */tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full /*&& tile11 == Tiles::Blank*/)                                          imgTile = Images::Crate_29;
@@ -154,9 +128,6 @@ void renderWorld(uint8_t currentPlane) {
 
                 // Vertical Vines
 
-                // else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                              imgTile = Images::Crate_36;
-                // else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower && tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle)                                                imgTile = Images::Crate_37;
-                // else if (tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Upper && tile11 == Tiles::Vine_Upper)                                                imgTile = Images::Crate_38;
                 else if (tile00 == Tiles::Vine_Middle /*&& tile01 == Tiles::Vine_Middle*/ && tile10 == Tiles::Vine_Middle /*&& tile11 == Tiles::Vine_Middle*/)                                              imgTile = Images::Crate_36;
                 else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower /*&& tile10 == Tiles::Vine_Middle && tile11 == Tiles::Vine_Middle*/)                                                imgTile = Images::Crate_37;
                 else if (/*tile00 == Tiles::Vine_Middle && tile01 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Upper && */tile11 == Tiles::Vine_Upper)                                                imgTile = Images::Crate_38;
@@ -178,44 +149,16 @@ void renderWorld(uint8_t currentPlane) {
 
 
                 // Rollers R then L
+                uint8_t yOffset = 0;
 
                 frame = ((world.getFrameCount() % 24) / 6 * 3);
 
-                if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
-                    imgTile = Images::Crate_32;
-                }
+                if (world.isRollerTile_RH(tile00))                          { imgTile = Images::Crate_32; yOffset = 8; }
+                else if (world.isRollerTile_RH(tile10))                     { imgTile = Images::Crate_34; }
+                else if (world.isRollerTile_LH(tile00))                     { imgTile = Images::Crate_33; yOffset = 8; }
+                else if (world.isRollerTile_LH(tile10))                     { imgTile = Images::Crate_35; }
 
-                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable &&*/ world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
-                    imgTile = Images::Crate_34;
-                }
-
-                else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/) {
-                    imgTile = Images::Crate_33;
-                }
-
-                else if (/*tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable &&*/ world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
-                    imgTile = Images::Crate_35;
-                }
-
-                // if (world.isRollerTile_RH(tile00) && world.isRollerTile_RH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                //     imgTile = Images::Crate_32;
-                // }
-
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_RH(tile10) && world.isRollerTile_RH(tile11)) {
-                //     imgTile = Images::Crate_34;
-                // }
-
-                // else if (world.isRollerTile_LH(tile00) && world.isRollerTile_LH(tile01) && tile10 == Tiles::Blank && tile11 == Tiles::Blank) {
-                //     imgTile = Images::Crate_33;
-                // }
-
-                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && world.isRollerTile_LH(tile10) && world.isRollerTile_LH(tile11)) {
-                //     imgTile = Images::Crate_35;
-                // }
-
-                if (imgTile != 0) {
-                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
-                }
+                if (imgTile != 0)                                           SpritesU::drawOverwriteFX(renderX, renderY + 9, imgTile, frame + currentPlane);
 
             }
 
@@ -389,7 +332,7 @@ void renderWorld(uint8_t currentPlane) {
             {
                 // uint8_t stanceImg = getStanceImg(stance);
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
-                renderPlayerAndHealth(stanceImg, 56 + x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
+                renderPlayerAndHealth(stanceImg, 56 + x, yOffset - Constants::GroundY + player.getY(), player.getHealth());
             }
             break;
 
@@ -401,7 +344,7 @@ void renderWorld(uint8_t currentPlane) {
             {
                 // uint8_t stanceImg = getStanceImg(stance);
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
-                renderPlayerAndHealth(stanceImg, 56 - x, yOffset - Constants::GroundY + player.getY(), player.getHealth(), currentPlane);
+                renderPlayerAndHealth(stanceImg, 56 - x, yOffset - Constants::GroundY + player.getY(), player.getHealth());
             }
             break;
 
@@ -470,10 +413,10 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_StandingJump_LH_01 ... Stance::Enemy_Sword_StandingJump_LH_07:
                     {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
-                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
+                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
 
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
+                            renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame());
                         }                        
 
                     }
@@ -486,10 +429,10 @@ void renderWorld(uint8_t currentPlane) {
                 case Stance::Enemy_Sword_StandingJump_RH_01 ... Stance::Enemy_Sword_StandingJump_RH_07:
                     {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
-                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth(), currentPlane);
+                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
-                            renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame(), currentPlane);
+                            renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame());
                         }                        
 
                     }
@@ -647,7 +590,7 @@ void renderWorld(uint8_t currentPlane) {
 
                                 if (world.getFrameCount() % 64 < 32) {
 
-                                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (menu.getY() * 8), currentPlane);
+                                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (menu.getY() * 8));
 
                                 }
 
@@ -658,12 +601,12 @@ void renderWorld(uint8_t currentPlane) {
 
                             InventoryItem &item = player.getItem(i - 2);
                             if (item.getItemType() == ItemType::None)   break;
-                            renderItem(item.getItemType(), menu.getX() + 13, -12 + ((i - menu.getTop()) * 18), currentPlane);
+                            renderItem(item.getItemType(), menu.getX() + 13, -12 + ((i - menu.getTop()) * 18));
 
                             if (menu.getY() >= 2 && world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
                                 uint8_t y = -13 + ((menu.getY() - menu.getTop()) * 18);
-                                renderItemCursor(menu.getX() + 12, y, currentPlane);
+                                renderItemCursor(menu.getX() + 12, y);
 
                             }
                             
@@ -680,17 +623,19 @@ void renderWorld(uint8_t currentPlane) {
                         if (item.getItemType() == ItemType::None)   break;
 
                         uint8_t y = 6 + ((i - menu.getTop()) * 18);
-                        renderItem(item.getItemType(), menu.getX() + 13, y, currentPlane);
+                        renderItem(item.getItemType(), menu.getX() + 13, y);
 
                     }
 
                     if (world.getFrameCount() % 64 < 32 && player.getItemCount() > 0) {
 
                         uint8_t y = 5 + ((menu.getY() - menu.getTop()) * 18);
-                        renderItemCursor(menu.getX() + 12, y, currentPlane);
+                        renderItemCursor(menu.getX() + 12, y);
 
                     }
+                    
                 }
+
                 break;
 
             case GameState::Inventory_Open_More_Reset:
@@ -702,7 +647,7 @@ void renderWorld(uint8_t currentPlane) {
 
                 if (world.getFrameCount() % 64 < 32) {
 
-                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8), currentPlane);
+                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (world.getGameState() == GameState::Inventory_Open_More_Reset ? 0 : 8));
 
                 }
 
@@ -720,7 +665,7 @@ void renderWorld(uint8_t currentPlane) {
                         case GameState::Inventory_Open_Reset_0 ... GameState::Inventory_Open_Exit_1:
                             {
                                 uint8_t y = FX::readIndexedUInt8(Constants::InventoryCursorY, static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Inventory_Open_Reset_0));
-                                renderInventoryPanelCursor(menu.getX() + 8, y, currentPlane);
+                                renderInventoryPanelCursor(menu.getX() + 8, y);
 
                             }
 
@@ -747,7 +692,7 @@ uint8_t getStanceImg(Stance stance) {
 
 }
 
-void renderItem(ItemType itemType, uint8_t x, uint8_t y, uint8_t currentPlane) {
+void renderItem(ItemType itemType, uint8_t x, uint8_t y) {
 
     uint24_t imageIdx = FX::readIndexedUInt24(Images::ItemsIndex, static_cast<uint8_t>(itemType));
     uint8_t imgFrame = FX::readIndexedUInt8(Images::InventoryFrame, static_cast<uint8_t>(itemType));
@@ -755,38 +700,38 @@ void renderItem(ItemType itemType, uint8_t x, uint8_t y, uint8_t currentPlane) {
 
 }
 
-void renderItemCursor(uint8_t x, uint8_t y, uint8_t currentPlane) {
+void renderItemCursor(uint8_t x, uint8_t y) {
 
     SpritesU::drawPlusMaskFX(x, y, Images::Cursor, currentPlane);
 
 }
 
-void renderPlayerAndHealth(uint8_t stanceImg, uint8_t x, uint8_t y, uint8_t health, uint8_t currentPlane) {
+void renderPlayerAndHealth(uint8_t stanceImg, uint8_t x, uint8_t y, uint8_t health) {
 
     SpritesU::drawPlusMaskFX(x, y, Images::Player, (stanceImg * 3) + currentPlane);
     SpritesU::drawPlusMaskFX(x - 1, y - 5, Images::Health, ((Constants::HealthMax - health) * 3) + currentPlane);
 
 }
 
-void renderGlint(uint8_t x, uint8_t y, uint8_t frame, uint8_t currentPlane) {
+void renderGlint(uint8_t x, uint8_t y, uint8_t frame) {
 
     SpritesU::drawPlusMaskFX(x, y, Images::Glint, (frame * 3) + currentPlane);
 
 }
 
-void renderChakanaBalance(uint8_t balance, uint8_t currentPlane){
+void renderChakanaBalance(uint8_t balance) {
                     
     SpritesU::drawOverwriteFX(menu.getX() + 15, 56, Images::Numbers_5x3_3D_BW, (balance * 3) + currentPlane);
 
 }
 
-void renderGamblePanel(uint8_t frame, uint8_t currentPlane) {
+void renderGamblePanel(uint8_t frame) {
     
     SpritesU::drawPlusMaskFX(menu.getX(), 0, Images::GamblePanel, (frame * 3) + currentPlane);
 
 }
 
-void renderInventoryPanelCursor(uint8_t x, uint8_t y, uint8_t currentPlane) {
+void renderInventoryPanelCursor(uint8_t x, uint8_t y) {
 
     SpritesU::drawPlusMaskFX(x, y, Images::InventoryPanel_Cursor, currentPlane);
 
