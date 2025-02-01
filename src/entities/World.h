@@ -20,7 +20,7 @@ struct World {
 
         Player player;
         Enemy enemy[Constants::EnemyCount];
-        Item items[10];
+        Item items[Constants::ItemCount_Level];
 
         uint16_t portsVisited = 0;
         uint16_t frameCount = 0;
@@ -120,10 +120,18 @@ struct World {
 
         uint8_t getYOffsetForRendering() {
 
-            uint8_t yOffset = Constants::GroundY;
-            if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+            switch (player.getY()) {
 
-            return yOffset;
+                case 21 ... 37: 
+                    return Constants::GroundY;
+
+                case -59 ... 20:
+                    return Constants::GroundY - player.getY() + 22;
+
+                default:
+                    return 118;
+
+            }
 
         }
 
@@ -322,7 +330,7 @@ struct World {
 
             uint8_t removeItemIdx = 255;
 
-            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+            for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
                 Item &item = this->items[i];
                 if (item.getItemType() == ItemType::None) break;
@@ -452,23 +460,24 @@ struct World {
 
         void removeItem(uint8_t itemIdx) {
 
-            for (uint8_t i = itemIdx; i < Constants::ItemCount - 1; i++) {
+            for (uint8_t i = itemIdx; i < Constants::ItemCount_Level - 1; i++) {
 
                 this->items[i].setItemType(items[i + 1].getItemType());
                 this->items[i].setFrame(items[i + 1].getFrame());
                 this->items[i].setX(items[i + 1].getX());
                 this->items[i].setY(items[i + 1].getY());
+                this->items[i].setData(items[i + 1].getData());
                 this->items[i].setCounter(items[i + 1].getCounter());
 
             }
 
-            this->items[Constants::ItemCount - 1].setItemType(ItemType::None);
+            this->items[Constants::ItemCount_Level - 1].setItemType(ItemType::None);
 
         }
 
         uint8_t getItem(ItemType itemType1, ItemType itemType2) {
 
-            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+            for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
                 if (this->items[i].getItemType() == itemType1) return i;
                 if (this->items[i].getItemType() == itemType2) return i;
@@ -481,7 +490,7 @@ struct World {
 
         uint8_t getItem(ItemType itemType) {
 
-            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+            for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
                 if (this->items[i].getItemType() == itemType) return i;
 
@@ -493,7 +502,7 @@ struct World {
 
         uint8_t getItem(uint16_t xOffset, int8_t yOffset) {
 
-            for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+            for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
                 if (this->items[i].getItemType() == ItemType::None) return Constants::NoItem;
 
@@ -543,7 +552,7 @@ struct World {
 
             if (tile == Tiles::Lever_Portal_LH && direction == Direction::Right) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
                     Item &item = this->items[i];
 
@@ -567,7 +576,7 @@ struct World {
 
             if (tile == Tiles::Lever_Portal_RH && direction == Direction::Left) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
                     Item &item = this->items[i];
 
@@ -591,7 +600,7 @@ struct World {
 
             if (tile == Tiles::Lever_Portal_Auto_LH && direction == Direction::Right) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
                     Item &item = this->items[i];
 
@@ -615,7 +624,7 @@ struct World {
 
             if (tile == Tiles::Lever_Portal_Auto_RH && direction == Direction::Left) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
                     Item &item = this->items[i];
 
@@ -633,7 +642,7 @@ struct World {
 
             if (tile == Tiles::WoodenBarrier) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
                     Item &item = this->items[i];
 
@@ -651,7 +660,7 @@ struct World {
 
             if (tile == Tiles::Mystery_Crate) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
                     Item &item = this->items[i];
 
@@ -669,7 +678,7 @@ struct World {
 
             if (tile == Tiles::LockedDoor) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
                     Item &item = this->items[i];
 

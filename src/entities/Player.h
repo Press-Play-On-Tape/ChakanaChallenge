@@ -10,7 +10,7 @@ class Player {
     private:
 
         Stance stance = Stance::Man_Walk_BK_01;
-        InventoryItem items[Constants::ItemCount];
+        InventoryItem items[Constants::ItemCount_Player];
 
         int8_t y = 37;
         uint8_t falls = 0;
@@ -84,20 +84,20 @@ class Player {
 
         void removeInventoryItem(uint8_t itemIdx) {
 
-            for (uint8_t i = itemIdx; i < Constants::ItemCount - 1; i++) {
+            for (uint8_t i = itemIdx; i < Constants::ItemCount_Player - 1; i++) {
 
                 this->items[i].setItemType(items[i + 1].getItemType());
 
             }
 
-            this->items[Constants::ItemCount - 1].setItemType(ItemType::None);
+            this->items[Constants::ItemCount_Player - 1].setItemType(ItemType::None);
             this->itemCount--;
 
         }
 
         void addInventoryItem(ItemType itemType) {
 
-            for (uint8_t i = 0; i < Constants::ItemCount - 1; i++) {
+            for (uint8_t i = 0; i < Constants::ItemCount_Player - 1; i++) {
 
                 if (this->items[i].getItemType() == ItemType::None) {
 

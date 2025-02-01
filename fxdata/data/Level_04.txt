@@ -72,9 +72,3 @@ uint16_t Level_04_Enemies[] = {
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
 };
-
-uint16_t Level_04_PlayerStart[] = {
-0,
-0,
-107,
-};

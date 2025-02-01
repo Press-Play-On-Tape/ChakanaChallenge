@@ -200,7 +200,7 @@ void renderWorld() {
     //
     // Rneder items ..
 
-    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+    for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
         Item &item = world.getItem(i);
         if (item.getItemType() == ItemType::Puff) break;
@@ -515,7 +515,7 @@ void renderWorld() {
 
     // Door RHS ..
 
-    for (uint8_t i = 0; i < Constants::ItemCount; i++) {
+    for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
         Item &item = world.getItem(i);
 

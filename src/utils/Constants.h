@@ -6,8 +6,8 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define _DEBUG
-#define _DEBUG_SOUND
+#define DEBUG
+#define DEBUG_SOUND
 #define AB_BUTTON 12
 
 // 136 bytes
@@ -583,7 +583,8 @@ namespace Constants {
     constexpr uint8_t HealthMax = 14;
 
     constexpr uint8_t EnemyCount = 4;
-    constexpr uint8_t ItemCount = 11;
+    constexpr uint8_t ItemCount_Level = 12;
+    constexpr uint8_t ItemCount_Player = 8;
 
     constexpr uint8_t StackSize_Enemy = 15;
     constexpr uint8_t StackSize_Player = 35;
