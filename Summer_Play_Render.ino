@@ -644,7 +644,7 @@ void renderWorld() {
             case GameState::Inventory_Open_More_Reset:
             case GameState::Inventory_Open_More_Exit:
 
-                SpritesU::drawPlusMaskFX(menu.getX(), 0,  Images::InventoryPanel, ((7 + player.getHealth()) * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(menu.getX(), 0, Images::InventoryPanel, ((7 + player.getHealth()) * 3) + currentPlane);
                 SpritesU::drawOverwriteFX(menu.getX() + 14, 32, Images::Numbers_5x3_3D_BW, (player.getChakanas() * 3) + currentPlane);
                 SpritesU::drawOverwriteFX(menu.getX() + 11, 47,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
 
