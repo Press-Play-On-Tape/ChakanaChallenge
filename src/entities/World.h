@@ -541,8 +541,12 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile, Direction direction) {
             
-            if (tile == Tiles::Poker)               return true;
             if (tile == Tiles::Solid_Blocking)      return false;
+            if (player.getLevel() == 0)             return true;
+            if (tile == Tiles::Poker)               return true;
+
+            if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)         return false;
+            if (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2)     return false;
 
             if (tile == Tiles::Lever_Portal_LH && direction == Direction::Left) { 
 
@@ -550,21 +554,22 @@ struct World {
 
             }
 
-            if (tile == Tiles::Lever_Portal_LH && direction == Direction::Right) { 
+            if (tile == Tiles::Lever_Portal_LH && direction != Direction::Left) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+                return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
-                    Item &item = this->items[i];
+                //     Item &item = this->items[i];
 
-                    if (item.getItemType() == ItemType::Lever_Portal_Open) {
+                //     if (item.getItemType() == ItemType::Lever_Portal_Open) {
                         
-                        return true;
+                //         return true;
 
-                    }
+                //     }
 
-                }
+                // }
 
-                return false; 
+                // return false; 
                 
             }
             
@@ -574,21 +579,22 @@ struct World {
 
             }
 
-            if (tile == Tiles::Lever_Portal_RH && direction == Direction::Left) { 
+            if (tile == Tiles::Lever_Portal_RH && direction != Direction::Right) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+                return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
-                    Item &item = this->items[i];
+                //     Item &item = this->items[i];
 
-                    if (item.getItemType() == ItemType::Lever_Portal_Open) {
+                //     if (item.getItemType() == ItemType::Lever_Portal_Open) {
                         
-                        return true;
+                //         return true;
 
-                    }
+                //     }
 
-                }
+                // }
 
-                return false; 
+                // return false; 
                 
             }
             
@@ -598,21 +604,23 @@ struct World {
 
             }
 
-            if (tile == Tiles::Lever_Portal_Auto_LH && direction == Direction::Right) { 
+            if (tile == Tiles::Lever_Portal_Auto_LH && direction != Direction::Left) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+                return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+
+                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
-                    Item &item = this->items[i];
+                //     Item &item = this->items[i];
 
-                    if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
+                //     if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
                         
-                        return true;
+                //         return true;
 
-                    }
+                //     }
 
-                }
+                // }
 
-                return false; 
+                // return false; 
                 
             }
 
@@ -622,21 +630,23 @@ struct World {
 
             }
 
-            if (tile == Tiles::Lever_Portal_Auto_RH && direction == Direction::Left) { 
+            if (tile == Tiles::Lever_Portal_Auto_RH && direction != Direction::Right) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+                return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+
+                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
                     
-                    Item &item = this->items[i];
+                //     Item &item = this->items[i];
 
-                    if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
+                //     if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
                         
-                        return true;
+                //         return true;
 
-                    }
+                //     }
 
-                }
+                // }
 
-                return false; 
+                // return false; 
                 
             }
 

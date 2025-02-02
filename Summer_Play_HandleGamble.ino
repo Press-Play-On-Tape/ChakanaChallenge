@@ -8,6 +8,8 @@
 
 void playGame_HandleGamble(Player &player, uint8_t justPressed) {
 
+    #ifndef DEBUG 
+
     if (justPressed & A_BUTTON) {
                 
         switch (world.getGameState()) {
@@ -84,5 +86,7 @@ void playGame_HandleGamble(Player &player, uint8_t justPressed) {
         }
 
     }
+
+    #endif
         
 }

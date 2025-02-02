@@ -6,8 +6,8 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define DEBUG
-#define DEBUG_SOUND
+#define _DEBUG
+#define _DEBUG_SOUND
 #define AB_BUTTON 12
 
 // 136 bytes

@@ -54,6 +54,8 @@ void playGame_HandleEnemies_Trebochet_SetFrame(uint8_t idx, ItemType itemType) {
 
 void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance stanceOffset, Stance stanceOffset2, int16_t dist) {
 
+    #ifndef DEBUG
+
     switch (dist) {
         
         // - Enemy to right of player -----------------------------------------------------------------------
@@ -171,6 +173,8 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
 
     }
 
+    #endif
+    
 }
 
 void enemy_PushSeqWalkLungeWalk(Enemy& enemy, Stance stanceOffset2) {

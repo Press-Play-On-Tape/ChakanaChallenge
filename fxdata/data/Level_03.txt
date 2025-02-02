@@ -78,7 +78,7 @@ uint16_t Level_03_Items[] = {
 448,                             // Position X
 16,                             // Position Y
 0,                             // Frame
-6,                             // Data
+3,                             // Data
 0,                             // Counter
 
 46,                             // ItemType::Lever_Portal_Open
@@ -92,7 +92,7 @@ uint16_t Level_03_Items[] = {
 496,                             // Position X
 80,                             // Position Y
 0,                             // Frame
-256,                             // Data
+1024,                             // Data
 0,                             // Counter
 
 63,                             // ItemType::Puff
