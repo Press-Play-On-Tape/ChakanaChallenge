@@ -543,6 +543,7 @@ struct World {
             
             if (tile == Tiles::Solid_Blocking)      return false;
             if (player.getLevel() == 0)             return true;
+            if (tile == Tiles::Solid_Walkable)      return false;
             if (tile == Tiles::Poker)               return true;
 
             if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)         return false;
@@ -557,19 +558,6 @@ struct World {
             if (tile == Tiles::Lever_Portal_LH && direction != Direction::Left) { 
 
                 return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
-                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
-                    
-                //     Item &item = this->items[i];
-
-                //     if (item.getItemType() == ItemType::Lever_Portal_Open) {
-                        
-                //         return true;
-
-                //     }
-
-                // }
-
-                // return false; 
                 
             }
             
@@ -582,19 +570,6 @@ struct World {
             if (tile == Tiles::Lever_Portal_RH && direction != Direction::Right) { 
 
                 return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
-                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
-                    
-                //     Item &item = this->items[i];
-
-                //     if (item.getItemType() == ItemType::Lever_Portal_Open) {
-                        
-                //         return true;
-
-                //     }
-
-                // }
-
-                // return false; 
                 
             }
             
@@ -607,20 +582,6 @@ struct World {
             if (tile == Tiles::Lever_Portal_Auto_LH && direction != Direction::Left) { 
 
                 return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
-
-                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
-                    
-                //     Item &item = this->items[i];
-
-                //     if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
-                        
-                //         return true;
-
-                //     }
-
-                // }
-
-                // return false; 
                 
             }
 
@@ -633,20 +594,6 @@ struct World {
             if (tile == Tiles::Lever_Portal_Auto_RH && direction != Direction::Right) { 
 
                 return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
-
-                // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
-                    
-                //     Item &item = this->items[i];
-
-                //     if (item.getItemType() == ItemType::Lever_Portal_Auto_Open) {
-                        
-                //         return true;
-
-                //     }
-
-                // }
-
-                // return false; 
                 
             }
 
@@ -704,9 +651,11 @@ struct World {
                 
             }
 
-            return tile == 0 || tile == 1 || tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == 13 /*rope lh*/ || 
-                   tile == 14 /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
-                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
+            return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
+                   tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
+                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower ||
+                   (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide) ||
+                   (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2);
             
         }
 
@@ -791,7 +740,7 @@ struct World {
 
         bool isStairTile_R1(uint8_t tile) {
 
-            return tile == 4;
+            return tile == Tiles::Single_Stair_RH_Upper_TL;
             
         }
 

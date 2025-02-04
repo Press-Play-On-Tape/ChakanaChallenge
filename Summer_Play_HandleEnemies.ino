@@ -450,6 +450,39 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 }
 
 
+// bool playGame_EnemyStabsPlayer(Player &player) {
+
+//     if (player.getEnemyIdx() == Constants::NoEnemy) {
+
+//         uint8_t enemyIdx = world.getClosestEnemy(EnemyType::SwordFighter);
+//         player.setEnemyIdx(enemyIdx);
+
+//         if (enemyIdx = Constants::NoEnemy) return false;
+
+//     }
+
+//     Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+//     Stance stance = enemy.getStance();
+//     Rect playerRect = { 61, - Constants::GroundY + player.getY(), 6, 16 };
+
+//     if (stance == Stance::Enemy_Sword_Lunge_LH_03) {
+
+//         Point enemyPoint = { enemy.getX() + world.getMiddleground() - 10, - enemy.getY() + 12 };
+//         return collide(enemyPoint, playerRect);
+
+//     }
+
+//     if (stance == Stance::Enemy_Sword_Lunge_RH_03) {
+
+//         Point enemyPoint = { enemy.getX() + world.getMiddleground() + 17, - enemy.getY() + 12 };
+//         return collide(enemyPoint, playerRect);
+
+//     }
+
+//     return false;
+
+// }
+
 bool playGame_EnemyStabsPlayer(Player &player) {
 
     if (player.getEnemyIdx() == Constants::NoEnemy) {
@@ -463,25 +496,60 @@ bool playGame_EnemyStabsPlayer(Player &player) {
 
     Enemy &enemy = world.getEnemy(player.getEnemyIdx());
     Stance stance = enemy.getStance();
+
+    if (!(stance == Stance::Enemy_Sword_Lunge_LH_03) && !(stance == Stance::Enemy_Sword_Lunge_RH_03)) {
+        return false;
+    }
+
+    Point enemyPoint;
     Rect playerRect = { 61, - Constants::GroundY + player.getY(), 6, 16 };
 
-    if (stance == Stance::Enemy_Sword_Lunge_LH_03) {
+    if (player.getStance() == Stance::Man_Sword_Lunge_RH_03) {
 
-        Point enemyPoint = { enemy.getX() + world.getMiddleground() - 10, - enemy.getY() + 12 };
-        return collide(enemyPoint, playerRect);
+        enemyPoint = { enemy.getX() + world.getMiddleground() - 10, - enemy.getY() + 12 };
 
-    }
+     }
 
-    if (stance == Stance::Enemy_Sword_Lunge_RH_03) {
+    if (player.getStance() == Stance::Man_Sword_Lunge_LH_03) {
 
-        Point enemyPoint = { enemy.getX() + world.getMiddleground() + 17, - enemy.getY() + 12 };
-        return collide(enemyPoint, playerRect);
+        enemyPoint = { enemy.getX() + world.getMiddleground() - 10, - enemy.getY() + 12 };
 
     }
 
-    return false;
+    return collide(enemyPoint, playerRect);
 
-}
+ }
+
+
+
+// bool playGame_PlayerStabsEnemy(Player &player) {
+
+//     Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+//     Rect enemyRect = { enemy.getX() + world.getMiddleground(), - enemy.getY(), 6, 16 };
+
+//     if (enemy.getDirection() == Direction::Right) {
+
+//         enemyRect.x = enemyRect.x + 2;
+
+//     }
+    
+//     if (player.getStance() == Stance::Man_Sword_Lunge_RH_03) {
+
+//         Point playerPoint = { 61 + 15, - Constants::GroundY + player.getY() + 12 };
+//         return collide(playerPoint, enemyRect);
+
+//     }
+
+//     if (player.getStance() == Stance::Man_Sword_Lunge_LH_03) {
+
+//         Point playerPoint = { 61 - 10, - Constants::GroundY + player.getY() + 12 };
+//         return collide(playerPoint, enemyRect);        
+
+//     }
+
+//     return false;
+
+// }
 
 
 bool playGame_PlayerStabsEnemy(Player &player) {
@@ -494,24 +562,29 @@ bool playGame_PlayerStabsEnemy(Player &player) {
         enemyRect.x = enemyRect.x + 2;
 
     }
-    
+
+    if (!(player.getStance() == Stance::Man_Sword_Lunge_LH_03) && !(player.getStance() == Stance::Man_Sword_Lunge_RH_03)) {
+        return false;
+    }
+
+    Point playerPoint;
+
     if (player.getStance() == Stance::Man_Sword_Lunge_RH_03) {
 
-        Point playerPoint = { 61 + 15, - Constants::GroundY + player.getY() + 12 };
-        return collide(playerPoint, enemyRect);
+        playerPoint = { 61 + 15, - Constants::GroundY + player.getY() + 12 };
 
-    }
+     }
 
     if (player.getStance() == Stance::Man_Sword_Lunge_LH_03) {
 
-        Point playerPoint = { 61 - 10, - Constants::GroundY + player.getY() + 12 };
-        return collide(playerPoint, enemyRect);        
+        playerPoint = { 61 - 10, - Constants::GroundY + player.getY() + 12 };
 
     }
 
-    return false;
+    return collide(playerPoint, enemyRect);
 
-}
+ }
+
 
 int16_t getDistanceBetween(Enemy &enemy) {
 
