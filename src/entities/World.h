@@ -330,10 +330,42 @@ struct World {
 
             uint8_t removeItemIdx = 255;
 
+            // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+
+            //     Item &item = this->items[i];
+            //     if (item.getItemType() == ItemType::None) break;
+                
+            //     ItemAction action = item.update();
+
+            //     switch (action) {
+
+            //         case ItemAction::Remove:
+            //             removeItemIdx = i;
+            //             break;
+
+            //         case ItemAction::HideCrate_ShowItem:
+            //             this->items[i + 1].setItemType(static_cast<ItemType>(static_cast<uint8_t>(this->items[i + 1].getItemType()) - 1));
+            //             break;
+
+            //         case ItemAction::Remove_AddToInventory:
+            //             player.addInventoryItem(item.getItemType());
+            //             removeItemIdx = i;
+            //             break;
+
+            //         case ItemAction::ChangeToHidden:
+            //             player.addInventoryItem(item.getItemType());
+            //             item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(item.getItemType()) + 1));
+            //             break;
+
+            //     }
+
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
                 Item &item = this->items[i];
-                if (item.getItemType() == ItemType::None) break;
+                ItemType itemType = item.getItemType();
+                bool addInventoryItem = false;
+
+                if (itemType == ItemType::None) break;
                 
                 ItemAction action = item.update();
 
@@ -348,14 +380,20 @@ struct World {
                         break;
 
                     case ItemAction::Remove_AddToInventory:
-                        player.addInventoryItem(item.getItemType());
+                        addInventoryItem = true;
                         removeItemIdx = i;
                         break;
 
                     case ItemAction::ChangeToHidden:
-                        player.addInventoryItem(item.getItemType());
-                        item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(item.getItemType()) + 1));
+                        addInventoryItem = true;
+                        item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(itemType) + 1));
                         break;
+
+                }
+
+                if (addInventoryItem) {
+                        
+                    player.addInventoryItem(itemType);
 
                 }
 
@@ -369,11 +407,77 @@ struct World {
                     case ItemType::SwingyThing:
                         {  
 
+                        //     int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
+                        //     int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
+
+                        //     int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
+                        //     int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
+
+
+                        //     Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
+
+                        //     if (collide(playerRect, itemRect)) {
+
+                        //         switch (player.getDirection()) {
+
+                        //             case Direction::Left:
+                        //                 {
+                        //                     switch (item.getFrame()) {
+
+                        //                         case 0 ... 8:
+                                     
+                        //                             initPuff(itemX - 8, itemY - 16);
+                        //                             player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
+                        //                             break;
+
+                        //                         default:
+                                         
+                        //                             initPuff(itemX - 8 + itemRect.width, itemY - 16);
+                        //                             player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
+                        //                             break;
+                                                    
+                        //                     }
+
+                        //                 }
+
+                        //                 break;
+
+                        //             case Direction::Right:
+                        //                 {                                                
+                        //                     item.setItemType(ItemType::SwingyThing_2);
+
+                        //                     switch (item.getFrame()) {
+
+                        //                         case 0 ... 8:
+                                 
+                        //                             initPuff(itemX - 8, itemY - 16);
+                        //                             player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
+                        //                             break;
+
+                        //                         default:
+                                           
+                        //                             initPuff(itemX - 8 + itemRect.width, itemY - 16);
+                        //                             player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
+                        //                             break;
+                                                    
+                        //                     }
+
+                        //                 }
+
+                        //                 break;
+
+                        //         }
+
+                        //     }
+
+                        // }
+
                             int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
                             int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
 
                             int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
                             int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
+                            uint8_t puffX = 0;
 
                             Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
 
@@ -387,13 +491,12 @@ struct World {
 
                                                 case 0 ... 8:
                                      
-                                                    initPuff(itemX - 8, itemY - 16);
                                                     player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
                                                     break;
 
                                                 default:
                                          
-                                                    initPuff(itemX - 8 + itemRect.width, itemY - 16);
+                                                    puffX = itemRect.width;
                                                     player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
                                                     break;
                                                     
@@ -411,13 +514,12 @@ struct World {
 
                                                 case 0 ... 8:
                                  
-                                                    initPuff(itemX - 8, itemY - 16);
                                                     player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
                                                     break;
 
                                                 default:
                                            
-                                                    initPuff(itemX - 8 + itemRect.width, itemY - 16);
+                                                    puffX = itemRect.width;
                                                     player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
                                                     break;
                                                     
@@ -429,10 +531,15 @@ struct World {
 
                                 }
 
+                                if (puffX != 0) {
+
+                                    initPuff(itemX - 8 + puffX, itemY - 16);
+
+                                }
+
                             }
 
                         }
-
                         break;
 
                 }
@@ -442,6 +549,9 @@ struct World {
             if (removeItemIdx != 255) {
                 this->removeItem(removeItemIdx);
             }
+
+
+            // Increment waves ..
 
             if (this->waveIdx == Constants::NoWaves) return;
 
@@ -541,73 +651,133 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile, Direction direction) {
             
-            if (tile == Tiles::Solid_Blocking)      return false;
-            if (player.getLevel() == 0)             return true;
-            if (tile == Tiles::Solid_Walkable)      return false;
-            if (tile == Tiles::Poker)               return true;
+            if (tile == Tiles::Solid_Blocking)                                          return false;
+            else if (player.getLevel() == 0)                                            return true;
+            else if (tile == Tiles::Solid_Walkable)                                     return false;
+            else if (tile == Tiles::Poker)                                              return true;
 
-            if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)         return false;
-            if (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2)     return false;
+            else if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)        return false;
+            else if (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2)    return false;
 
-            if (tile == Tiles::Lever_Portal_LH && direction == Direction::Left) { 
 
-                return true;
+            // if (tile == Tiles::Lever_Portal_LH && direction == Direction::Left) { 
 
-            }
+            //     return true;
 
-            if (tile == Tiles::Lever_Portal_LH && direction != Direction::Left) { 
+            // }
 
-                return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+            // if (tile == Tiles::Lever_Portal_LH && direction != Direction::Left) { 
+
+            //     return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
                 
-            }
+            // }
             
-            if (tile == Tiles::Lever_Portal_RH && direction == Direction::Right) { 
+            // if (tile == Tiles::Lever_Portal_Auto_LH && direction == Direction::Left) { 
 
-                return true;
+            //     return true;
 
-            }
+            // }
 
-            if (tile == Tiles::Lever_Portal_RH && direction != Direction::Right) { 
+            // if (tile == Tiles::Lever_Portal_Auto_LH && direction != Direction::Left) { 
 
-                return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+            //     return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
                 
-            }
+            // }
             
-            if (tile == Tiles::Lever_Portal_Auto_LH && direction == Direction::Left) { 
+            // if (tile == Tiles::Lever_Portal_RH && direction == Direction::Right) { 
 
-                return true;
+            //     return true;
 
-            }
+            // }
 
-            if (tile == Tiles::Lever_Portal_Auto_LH && direction != Direction::Left) { 
+            // if (tile == Tiles::Lever_Portal_RH && direction != Direction::Right) { 
 
-                return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+            //     return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
                 
-            }
+            // }
 
-            if (tile == Tiles::Lever_Portal_Auto_RH && direction == Direction::Right) { 
+            // if (tile == Tiles::Lever_Portal_Auto_RH && direction == Direction::Right) { 
 
-                return true;
+            //     return true;
 
-            }
+            // }
 
-            if (tile == Tiles::Lever_Portal_Auto_RH && direction != Direction::Right) { 
+            // if (tile == Tiles::Lever_Portal_Auto_RH && direction != Direction::Right) { 
 
-                return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+            //     return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
                 
-            }
+            // }
 
-            if (tile == Tiles::WoodenBarrier) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+            else if (tile == Tiles::Lever_Portal_LH) { 
+
+                if (direction == Direction::Left) { 
+
+                    return true;
+
+                }
+
+                if (direction != Direction::Left) { 
+
+                    return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
                     
-                    Item &item = this->items[i];
+                }
 
-                    if (item.getItemType() == ItemType::WoodenBarrier) {
-                        
-                        return item.getCounter() == (7 * 32) - 1;
+            }
+            else if (tile == Tiles::Lever_Portal_Auto_LH) {
+                
+                if (direction == Direction::Left) { 
 
-                    }
+                    return true;
+
+                }
+
+                if (direction != Direction::Left) { 
+
+                    return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+                    
+                }
+
+            }
+            else if (tile == Tiles::Lever_Portal_RH) {
+                
+                if (direction == Direction::Right) { 
+
+                    return true;
+
+                }
+
+                if (direction != Direction::Right) { 
+
+                    return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    
+                }
+
+            }
+            else if (tile == Tiles::Lever_Portal_Auto_RH) {
+
+                if (direction == Direction::Right) { 
+
+                    return true;
+
+                }
+
+                if (direction != Direction::Right) { 
+
+                    return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+                    
+                }
+
+            }
+
+            else if (tile == Tiles::WoodenBarrier) { 
+
+                uint8_t idx = this->getItem(ItemType::WoodenBarrier);
+
+                if (idx != Constants::NoItem) {
+                    
+                    Item &item = this->items[idx];
+                    return item.getCounter() == (7 * 32) - 1;
 
                 }
 
@@ -615,17 +785,14 @@ struct World {
                 
             }
 
-            if (tile == Tiles::Mystery_Crate) { 
+            else if (tile == Tiles::Mystery_Crate) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+                uint8_t idx = this->getItem(ItemType::MysteryCrate);
+
+                if (idx != Constants::NoItem) {
                     
-                    Item &item = this->items[i];
-
-                    if (item.getItemType() == ItemType::MysteryCrate) {
-                        
-                        return item.getFrame() == 8;
-
-                    }
+                    Item &item = this->items[idx];
+                    return item.getFrame() == 8;
 
                 }
 
@@ -633,17 +800,14 @@ struct World {
                 
             }
 
-            if (tile == Tiles::LockedDoor) { 
+            else if (tile == Tiles::LockedDoor) { 
 
-                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+                uint8_t idx = this->getItem(ItemType::LockedDoor);
+
+                if (idx != Constants::NoItem) {
                     
-                    Item &item = this->items[i];
-
-                    if (item.getItemType() == ItemType::LockedDoor) {
-                        
-                        return item.getFrame() == 4;
-
-                    }
+                    Item &item = this->items[idx];
+                    return item.getFrame() == 4;
 
                 }
 

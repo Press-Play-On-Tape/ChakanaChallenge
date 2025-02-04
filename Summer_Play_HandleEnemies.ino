@@ -52,6 +52,7 @@ void playGame_HandleEnemies_Trebochet_SetFrame(uint8_t idx, ItemType itemType) {
 
 // }
 
+
 void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance stanceOffset, Stance stanceOffset2, int16_t dist) {
 
     #ifndef DEBUG
@@ -177,13 +178,13 @@ void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance st
     
 }
 
-void enemy_PushSeqWalkLungeWalk(Enemy& enemy, Stance stanceOffset2) {
+// void enemy_PushSeqWalkLungeWalk(Enemy& enemy, Stance stanceOffset2) {
 
-    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
-    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
-    enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
+//     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_BK_RH_02 + stanceOffset2);
+//     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01 + stanceOffset2, Stance::Enemy_Sword_Lunge_RH_06 + stanceOffset2);
+//     enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01 + stanceOffset2, Stance::Enemy_Sword_Walk_RH_02 + stanceOffset2);
     
-}
+//}
 
 
 void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
@@ -226,18 +227,31 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             switch (enemy.getEnemyType()) {
 
                 case EnemyType::Archer:
+                    {    
+
+                        // switch (stance) {
+
+                        //     case Stance::Enemy_Fire_LH_07:
+
+                        //         playGame_HandleEnemies_LaunchArrow(enemy, Direction::Left);
+                        //         break;
+
+                        //     case Stance::Enemy_Fire_RH_07:
+
+                        //         playGame_HandleEnemies_LaunchArrow(enemy, Direction::Right);
+                        //         break;
+
+                        // }
                         
-                    switch (stance) {
+                        switch (stance) {
 
-                        case Stance::Enemy_Fire_LH_07:
+                            case Stance::Enemy_Fire_LH_07:
+                            case Stance::Enemy_Fire_RH_07:
 
-                            playGame_HandleEnemies_LaunchArrow(enemy, Direction::Left);
-                            break;
+                                playGame_HandleEnemies_LaunchArrow(enemy, stance == Stance::Enemy_Fire_LH_07 ? Direction::Left : Direction::Right);
+                                break;
 
-                        case Stance::Enemy_Fire_RH_07:
-
-                            playGame_HandleEnemies_LaunchArrow(enemy, Direction::Right);
-                            break;
+                        }
 
                     }
 
@@ -315,29 +329,94 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                     if (player.getHealth() == 0) {
 
+                                        // int16_t dist = getDistanceBetween(enemy);
+                                        // player.clear();
+
+                                        // // Enemy puts away sword ..
+
+                                        // switch (enemy.getDirection()) {
+
+                                        //     case Direction::Left:
+                                        //         enemy.insert(Stance::Enemy_Walk_LH_00);
+                                        //         break;
+
+                                        //     case Direction::Right:
+                                        //         enemy.insert(Stance::Enemy_Walk_RH_00);
+                                        //         break;
+
+                                        //     default: break;
+
+                                        // }
                                         int16_t dist = getDistanceBetween(enemy);
                                         player.clear();
-
+                                        Stance stanceSingle = 0;
+                                        Stance stanceDouble = 0;
 
                                         // Enemy puts away sword ..
 
                                         switch (enemy.getDirection()) {
 
                                             case Direction::Left:
-                                                enemy.insert(Stance::Enemy_Walk_LH_00);
+                                                stanceSingle = Stance::Enemy_Walk_LH_00;
                                                 break;
 
                                             case Direction::Right:
-                                                enemy.insert(Stance::Enemy_Walk_RH_00);
+                                                stanceSingle = Stance::Enemy_Walk_RH_00;
                                                 break;
 
                                             default: break;
 
                                         }
 
+                                        if (stance != 0) {
+                                            enemy.insert(stanceSingle);
+                                        }
+
 
                                         // Player dies but whch direction does he fall?
 
+                                        // switch (dist) {
+
+                                        //     case -999 ... 0:
+
+                                        //         switch (player.getDirection()) {
+
+                                        //             case Direction::Left:
+                                        //                 player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
+                                        //                 break;
+
+                                        //             case Direction::Right:
+
+                                        //                 player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                        //                 break;
+
+                                        //             default: break;
+
+                                        //         }
+
+                                        //         break;
+
+                                        //     case 1 ... 999:
+
+                                        //         switch (player.getDirection()) {
+
+                                        //             case Direction::Left:
+
+                                        //                 player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
+                                        //                 break;
+
+                                        //             case Direction::Right:
+
+                                        //                 player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                        //                 break;
+
+                                        //             default: break;
+
+                                        //         }
+
+                                        //         break;
+
+                                        // }                                                
                                         switch (dist) {
 
                                             case -999 ... 0:
@@ -346,12 +425,14 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                                     case Direction::Left:
 
-                                                        player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04);
+                                                        stanceSingle = Stance::Man_Die_FWD_LH_01;
+                                                        stanceDouble = Stance::Man_Die_FWD_LH_04;
                                                         break;
 
                                                     case Direction::Right:
 
-                                                        player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04);
+                                                        stanceSingle = Stance::Man_Die_BWD_RH_01;
+                                                        stanceDouble = Stance::Man_Die_BWD_RH_04;
                                                         break;
 
                                                     default: break;
@@ -366,12 +447,14 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                                     case Direction::Left:
 
-                                                        player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04);
+                                                        stanceSingle = Stance::Man_Die_BWD_LH_01;
+                                                        stanceDouble = Stance::Man_Die_BWD_LH_04;
                                                         break;
 
                                                     case Direction::Right:
 
-                                                        player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04);
+                                                        stanceSingle = Stance::Man_Die_FWD_RH_01;
+                                                        stanceDouble = Stance::Man_Die_FWD_RH_04;
                                                         break;
 
                                                     default: break;
@@ -380,7 +463,13 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                                 break;
 
-                                        }                                                
+                                        }   
+
+                                        if (stanceDouble != 0) {
+                                            
+                                            player.pushSequence(stanceSingle, stanceDouble);
+
+                                        }
 
                                     }
 
@@ -414,24 +503,62 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             switch (enemy.getEnemyType()) {
 
+                // case EnemyType::SwordFighter:
+                //     {
+                //         int16_t dist = getDistanceBetween(enemy);
+
+                //         switch (enemy.getDirection()) {
+
+                //             case Direction::Left:
+
+                //                 playGame_HandleEnemies_SwordFighter(player, enemy, 0, Stance::Enemy_LH_Start - Stance::Enemy_RH_Start, -dist);
+                //                 break;
+
+                //             case Direction::Right:
+
+                //                 playGame_HandleEnemies_SwordFighter(player, enemy, Constants::Player_Stance_Offset, 0, dist);
+                //                 break;
+                                
+                //             default: break;
+                        
+                //         }
+
+                //     }
+
+                //     break;
+
                 case EnemyType::SwordFighter:
                     {
                         int16_t dist = getDistanceBetween(enemy);
+                        bool isLeftOrRight = false;
+                        Stance stanceOffset1;
+                        Stance stanceOffset2;
 
                         switch (enemy.getDirection()) {
 
                             case Direction::Left:
-
-                                playGame_HandleEnemies_SwordFighter(player, enemy, 0, Stance::Enemy_LH_Start - Stance::Enemy_RH_Start, -dist);
+                                isLeftOrRight = true;
+                                stanceOffset1 = 0;
+                                stanceOffset2 = Constants::Player_Stance_Offset;
+                                dist = -dist;
+                                // playGame_HandleEnemies_SwordFighter(player, enemy, 0 Stance::Enemy_LH_Start - Stance::Enemy_RH_Start, -dist);
                                 break;
 
                             case Direction::Right:
-
-                                playGame_HandleEnemies_SwordFighter(player, enemy, Constants::Player_Stance_Offset, 0, dist);
+                                isLeftOrRight = true;
+                                stanceOffset1 = Constants::Player_Stance_Offset;
+                                stanceOffset2 = 0;
+                                // playGame_HandleEnemies_SwordFighter(player, enemy, Constants::Player_Stance_Offset, 0, dist);
                                 break;
-                              
+                                
                             default: break;
-  
+
+                        }
+
+                        if (isLeftOrRight) {
+
+                            playGame_HandleEnemies_SwordFighter(player, enemy, stanceOffset1, stanceOffset2, dist);
+
                         }
 
                     }

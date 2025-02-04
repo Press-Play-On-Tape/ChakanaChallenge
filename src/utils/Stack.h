@@ -87,8 +87,17 @@ const typename Stack< Type, Capacity >::ItemType & Stack< Type, Capacity >::peek
 
 template< typename Type, uint8_t Capacity >
 typename Stack< Type, Capacity >::ItemType & Stack< Type, Capacity >::pop(void) {   
+
+	#ifdef DEBUG_STACK
+	--this->next;
+	if (this->next < Capacity) {
+		this->items[this->next + 1] = 0;
+	}
+	return this->items[this->next];
+	#else
 	--this->next;
 	return this->items[this->next];
+	#endif
 }
 
 template< typename Type, uint8_t Capacity >

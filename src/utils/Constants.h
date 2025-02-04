@@ -551,6 +551,9 @@ enum Tiles : uint8_t {
 	Poker = 41,
 
 
+	Decorative_Triangle_LH = 42,
+	Decorative_Triangle_RH = 43,
+
 	Solid_2_Wide = 62,
 	Solid_3_Wide = 63,
 	Solid_4_Wide = 64,

@@ -184,21 +184,18 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     switch (world.getGameState()) {
 
         case GameState::Title_Start:
-            // renderTitleBase(0, currentPlane);
             SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, currentPlane);
             break;
 
         case GameState::Title_OptPlay ... GameState::Title_OptSound_Volume2:
             {
                 uint8_t frame = (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_OptPlay)) + (soundSettings.getMusic() ? 0 : 6);
-                // renderTitleBase(3, currentPlane);
                 SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, 3 + currentPlane);
                 SpritesU::drawPlusMaskFX(64, 36, Images::Title_Options, (3 * frame) + currentPlane);
             }
             break;
 
         case GameState::Title_ShowCredits:
-            // renderTitleBase(6, currentPlane);
             SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (2 * 3) + currentPlane);
             break;
 
