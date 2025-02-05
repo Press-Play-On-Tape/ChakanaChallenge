@@ -511,7 +511,7 @@ void renderWorld() {
 
     if (item.getFrame() < Constants::Puff_Max) {
 
-        uint8_t frame = (item.getFrame() / 16) + (item.getData() == 1 ? 7: 0);
+        uint8_t frame = (item.getFrame() / 16) + (item.getData() * 7);
         SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (frame * 3) +  currentPlane);
 
     }
