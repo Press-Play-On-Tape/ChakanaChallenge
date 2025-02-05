@@ -287,13 +287,26 @@ template<
 >
 struct ArduboyG_Common : public BASE
 {
-    uint16_t rnd = 0xACE1;
+    uint16_t rnd;
     static uint8_t justPressedButtons() {
         return (~Arduboy2Base::previousButtonState & Arduboy2Base::currentButtonState);
     }
     
     static uint8_t pressedButtons() {
         return Arduboy2Base::currentButtonState;
+    }
+
+    void initRandomLFSRSeed() {
+        // adapted from Arduboy2 library
+        power_adc_enable(); // ADC on
+
+        // do an ADC read from an unconnected input pin
+        ADCSRA |= _BV(ADSC); // start conversion (ADMUX has been pre-set in boot())
+        while (bit_is_set(ADCSRA, ADSC)) { } // wait for conversion complete
+
+        rnd = ADC ^ (uint16_t)micros();
+        power_adc_disable(); // ADC off
+
     }
 
     uint8_t randomLFSR(uint8_t min, uint8_t max) {

@@ -17,9 +17,9 @@ void splashScreen_Update() {
     if (justPressed > 0 && titleCounter == 32) {
         
         #ifndef DEBUG_FIXED_RAND
-            a.initRandomSeed(); 
+            a.initRandomLFSRSeed();
         #else
-            randomSeed(1);
+            a.rnd = 0xACE1;
         #endif
         
         world.setGameState(GameState::Title_Init); 

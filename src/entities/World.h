@@ -616,7 +616,7 @@ struct World {
 
                 if (this->items[i].getItemType() == ItemType::None) return Constants::NoItem;
 
-                if (this->items[i].getItemType() != ItemType::None && this->items[i].getX() == xOffset && this->items[y].getY() == yOffset) {
+                else if (this->items[i].getItemType() != ItemType::None && this->items[i].getX() == xOffset && this->items[y].getY() == yOffset) {
                     return i;
                 }
             }
@@ -770,6 +770,7 @@ struct World {
 
             }
 
+          
             else if (tile == Tiles::WoodenBarrier) { 
 
                 uint8_t idx = this->getItem(ItemType::WoodenBarrier);
@@ -964,7 +965,7 @@ struct World {
 
         bool isRopeSupport(uint8_t tile) {
 
-            return tile == 13 || tile == 14;
+            return tile == Tiles::Rope_Support_LH || tile == Tiles::Rope_Support_RH;
             
         }
 
@@ -996,7 +997,7 @@ struct World {
 
         bool isRopeTile(uint8_t tile) {
 
-            return tile == 15;
+            return tile == Tiles::Rope;
             
         }
 
@@ -1102,25 +1103,61 @@ struct World {
 
                 switch (item.getItemType()) {
 
+                    // case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
+
+                    //     if (enemy.getCount() == 0 && a.randomLFSR(0, 140) == 0) {
+
+                    //         switch (enemy.getDirection()) {
+
+                    //             case Direction::Left:
+                    //                 enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
+                    //                 break;
+
+                    //             case Direction::Right:
+                    //                 enemy.pushSequence(Stance::Enemy_Fire_RH_00, Stance::Enemy_Fire_RH_12);
+                    //                 break;
+
+                    //         }
+
+                    //     }
+
+                    //     break;
+
                     case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
 
                         if (enemy.getCount() == 0 && a.randomLFSR(0, 140) == 0) {
 
-                            switch (enemy.getDirection()) {
-
-                                case Direction::Left:
-                                    enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
-                                    break;
-
-                                case Direction::Right:
-                                    enemy.pushSequence(Stance::Enemy_Fire_RH_00, Stance::Enemy_Fire_RH_12);
-                                    break;
-
-                            }
+                            const uint16_t diff = Stance::Enemy_Fire_LH_00 - Stance::Enemy_Fire_RH_00;
+                            uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
+                            enemy.pushSequence(Stance::Enemy_Fire_RH_00 + stanceOffset, Stance::Enemy_Fire_RH_12 + diff);
 
                         }
 
                         break;
+
+                    // case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
+
+                    //     if (this->gameState != GameState::Play_Dead) {
+                                
+                    //         if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
+
+                    //             switch (enemy.getDirection()) {
+
+                    //                 case Direction::Left:
+                    //                     enemy.pushSequence(Stance::Enemy_Trebochet_Release_LH_01, Stance::Enemy_Trebochet_Release_LH_14);
+                    //                     break;
+
+                    //                 case Direction::Right:
+                    //                     enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01, Stance::Enemy_Trebochet_Release_RH_14);
+                    //                     break;
+
+                    //             }
+
+                    //         }
+
+                    //     }
+
+                    //     break;
 
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
 
@@ -1128,17 +1165,9 @@ struct World {
                                 
                             if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
 
-                                switch (enemy.getDirection()) {
-
-                                    case Direction::Left:
-                                        enemy.pushSequence(Stance::Enemy_Trebochet_Release_LH_01, Stance::Enemy_Trebochet_Release_LH_14);
-                                        break;
-
-                                    case Direction::Right:
-                                        enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01, Stance::Enemy_Trebochet_Release_RH_14);
-                                        break;
-
-                                }
+                                const uint16_t diff = Stance::Enemy_Trebochet_Release_LH_01 - Stance::Enemy_Trebochet_Release_RH_01;
+                                uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
+                                enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01 + stanceOffset, Stance::Enemy_Trebochet_Release_RH_14 + diff);
 
                             }
 
@@ -1231,18 +1260,24 @@ struct World {
 
                                 if (this->player.getHealth() < 4) {
 
+                                    Stance stance = 0;
+
                                     if (item.getItemType() == ItemType::Arrow_LH) {
 
                                         enemy.getItem().setItemType(ItemType::Arrow_LH_Hidden);
-                                                
+
                                         switch (this->player.getDirection()) {
 
                                             case Direction::Right:
-                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
+                                                stance = Man_Die_Arrow_FallBackward_RH_01;
+                                                // stance2 = Man_Die_Arrow_FallBackward_RH_04;
+                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
                                                 break;
 
                                             case Direction::Left:
-                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
+                                                stance = Man_Die_Arrow_FallForward_LH_01;
+                                                // stance2 = Man_Die_Arrow_FallForward_LH_04;
+                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
                                                 break;
                                                 
                                         }
@@ -1255,16 +1290,26 @@ struct World {
                                         switch (this->player.getDirection()) {
 
                                             case Direction::Right:
-                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
+                                                stance = Man_Die_Arrow_FallForward_RH_01;
+                                                // stance2 = Man_Die_Arrow_FallForward_RH_04;
+                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
                                                 break;
 
                                             case Direction::Left:
-                                                this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
+                                                stance = Man_Die_Arrow_FallBackward_LH_01;
+                                                // stance2 = Man_Die_Arrow_FallBackward_LH_04;
+                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
                                                 break;
                                                 
                                         }
 
                                     }
+
+                                    // if (stance != 0) {
+
+                                        this->player.pushSequence(stance, stance + 4, true);
+
+                                    // }
 
                                 }
                                 else {
@@ -1311,18 +1356,23 @@ struct World {
                                 item.setCounter(3);
 
                                 this->initPuff(item.getX(), item.getY());
+                                Stance stance = 0;
 
                                 switch (this->player.getDirection()) {
 
                                     case Direction::Right:
-                                        this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
+                                        stance = Stance::Man_Die_BWD_RH_01;
+                                        // this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
                                         break;
 
                                     case Direction::Left:
-                                        this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
+                                        stance = Stance::Man_Die_FWD_LH_01;
+                                        // this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
                                         break;
                                         
                                 }
+
+                                this->player.pushSequence(stance, stance + 4, true);
 
                             }                            
 
@@ -1344,20 +1394,25 @@ struct World {
                                 enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
                                 enemy.getItem().setFrame(0);
                                 item.setCounter(3);
+                                Stance stance = 0;
 
                                 this->initPuff(item.getX(), item.getY());
 
                                 switch (this->player.getDirection()) {
 
                                     case Direction::Right:
-                                        this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
+                                        stance = Stance::Man_Die_FWD_RH_01;
+                                        // this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
                                         break;
 
                                     case Direction::Left:
-                                        this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
+                                        stance = Stance::Man_Die_BWD_LH_01;
+                                        // this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
                                         break;
                                         
                                 }
+
+                                this->player.pushSequence(stance, stance + 4, true);
 
                             }                            
 
