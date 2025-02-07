@@ -2134,32 +2134,57 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             }
                             else {
 
-                                if (player.getFalls() >= 3) {
+//                                 if (player.getFalls() >= 3) {
 
-                                    if (world.isSpringTile(tile_D)) {
+//                                     if (world.isSpringTile(tile_D)) {
                                     
-                                        player.pushSequence(Stance::Man_Walk_FallLandSpring_BK_01, Stance::Man_Walk_FallLandSpring_BK_28);
-                                    }
-                                    else {
+//                                         player.pushSequence(Stance::Man_Walk_FallLandSpring_BK_01, Stance::Man_Walk_FallLandSpring_BK_28);
+//                                     }
+//                                     else {
 
-                                        player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
-                                        player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+//                                         player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+//                                         player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
 
-                                    }
+//                                     }
 
-                                }
-                                else if (world.isSpringTile(tile_D)) {
+//                                 }
+//                                 else if (world.isSpringTile(tile_D)) {
+
+//                                     player.pushSequence(Stance::Man_Walk_FallLandSpring_BK_01, Stance::Man_Walk_FallLandSpring_BK_28);
+
+//                                 }                                
+//                                 else if (world.isSpikeTile(tile_D)) {
+
+//                                     player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+//                                     player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+
+//                                 }
+//                                 else if (world.isWaterTile(tile_D)) {
+
+// ///SJH Need graphics for this!
+//                                     player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+//                                     player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+
+//                                 }
+//                                 else {
+
+//                                     if (!world.getMiddleground() % 8 != 0) {
+                                    
+//                                         player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
+
+//                                     }
+
+//                                     player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
+//                                     player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+    
+//                                 } 
+
+                                if (world.isSpringTile(tile_D)) {
 
                                     player.pushSequence(Stance::Man_Walk_FallLandSpring_BK_01, Stance::Man_Walk_FallLandSpring_BK_28);
 
                                 }                                
-                                else if (world.isSpikeTile(tile_D)) {
-
-                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
-                                    player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
-
-                                }
-                                else if (world.isWaterTile(tile_D)) {
+                                else if (world.isSpikeTile(tile_D) || world.isWaterTile(tile_D)) {
 
 ///SJH Need graphics for this!
                                     player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
@@ -2168,16 +2193,41 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 }
                                 else {
 
-                                    // if (world.getMiddleground() % 8 == 4 || world.getMiddleground() % 8 == -4) {
-                                    if (!world.getMiddleground() % 8 != 0) {
-                                    
-                                        player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
+                                    switch (player.getFalls()) {
+
+                                        case 0 ... 2:
+
+                                            if (!world.getMiddleground() % 8 != 0) {
+                                            
+                                                player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
+
+                                            }
+
+                                            player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04); 
+
+                                            break;
+
+                                        case 3:
+
+                                            if (!world.getMiddleground() % 8 != 0) {
+                                            
+                                                player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
+
+                                            }
+
+                                            player.decHealth(2);
+                                            player.pushSequence(Stance::Man_Walk_FallLand_BK_01_Puff, Stance::Man_Walk_FallLand_BK_04_Puff); 
+
+                                            break;
+
+                                        default:
+
+                                            player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
+                                            player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
+                                            break;
 
                                     }
 
-                                    player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
-                                    player.pushSequence(Stance::Man_Walk_FallLand_BK_01, Stance::Man_Walk_FallLand_BK_04);
-    
                                 } 
 
                             }

@@ -288,6 +288,11 @@ enum Stance : uint16_t {
             Man_Walk_FallLand_BK_03,
             Man_Walk_FallLand_BK_04,
 
+            Man_Walk_FallLand_BK_01_Puff,
+            Man_Walk_FallLand_BK_02_Puff,
+            Man_Walk_FallLand_BK_03_Puff,
+            Man_Walk_FallLand_BK_04_Puff,
+
             Man_Walk_FallLandSpring_BK_01,
             Man_Walk_FallLandSpring_BK_02,
             Man_Walk_FallLandSpring_BK_03,
