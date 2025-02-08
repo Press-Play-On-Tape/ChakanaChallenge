@@ -326,38 +326,21 @@ struct World {
 
         }
 
+        void setMap(Item &item, uint8_t val) {
+                            
+            uint8_t x = (item.getX() - 144) >> 3;
+            uint8_t y = (64 - item.getY()) >> 3;
+
+            this->mapData[y][x] = val;
+            this->mapData[y][x + 1] = val;
+            this->mapData[y + 1][x] = val;
+            this->mapData[y + 1][x + 1] = val;
+
+        }
+
         void update(bool completeWaves) {
 
             uint8_t removeItemIdx = 255;
-
-            // for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
-
-            //     Item &item = this->items[i];
-            //     if (item.getItemType() == ItemType::None) break;
-                
-            //     ItemAction action = item.update();
-
-            //     switch (action) {
-
-            //         case ItemAction::Remove:
-            //             removeItemIdx = i;
-            //             break;
-
-            //         case ItemAction::HideCrate_ShowItem:
-            //             this->items[i + 1].setItemType(static_cast<ItemType>(static_cast<uint8_t>(this->items[i + 1].getItemType()) - 1));
-            //             break;
-
-            //         case ItemAction::Remove_AddToInventory:
-            //             player.addInventoryItem(item.getItemType());
-            //             removeItemIdx = i;
-            //             break;
-
-            //         case ItemAction::ChangeToHidden:
-            //             player.addInventoryItem(item.getItemType());
-            //             item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(item.getItemType()) + 1));
-            //             break;
-
-            //     }
 
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
@@ -368,6 +351,7 @@ struct World {
                 if (itemType == ItemType::None) break;
                 
                 ItemAction action = item.update();
+                bool doClearMap = false;
 
                 switch (action) {
 
@@ -376,7 +360,13 @@ struct World {
                         break;
 
                     case ItemAction::HideCrate_ShowItem:
-                        this->items[i + 1].setItemType(static_cast<ItemType>(static_cast<uint8_t>(this->items[i + 1].getItemType()) - 1));
+                        doClearMap = true;
+                        item.setItemType(static_cast<ItemType>(item.getData()));
+
+                        break;
+
+                    case ItemAction::HideWoodenBarrier:                        
+                        doClearMap = true;
                         break;
 
                     case ItemAction::Remove_AddToInventory:
@@ -391,15 +381,15 @@ struct World {
 
                 }
 
-                if (addInventoryItem) {
-                        
-                    player.addInventoryItem(itemType);
+                if (doClearMap) {
+                    setMap(item, 0);
+                }
 
+                if (addInventoryItem) {                        
+                    player.addInventoryItem(itemType);
                 }
 
                 uint8_t yOffset = this->getYOffsetForRendering();
-
-                // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
                 Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
                 
                 switch (item.getItemType()) {
@@ -636,7 +626,7 @@ struct World {
 
             if (player.getLevel() + yOffset < 0) return 1;
 
-            int16_t tileIdx = (-this->getMiddleground() + 65 + (xOffset * 8)) / 8;
+            int16_t tileIdx = (-this->getMiddleground() + 65 + (xOffset << 3)) >> 3;
 
             if (tileIdx < 18) return Tiles::Blank;
             return mapData[this->player.getLevel() + yOffset][tileIdx - 18];
@@ -658,56 +648,6 @@ struct World {
 
             else if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)        return false;
             else if (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2)    return false;
-
-
-            // if (tile == Tiles::Lever_Portal_LH && direction == Direction::Left) { 
-
-            //     return true;
-
-            // }
-
-            // if (tile == Tiles::Lever_Portal_LH && direction != Direction::Left) { 
-
-            //     return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
-                
-            // }
-            
-            // if (tile == Tiles::Lever_Portal_Auto_LH && direction == Direction::Left) { 
-
-            //     return true;
-
-            // }
-
-            // if (tile == Tiles::Lever_Portal_Auto_LH && direction != Direction::Left) { 
-
-            //     return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
-                
-            // }
-            
-            // if (tile == Tiles::Lever_Portal_RH && direction == Direction::Right) { 
-
-            //     return true;
-
-            // }
-
-            // if (tile == Tiles::Lever_Portal_RH && direction != Direction::Right) { 
-
-            //     return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
-                
-            // }
-
-            // if (tile == Tiles::Lever_Portal_Auto_RH && direction == Direction::Right) { 
-
-            //     return true;
-
-            // }
-
-            // if (tile == Tiles::Lever_Portal_Auto_RH && direction != Direction::Right) { 
-
-            //     return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
-                
-            // }
-
 
             else if (tile == Tiles::Lever_Portal_LH) { 
 
@@ -769,33 +709,14 @@ struct World {
                 }
 
             }
-
           
             else if (tile == Tiles::WoodenBarrier) { 
-
-                uint8_t idx = this->getItem(ItemType::WoodenBarrier);
-
-                if (idx != Constants::NoItem) {
-                    
-                    Item &item = this->items[idx];
-                    return item.getCounter() == (7 * 32) - 1;
-
-                }
 
                 return false; 
                 
             }
 
             else if (tile == Tiles::Mystery_Crate) { 
-
-                uint8_t idx = this->getItem(ItemType::MysteryCrate);
-
-                if (idx != Constants::NoItem) {
-                    
-                    Item &item = this->items[idx];
-                    return item.getFrame() == 8;
-
-                }
 
                 return false; 
                 
@@ -882,6 +803,70 @@ struct World {
         }
 
         bool isEmptyTile(uint8_t tile) {
+
+            Direction direction = this->player.getDirection();
+
+            // if (tile == Tiles::Lever_Portal_LH) { 
+
+            //     // if (direction == Direction::Left) { 
+
+            //     //     return true;
+
+            //     // }
+
+            //     if (direction != Direction::Left) { 
+
+            //         return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    
+            //     }
+
+            // }
+            // else if (tile == Tiles::Lever_Portal_Auto_LH) {
+                
+            //     // if (direction == Direction::Left) { 
+
+            //     //     return true;
+
+            //     // }
+
+            //     if (direction != Direction::Left) { 
+
+            //         return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+                    
+            //     }
+
+            // }
+            // else if (tile == Tiles::Lever_Portal_RH) {
+                
+            //     // if (direction == Direction::Right) { 
+
+            //     //     return true;
+
+            //     // }
+
+            //     if (direction != Direction::Right) { 
+
+            //         return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    
+            //     }
+
+            // }
+            // else if (tile == Tiles::Lever_Portal_Auto_RH) {
+
+            //     // if (direction == Direction::Right) { 
+
+            //     //     return true;
+
+            //     // }
+
+            //     if (direction != Direction::Right) { 
+
+            //         return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+                    
+            //     }
+
+            // }
+
 
             return tile == Tiles::Blank || tile == Tiles::Spikes || 
                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || 

@@ -51,12 +51,12 @@ void renderWorld() {
 
     for (uint8_t y = 0; y < 16; y = y + 2) {
 
-        int16_t renderY = yOffset - (y * 8);
+        int16_t renderY = yOffset - (y << 3);
         if (renderY <= -16 || renderY > 64) continue;
 
         for (uint8_t i = xMin; i < xMax; i = i + 2) {
 
-            int16_t renderX = (i * 8) + world.getMiddleground() - 4;
+            int16_t renderX = (i << 3) + world.getMiddleground() - 4;
 
             if (renderX <= -64)             { xMin = i + 2; continue; }
             if (renderX > menu.getX())      { xMax = i;     break; }
@@ -173,7 +173,7 @@ void renderWorld() {
                 else if (world.isRollerTile_LH(tile10))                                                                                                                     { imgTile = Images::Crate_35; }
 
                 if (imgTile != 0) {
-                    SpritesU::drawOverwriteFX(renderX, renderY + 9, imgTile, frame + currentPlane);
+                    SpritesU::drawOverwriteFX(renderX, renderY + yOffset, imgTile, frame + currentPlane);
                 }
 
             }
@@ -226,7 +226,7 @@ void renderWorld() {
             case ItemType::PinchBar:
             // case ItemType::TrapDoor:
             case ItemType::Potion:
-                frame = item.getFrame() / 16;
+                frame = item.getFrame() >> 4;
                 break;
 
             case ItemType::MysteryCrate:
@@ -511,7 +511,7 @@ void renderWorld() {
 
     if (item.getFrame() < Constants::Puff_Max) {
 
-        uint8_t frame = (item.getFrame() / 16) + (item.getData() * 7);
+        uint8_t frame = (item.getFrame() >> 4) + (item.getData() * 7);
         SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4, yOffset - item.getY(), Images::Item_02, (frame * 3) +  currentPlane);
 
     }
@@ -597,7 +597,7 @@ void renderWorld() {
 
                                 if (world.getFrameCount() % 64 < 32) {
 
-                                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (menu.getY() * 8));
+                                    renderInventoryPanelCursor(menu.getX() + 8, 1 + (menu.getY() << 3));
 
                                 }
 

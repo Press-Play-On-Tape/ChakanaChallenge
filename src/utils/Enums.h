@@ -171,6 +171,7 @@ enum class ItemAction : uint8_t {
     Remove_AddToInventory,
     HideCrate_ShowItem,
     ChangeToHidden,
+    HideWoodenBarrier,
 };
 
 

@@ -33,7 +33,7 @@ class Player {
 
         int8_t getY()                                       { return this->y; }
         uint8_t getFalls()                                  { return this->falls; }
-        uint8_t getLevel()                                  { return (37 - y) / 8; }
+        uint8_t getLevel()                                  { return (37 - y) >> 3; }
         uint8_t getItemCount()                              { return this->itemCount; }
         uint8_t getHealth()                                 { return this->health; }
         uint8_t getEnemyIdx()                               { return this->enemyIdx; }

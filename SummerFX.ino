@@ -70,20 +70,7 @@ void loop() {
 
     FX::enableOLED();
 
-    switch (world.getGameState()) {
-
-        case GameState::Play_Battle:
-        case GameState::Play_Game:
-        case GameState::Inventory_Open ... GameState::Chakana_Open:
-            a.waitForNextPlane(WHITE);
-            break;
-
-        default:
-            a.waitForNextPlane(BLACK);
-            break;
-        
-    }
-    
+    a.waitForNextPlane(WHITE);
     FX::disableOLED();
 
     Player &player = world.getPlayer();

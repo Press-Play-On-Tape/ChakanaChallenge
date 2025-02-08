@@ -218,6 +218,7 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         selectedItem = player.getItem(menu.getY() - 2).getItemType();
     }
 
+    #ifndef DEBUG
     if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver) {
 
         uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Hidden);
@@ -243,8 +244,11 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         removeInventoryItem(GameState::Play_Game);
 
     }
-
     else if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
+    #else
+    if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
+    #endif
+
 
         player.pushSequence(Stance::Man_Hammering_RH_00 + stanceOffset, Stance::Man_Hammering_RH_10 + stanceOffset);
         removeWorldandInventoryItem(ItemType::WoodenBarrier, GameState::Play_Game);

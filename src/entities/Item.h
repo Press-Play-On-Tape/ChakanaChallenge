@@ -64,7 +64,7 @@ class Item {
                         switch (this->counter) {
 
                             case 0 ... 55:
-                                this->frame = this->counter / 8;
+                                this->frame = this->counter >> 3;
                                 break;
 
                             default:
@@ -109,7 +109,7 @@ class Item {
 
                     this->counter++;
                     if (this->counter == (6 * 8))   this->counter = 0;
-                    this->frame = this->counter / 8;
+                    this->frame = this->counter >> 3;
 
                     break;
 
@@ -117,7 +117,7 @@ class Item {
 
                     this->counter++;
                     if (this->counter == (16 * 12))   this->counter = 0;
-                    this->frame = this->counter / 16;
+                    this->frame = this->counter >> 4;
 
                     break;
 
@@ -126,7 +126,7 @@ class Item {
                     if (this->counter > 0 && this->counter < (3 * 8) - 1) {
 
                         this->counter++;
-                        this->frame = this->counter / 8;
+                        this->frame = this->counter >> 3;
 
                     }
                     
@@ -311,6 +311,10 @@ class Item {
 
                         this->counter++;
                         this->frame = this->counter / 32;
+                        
+                        if (this->counter == (7 * 32) - 1) {
+                            return ItemAction::HideWoodenBarrier;
+                        }
 
                     }
                     
@@ -368,12 +372,12 @@ class Item {
                         }
                         else if (this->counter >= (11 * 16)) {
 
-                            this->frame = ((22 * 16) - this->counter) / 16;
+                            this->frame = ((22 * 16) - this->counter) >> 4;
 
                         }
                         else {
 
-                            this->frame = this->counter / 16;
+                            this->frame = this->counter >> 4;
 
                         }
 
