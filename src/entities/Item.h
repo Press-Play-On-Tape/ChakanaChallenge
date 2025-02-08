@@ -54,6 +54,29 @@ class Item {
 
             switch (this->getItemType()) {
 
+                #ifdef TRAP_DOOR
+                    
+                    case ItemType::TrapDoor:
+
+                        this->counter++;
+                        if (this->counter == 256)   this->counter = 0;
+
+                        switch (this->counter) {
+
+                            case 0 ... 55:
+                                this->frame = this->counter / 8;
+                                break;
+
+                            default:
+                                this->frame = 7;
+                                break;
+
+                        }
+
+                        break;
+
+                #endif
+
                 case ItemType::Poker:
 
                     this->counter++;

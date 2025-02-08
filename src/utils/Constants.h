@@ -13,6 +13,9 @@
 // 136 bytes
 #define MAP_SHOW_PORTS_VISITED
 
+// 216 bytes
+#define TRAP_DOOR
+
 enum Tiles : uint8_t {
 
 	Blank = 0,
@@ -586,8 +589,8 @@ namespace Constants {
     constexpr uint8_t HealthMax = 14;
 
     constexpr uint8_t EnemyCount = 4;
-    constexpr uint8_t ItemCount_Level = 12;
-    constexpr uint8_t ItemCount_Player = 8;
+    constexpr uint8_t ItemCount_Level = 13;
+    constexpr uint8_t ItemCount_Player = 6;
 
     constexpr uint8_t StackSize_Enemy = 15;
     constexpr uint8_t StackSize_Player = 35;

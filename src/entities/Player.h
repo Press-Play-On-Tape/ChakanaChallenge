@@ -144,6 +144,44 @@ class Player {
 
         }
 
+
+        // Direction getDirection() {
+
+        //     Direction ret;
+
+        //     switch (this->getStance()) {
+
+        //         case Stance::Man_BK_Start ... Stance::Man_BK_End:
+        //         case Stance::Man_Rope_Start_LH_01 ... Stance::Man_Rope_Start_LH_07:
+        //         case Stance::Man_Rope_End_LH_01 ... Stance::Man_Rope_End_LH_06:
+        //         case Stance::Man_Rope_Start_RH_01 ... Stance::Man_Rope_Start_RH_07:
+        //         case Stance::Man_Rope_End_RH_01 ... Stance::Man_Rope_End_RH_06:
+        //             ret = Direction::Backward;
+        //             break;
+
+        //         case Stance::Man_Walk_RH_00 ... Stance::Man_Rope_Start_RH - 1:
+        //         case Stance::Man_Rope_End_RH + 1 ... Stance::Man_RH_End:
+        //             ret = Direction::Right;
+        //             break;
+
+        //         case Stance::Man_FW_Start ... Stance::Man_FW_End:
+        //             ret = Direction::Forward;
+        //             break;
+
+        //         case Stance::Man_Walk_LH_00 ... Stance::Man_Rope_Start_LH - 1:
+        //         case Stance::Man_Rope_End_LH + 1 ... Stance::Man_LH_End:
+        //             ret = Direction::Left;         
+        //             break;
+
+        //         default:
+        //             ret = Direction::None;           
+
+        //     }
+
+        //     return ret;
+
+        // }
+
     	void update() {
 
             // Housekeeping ..

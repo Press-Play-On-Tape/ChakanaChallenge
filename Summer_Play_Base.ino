@@ -142,6 +142,22 @@ void playGame_Init() {
 
 }
 
+void killPlayer(Player &player) {
+
+    switch (player.getDirection()) {
+
+        case Direction::Left:
+            player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04, true);
+            break;
+
+        case Direction::Right:
+            player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04, true);
+            break;
+
+    }
+
+}
+
 void processLadder_MoveLeft(Player &player, Tiles tile) {
 
     if (world.getMiddleground() % 8 != 0) {
@@ -208,6 +224,13 @@ bool canClimbUp(uint8_t t1, uint8_t t2) {
 
 };
 
+bool canClimbUp_Upper(uint8_t t1, uint8_t t2) {
+
+    return (world.isLadderTile_Upper(t1) && world.isLadderTile_Upper(t2)) ||
+           (world.isVerticalVine_Upper(t1) && world.isVerticalVine_Upper(t2));
+
+};
+
 bool canClimbDown(uint8_t t1, uint8_t t2) {
 
     return (world.isLadderTile_Upper(t1) && world.isLadderTile_Upper(t2)) ||
@@ -230,6 +253,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
             case Direction::Backward:
                 {
+                
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                     uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
@@ -339,22 +363,49 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
             case Direction::Right:
             case Direction::Left:
                 {   
+//                     Direction dir = player.getDirection();
+
+//                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+//                     uint8_t tile_adj = world.getTile_RelativeToPlayer((dir == Direction::Right ? 1 : -1), 0);
+
+//                     if (canClimbUp(tile, tile_adj)) {
+
+//                         if (middleGroundMod8Equals0) {
+//                             player.pushSequence(
+//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_UP_01 : Stance::Man_ClimbLadder_BK_LH_UP_01,
+//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_UP_07 : Stance::Man_ClimbLadder_BK_LH_UP_07);
+//                         } 
+//                         else {
+//                             player.pushSequence(
+//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_UP_01 : Stance::Man_ClimbLadder_More_BK_LH_UP_01,
+//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_UP_04 : Stance::Man_ClimbLadder_More_BK_LH_UP_04);
+//                         }
+
+//                     }
                     Direction dir = player.getDirection();
 
+                    uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-                    uint8_t tile_adj = world.getTile_RelativeToPlayer((dir == Direction::Right ? 1 : -1), 0);
+                    uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
-                    if (canClimbUp(tile, tile_adj)) {
+                    if (canClimbUp(tile, tile_R)) {
 
                         if (middleGroundMod8Equals0) {
-                            player.pushSequence(
-                                (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_UP_01 : Stance::Man_ClimbLadder_BK_LH_UP_01,
-                                (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_UP_07 : Stance::Man_ClimbLadder_BK_LH_UP_07);
+                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_01, Stance::Man_ClimbLadder_BK_RH_UP_07);
                         } 
                         else {
-                            player.pushSequence(
-                                (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_UP_01 : Stance::Man_ClimbLadder_More_BK_LH_UP_01,
-                                (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_UP_04 : Stance::Man_ClimbLadder_More_BK_LH_UP_04);
+                            player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_UP_01, Stance::Man_ClimbLadder_More_BK_RH_UP_04);
+                        }
+
+                    }
+
+                    else if (canClimbUp_Upper(tile_R, tile)) {
+
+                        if (dir == Direction::Left) {
+                            player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_08, Stance::Man_ClimbLadder_BK_LH_UP_14);
+                        } 
+                        else {
+                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_08, Stance::Man_ClimbLadder_BK_RH_UP_14);
                         }
 
                     }
@@ -515,22 +566,41 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                     uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
                     uint8_t tile_AdjD = world.getTile_RelativeToPlayer(dir == Direction::Right ? 1 : -1, -1);
+                    uint8_t tile_Adj2D = world.getTile_RelativeToPlayer(dir == Direction::Right ? -1 : 1, -1);
+// Serial.print("x ");
+// Serial.print(tile_D);
+// Serial.print(", ");
+// Serial.print(tile_AdjD);
+// Serial.print(", ");
+// Serial.println(tile_Adj2D);
 
                     if (canClimbDown(tile_D, tile_AdjD)) {
-
+// Serial.println("A");
                         player.pushSequence(
                             (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
                             (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);
 
                     }
+
+                    else if (canClimbDown(tile_D, tile_Adj2D)) {
+// Serial.println("B");
+                        player.pushSequence(
+                            (dir == Direction::Left) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
+                            (dir == Direction::Left) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);                       
+
+                    }
                     else if (world.isLadderTile(tile_D) && world.isLadderTile(tile_RD)) {
 
                         if (middleGroundMod8Equals0) {
-                            player.pushSequence(
-                                (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
-                                (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);
+// Serial.println("C dir ");
+// Serial.println((uint8_t)dir);
+                            // player.pushSequence(
+                            //     (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
+                            //     (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);
+                           player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_01, Stance::Man_ClimbLadder_BK_RH_DOWN_07);                            
                         } 
                         else {
+// Serial.println("D");
                             player.pushSequence(
                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_More_BK_LH_DOWN_01,
                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_DOWN_04 : Stance::Man_ClimbLadder_More_BK_LH_DOWN_04);
@@ -1401,6 +1471,7 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
 
             case Stance::Man_Walk_RH_01:
                 {
+
                     uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                     uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
@@ -1762,6 +1833,49 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             }
 
+
+            // Check for the trapdoor ..
+
+            #ifdef TRAP_DOOR
+
+                Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+
+                for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
+            
+                    Item &item = world.getItem(i);
+
+
+                    // If the item is the 'puff' then we are at the last of the items, stop iterating ..
+
+                    if (item.getItemType() == ItemType::Puff) break;
+
+
+                    // If not a trap door then skip ..
+
+                    if (item.getItemType() != ItemType::TrapDoor) continue;
+
+
+                    // Otherwise check if we have collided ..
+
+                    Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, item.getY() + 1, 14, 14 };
+
+                    if (item.getFrame() != 7) {
+
+                        itemRect = { item.getX() + world.getMiddleground() - 4 + 3, item.getY() + 1, 10, 2 };
+
+                        if (item.getData() == 0 && collide(playerRect, itemRect)) {
+
+                            item.setData(1);
+                            killPlayer(player);
+
+                        }
+
+                    }
+
+                }
+
+            #endif
+
         }
         else {
 
@@ -1789,12 +1903,9 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             // Has the player collided with an item?
 
-            // uint8_t yOffset = world.getYOffsetForRendering();
-            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
           
+                Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
                 Item &item = world.getItem(i);
 
                 
@@ -1810,7 +1921,6 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 // Otherwise check if we have collided ..
 
-                // Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, yOffset - item.getY() + 1, 14, 14 };
                 Rect itemRect = { item.getX() + world.getMiddleground() - 4 + 1, item.getY() + 1, 14, 14 };
 
                 switch (item.getItemType()) {
@@ -1913,38 +2023,46 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         break;
 
                     case ItemType::Punji:
-                                
-                        switch (player.getDirection()) {
+                            
+                        if ((player.getStance() >= Stance::Man_WalkingJump_LH_25_01 && player.getStance() <= Stance::Man_WalkingJump_LH_25_11) ||
+                            (player.getStance() >= Stance::Man_WalkingJump_RH_25_01 && player.getStance() <= Stance::Man_WalkingJump_RH_25_11)) {
 
-                            case Direction::Left:
-                                playerRect.width = 4;
-                                break;
-
-                            case Direction::Right:
-                                playerRect.x = playerRect.x + 8;
-                                playerRect.width = playerRect.width - 8;
-                                break;
-
+                                // Do nothing. 
                         }
-
-                        // itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
-                        itemRect = { item.getX() + world.getMiddleground() - 4 + 4, item.getY() + 14, 8, 2 };
-
-                        if (item.getCounter() == 0 && collide(playerRect, itemRect)) {
-
-                            item.setCounter(1);
-                            // uint16_t offset = (player.getDirection() == Direction::Left ? Constants::Player_Stance_Offset : 0);
-                            // player.pushSequence(Stance::Man_Die_Fall_RH_01 + offset, Stance::Man_Die_Fall_RH_04 + offset, true);
-
+                        else {
+                            
                             switch (player.getDirection()) {
 
                                 case Direction::Left:
-                                    player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04, true);
+                                    playerRect.width = 1;
                                     break;
 
                                 case Direction::Right:
-                                    player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04, true);
+                                    playerRect.x = playerRect.x + 8;
+                                    playerRect.width = 1;//playerRect.width - 8;
                                     break;
+
+                            }
+
+                            playerRect.width = 1;
+                            itemRect = { item.getX() + world.getMiddleground() - 4 + 4, item.getY() + 1, 8, 2 };
+
+                            if (item.getCounter() == 0 && collide(playerRect, itemRect)) {
+
+                                item.setCounter(1);
+                                killPlayer(player);
+
+                                // switch (player.getDirection()) {
+
+                                //     case Direction::Left:
+                                //         player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04, true);
+                                //         break;
+
+                                //     case Direction::Right:
+                                //         player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04, true);
+                                //         break;
+
+                                // }
 
                             }
 
@@ -1954,7 +2072,6 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     case ItemType::Flame:
                         
-                        // itemRect = { item.getX() + world.getMiddleground() - 4 + 4, yOffset - item.getY() + 14, 8, 2 };
                         itemRect = { item.getX() + world.getMiddleground() - 4 + 4, item.getY() + 14, 8, 2 };
 
                         if (collide(playerRect, itemRect)) {
@@ -2197,7 +2314,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                         case 0 ... 2:
 
-                                            if (!world.getMiddleground() % 8 != 0) {
+                                            if (world.getMiddleground() % 8 != 0) {
                                             
                                                 player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
 
@@ -2209,7 +2326,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                         case 3:
 
-                                            if (!world.getMiddleground() % 8 != 0) {
+                                            if (world.getMiddleground() % 8 != 0) {
                                             
                                                 player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
 

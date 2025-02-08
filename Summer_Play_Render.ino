@@ -224,7 +224,7 @@ void renderWorld() {
             case ItemType::Key1:
             case ItemType::Anchor:
             case ItemType::PinchBar:
-            case ItemType::TrapDoor:
+            // case ItemType::TrapDoor:
             case ItemType::Potion:
                 frame = item.getFrame() / 16;
                 break;
@@ -687,6 +687,10 @@ void renderWorld() {
 
     }
 
+    // a.drawRect(59 + 8, Constants::GroundY - player.getY(), 2, 16);
+    // a.drawRect(160 + world.getMiddleground() - 4 + 4, 0 + 1, 8, 2);
+    // a.drawRect(240 + world.getMiddleground() - 4 + 4, 16 + 1, 8, 2);
+// a.drawRect(288 + world.getMiddleground() - 4 + 3, 16 + 1, 10, 2 );
 }
 
 uint8_t getStanceImg(Stance stance) {
