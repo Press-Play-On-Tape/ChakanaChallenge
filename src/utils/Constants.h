@@ -6,19 +6,24 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define _DEBUG
+#define DEBUG
 #define _DEBUG_SOUND
 #define _DEBUG_DISABLE_PLAY
+#define _DEBUG_HANDLE_MENUS
+#define DEBUG_LOCKED_DOOR
+#define DEBUG_RENDER_MAP
 #define AB_BUTTON 12
 
-// 136 bytes
-#define MAP_SHOW_PORTS_VISITED
+#ifndef DEBUG
+	// 136 bytes
+	#define MAP_SHOW_PORTS_VISITED
 
-// 216 bytes
-#define TRAP_DOOR
+	// 216 bytes
+	#define TRAP_DOOR
 
-// 208 bytes
-#define FALL_THROUGH_PORTAL
+	// 208 bytes
+	#define FALL_THROUGH_PORTAL
+#endif
 
 enum Tiles : uint8_t {
 

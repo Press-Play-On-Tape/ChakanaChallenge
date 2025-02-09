@@ -1957,7 +1957,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 
                 // Can we skip this one?
 
-                if (item.getItemType() == ItemType::MysteryCrate && item.getFrame() == 8) continue;
+//                if (item.getItemType() == ItemType::MysteryCrate && item.getFrame() == 8) continue;
+                if (item.getItemType() == ItemType::MysteryCrate){//SJH revet to above/
+                    if (item.getFrame() == 8) continue;
+                }
 
 
                 // If the item is the 'puff' then we are at the last of the items, stop iterating ..
@@ -2967,7 +2970,7 @@ void removeWorldandInventoryItem(ItemType itemType, GameState gameState) {
 
         uint8_t item = world.getItem(itemType);
         world.getItem(item).setCounter(1);  
-
+// Serial.println("setC");
     }
 
     menu.setDirection(Direction::Right);

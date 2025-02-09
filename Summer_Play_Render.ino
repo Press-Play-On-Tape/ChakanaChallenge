@@ -226,19 +226,20 @@ void renderWorld() {
             case ItemType::PinchBar:
             // case ItemType::TrapDoor:
             case ItemType::Potion:
-                frame = item.getFrame() >> 4;
+                frame = frame >> 4;
                 break;
 
             case ItemType::MysteryCrate:
-
-                if (item.getFrame() >= 8) {
+// Serial.print("MC ");
+// Serial.println(frame);
+                if (frame >= 8) {
                     imageIdx = 0;
                 }
                 break;
 
             case ItemType::LifeSaver:
             case ItemType::LifeSaver_Dissolve:
-                frame = item.getFrame() / 22;
+                frame = frame / 22;
                 break;
 
             case ItemType::Hammer:
@@ -249,7 +250,7 @@ void renderWorld() {
                 switch (item.getFrame()) {
 
                     case 3 ... 21:
-                        frame = item.getFrame() / 3;
+                        frame = frame / 3;
                         break;
 
                     default:
@@ -263,10 +264,10 @@ void renderWorld() {
             case ItemType::Lever_LH:
             case ItemType::Lever_RH:
 
-                switch (item.getFrame()) {
+                switch (frame) {
 
                     case 3 ... 21:
-                        frame = (item.getFrame() / 3) + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
+                        frame = (frame / 3) + (item.getItemType() == ItemType::Lever_RH ? 8 : 0);
                         break;
 
                     default:
@@ -525,11 +526,13 @@ void renderWorld() {
 
         if (item.getItemType() == ItemType::None) break;
 
+        #ifndef DEBUG_LOCKED_DOOR
         if (item.getItemType() == ItemType::LockedDoor && item.getFrame() == 4) {
 
             SpritesU::drawPlusMaskFX(item.getX() + world.getMiddleground() - 4 + 11, yOffset - item.getY(), Images::Item_09a, currentPlane);
 
         }
+        #endif
 
     }
 

@@ -305,15 +305,16 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     uint8_t yInt = world.getYMap() / 192;
     int16_t yTop = -(world.getYMap() - (yInt * 192));
 
-    for (uint8_t i = 0; i < 2; i++) {
+    #ifndef DEBUG_RENDER_MAP
 
-        // SpritesU::drawOverwriteFX(xLeft,       yTop + (i * 64), Images::Map, (((xInt + 0) + ((yInt + i) * 3)) * 3) + currentPlane);    
-        // SpritesU::drawOverwriteFX(xLeft + 128, yTop + (i * 64), Images::Map, (((xInt + 1) + ((yInt + i) * 3)) * 3) + currentPlane);    
-        // SpritesU::drawOverwriteFX(xLeft + 256, yTop + (i * 64), Images::Map, (((xInt + 2) + ((yInt + i) * 3)) * 3) + currentPlane);    
-        SpritesU::drawOverwriteFX(xLeft,       yTop + (i * 192), Images::Map, (((xInt + 0) + ((yInt + i) * 2)) * 3) + currentPlane);    
-        SpritesU::drawOverwriteFX(xLeft + 192, yTop + (i * 192), Images::Map, (((xInt + 1) + ((yInt + i) * 2)) * 3) + currentPlane);    
+        for (uint8_t i = 0; i < 2; i++) {
 
-    }
+            SpritesU::drawOverwriteFX(xLeft,       yTop + (i * 192), Images::Map, (((xInt + 0) + ((yInt + i) * 2)) * 3) + currentPlane);    
+            SpritesU::drawOverwriteFX(xLeft + 192, yTop + (i * 192), Images::Map, (((xInt + 1) + ((yInt + i) * 2)) * 3) + currentPlane);    
+
+        }
+
+    #endif
 
     for (uint8_t i = 0; i < 14; i++) {
 
@@ -451,6 +452,8 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 SpritesU::drawPlusMaskFX(0 + (leftDialogue ? 0: 73), 0, Images::Scroll, (frame * 3) + currentPlane);
 
+                #ifndef DEBUG
+
                 if (frame <= 3) {
 
                     if (frame < 2) {
@@ -460,6 +463,8 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     renderNumber(numberToShow, x, y);
 
                 }
+
+                #endif
 
             }
             break;
@@ -472,6 +477,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 }
 
+#ifndef DEBUG
 
 void renderNumber(uint8_t numberToShow, uint8_t x, uint8_t y) {
 
@@ -487,3 +493,5 @@ void renderNumber(uint8_t numberToShow, uint8_t x, uint8_t y) {
     SpritesU::drawOverwriteFX(x + (leftDialogue ? 0 : 73), y, font, (numberToShow * 3) + currentPlane);
 
 }
+
+#endif

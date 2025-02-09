@@ -9,7 +9,7 @@
 
 void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
-    #ifndef DEBUG
+    #ifndef DEBUG_HANDLE_MENUS
 
     if (justPressed & A_BUTTON) {
                 
@@ -49,6 +49,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
                 break;
 
+            #ifndef DEBUG
+
             case GameState::Inventory_Open_More_Reset:     
                 world.setGameState(GameState::Inventory_Open_Reset_0);
                 break;
@@ -80,6 +82,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Reset_Exit_1:
                 world.setGameState(GameState::Title_Init);
                 break;
+
+            #endif
 
             default: break;
 
@@ -206,7 +210,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
 void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOffset) {
 
-    #ifndef DEBUG
+    #ifndef DEBUG_HANDLE_MENUS
 
     uint8_t tile = world.getTile_RelativeToPlayer(direction == Direction::Left ? -1 : 1, 0);
     uint8_t tile_1D = world.getTile_RelativeToPlayer(direction == Direction::Left ? -1 : 1, -2);
@@ -258,15 +262,20 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
     else if (world.isMysteryCrate(tile) && selectedItem == ItemType::PinchBar) {
 
         player.pushSequence(Stance::Man_Levering_RH_00 + stanceOffset, Stance::Man_Levering_RH_10 + stanceOffset);
+        // Serial.println("Start");
         removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::Play_Game);
 
     }
 
+    #ifndef DEBUG_LOCKED_DOOR
     else if (world.isLockedDoor(tile) && selectedItem == ItemType::Key1) {
 
         removeWorldandInventoryItem(ItemType::LockedDoor, GameState::Play_Game);
 
     }
+    #endif
+
+    #ifndef DEBUG
 
     else if (selectedItem == ItemType::Sword) {
 
@@ -297,11 +306,13 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     #endif
 
+    #endif
+
 }
 
 void playGame_HandleMenu_OpenClose() {
 
-    #ifndef DEBUG
+    #ifndef DEBUG_HANDLE_MENUS
 
     switch (menu.getDirection()) {
 
@@ -341,7 +352,7 @@ void playGame_HandleMenu_OpenClose() {
 
 void playGame_HandleMenu(GameState gameState) {
 
-    #ifndef DEBUG
+    #ifndef DEBUG_HANDLE_MENUS
 
     if (menu.getX() == 128) {
 

@@ -360,9 +360,13 @@ struct World {
                         break;
 
                     case ItemAction::HideCrate_ShowItem:
+// Serial.print("H ");
+// Serial.println(item.getData());
                         doClearMap = true;
                         item.setItemType(static_cast<ItemType>(item.getData()));
-
+                        item.setFrame(0);
+                        item.setCounter(0);
+                        item.setData(0);
                         break;
 
                     case ItemAction::HideWoodenBarrier:                        
@@ -734,20 +738,24 @@ struct World {
                 
             }
 
-            else if (tile == Tiles::LockedDoor) { 
+            #ifndef DEBUG_LOCKED_DOOR
 
-                uint8_t idx = this->getItem(ItemType::LockedDoor);
+                else if (tile == Tiles::LockedDoor) { 
 
-                if (idx != Constants::NoItem) {
+                    uint8_t idx = this->getItem(ItemType::LockedDoor);
+
+                    if (idx != Constants::NoItem) {
+                        
+                        Item &item = this->items[idx];
+                        return item.getFrame() == 4;
+
+                    }
+
+                    return false; 
                     
-                    Item &item = this->items[idx];
-                    return item.getFrame() == 4;
-
                 }
 
-                return false; 
-                
-            }
+            #endif
 
             return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
                    tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
