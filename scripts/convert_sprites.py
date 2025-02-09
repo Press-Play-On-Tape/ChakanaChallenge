@@ -244,3 +244,5 @@ convert_header(IMAGES + 'Crates/Crate_42.png',                                  
 convert_header(IMAGES + 'Crates/Crate_43.png',                                                          BASE + 'Images.hpp', 'Crate_43', 4)
 convert_header(IMAGES + 'Crates/Crate_44.png',                                                          BASE + 'Images.hpp', 'Crate_44', 4)
 convert_header(IMAGES + 'Crates/Crate_45.png',                                                          BASE + 'Images.hpp', 'Crate_45', 4)
+convert_header(IMAGES + 'Crates/Crate_46.png',                                                          BASE + 'Images.hpp', 'Crate_46', 4)
+convert_header(IMAGES + 'Crates/Crate_47.png',                                                          BASE + 'Images.hpp', 'Crate_47', 4)

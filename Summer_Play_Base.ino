@@ -2703,7 +2703,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 }
 
 
-                                // Player dies but whch direction does he fall?
+                                // Enemy dies but whch direction does he fall?
 
                                 switch (dist) {
 
@@ -2957,30 +2957,69 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
 }
 
-
 void removeInventoryItem(GameState gameState) {
 
     removeWorldandInventoryItem(ItemType::None, gameState);
 
 }
 
-void removeWorldandInventoryItem(ItemType itemType, GameState gameState) {
+#ifdef MULTIPLE_ITEMS
+    
+    void removeWorldandInventoryItem(ItemType itemType, GameState gameState) {
 
-    if (itemType != ItemType::None) {
+        if (itemType != ItemType::None) {
 
-        uint8_t item = world.getItem(itemType);
-        world.getItem(item).setCounter(1);  
-// Serial.println("setC");
+            int16_t xPos = -world.getMiddleground() + 56 + (world.getPlayer().getDirection() == Direction::Left ? -8 : 16);
+            if (xPos % 16 != 0) xPos = xPos + (world.getPlayer().getDirection() == Direction::Left ? 8 : -8);
+
+            uint8_t yPos = 37 - world.getPlayer().getY();
+            if (yPos % 16 != 0) yPos = yPos - 8;
+
+            uint8_t itemIdx = world.getItem(xPos, yPos);
+
+            if (itemIdx != Constants::NoItem) {
+
+                Item &item = world.getItem(itemIdx);
+
+                if (item.getItemType() == itemType) {
+                    item.setCounter(1); 
+                    world.setMap(item); 
+                }
+
+            }
+
+        }
+
+        menu.setDirection(Direction::Right);
+        menu.setGameState(gameState);
+
+        world.getPlayer().removeInventoryItem(menu.getY() - 2);
+        menu.setTop(0);
+        menu.setY(0);
+
     }
 
-    menu.setDirection(Direction::Right);
-    menu.setGameState(gameState);
+#else
 
-    world.getPlayer().removeInventoryItem(menu.getY() - 2);
-    menu.setTop(0);
-    menu.setY(0);
+    void removeWorldandInventoryItem(ItemType itemType, GameState gameState) {
 
-}
+        if (itemType != ItemType::None) {
+
+            uint8_t item = world.getItem(itemType);
+            world.getItem(item).setCounter(1);  
+
+        }
+
+        menu.setDirection(Direction::Right);
+        menu.setGameState(gameState);
+
+        world.getPlayer().removeInventoryItem(menu.getY() - 2);
+        menu.setTop(0);
+        menu.setY(0);
+
+    }
+
+#endif
 
 void launchPuff(Item &item) {
 

@@ -7,13 +7,23 @@
 #include "src/utils/SpritesU.hpp"
 
 void play_Init() { 
+    
+    #ifndef DEBUG
 
-    titleCounter = 0;
-    world.setGameState(GameState::Play_BoatEnters);
+        titleCounter = 0;
+        world.setGameState(GameState::Play_BoatEnters);
+
+    #else
+
+        world.setGameState(GameState::Play_Game_Init);
+
+    #endif
 
 }
 
 void play_Update() {
+
+    #ifndef DEBUG
 
     uint8_t justPressed = getJustPressedButtons();
 
@@ -34,11 +44,15 @@ void play_Update() {
         world.setGameState(GameState::Play_Game_Init);
 
     }
+
+    #endif
     
 }
 
 
 void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
+
+    #ifndef DEBUG
 
     Player &player = world.getPlayer();
     if (a.needsUpdate()) play_Update();
@@ -46,5 +60,7 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     currentPlane = a.currentPlane();
 
     SpritesU::drawOverwriteFX(0, 0, Images::BoatEnters, (titleCounter * 3) + currentPlane);    
+
+    #endif
 
 }

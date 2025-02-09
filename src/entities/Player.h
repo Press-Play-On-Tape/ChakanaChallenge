@@ -12,7 +12,7 @@ class Player {
         Stance stance = Stance::Man_Walk_BK_01;
         InventoryItem items[Constants::ItemCount_Player];
 
-        int8_t y = 37;
+        int8_t y = Constants::GroundY;
         uint8_t falls = 0;
         uint8_t itemCount = 0;
         uint8_t health = Constants::HealthMax;
@@ -33,7 +33,7 @@ class Player {
 
         int8_t getY()                                       { return this->y; }
         uint8_t getFalls()                                  { return this->falls; }
-        uint8_t getLevel()                                  { return (37 - y) >> 3; }
+        uint8_t getLevel()                                  { return (Constants::GroundY - y) >> 3; }
         uint8_t getItemCount()                              { return this->itemCount; }
         uint8_t getHealth()                                 { return this->health; }
         uint8_t getEnemyIdx()                               { return this->enemyIdx; }

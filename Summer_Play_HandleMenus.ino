@@ -223,34 +223,56 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
     }
 
     #ifndef DEBUG
-    if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver) {
+        // if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver) {
 
-        uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Hidden);
-        Item &item = world.getItem(itemIdx);
-        item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_InWater_RH : ItemType::LifeSaver_InWater_LH);
-        item.setFrame(0);
-        item.setCounter(0);
-        item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
-        item.setY(player.getY() - 1);   
-        removeInventoryItem(GameState::Play_Game);
+        //     uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Hidden);
+        //     Item &item = world.getItem(itemIdx);
+        //     item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_InWater_RH : ItemType::LifeSaver_InWater_LH);
+        //     item.setFrame(0);
+        //     item.setCounter(0);
+        //     item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
+        //     item.setY(37 - player.getY() + 3);   
+        //     removeInventoryItem(GameState::Play_Game);
 
-    }
+        // }
 
-    else if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver_Dissolve) {
+        // else if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver_Dissolve) {
 
-        uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Dissolve_Hidden);
-        Item &item = world.getItem(itemIdx);
-        item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_Dissolve_InWater_RH : ItemType::LifeSaver_Dissolve_InWater_LH);
-        item.setFrame(0);
-        item.setCounter(0);
-        item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
-        item.setY(player.getY() - 1);     
-        removeInventoryItem(GameState::Play_Game);
+        //     uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Dissolve_Hidden);
+        //     Item &item = world.getItem(itemIdx);
+        //     item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_Dissolve_InWater_RH : ItemType::LifeSaver_Dissolve_InWater_LH);
+        //     item.setFrame(0);
+        //     item.setCounter(0);
+        //     item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
+        //     item.setY(37 - player.getY() + 3);   
+        //     removeInventoryItem(GameState::Play_Game);
 
-    }
-    else if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
+        // }
+
+        if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && 
+            (selectedItem == ItemType::LifeSaver || selectedItem == ItemType::LifeSaver_Dissolve)) {
+
+            ItemType hiddenType = (selectedItem == ItemType::LifeSaver) ? ItemType::LifeSaver_Hidden : ItemType::LifeSaver_Dissolve_Hidden;
+            ItemType inWaterType = (direction == Direction::Right) 
+                ? (selectedItem == ItemType::LifeSaver ? ItemType::LifeSaver_InWater_RH : ItemType::LifeSaver_Dissolve_InWater_RH)
+                : (selectedItem == ItemType::LifeSaver ? ItemType::LifeSaver_InWater_LH : ItemType::LifeSaver_Dissolve_InWater_LH);
+
+            uint8_t itemIdx = world.getItem(hiddenType);
+            Item &item = world.getItem(itemIdx);
+            item.setItemType(inWaterType);
+            item.setFrame(0);
+            item.setCounter(0);
+            item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(30) : static_cast<uint16_t>(70)));
+            item.setY(40 - player.getY());   
+            
+            removeInventoryItem(GameState::Play_Game);
+        }    
+        else if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
+            
     #else
-    if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
+
+        if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
+
     #endif
 
 
@@ -267,13 +289,14 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     }
 
-    #ifndef DEBUG_LOCKED_DOOR
-    else if (world.isLockedDoor(tile) && selectedItem == ItemType::Key1) {
+        #ifndef DEBUG_LOCKED_DOOR
 
-        removeWorldandInventoryItem(ItemType::LockedDoor, GameState::Play_Game);
+        else if (world.isLockedDoor(tile) && selectedItem == ItemType::Key1) {
 
-    }
-    #endif
+            removeWorldandInventoryItem(ItemType::LockedDoor, GameState::Play_Game);
+
+        }
+        #endif
 
     #ifndef DEBUG
 

@@ -14,7 +14,7 @@ class Enemy {
         Item item;
 
         int16_t x = 0;
-        int8_t y = 37;
+        int8_t y = Constants::GroundY;
         uint8_t health = Constants::HealthMax;
         uint8_t swordWound = 0;
 

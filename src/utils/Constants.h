@@ -6,12 +6,12 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define DEBUG
+#define _DEBUG
 #define _DEBUG_SOUND
 #define _DEBUG_DISABLE_PLAY
 #define _DEBUG_HANDLE_MENUS
-#define DEBUG_LOCKED_DOOR
-#define DEBUG_RENDER_MAP
+#define _DEBUG_LOCKED_DOOR
+#define _DEBUG_RENDER_MAP
 #define AB_BUTTON 12
 
 #ifndef DEBUG
@@ -23,6 +23,10 @@
 
 	// 208 bytes
 	#define FALL_THROUGH_PORTAL
+
+	// 242 bytes
+	#define MULTIPLE_ITEMS
+
 #endif
 
 enum Tiles : uint8_t {
@@ -574,6 +578,9 @@ enum Tiles : uint8_t {
 	Solid_3_Wide_2 = 73,
 	Solid_4_Wide_2 = 74,
 
+	Trebochet_To_RH = 46,
+	Trebochet_To_LH = 47,
+
 };
 
 
@@ -599,10 +606,10 @@ namespace Constants {
     constexpr uint8_t HealthMax = 14;
 
     constexpr uint8_t EnemyCount = 4;
-    constexpr uint8_t ItemCount_Level = 13;
+    constexpr uint8_t ItemCount_Level = 15;
     constexpr uint8_t ItemCount_Player = 5;
 
-    constexpr uint8_t StackSize_Enemy = 15;
+    constexpr uint8_t StackSize_Enemy = 14;
     constexpr uint8_t StackSize_Player = 35;
 
     constexpr uint8_t GroundY = 37;

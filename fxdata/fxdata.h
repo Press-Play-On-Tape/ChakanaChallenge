@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xf01c;
-constexpr uint24_t FX_DATA_BYTES = 1037106;
+constexpr uint16_t FX_DATA_PAGE  = 0xf01b;
+constexpr uint24_t FX_DATA_BYTES = 1037566;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -206,48 +206,50 @@ namespace Images
   constexpr uint24_t Crate_43 = 0x0FA560;
   constexpr uint24_t Crate_44 = 0x0FA622;
   constexpr uint24_t Crate_45 = 0x0FA6E4;
-  constexpr uint24_t PalmImages = 0x0FA7A6;
-  constexpr uint24_t ItemsIndex = 0x0FA7BE;
-  constexpr uint24_t InventoryFrame = 0x0FA881;
+  constexpr uint24_t Crate_46 = 0x0FA7A6;
+  constexpr uint24_t Crate_47 = 0x0FA868;
+  constexpr uint24_t PalmImages = 0x0FA92A;
+  constexpr uint24_t ItemsIndex = 0x0FA942;
+  constexpr uint24_t InventoryFrame = 0x0FAA05;
 }
 
 namespace Levels
 {
-  constexpr uint24_t Level_00 = 0x0FA8C2;
-  constexpr uint24_t Level_00_Items = 0x0FABE2;
-  constexpr uint24_t Level_00_Enemies = 0x0FAC2A;
-  constexpr uint24_t Level_01 = 0x0FAC52;
-  constexpr uint24_t Level_01_Items = 0x0FAF72;
-  constexpr uint24_t Level_01_Enemies = 0x0FAFDE;
-  constexpr uint24_t Level_02 = 0x0FB006;
-  constexpr uint24_t Level_02_Items = 0x0FB326;
-  constexpr uint24_t Level_02_Enemies = 0x0FB3B6;
-  constexpr uint24_t Level_03 = 0x0FB3DE;
-  constexpr uint24_t Level_03_Items = 0x0FB6FE;
-  constexpr uint24_t Level_03_Enemies = 0x0FB79A;
-  constexpr uint24_t Level_04 = 0x0FB7C2;
-  constexpr uint24_t Level_04_Items = 0x0FBAE2;
-  constexpr uint24_t Level_04_Enemies = 0x0FBB12;
-  constexpr uint24_t Level_05 = 0x0FBB3A;
-  constexpr uint24_t Level_05_Items = 0x0FBE5A;
-  constexpr uint24_t Level_05_Enemies = 0x0FBED2;
-  constexpr uint24_t Level_06 = 0x0FBEFA;
-  constexpr uint24_t Level_06_Items = 0x0FC21A;
-  constexpr uint24_t Level_06_Enemies = 0x0FC29E;
-  constexpr uint24_t Level_07 = 0x0FC2C6;
-  constexpr uint24_t Level_07_Items = 0x0FC5E6;
-  constexpr uint24_t Level_07_Enemies = 0x0FC652;
-  constexpr uint24_t Level_08 = 0x0FC67A;
-  constexpr uint24_t Level_08_Items = 0x0FC99A;
-  constexpr uint24_t Level_08_Enemies = 0x0FCA4E;
-  constexpr uint24_t Level_09 = 0x0FCA76;
-  constexpr uint24_t Level_09_Items = 0x0FCD96;
-  constexpr uint24_t Level_09_Enemies = 0x0FCE86;
-  constexpr uint24_t Level_10 = 0x0FCF12;
-  constexpr uint24_t Level_10_Items = 0x0FD232;
-  constexpr uint24_t Level_10_Enemies = 0x0FD292;
-  constexpr uint24_t Levels = 0x0FD2BA;
-  constexpr uint24_t Level_Items = 0x0FD2E4;
-  constexpr uint24_t Level_Enemies = 0x0FD30B;
+  constexpr uint24_t Level_00 = 0x0FAA46;
+  constexpr uint24_t Level_00_Items = 0x0FAD66;
+  constexpr uint24_t Level_00_Enemies = 0x0FADAE;
+  constexpr uint24_t Level_01 = 0x0FADD6;
+  constexpr uint24_t Level_01_Items = 0x0FB0F6;
+  constexpr uint24_t Level_01_Enemies = 0x0FB17A;
+  constexpr uint24_t Level_02 = 0x0FB1A2;
+  constexpr uint24_t Level_02_Items = 0x0FB4C2;
+  constexpr uint24_t Level_02_Enemies = 0x0FB576;
+  constexpr uint24_t Level_03 = 0x0FB59E;
+  constexpr uint24_t Level_03_Items = 0x0FB8BE;
+  constexpr uint24_t Level_03_Enemies = 0x0FB95A;
+  constexpr uint24_t Level_04 = 0x0FB982;
+  constexpr uint24_t Level_04_Items = 0x0FBCA2;
+  constexpr uint24_t Level_04_Enemies = 0x0FBCDE;
+  constexpr uint24_t Level_05 = 0x0FBD06;
+  constexpr uint24_t Level_05_Items = 0x0FC026;
+  constexpr uint24_t Level_05_Enemies = 0x0FC09E;
+  constexpr uint24_t Level_06 = 0x0FC0C6;
+  constexpr uint24_t Level_06_Items = 0x0FC3E6;
+  constexpr uint24_t Level_06_Enemies = 0x0FC46A;
+  constexpr uint24_t Level_07 = 0x0FC492;
+  constexpr uint24_t Level_07_Items = 0x0FC7B2;
+  constexpr uint24_t Level_07_Enemies = 0x0FC81E;
+  constexpr uint24_t Level_08 = 0x0FC846;
+  constexpr uint24_t Level_08_Items = 0x0FCB66;
+  constexpr uint24_t Level_08_Enemies = 0x0FCC1A;
+  constexpr uint24_t Level_09 = 0x0FCC42;
+  constexpr uint24_t Level_09_Items = 0x0FCF62;
+  constexpr uint24_t Level_09_Enemies = 0x0FD052;
+  constexpr uint24_t Level_10 = 0x0FD0DE;
+  constexpr uint24_t Level_10_Items = 0x0FD3FE;
+  constexpr uint24_t Level_10_Enemies = 0x0FD45E;
+  constexpr uint24_t Levels = 0x0FD486;
+  constexpr uint24_t Level_Items = 0x0FD4B0;
+  constexpr uint24_t Level_Enemies = 0x0FD4D7;
 }
 

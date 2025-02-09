@@ -326,15 +326,28 @@ struct World {
 
         }
 
-        void setMap(Item &item, uint8_t val) {
+        void setMap(Item &item) {
                             
             uint8_t x = (item.getX() - 144) >> 3;
-            uint8_t y = (64 - item.getY()) >> 3;
+            uint8_t y = item.getY() >> 3;
 
-            this->mapData[y][x] = val;
-            this->mapData[y][x + 1] = val;
-            this->mapData[y + 1][x] = val;
-            this->mapData[y + 1][x + 1] = val;
+            #ifdef DEBUG_SET_MAP
+
+                DEBUG_PRINT("C ");
+                DEBUG_PRINT(item.getX());
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(item.getY());
+                DEBUG_PRINT(" - ");
+                DEBUG_PRINT(x);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINTLN(y);
+
+            #endif
+
+            this->mapData[y][x] = 0;
+            this->mapData[y][x + 1] = 0;
+            this->mapData[y + 1][x] = 0;
+            this->mapData[y + 1][x + 1] = 0;
 
         }
 
@@ -386,7 +399,7 @@ struct World {
                 }
 
                 if (doClearMap) {
-                    setMap(item, 0);
+                    setMap(item);
                 }
 
                 if (addInventoryItem) {                        
@@ -394,8 +407,9 @@ struct World {
                 }
 
                 uint8_t yOffset = this->getYOffsetForRendering();
-                Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-                
+                // Rect playerRect = { 59, Constants::GroundY - player.getY() + 6, 10, 16 };
+                Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+
                 switch (item.getItemType()) {
 
                     case ItemType::SwingyThing:
@@ -466,6 +480,16 @@ struct World {
 
                         // }
 
+                            // int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
+                            // int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
+
+                            // int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
+                            // int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
+                            // uint8_t puffX = 0;
+
+                            // Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
+
+
                             int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
                             int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
 
@@ -473,9 +497,26 @@ struct World {
                             int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
                             uint8_t puffX = 0;
 
-                            Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
+                            Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3 };
 
                             if (collide(playerRect, itemRect)) {
+
+// Serial.print(playerRect.x);
+// Serial.print(" ");
+// Serial.print(playerRect.y);
+// Serial.print(" ");
+// Serial.print(playerRect.width);
+// Serial.print(" ");
+// Serial.print(playerRect.height);
+// Serial.print(" - ");
+// Serial.print(itemRect.x);
+// Serial.print(" ");
+// Serial.print(itemRect.y);
+// Serial.print(" ");
+// Serial.print(itemRect.width);
+// Serial.print(" ");
+// Serial.println(itemRect.height);
+// DEBUG_BREAK
 
                                 switch (player.getDirection()) {
 
@@ -534,6 +575,7 @@ struct World {
                             }
 
                         }
+
                         break;
 
                 }
