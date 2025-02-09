@@ -600,15 +600,27 @@ struct World {
 
         }
 
-        uint8_t getItem(uint16_t xOffset, int8_t yOffset) {
+        uint8_t getItem(int16_t xPos, uint8_t yPos) {
 
+// Serial.print("Test ");
+// Serial.print(xPos);
+// Serial.print(",");
+// Serial.println(yPos);
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
-                if (this->items[i].getItemType() == ItemType::None) return Constants::NoItem;
-
-                else if (this->items[i].getItemType() != ItemType::None && this->items[i].getX() == xOffset && this->items[y].getY() == yOffset) {
+                if (this->items[i].getItemType() == ItemType::Puff) {
+                    // Serial.println("No Match");                    
+                    break;
+                }
+// Serial.print("Item ");
+// Serial.print(this->items[i].getX());
+// Serial.print(",");
+// Serial.println(this->items[i].getY());
+                if (this->items[i].getX() == xPos && this->items[i].getY() == yPos) {
+// Serial.println("Match");                    
                     return i;
                 }
+
             }
 
             return Constants::NoItem;
@@ -802,71 +814,48 @@ struct World {
             
         }
 
+        #ifdef FALL_THROUGH_PORTAL
+
         bool isEmptyTile(uint8_t tile) {
 
-            Direction direction = this->player.getDirection();
+            return isEmptyTile_XY(tile, Constants::NoOffset, Constants::NoOffset);
 
-            // if (tile == Tiles::Lever_Portal_LH) { 
+        }
 
-            //     // if (direction == Direction::Left) { 
+        bool isEmptyTile_XY(uint8_t tile, int8_t relX, int8_t relY) {
 
-            //     //     return true;
+            if (relX != Constants::NoOffset) {
 
-            //     // }
+                if (tile == Tiles::Lever_Portal_LH || tile == Tiles::Lever_Portal_RH ||
+                    tile == Tiles::Lever_Portal_Auto_LH || tile == Tiles::Lever_Portal_Auto_RH) {
+                            
+                    int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
+                    uint8_t yItem = (this->player.getLevel() + relY - 1) * 8;
 
-            //     if (direction != Direction::Left) { 
-
-            //         return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    if (xItem % 16 != 0) xItem = xItem - 8;
+                    if (yItem % 16 != 0) yItem = yItem + 8;
                     
-            //     }
+                    uint8_t idx = this->getItem(xItem, yItem);
 
-            // }
-            // else if (tile == Tiles::Lever_Portal_Auto_LH) {
-                
-            //     // if (direction == Direction::Left) { 
+                    if (idx != Constants::NoItem) {
 
-            //     //     return true;
+                        Item &item = this->getItem(idx);
 
-            //     // }
+                        switch (item.getItemType()) {
 
-            //     if (direction != Direction::Left) { 
+                            case ItemType::Lever_Portal_Open:
+                            case ItemType::Lever_Portal_Auto_Open:
+                                return true;
 
-            //         return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+                        }
+
+                    }
                     
-            //     }
+                    return false;
 
-            // }
-            // else if (tile == Tiles::Lever_Portal_RH) {
-                
-            //     // if (direction == Direction::Right) { 
+                }
 
-            //     //     return true;
-
-            //     // }
-
-            //     if (direction != Direction::Right) { 
-
-            //         return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
-                    
-            //     }
-
-            // }
-            // else if (tile == Tiles::Lever_Portal_Auto_RH) {
-
-            //     // if (direction == Direction::Right) { 
-
-            //     //     return true;
-
-            //     // }
-
-            //     if (direction != Direction::Right) { 
-
-            //         return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
-                    
-            //     }
-
-            // }
-
+            }
 
             return tile == Tiles::Blank || tile == Tiles::Spikes || 
                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || 
@@ -875,6 +864,20 @@ struct World {
                    tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker;
             
         }
+
+        #else
+
+        bool isEmptyTile(uint8_t tile) {
+
+            return tile == Tiles::Blank || tile == Tiles::Spikes || 
+                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || 
+                   tile == Tiles::Vine_Lower ||
+                   tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
+                   tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker;
+            
+        }
+
+        #endif
 
         bool isSpikeTile(uint8_t tile) {
 

@@ -6,8 +6,9 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define DEBUG
-#define DEBUG_SOUND
+#define _DEBUG
+#define _DEBUG_SOUND
+#define _DEBUG_DISABLE_PLAY
 #define AB_BUTTON 12
 
 // 136 bytes
@@ -15,6 +16,9 @@
 
 // 216 bytes
 #define TRAP_DOOR
+
+// 208 bytes
+#define FALL_THROUGH_PORTAL
 
 enum Tiles : uint8_t {
 
@@ -585,6 +589,7 @@ namespace Constants {
     constexpr uint8_t NoDirection = 255;
     constexpr uint16_t NoWaves = 29999;
     constexpr uint8_t NoEnemy = 255;
+    constexpr int8_t NoOffset = 100;
 
     constexpr uint8_t HealthMax = 14;
 
