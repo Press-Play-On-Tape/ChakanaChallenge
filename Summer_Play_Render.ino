@@ -98,6 +98,7 @@ void renderWorld() {
                 else if (tile00 == Tiles::Decorative_Triangle_RH)                                                                                                           imgTile = Images::Crate_43;
                 else if (tile00 == Tiles::Trebochet_To_RH)                                                                                                                  imgTile = Images::Crate_46;
                 else if (tile00 == Tiles::Trebochet_To_LH)                                                                                                                  imgTile = Images::Crate_47;
+                else if (tile00 == Tiles::Weed)                                                                                                                             imgTile = Images::Crate_48;
                 else if (tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                                                              imgTile = Images::Crate_20;
                 else if (tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                                                              imgTile = Images::Crate_21;
                 else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_00;
