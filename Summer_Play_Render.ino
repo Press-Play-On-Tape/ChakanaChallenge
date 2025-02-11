@@ -726,6 +726,9 @@ Item &item1 = world.getItem(itemIdx);
 
                             a.drawRect(itemX + world.getMiddleground() - 4, itemY, 16, 3);
 */
+
+// a.drawRect(59,Constants::GroundY - 0,10,16);
+// a.drawRect(world.getXMap(), world.getYMap(), 4, 4);
 }
 
 uint8_t getStanceImg(Stance stance) {

@@ -1199,9 +1199,11 @@ struct World {
 
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
 
-                        if (this->gameState != GameState::Play_Dead) {
+                        if (item.getData() > 0) item.setData(item.getData() - 1);
+
+                        if (item.getData() == 0 && this->gameState != GameState::Play_Dead) {
                                 
-                            if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
+                            if (enemy.getCount() == 0 && a.randomLFSR(0, 40) == 0) {
 
                                 const uint16_t diff = Stance::Enemy_Trebochet_Release_LH_01 - Stance::Enemy_Trebochet_Release_RH_01;
                                 uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
@@ -1345,7 +1347,7 @@ struct World {
 
                                     // if (stance != 0) {
 
-                                        this->player.pushSequence(stance, stance + 4, true);
+                                        this->player.pushSequence(stance, stance + 3, true);
 
                                     // }
 
@@ -1377,82 +1379,116 @@ struct World {
                         break;
 
 
-                    case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
-                        {
-                            enemy.getItem().update(); 
+                    // case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
+                    //     {
+                    //         enemy.getItem().update(); 
 
-                            // uint8_t yOffset = this->getYOffsetForRendering();
-                            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                            // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
-                            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
-                            
-                            if (collide(playerRect, trebochetRect)) {
+                    //         // uint8_t yOffset = this->getYOffsetForRendering();
+                    //         // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                    //         // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                    //         Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                    //         // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
+                    //         Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 3, enemy.getItem().getY(), 4, 4 };
+                          
+                    //         if (collide(playerRect, trebochetRect)) {
 
-                                enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
-                                enemy.getItem().setFrame(0);
-                                item.setCounter(3);
+                    //             enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
+                    //             enemy.getItem().setFrame(0);
+                    //             item.setCounter(3);
 
-                                this->initPuff(item.getX(), item.getY());
-                                Stance stance = 0;
+                    //             this->initPuff(item.getX(), item.getY());
+                    //             Stance stance = 0;
 
-                                switch (this->player.getDirection()) {
+                    //             switch (this->player.getDirection()) {
 
-                                    case Direction::Right:
-                                        stance = Stance::Man_Die_BWD_RH_01;
-                                        // this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
-                                        break;
+                    //                 case Direction::Right:
+                    //                     stance = Stance::Man_Die_BWD_RH_01;
+                    //                     // this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
+                    //                     break;
 
-                                    case Direction::Left:
-                                        stance = Stance::Man_Die_FWD_LH_01;
-                                        // this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
-                                        break;
+                    //                 case Direction::Left:
+                    //                     stance = Stance::Man_Die_FWD_LH_01;
+                    //                     // this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
+                    //                     break;
                                         
-                                }
+                    //             }
 
-                                this->player.pushSequence(stance, stance + 4, true);
+                    //             this->player.pushSequence(stance, stance + 3, true);
 
-                            }                            
+                    //         }                            
 
-                        }
-                        break;   
+                    //     }
+                    //     break;   
 
+                    // case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
+                    //     {
+                    //         enemy.getItem().update(); 
+
+                    //         // uint8_t yOffset = this->getYOffsetForRendering();
+                    //         // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                    //         // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
+                    //         Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                    //         Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
+                            
+                    //         if (collide(playerRect, trebochetRect)) {
+
+                    //             enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
+                    //             enemy.getItem().setFrame(0);
+                    //             item.setCounter(3);
+                    //             Stance stance = 0;
+
+                    //             this->initPuff(item.getX(), item.getY());
+
+                    //             switch (this->player.getDirection()) {
+
+                    //                 case Direction::Right:
+                    //                     stance = Stance::Man_Die_FWD_RH_01;
+                    //                     // this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
+                    //                     break;
+
+                    //                 case Direction::Left:
+                    //                     stance = Stance::Man_Die_BWD_LH_01;
+                    //                     // this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
+                    //                     break;
+                                        
+                    //             }
+
+                    //             this->player.pushSequence(stance, stance + 3, true);
+
+                    //         }                            
+
+                    //     }
+                    //     break;  
+
+
+
+                    case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                     case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
                         {
-                            enemy.getItem().update(); 
+                            ItemType itemType = item.getItemType();
+                            enemy.getItem().update();
 
-                            // uint8_t yOffset = this->getYOffsetForRendering();
-                            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                            // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
                             Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
+                            int xOffset = (itemType >= ItemType::Trebochet_Ball_Left_1) ? -3 : -4;
+                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() + xOffset, enemy.getItem().getY(), 4, 4 };
                             
                             if (collide(playerRect, trebochetRect)) {
-
-                                enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
+                                
+                                ItemType hiddenType = (itemType >= ItemType::Trebochet_Ball_Left_1) ?
+                                    ItemType::Trebochet_Ball_Left_Hidden : ItemType::Trebochet_Ball_Right_Hidden;
+                                
+                                enemy.getItem().setItemType(hiddenType);
                                 enemy.getItem().setFrame(0);
                                 item.setCounter(3);
-                                Stance stance = 0;
-
                                 this->initPuff(item.getX(), item.getY());
+                                
+                                Stance stance = (this->player.getDirection() == Direction::Right) ?
+                                    ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_RH_01) :
+                                    ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_FWD_LH_01 : Stance::Man_Die_BWD_LH_01);
+                                
+                                this->player.pushSequence(stance, stance + 3, true);
 
-                                switch (this->player.getDirection()) {
-
-                                    case Direction::Right:
-                                        stance = Stance::Man_Die_FWD_RH_01;
-                                        // this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
-                                        break;
-
-                                    case Direction::Left:
-                                        stance = Stance::Man_Die_BWD_LH_01;
-                                        // this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
-                                        break;
-                                        
-                                }
-
-                                this->player.pushSequence(stance, stance + 4, true);
-
-                            }                            
+                            }
 
                         }
                         break;  

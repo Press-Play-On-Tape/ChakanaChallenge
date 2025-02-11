@@ -177,31 +177,67 @@ void title_Update() {
 
 void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     
+    // if (a.needsUpdate()) title_Update();
+
+    // currentPlane = a.currentPlane();
+
+    // switch (world.getGameState()) {
+
+    //     case GameState::Title_Start:
+    //         SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, currentPlane);
+    //         break;
+
+    //     #ifndef DEBUG
+
+    //     case GameState::Title_OptPlay ... GameState::Title_OptSound_Volume2:
+    //         {
+    //             uint8_t frame = (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_OptPlay)) + (soundSettings.getMusic() ? 0 : 6);
+    //             SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, 3 + currentPlane);
+    //             SpritesU::drawPlusMaskFX(64, 36, Images::Title_Options, (3 * frame) + currentPlane);
+    //         }
+    //         break;
+
+    //     case GameState::Title_ShowCredits:
+    //         SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (2 * 3) + currentPlane);
+    //         break;
+
+    //     #endif
+
+    // }
+
+    uint8_t frame = 0;
+
     if (a.needsUpdate()) title_Update();
 
     currentPlane = a.currentPlane();
 
-    switch (world.getGameState()) {
+    #ifndef DEBUG
 
-        case GameState::Title_Start:
-            SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, currentPlane);
-            break;
+        switch (world.getGameState()) {
 
-        #ifndef DEBUG
+            case GameState::Title_OptPlay ... GameState::Title_OptSound_Volume2:
 
-        case GameState::Title_OptPlay ... GameState::Title_OptSound_Volume2:
-            {
-                uint8_t frame = (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_OptPlay)) + (soundSettings.getMusic() ? 0 : 6);
-                SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, 3 + currentPlane);
-                SpritesU::drawPlusMaskFX(64, 36, Images::Title_Options, (3 * frame) + currentPlane);
-            }
-            break;
+                frame = 1;
+                break;
 
-        case GameState::Title_ShowCredits:
-            SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (2 * 3) + currentPlane);
-            break;
+            case GameState::Title_ShowCredits:
 
-        #endif
+                frame = 2;
+                break;
+
+        }
+
+    #endif
+
+    SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
+
+
+    // Render Options ?
+
+    if (frame == 1) {
+
+        frame = (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_OptPlay)) + (soundSettings.getMusic() ? 0 : 6);
+        SpritesU::drawPlusMaskFX(64, 36, Images::Title_Options, (3 * frame) + currentPlane);
 
     }
 

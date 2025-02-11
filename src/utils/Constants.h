@@ -580,6 +580,7 @@ enum Tiles : uint8_t {
 
 	Trebochet_To_RH = 46,
 	Trebochet_To_LH = 47,
+	Weed = 48,
 
 };
 

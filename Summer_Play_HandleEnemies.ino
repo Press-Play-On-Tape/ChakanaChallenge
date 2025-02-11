@@ -28,29 +28,27 @@ void playGame_HandleEnemies_Trebochet_SetFrame(uint8_t idx, ItemType itemType) {
 
 }
 
-// void launchTrebochetBall(Enemy &enemy, ItemType itemType) {
+void launchTrebochetBall(Enemy &enemy, ItemType itemType) {
 
-//     playGame_HandleEnemies_Trebochet_SetFrame(4, itemType);
+    Item &item = enemy.getItem();
+    uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+    item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(itemType) + r));
+    item.setCounter(20);
+    item.setData(120);
+    item.setY(enemy.getY() + 8);
 
-//     Item &item = enemy.getItem();
-//     uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
-//     item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(itemType) + r));
-//     item.setCounter(20);
+    if (itemType == ItemType::Trebochet_Ball_Left_1) {
 
-//     if (itemType == ItemType::Trebochet_Ball_Left_1) {
+        item.setX(enemy.getX() - 16);
 
-//         item.setX(enemy.getX() - 16);
-//         item.setY(enemy.getY() + 10);
+    }
+    else {
 
-//     }
-//     else {
+        item.setX(enemy.getX() + 28);
 
-//         item.setX(enemy.getX() + 28);
-//         item.setY(enemy.getY() + 10);
+    }
 
-//     }
-
-// }
+}
 
 
 void playGame_HandleEnemies_SwordFighter(Player &player, Enemy &enemy, Stance stanceOffset, Stance stanceOffset2, int16_t dist) {
@@ -261,56 +259,79 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     switch (stance) {
                                 
-                        case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_04:
-                        case Stance::Enemy_Trebochet_Release_LH_06 ... Stance::Enemy_Trebochet_Release_LH_14:
+                        // case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_04:
+                        // case Stance::Enemy_Trebochet_Release_LH_06 ... Stance::Enemy_Trebochet_Release_LH_14:
+                        //     {
+                        //         uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
+                        //         playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left); 
+                                
+                        //     }
+                        //     break;
+
+                        // case Stance::Enemy_Trebochet_Release_LH_05:
+                        //     {
+                        //         // uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
+                        //         // playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left);
+
+                        //         // Item &item = enemy.getItem();
+                        //         // uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+                        //         // item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Left_1) + r));
+                        //         // item.setCounter(20);
+                        //         // item.setX(enemy.getX() - 16);
+                        //         // item.setY(enemy.getY() + 10);
+                        //         launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Left_1);
+
+                        //     }
+                        //     break;
+
+                        case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_14:
                             {
                                 uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
                                 playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left); 
                                 
-                            }
-                            break;
-
-                        case Stance::Enemy_Trebochet_Release_LH_05:
-                            {
-                                uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_LH_01);
-                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Left);
-
-                                Item &item = enemy.getItem();
-                                uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
-                                item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Left_1) + r));
-                                item.setCounter(20);
-                                item.setX(enemy.getX() - 16);
-                                item.setY(enemy.getY() + 10);
-                                // launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Left_1);
+                                if (stance == Stance::Enemy_Trebochet_Release_LH_05) {
+                                    launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Left_1);
+                                }
 
                             }
                             break;
 
-                        case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_04:
-                        case Stance::Enemy_Trebochet_Release_RH_06 ... Stance::Enemy_Trebochet_Release_RH_14:
+                        // case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_04:
+                        // case Stance::Enemy_Trebochet_Release_RH_06 ... Stance::Enemy_Trebochet_Release_RH_14:
+                        //     {
+                        //         uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
+                        //         playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
+                                
+                        //     }
+                        //     break;
+
+                        // case Stance::Enemy_Trebochet_Release_RH_05:
+                        //     {
+                        //         // uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
+                        //         // playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
+
+                        //         // Item &item = enemy.getItem();
+                        //         // uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+                        //         // item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Right_1) + r));
+                        //         // item.setCounter(20);
+                        //         // item.setX(enemy.getX() + 28);
+                        //         // item.setY(enemy.getY() + 10);
+                        //         launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Right_1);
+
+                        //     }
+                        //     break;
+
+                        case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_14:
                             {
                                 uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
                                 playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
                                 
-                            }
-                            break;
-
-                        case Stance::Enemy_Trebochet_Release_RH_05:
-                            {
-                                uint8_t idx = static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Enemy_Trebochet_Release_RH_01);
-                                playGame_HandleEnemies_Trebochet_SetFrame(idx, ItemType::Trebochet_Right);
-
-                                Item &item = enemy.getItem();
-                                uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
-                                item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(ItemType::Trebochet_Ball_Right_1) + r));
-                                item.setCounter(20);
-                                item.setX(enemy.getX() + 28);
-                                item.setY(enemy.getY() + 10);
-                                // launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Right_1);
+                                if (stance == Stance::Enemy_Trebochet_Release_RH_05) {
+                                    launchTrebochetBall(enemy, ItemType::Trebochet_Ball_Right_1);
+                                }
 
                             }
                             break;
-
                     }
 
                     break;
