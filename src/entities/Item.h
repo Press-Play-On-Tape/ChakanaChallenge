@@ -50,6 +50,33 @@ class Item {
 
         }
 
+        bool updateCounter(uint16_t maxVal) {
+
+            this->counter++;
+
+            if (this->counter == maxVal) {
+                this->counter = 0;
+                return true;
+            }
+
+            return false;
+
+        }
+
+        bool updateFrame(uint16_t maxVal) {
+
+            this->frame++;
+
+            if (this->frame == maxVal) {
+                this->frame = 0;
+                return true;
+            }
+
+            return false;
+
+        }
+
+
         ItemAction update() {
 
             switch (this->getItemType()) {
@@ -58,8 +85,7 @@ class Item {
                     
                     case ItemType::TrapDoor:
 
-                        this->counter++;
-                        if (this->counter == 256)   this->counter = 0;
+                        updateCounter(256);
 
                         switch (this->counter) {
 
@@ -79,8 +105,7 @@ class Item {
 
                 case ItemType::Poker:
 
-                    this->counter++;
-                    if (this->counter == (8 * 12))   this->counter = 0;
+                    updateCounter(8 * 12);
                     this->frame = this->counter / 12;
 
                     break;
@@ -90,8 +115,7 @@ class Item {
                 case ItemType::Potion:
                 case ItemType::Anchor:
 
-                    this->frame++;
-                    if (this->frame == 128) this->frame = 0;
+                    updateFrame(128);
 
                     if (this->counter > 0 && this->frame % 16 == 0) {
 
@@ -107,16 +131,14 @@ class Item {
 
                 case ItemType::Flame:
 
-                    this->counter++;
-                    if (this->counter == (6 * 8))   this->counter = 0;
+                    updateCounter(6 * 8);
                     this->frame = this->counter >> 3;
 
                     break;
 
                 case ItemType::Chakana:
 
-                    this->counter++;
-                    if (this->counter == (16 * 12))   this->counter = 0;
+                    updateCounter(16 * 12);
                     this->frame = this->counter >> 4;
 
                     break;
@@ -140,19 +162,13 @@ class Item {
 
                         case 1 ... 8:
 
-                            this->counter++;
+                            if (updateCounter(8)) {
 
-                            if (this->counter == 8) {
-
-                                this->counter = 0;
-                                this->frame++;
-
-                                if (this->frame == 9) {
+                                if (updateFrame(9)) {
                                     this->itemType++;
                                 }
 
                             }
-
                             break;
 
                         default: break;
@@ -168,14 +184,9 @@ class Item {
                         
                         case 1 ... 8:
 
-                            this->counter++;
+                            if (updateCounter(8)) {
 
-                            if (this->counter == 8) {
-
-                                this->counter = 0;
-                                this->frame--;
-
-                                if (this->frame == 0) {
+                                if (updateFrame(9)) {
                                     this->itemType--;
                                 }
 
@@ -204,50 +215,17 @@ class Item {
                 case ItemType::Lever_LH:
                 case ItemType::Lever_RH:
 
-                    // this->frame++;
-
-                    // if (this->counter > 0 && this->frame % 8 == 0) {
-
-                    //     this->counter--;
-
-                    //     if (this->counter == 0) {
-                    //         return ItemAction::Remove_AddToInventory;
-                    //     }
-
-                    // }
                     if (this->processItem()) return ItemAction::Remove_AddToInventory;
                     break;
 
                 case ItemType::LifeSaver:
                 case ItemType::LifeSaver_Dissolve:
 
-                    // this->frame++;
-
-                    // if (this->counter > 0 && this->frame % 8 == 0) {
-
-                    //     this->counter--;
-
-                    //     if (this->counter == 0) {
-                    //         return ItemAction::ChangeToHidden;
-                    //     }
-
-                    // }
                     if (this->processItem()) return ItemAction::ChangeToHidden;
                     break;
 
                 case ItemType::Chakana_Small:
 
-                    // this->frame++;
-
-                    // if (this->counter > 0 && this->frame % 8 == 0) {
-
-                    //     this->counter--;
-
-                    //     if (this->counter == 0) {
-                    //         return ItemAction::Remove;
-                    //     }
-
-                    // }
                     if (this->processItem()) return ItemAction::Remove;
                     break;
 
@@ -492,7 +470,7 @@ class Item {
                 //     }
 
                 //     break;
-                
+
                 case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                 case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3: 
                     {
@@ -553,12 +531,8 @@ class Item {
                 case ItemType::SwingyThing:
                 case ItemType::SwingyThing_2:
 
-                    this->counter++;
-
-                    if (this->counter == 16) {
-                        this->counter = 0;
-                        this->frame++;
-                        if (this->frame == 16) this->frame = 0;
+                    if (updateCounter(16)) {
+                        updateFrame(16);
                     }
                     
                     break;
