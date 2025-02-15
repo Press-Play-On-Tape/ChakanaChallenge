@@ -1274,9 +1274,20 @@ struct World {
                         {
                             enemy.getItem().update();
 
-                            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                            Rect playerRect = { 59, player.getY(), 10, 16 };
                             Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, Constants::GroundY - enemy.getItem().getY() - 1, 9, 3 };
 
+                            #ifdef ARROW
+
+                            DEBUG_PRINT(playerRect.x);
+                            DEBUG_PRINT(" ");
+                            DEBUG_PRINT(playerRect.y);
+                            DEBUG_PRINT(" - ");
+                            DEBUG_PRINT(arrowRect.x);
+                            DEBUG_PRINT(" ");
+                            DEBUG_PRINTLN(arrowRect.y);
+
+                            #endif
 
                             if (collide(playerRect, arrowRect)) {
 
@@ -1284,41 +1295,16 @@ struct World {
 
                                     Stance stance;
 
-                                    if (item.getItemType() == ItemType::Arrow_LH) {
+                                    bool isArrowTravellingRight = (item.getItemType() == ItemType::Arrow_RH);
+                                    bool isPlayerFacingRight = (this->player.getDirection() == Direction::Right);
 
-                                        enemy.getItem().setItemType(ItemType::Arrow_LH_Hidden);
-
-                                        switch (this->player.getDirection()) {
-
-                                            case Direction::Right:
-                                                stance = Man_Die_Arrow_FallBackward_RH_01;
-                                                break;
-
-                                            case Direction::Left:
-                                                stance = Man_Die_Arrow_FallForward_LH_01;
-                                                break;
-                                                
-                                        }
-
-                                    }
-                                    else {
-
-                                        enemy.getItem().setItemType(ItemType::Arrow_RH_Hidden);
-        
-                                        switch (this->player.getDirection()) {
-
-                                            case Direction::Right:
-                                                stance = Man_Die_Arrow_FallForward_RH_01;
-                                                break;
-
-                                            case Direction::Left:
-                                                stance = Man_Die_Arrow_FallBackward_LH_01;
-                                                break;
-                                                
-                                        }
-
+                                    if (isArrowTravellingRight) {
+                                        stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallForward_RH_01 : Stance::Man_Die_Arrow_FallBackward_LH_01;
+                                    } else {
+                                        stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallBackward_RH_01 : Stance::Man_Die_Arrow_FallForward_LH_01;
                                     }
 
+                                    enemy.getItem().setItemType(static_cast<ItemType>(static_cast<uint8_t>(enemy.getItem().getItemType()) + 1));
                                     this->player.pushSequence(stance, stance + 3, true);
 
                                 }

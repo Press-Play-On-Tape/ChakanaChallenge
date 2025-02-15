@@ -12,7 +12,7 @@ void playGame_HandleEnemies_LaunchArrow(Enemy &enemy, Direction direction) {
 
     Item &item = enemy.getItem();
     item.setItemType(direction == Direction::Left ? ItemType::Arrow_LH : ItemType::Arrow_RH);
-    item.setCounter(25 * 4);
+    item.setCounter(28 * 4);
     item.setX(enemy.getX());
     item.setY(enemy.getY() - 7);
 
@@ -549,7 +549,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                         ? (enemyType == EnemyType::Guard_RH ? Stance::Enemy_Guard_RH_02 : Stance::Enemy_Guard_LH_02) 
                                         : (enemyType == EnemyType::Guard_RH ? Stance::Enemy_Guard_RH_01 : Stance::Enemy_Guard_LH_01)
                         );
-                        
+
                     }
 
                     break;

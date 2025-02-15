@@ -389,28 +389,6 @@ class Item {
                     }                    
                     break;
 
-                // case ItemType::Arrow_LH:
-
-                //     this->setCounter(this->getCounter() - 4);
-                //     this->setX(this->getX() - 4);
-
-                //     if (this->getCounter() == 0) {
-                //         this->itemType = ItemType::Arrow_LH_Hidden;
-                //     }
-
-                //     break;
-
-                // case ItemType::Arrow_RH:
-
-                //     this->setCounter(this->getCounter() + 4);
-                //     this->setX(this->getX() + 4);
-
-                //     if (this->getCounter() == 0) {
-                //         this->itemType = ItemType::Arrow_RH_Hidden;
-                //     }
-
-                //     break;
-
                 case ItemType::Arrow_LH:
                 case ItemType::Arrow_RH: 
                     {
@@ -514,6 +492,7 @@ class Item {
                 //     }
 
                 //     break;
+                
                 case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                 case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3: 
                     {

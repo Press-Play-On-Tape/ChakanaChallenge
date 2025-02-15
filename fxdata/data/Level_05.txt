@@ -112,7 +112,7 @@ uint16_t Level_05_Items[] = {
 
 uint16_t Level_05_Enemies[] = {
 1                            // EnemyType::Archer
-162,                             // Position X
+176,                             // Position X
 96,                             // Position Y
 963,                             // Stance::Enemy_Walk_Bow_RH_00
 25,                             // Inventory ItemType::Arrow_RH_Hidden
