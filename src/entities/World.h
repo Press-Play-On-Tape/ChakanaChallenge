@@ -1299,9 +1299,13 @@ struct World {
                                     bool isPlayerFacingRight = (this->player.getDirection() == Direction::Right);
 
                                     if (isArrowTravellingRight) {
+
                                         stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallForward_RH_01 : Stance::Man_Die_Arrow_FallBackward_LH_01;
+
                                     } else {
+
                                         stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallBackward_RH_01 : Stance::Man_Die_Arrow_FallForward_LH_01;
+                                        
                                     }
 
                                     enemy.getItem().setItemType(static_cast<ItemType>(static_cast<uint8_t>(enemy.getItem().getItemType()) + 1));
