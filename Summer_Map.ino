@@ -68,12 +68,12 @@ void map_Update() {
 
             if (justPressed & A_BUTTON) {
 
-                world.setNextPort(255);
+                world.setNextPort(Constants::NoPort);
                 Point pt;
 
                 FX::seekData(Constants::mapCoords);
 
-                for (uint8_t i = 0; i < 14; i++) {
+                for (uint8_t i = 0; i < Constants::NoOfPorts; i++) {
                     
                     FX::readObject(pt);
 
@@ -88,7 +88,7 @@ void map_Update() {
 
                 FX::readEnd();
 
-                if (world.getNextPort() != 255) {
+                if (world.getNextPort() != Constants::NoPort) {
 
                     uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
                     uint8_t toPort = world.getNextPort() + 1;
@@ -174,7 +174,7 @@ void map_Update() {
 
             if (justPressed & DOWN_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowMenu_Exit);
+                world.incGameState();
 
             }
 
@@ -190,7 +190,7 @@ void map_Update() {
 
             if (justPressed & UP_BUTTON) {
 
-                world.setGameState(GameState::Map_ShowMenu_Back);
+                world.decGameState();
 
             }
 
@@ -252,7 +252,7 @@ void map_Update() {
                 }
                 else {
 
-                    world.setGameState(GameState::Map);
+                    world.decGameState();
                     world.setFrameCount(0);
 
                 }
@@ -261,7 +261,7 @@ void map_Update() {
 
             else if (justPressed & B_BUTTON) {
 
-                world.setGameState(GameState::Map);
+                world.decGameState();
                 world.setFrameCount(0);
 
             }
@@ -316,14 +316,13 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     #endif
 
-    for (uint8_t i = 0; i < 14; i++) {
+    for (uint8_t i = 0; i < Constants::NoOfPorts; i++) {
 
         Point pt;
 
          if (world.getFrameCount() % 36 < 18) {
 
             FX::seekDataArray(Constants::mapCoords, i, 0, 4);
-            // Point pt;
             FX::readObject(pt);
             FX::readEnd();
 

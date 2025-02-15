@@ -43,132 +43,81 @@ void title_Update() {
     world.incFrameCount();
 
     uint8_t justPressed = getJustPressedButtons();
-    uint8_t pressed = getPressedButtons();
 
-    switch (world.getGameState()) {
-        
-        case GameState::Title_Start:
+    if (justPressed & A_BUTTON) {
 
-            if (justPressed & A_BUTTON) {
+        switch (world.getGameState()) {
+
+            case GameState::Title_Start:
 
                 world.setGameState(GameState::Title_OptPlay);
+                break;
 
-            }
+            case GameState::Title_OptPlay:
+            case GameState::Title_OptPlay2:
 
-            break;
-
-        case GameState::Title_OptPlay:
-
-            if (justPressed & DOWN_BUTTON) {
-                world.setGameState(GameState::Title_OptSound);
-            }
-
-            if (justPressed & A_BUTTON) {                
                 title_StartNewGame();
-            }
+                break;
 
-            break;
-        
-        #ifndef DEBUG
-            
             case GameState::Title_ShowCredits:
 
-                // if (justPressed & A_BUTTON || justPressed & B_BUTTON) {
-                if (justPressed & AB_BUTTON) {
-
-                    world.setGameState(GameState::Title_OptCredits);
-
-                }
-
+                world.setGameState(GameState::Title_OptCredits);
                 break;
 
             case GameState::Title_OptResume:
 
-                if (justPressed & DOWN_BUTTON) {
-                    world.setGameState(GameState::Title_OptPlay2);
-                }
-
-                if (justPressed & A_BUTTON) {
-
-                    FX::loadGameState((uint8_t*)&cookie, sizeof(cookie));
-                    menu.setX(128);
-
-                }
-
-                break;
-            
-            case GameState::Title_OptPlay2:
-
-                if (justPressed & UP_BUTTON) {
-                    world.setGameState(GameState::Title_OptResume);
-                }
-
-                if (justPressed & DOWN_BUTTON) {
-                    world.setGameState(GameState::Title_OptSound2);
-                }
-
-                if (justPressed & A_BUTTON) {
-                    title_StartNewGame();
-                }
-
+                FX::loadGameState((uint8_t*)&cookie, sizeof(cookie));
+                menu.setX(128);
                 break;
 
             case GameState::Title_OptSound:
+            case GameState::Title_OptSound2:
 
-                if (justPressed & UP_BUTTON) {
-                    world.setGameState(GameState::Title_OptPlay);
-                }
+                title_SaveSoundSettings();
+                break;
+                
+            case GameState::Title_OptCredits:
 
-                if (justPressed & DOWN_BUTTON) {
-                    world.setGameState(GameState::Title_OptCredits);
-                }
+                world.setGameState(GameState::Title_ShowCredits);
+                break;
 
-                if (justPressed & A_BUTTON) {
+        }
 
-                    if (justPressed & A_BUTTON) {
-                        title_SaveSoundSettings();
-                    }
+    }
+    else if (justPressed & DOWN_BUTTON) {
 
-                }
+        switch (world.getGameState()) {
 
+            case GameState::Title_OptPlay:
+            case GameState::Title_OptPlay2:
+            case GameState::Title_OptResume:
+            case GameState::Title_OptSound:
+
+                world.incGameState();
                 break;
 
             case GameState::Title_OptSound2:
 
-                if (justPressed & UP_BUTTON) {
-                    world.setGameState(GameState::Title_OptPlay2);
-                }
-
-                if (justPressed & DOWN_BUTTON) {
-                    world.setGameState(GameState::Title_OptCredits);
-                }
-
-                if (justPressed & A_BUTTON) {
-
-                    if (justPressed & A_BUTTON) {
-
-                        title_SaveSoundSettings();
-
-                    }
-
-                }
-
+                world.setGameState(GameState::Title_OptCredits);
                 break;
-            
+
+        }
+
+    }
+    else if (justPressed & UP_BUTTON) {
+
+        switch (world.getGameState()) { 
+
+            case GameState::Title_OptPlay2:
+            case GameState::Title_OptSound:
+            case GameState::Title_OptSound2:
             case GameState::Title_OptCredits:
 
-                if (justPressed & UP_BUTTON) {
-                    world.setGameState(GameState::Title_OptSound);
-                }
-
-                if (justPressed & A_BUTTON) {
-                    world.setGameState(GameState::Title_ShowCredits);
-                }
-
+                world.decGameState();
                 break;
 
-        #endif
-        
+        }
+
     }
 
     if (titleCounter < 72) titleCounter++;
@@ -176,34 +125,6 @@ void title_Update() {
 }
 
 void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
-    
-    // if (a.needsUpdate()) title_Update();
-
-    // currentPlane = a.currentPlane();
-
-    // switch (world.getGameState()) {
-
-    //     case GameState::Title_Start:
-    //         SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, currentPlane);
-    //         break;
-
-    //     #ifndef DEBUG
-
-    //     case GameState::Title_OptPlay ... GameState::Title_OptSound_Volume2:
-    //         {
-    //             uint8_t frame = (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_OptPlay)) + (soundSettings.getMusic() ? 0 : 6);
-    //             SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, 3 + currentPlane);
-    //             SpritesU::drawPlusMaskFX(64, 36, Images::Title_Options, (3 * frame) + currentPlane);
-    //         }
-    //         break;
-
-    //     case GameState::Title_ShowCredits:
-    //         SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (2 * 3) + currentPlane);
-    //         break;
-
-    //     #endif
-
-    // }
 
     uint8_t frame = 0;
 

@@ -169,6 +169,12 @@ struct World {
 
         }
 
+        void decGameState() {
+
+            this->gameState--;
+
+        }
+
         uint8_t getBoatCoords_Offset() {
 
             if (this->getCurrentPort() < 255 && this->getNextPort() < 255) {

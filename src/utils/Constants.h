@@ -12,7 +12,6 @@
 #define _DEBUG_HANDLE_MENUS
 #define _DEBUG_LOCKED_DOOR
 #define _DEBUG_RENDER_MAP
-#define AB_BUTTON 12
 
 #ifndef DEBUG
 	// 136 bytes
@@ -27,7 +26,15 @@
 	// 242 bytes
 	#define MULTIPLE_ITEMS
 
+	// 208 bytes
+	#define _RENDER_RUNS
+
+	// 120 bytes
+	#define BOUNCEJUMP_3
+
 #endif
+
+#define AB_BUTTON 12
 
 enum Tiles : uint8_t {
 
@@ -602,9 +609,11 @@ namespace Constants {
     constexpr uint8_t NoDirection = 255;
     constexpr uint16_t NoWaves = 29999;
     constexpr uint8_t NoEnemy = 255;
+    constexpr uint8_t NoPort = 255;
     constexpr int8_t NoOffset = 100;
 
     constexpr uint8_t HealthMax = 14;
+    constexpr uint8_t NoOfPorts = 14;
 
     constexpr uint8_t EnemyCount = 4;
     constexpr uint8_t ItemCount_Level = 15;
