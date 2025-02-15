@@ -228,11 +228,14 @@ void renderWorld() {
             uint8_t frame = 0;
 
             if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)         imgTile = Images::Crate_01;
+            else if (tile00 == Tiles::Solid_Blocking)                                                                                                                   imgTile = Images::Crate_22;
             else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper)                                                                                    imgTile = Images::Crate_13;
             else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle)                                                                                   imgTile = Images::Crate_14;
             else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper)                                                                                   imgTile = Images::Crate_15;
             else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle)                                                                                  imgTile = Images::Crate_16;
-            else if (tile00 == Tiles::Solid_Blocking)                                                                                                                   imgTile = Images::Crate_22;
+            else if (tile00 == Tiles::Block_WithWeed)                                                                                                                   imgTile = Images::Crate_49;
+            else if (tile00 == Tiles::Block_WithWeed_LH)                                                                                                                imgTile = Images::Crate_50;
+            else if (tile00 == Tiles::Block_WithWeed_RH)                                                                                                                imgTile = Images::Crate_51;
 
             if (imgTile != 0) {
                 SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);

@@ -6,8 +6,8 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define _DEBUG
-#define _DEBUG_SOUND
+#define DEBUG
+#define DEBUG_SOUND
 #define _DEBUG_DISABLE_PLAY
 #define _DEBUG_HANDLE_MENUS
 #define _DEBUG_LOCKED_DOOR
@@ -587,7 +587,11 @@ enum Tiles : uint8_t {
 
 	Trebochet_To_RH = 46,
 	Trebochet_To_LH = 47,
+
 	Weed = 48,
+	Block_WithWeed = 49,
+	Block_WithWeed_LH = 50,
+	Block_WithWeed_RH = 51,
 
 };
 

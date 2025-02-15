@@ -417,7 +417,7 @@ class Item {
                         
                         int8_t direction = (this->itemType == ItemType::Arrow_LH) ? -1 : 1; 
 
-                        this->setCounter(this->getCounter() + (direction * 4));
+                        this->setCounter(this->getCounter() - 4);
                         this->setX(this->getX() + (direction * 4));
 
                         if (this->getCounter() == 0) {

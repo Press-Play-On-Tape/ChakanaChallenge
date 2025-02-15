@@ -1147,33 +1147,13 @@ struct World {
 
                 switch (item.getItemType()) {
 
-                    // case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
-
-                    //     if (enemy.getCount() == 0 && a.randomLFSR(0, 140) == 0) {
-
-                    //         switch (enemy.getDirection()) {
-
-                    //             case Direction::Left:
-                    //                 enemy.pushSequence(Stance::Enemy_Fire_LH_00, Stance::Enemy_Fire_LH_12);
-                    //                 break;
-
-                    //             case Direction::Right:
-                    //                 enemy.pushSequence(Stance::Enemy_Fire_RH_00, Stance::Enemy_Fire_RH_12);
-                    //                 break;
-
-                    //         }
-
-                    //     }
-
-                    //     break;
-
                     case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
 
                         if (enemy.getCount() == 0 && a.randomLFSR(0, 140) == 0) {
 
                             const uint16_t diff = Stance::Enemy_Fire_LH_00 - Stance::Enemy_Fire_RH_00;
                             uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
-                            enemy.pushSequence(Stance::Enemy_Fire_RH_00 + stanceOffset, Stance::Enemy_Fire_RH_12 + diff);
+                            enemy.pushSequence(Stance::Enemy_Fire_RH_00 + stanceOffset, Stance::Enemy_Fire_RH_12 + stanceOffset);
 
                         }
 
@@ -1225,88 +1205,20 @@ struct World {
 
                 switch (item.getItemType()) {
 
-                    // case ItemType::Arrow_LH:
-                    //     {
-                    //         enemy.getItem().update();
-
-                    //         uint8_t yOffset = Constants::GroundY;
-                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-
-                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
-                            
-                    //         if (collide(playerRect, arrowRect)) {
-
-                    //             enemy.getItem().setItemType(ItemType::None);
-
-                    //             switch (this->player.getDirection()) {
-
-                    //                 case Direction::Right:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
-                    //                     break;
-
-                    //                 case Direction::Left:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
-                    //                     break;
-                                        
-                    //             }
-
-                    //         }
-
-                    //     }
-
-                    //     break;
-
-                    // case ItemType::Arrow_RH:
-                    //     {
-                    //         enemy.getItem().update();
-
-                    //         uint8_t yOffset = Constants::GroundY;
-                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-
-                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
-                            
-                    //         if (collide(playerRect, arrowRect)) {
-
-                    //             enemy.getItem().setItemType(ItemType::None);
-
-                    //             switch (this->player.getDirection()) {
-
-                    //                 case Direction::Right:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
-                    //                     break;
-
-                    //                 case Direction::Left:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
-                    //                     break;
-                                        
-                    //             }
-
-                    //         }
-
-                    //     }
-
-                    //     break;
-
                     case ItemType::Arrow_LH:
                     case ItemType::Arrow_RH:
                         {
                             enemy.getItem().update();
 
-                            // uint8_t yOffset = this->getYOffsetForRendering();
-
-                            // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                            // Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
-
-                            Rect playerRect = { 59, Constants::GroundY + player.getY(), 10, 16 };
+                            Rect playerRect = { 59, player.getY(), 10, 16 };
                             Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, enemy.getItem().getY() - 1, 9, 3 };
-                            
+
+
                             if (collide(playerRect, arrowRect)) {
 
                                 if (this->player.getHealth() < 4) {
 
-                                    Stance stance = 0;
+                                    Stance stance;
 
                                     if (item.getItemType() == ItemType::Arrow_LH) {
 
@@ -1316,14 +1228,10 @@ struct World {
 
                                             case Direction::Right:
                                                 stance = Man_Die_Arrow_FallBackward_RH_01;
-                                                // stance2 = Man_Die_Arrow_FallBackward_RH_04;
-                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
                                                 break;
 
                                             case Direction::Left:
                                                 stance = Man_Die_Arrow_FallForward_LH_01;
-                                                // stance2 = Man_Die_Arrow_FallForward_LH_04;
-                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
                                                 break;
                                                 
                                         }
@@ -1337,25 +1245,17 @@ struct World {
 
                                             case Direction::Right:
                                                 stance = Man_Die_Arrow_FallForward_RH_01;
-                                                // stance2 = Man_Die_Arrow_FallForward_RH_04;
-                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
                                                 break;
 
                                             case Direction::Left:
                                                 stance = Man_Die_Arrow_FallBackward_LH_01;
-                                                // stance2 = Man_Die_Arrow_FallBackward_LH_04;
-                                                // this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
                                                 break;
                                                 
                                         }
 
                                     }
 
-                                    // if (stance != 0) {
-
-                                        this->player.pushSequence(stance, stance + 3, true);
-
-                                    // }
+                                    this->player.pushSequence(stance, stance + 3, true);
 
                                 }
                                 else {
