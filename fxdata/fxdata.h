@@ -43,8 +43,8 @@ namespace Constants
   constexpr uint24_t InventoryCursorY = 0x000E76;
   constexpr uint24_t GambleFrames = 0x000E7C;
   constexpr uint24_t TrebochetImgs = 0x000F4C;
-  constexpr uint24_t mapCoords = 0x000F5A;
-  constexpr uint24_t portNames_Coords = 0x000F92;
+  constexpr uint24_t Port_Coords = 0x000F5A;
+  constexpr uint24_t PortNames_Coords = 0x000F92;
   constexpr uint24_t BeachDetails = 0x000FCA;
   constexpr uint24_t PortCosts = 0x00101E;
   constexpr uint24_t StanceImgIdx = 0x001367;

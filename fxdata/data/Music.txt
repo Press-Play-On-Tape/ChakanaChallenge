@@ -1,0 +1,51 @@
+namespace Music {
+   
+    raw_t Song_MainTheme = "music/TheGambler.bin"
+
+    raw_t SFX_Death = "music/SFX_Death.bin"
+    raw_t SFX_Victory = "music/SFX_Victory.bin"
+    raw_t SFX_XPGain = "music/SFX_XPGain.bin"
+    raw_t SFX_Three_Inc = "music/SFX_ThreeInc.bin"
+    raw_t SFX_Three_Dec = "music/SFX_ThreeDec.bin"
+    raw_t SFX_PlayerBlip = "music/SFX_PlayerBlip.bin"
+    raw_t SFX_EnemyBlip = "music/SFX_EnemyBlip.bin"
+    raw_t SFX_Explosion = "music/SFX_Explosion.bin"
+    raw_t SFX_DoubleBeep = "music/SFX_DoubleBeep.bin"
+    raw_t SFX_DoubleBeepDown = "music/SFX_DoubleBeepDown.bin"
+    raw_t SFX_Bet1 = "music/SFX_Bet1.bin"
+    raw_t SFX_Bet2 = "music/SFX_Bet2.bin"
+    raw_t SFX_Bet3 = "music/SFX_Bet3.bin"
+    raw_t SFX_Bet4 = "music/SFX_Bet4.bin"
+    raw_t SFX_Bet5 = "music/SFX_Bet5.bin"
+    raw_t SFX_Bet6 = "music/SFX_Bet6.bin"
+    raw_t SFX_Click = "music/SFX_Click.bin"
+    raw_t SFX_SmallBlind = "music/SFX_SmallBlind.bin"
+    raw_t SFX_BigBlind = "music/SFX_BigBlind.bin"
+    
+
+
+    uint24_t Songs[] = { Song_MainTheme };
+
+    uint24_t SFXs[] =  { SFX_Death, 
+                         SFX_Victory,
+                         SFX_XPGain,
+                         SFX_Three_Inc,
+                         SFX_Three_Dec,
+                         SFX_PlayerBlip,
+                         SFX_EnemyBlip,
+                         SFX_Explosion,
+                         SFX_DoubleBeep,
+                         SFX_DoubleBeepDown,
+                         SFX_Bet1,
+                         SFX_Bet2,
+                         SFX_Bet3,
+                         SFX_Bet4,
+                         SFX_Bet5,
+                         SFX_Bet6,
+                         SFX_Click,
+                         SFX_SmallBlind,
+                         SFX_BigBlind,
+                       };
+
+
+namespace_end  

@@ -71,7 +71,7 @@ void map_Update() {
                 world.setNextPort(Constants::NoPort);
                 Point pt;
 
-                FX::seekData(Constants::mapCoords);
+                FX::seekData(Constants::Port_Coords);
 
                 for (uint8_t i = 0; i < Constants::NoOfPorts; i++) {
                     
@@ -322,7 +322,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
          if (world.getFrameCount() % 36 < 18) {
 
-            FX::seekDataArray(Constants::mapCoords, i, 0, 4);
+            FX::seekDataArray(Constants::Port_Coords, i, 0, 4);
             FX::readObject(pt);
             FX::readEnd();
 
@@ -330,7 +330,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         }
 
-        FX::seekDataArray(Constants::portNames_Coords, i, 0, 4);
+        FX::seekDataArray(Constants::PortNames_Coords, i, 0, 4);
         FX::readObject(pt);
         FX::readEnd();
 

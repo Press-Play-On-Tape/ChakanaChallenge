@@ -1205,13 +1205,77 @@ struct World {
 
                 switch (item.getItemType()) {
 
+                    // case ItemType::Arrow_LH:
+                    //     {
+                    //         enemy.getItem().update();
+
+                    //         uint8_t yOffset = Constants::GroundY;
+                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+                            
+                    //         if (collide(playerRect, arrowRect)) {
+
+                    //             enemy.getItem().setItemType(ItemType::None);
+
+                    //             switch (this->player.getDirection()) {
+
+                    //                 case Direction::Right:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
+                    //                     break;
+
+                    //                 case Direction::Left:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
+                    //                     break;
+                                        
+                    //             }
+
+                    //         }
+
+                    //     }
+
+                    //     break;
+
+                    // case ItemType::Arrow_RH:
+                    //     {
+                    //         enemy.getItem().update();
+
+                    //         uint8_t yOffset = Constants::GroundY;
+                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
+
+                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
+                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
+                            
+                    //         if (collide(playerRect, arrowRect)) {
+
+                    //             enemy.getItem().setItemType(ItemType::None);
+
+                    //             switch (this->player.getDirection()) {
+
+                    //                 case Direction::Right:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
+                    //                     break;
+
+                    //                 case Direction::Left:
+                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
+                    //                     break;
+                                        
+                    //             }
+
+                    //         }
+
+                    //     }
+
+                    //     break;
+
                     case ItemType::Arrow_LH:
                     case ItemType::Arrow_RH:
                         {
                             enemy.getItem().update();
 
-                            Rect playerRect = { 59, player.getY(), 10, 16 };
-                            Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, enemy.getItem().getY() - 1, 9, 3 };
+                            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                            Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, Constants::GroundY - enemy.getItem().getY() - 1, 9, 3 };
 
 
                             if (collide(playerRect, arrowRect)) {
