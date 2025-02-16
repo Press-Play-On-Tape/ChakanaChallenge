@@ -12,6 +12,9 @@ namespace Levels
     include "data/Level_08.txt"
     include "data/Level_09.txt"
     include "data/Level_10.txt"
+    include "data/Level_11.txt"
+    include "data/Level_12.txt"
+    include "data/Level_13.txt"
     
     uint24_t Levels[] = {
         Level_00,  
@@ -25,9 +28,9 @@ namespace Levels
         Level_08,  
         Level_09,  
         Level_10,  
-        Level_00,  
-        Level_00,  
-        Level_00,  
+        Level_11,  
+        Level_12,  
+        Level_13,  
     };
 
     uint24_t Level_Items[] = {
@@ -42,8 +45,9 @@ namespace Levels
         Level_08_Items,  
         Level_09_Items,  
         Level_10_Items,  
-        Level_00_Items,  
-        Level_00_Items,  
+        Level_11_Items,  
+        Level_12_Items,  
+        Level_13_Items,  
     };
 
     uint24_t Level_Enemies[] = {
@@ -58,8 +62,9 @@ namespace Levels
         Level_08_Enemies,  
         Level_09_Enemies,  
         Level_10_Enemies,  
-        Level_00_Enemies,  
-        Level_00_Enemies,  
+        Level_11_Enemies,  
+        Level_12_Enemies,  
+        Level_13_Enemies,  
     };
 
 namespace_end

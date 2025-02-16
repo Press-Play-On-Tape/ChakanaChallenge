@@ -1,153 +1,27 @@
 uint8_t Level_09[] = {
 { 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
 { 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
-{64,64, 74,74, 74,74, 74,74, 63,63, 73,73, 73,73,  0, 0,  1, 1,  8, 8,  1, 1,  9,10,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
-{64,64, 74,74, 74,74, 74,74, 63,63, 73,73, 73,73,  0, 0,  2, 2, 12,12,  2, 2,  2, 1,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
-{ 0, 0, 33,33,  1, 1, 33,33,  0, 0, 33,33,  0, 0,  0, 0,  0, 0, 12,12,  0, 0, 62,62, 72,72,  8, 8, 63,63, 73,73, 73,73,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 36,37, 34,35,  1, 1,},
-{ 0, 0, 31,31,  2, 2, 31,31,  0, 0, 31,31,  0, 0,  0, 0,  0, 0, 12,12,  0, 0, 62,62, 72,72, 12,12, 63,63, 73,73, 73,73,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 36,37, 34,35,  2, 2,},
-{ 1, 1, 31,31,  1, 1, 31,31,  1, 1, 31,31,  0, 0,  0, 0,  0, 0, 12,12,  0, 0,  0, 0,  0, 0, 12,12,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 63,63, 73,73, 73,73,  8, 8,  1, 1,},
-{ 2, 2, 31,31,  2, 2, 31,31,  2, 2, 31,31,  0, 0,  0, 0,  0, 0,  7, 7,  0, 0,  0, 0,  0, 0,  7, 7,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 63,63, 73,73, 73,73, 12,12,  2, 2,},
-{ 0, 0, 31,31,  0, 0, 31,31,  0, 0, 31,31,  0, 0,  1, 1,  8, 8, 64,64, 74,74, 74,74, 74,74,  1, 1,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 12,12,  1, 1,},
-{ 0, 0, 31,31,  0, 0, 31,31,  0, 0, 31,31,  0, 0,  2, 2, 12,12, 64,64, 74,74, 74,74, 74,74,  2, 2,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 12,12,  2, 2,},
-{ 0, 0, 31,31,  1, 1, 31,31,  0, 0, 31,31,  0, 0,  0, 0, 12,12,  0, 0,  0, 0,  0, 0, 24,24,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 63,63, 73,73, 73,73, 12,12,  1, 1,},
-{ 0, 0, 31,31,  2, 2, 31,31,  0, 0, 32,32,  0, 0,  0, 0, 12,12,  0, 0,  0, 0,  0, 0, 24,24,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 63,63, 73,73, 73,73, 12,12,  2, 2,},
-{ 0, 0, 31,31,  0, 0, 31,31,  0, 0,  0, 0,  0, 0,  0, 0, 12,12,  0, 0,  8, 8, 62,62, 72,72,  9,10,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 25,25,  0, 0, 12,12,  1, 1,},
-{ 0, 0, 32,32,  0, 0, 31,31,  0, 0,  0, 0,  0, 0,  0, 0, 12,12,  0, 0, 12,12, 62,62, 72,72,  2, 1,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0, 25,25,  0, 0,  7, 7,  2, 2,},
-{ 4, 5,  1, 1, 20, 0, 31,31,  0, 0, 18,18,  1,19,  0, 0, 12,12,  0, 0, 12,12,  0, 0,  0, 0, 62,62, 72,72,  0, 0,  0, 0,  0, 0, 64,64, 74,74, 74,74, 74,74, 63,63, 73,73, 73,73,},
-{ 1, 2,  2, 2,  2,20, 32,32,  0, 0, 18,18,  2, 2,  0, 0,  7, 7,  0, 0,  7, 7,  0, 0,  0, 0, 62,62, 72,72, 40,40, 38,38, 39,39, 64,64, 74,74, 74,74, 74,74, 63,63, 73,73, 73,73,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
+{ 0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,  0, 0,},
 };
 
 uint16_t Level_09_Items[] = {
-28,                             // ItemType::Trebochet_Left
-320,                             // Position X
-16,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-33,                             // ItemType::Trebochet_Ball_Left_Hidden
-320,                             // Position X
-16,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-26,                             // ItemType::Sword
-192,                             // Position X
-0,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-16,                             // ItemType::Anchor
-240,                             // Position X
-0,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-28,                             // ItemType::Trebochet_Left
-480,                             // Position X
-16,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-33,                             // ItemType::Trebochet_Ball_Left_Hidden
-480,                             // Position X
-16,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-29,                             // ItemType::Trebochet_Right
-384,                             // Position X
-64,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-37,                             // ItemType::Trebochet_Ball_Right_Hidden
-384,                             // Position X
-64,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-29,                             // ItemType::Trebochet_Right
-224,                             // Position X
-64,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-37,                             // ItemType::Trebochet_Ball_Right_Hidden
-224,                             // Position X
-64,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
 41,                             // ItemType::Chakana
-512,                             // Position X
-112,                             // Position Y
-9,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-28,                             // ItemType::Trebochet_Left
-224,                             // Position X
-112,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-33,                             // ItemType::Trebochet_Ball_Left_Hidden
-224,                             // Position X
-112,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-28,                             // ItemType::Trebochet_Left
-464,                             // Position X
-112,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-33,                             // ItemType::Trebochet_Ball_Left_Hidden
-464,                             // Position X
-112,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-12,                             // ItemType::Potion
-352,                             // Position X
+160,                             // Position X
 0,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-12,                             // ItemType::Potion
-368,                             // Position X
-48,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-12,                             // ItemType::Potion
-208,                             // Position X
-48,                             // Position Y
-0,                             // Frame
-0,                             // Data
-0,                             // Counter
-
-12,                             // ItemType::Potion
-256,                             // Position X
-96,                             // Position Y
-0,                             // Frame
+9,                             // Frame
 0,                             // Data
 0,                             // Counter
 
@@ -160,87 +34,31 @@ uint16_t Level_09_Items[] = {
 };
 
 uint16_t Level_09_Enemies[] = {
-2                            // EnemyType::TrebochetOperator
-350,                             // Position X
+0                            // EnemyType::None
+0,                             // Position X
 0,                             // Position Y
-961,                             // Stance::Enemy_Trebochet_Release_LH_01
-33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden
+0,                             // Stance::Enemy_None
+0,                             // Inventory ItemType::None
+0,                             // IData
 
-3                            // EnemyType::SwordFighter
-258,                             // Position X
+0                            // EnemyType::None
+0,                             // Position X
 0,                             // Position Y
-975,                             // Stance::Enemy_Sword_Stationary_LH
-50,                             // Inventory ItemType::Glint_Hidden
+0,                             // Stance::Enemy_None
+0,                             // Inventory ItemType::None
+0,                             // IData
 
-3                            // EnemyType::SwordFighter
-370,                             // Position X
+0                            // EnemyType::None
+0,                             // Position X
 0,                             // Position Y
-975,                             // Stance::Enemy_Sword_Stationary_LH
-50,                             // Inventory ItemType::Glint_Hidden
+0,                             // Stance::Enemy_None
+0,                             // Inventory ItemType::None
+0,                             // IData
 
-1                            // EnemyType::Archer
-434,                             // Position X
+0                            // EnemyType::None
+0,                             // Position X
 0,                             // Position Y
-944,                             // Stance::Enemy_Walk_Bow_LH_00
-23,                             // Inventory ItemType::Arrow_LH_Hidden
-
-2                            // EnemyType::TrebochetOperator
-510,                             // Position X
-0,                             // Position Y
-961,                             // Stance::Enemy_Trebochet_Release_LH_01
-33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden
-
-2                            // EnemyType::TrebochetOperator
-370,                             // Position X
-48,                             // Position Y
-904,                             // Stance::Enemy_Trebochet_Release_RH_01
-37,                             // Inventory ItemType::Trebochet_Ball_Right_Hidden
-
-2                            // EnemyType::TrebochetOperator
-210,                             // Position X
-48,                             // Position Y
-904,                             // Stance::Enemy_Trebochet_Release_RH_01
-37,                             // Inventory ItemType::Trebochet_Ball_Right_Hidden
-
-1                            // EnemyType::Archer
-274,                             // Position X
-48,                             // Position Y
-887,                             // Stance::Enemy_Walk_Bow_RH_00
-25,                             // Inventory ItemType::Arrow_RH_Hidden
-
-2                            // EnemyType::TrebochetOperator
-254,                             // Position X
-96,                             // Position Y
-961,                             // Stance::Enemy_Trebochet_Release_LH_01
-33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden
-
-3                            // EnemyType::SwordFighter
-178,                             // Position X
-96,                             // Position Y
-975,                             // Stance::Enemy_Sword_Stationary_LH
-50,                             // Inventory ItemType::Glint_Hidden
-
-1                            // EnemyType::Archer
-274,                             // Position X
-96,                             // Position Y
-944,                             // Stance::Enemy_Walk_Bow_LH_00
-23,                             // Inventory ItemType::Arrow_LH_Hidden
-
-1                            // EnemyType::Archer
-290,                             // Position X
-96,                             // Position Y
-944,                             // Stance::Enemy_Walk_Bow_LH_00
-23,                             // Inventory ItemType::Arrow_LH_Hidden
-
-2                            // EnemyType::TrebochetOperator
-494,                             // Position X
-96,                             // Position Y
-961,                             // Stance::Enemy_Trebochet_Release_LH_01
-33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden
-
-3                            // EnemyType::SwordFighter
-370,                             // Position X
-96,                             // Position Y
-975,                             // Stance::Enemy_Sword_Stationary_LH
-50,                             // Inventory ItemType::Glint_Hidden
+0,                             // Stance::Enemy_None
+0,                             // Inventory ItemType::None
+0,                             // IData
 };
