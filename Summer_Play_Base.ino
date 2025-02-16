@@ -95,6 +95,7 @@ void playGame_Init() {
             enemy.setY(FX::readPendingUInt16());
             enemy.setStance(FX::readPendingUInt16());
             enemy.getItem().setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
+            enemy.getItem().setData(FX::readPendingUInt16());
 
         }
 
@@ -1494,7 +1495,7 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
         else if (world.isSpringTile(tile)) {    
 
             #ifdef BOUNCEJUMP_3
-            
+
             uint8_t tile_3U = world.getTile_RelativeToPlayer(0, 3);
             uint8_t tile_4U = world.getTile_RelativeToPlayer(0, 4);
 

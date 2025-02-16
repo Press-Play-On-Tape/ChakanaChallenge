@@ -12,7 +12,7 @@ void playGame_HandleEnemies_LaunchArrow(Enemy &enemy, Direction direction) {
 
     Item &item = enemy.getItem();
     item.setItemType(direction == Direction::Left ? ItemType::Arrow_LH : ItemType::Arrow_RH);
-    item.setCounter(28 * 4);
+    item.setCounter(item.getData() * 4);
     item.setX(enemy.getX());
     item.setY(enemy.getY() - 7);
 

@@ -120,16 +120,28 @@ struct World {
 
         uint8_t getYOffsetForRendering() {
 
+            // switch (player.getY()) {
+
+            //     case 21 ... 37: 
+            //         return Constants::GroundY;
+
+            //     case -59 ... 20:
+            //         return Constants::GroundY - player.getY() + 22;
+
+            //     default:
+            //         return 118;
+
+            // }
             switch (player.getY()) {
 
                 case 21 ... 37: 
                     return Constants::GroundY;
 
-                case -59 ... 20:
+                case -53 ... 20:
                     return Constants::GroundY - player.getY() + 22;
 
                 default:
-                    return 118;
+                    return 112;
 
             }
 

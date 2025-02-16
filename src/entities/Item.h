@@ -164,7 +164,9 @@ class Item {
 
                             if (updateCounter(8)) {
 
-                                if (updateFrame(9)) {
+                                this->frame++;
+
+                                if (this->frame == 9) {
                                     this->itemType++;
                                 }
 
@@ -186,7 +188,9 @@ class Item {
 
                             if (updateCounter(8)) {
 
-                                if (updateFrame(9)) {
+                                this->frame--;
+
+                                if (this->frame == 0) {
                                     this->itemType--;
                                 }
 
