@@ -13,13 +13,13 @@ class Player {
         InventoryItem items[Constants::ItemCount_Player];
 
         int8_t y = Constants::GroundY;
-        uint8_t falls = 0;
-        uint8_t itemCount = 0;
-        uint8_t health = Constants::HealthMax;
-        uint8_t enemyIdx = Constants::NoEnemy;
-        uint8_t wound = 0;
-        uint8_t chakanas = 100;
-        uint8_t lives = 3;
+        uint8_t falls;
+        uint8_t itemCount;
+        uint8_t health;
+        uint8_t enemyIdx;
+        uint8_t wound;
+        uint8_t chakanas;
+        uint8_t lives;
 		
         Stance fromStance = Stance::None;
         Stance toStance = Stance::None;
@@ -58,7 +58,7 @@ class Player {
         void init() {
 
             this->lives = 3;
-            this->chakanas = 100;
+            this->chakanas = 200;
             this->falls = 0;
             this->itemCount = 0;
             this->health = Constants::HealthMax;

@@ -6,8 +6,8 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define _DEBUG
-#define _DEBUG_SOUND
+#define DEBUG
+#define DEBUG_SOUND
 #define _DEBUG_DISABLE_PLAY
 #define _DEBUG_HANDLE_MENUS
 #define _DEBUG_LOCKED_DOOR
@@ -584,9 +584,13 @@ enum Tiles : uint8_t {
 	Solid_3_Wide = 63,
 	Solid_4_Wide = 64,
 
-	Solid_2_Wide_2 = 72,
-	Solid_3_Wide_2 = 73,
-	Solid_4_Wide_2 = 74,
+	#ifdef RENDER_RUNS
+	
+		Solid_2_Wide_2 = 72,
+		Solid_3_Wide_2 = 73,
+		Solid_4_Wide_2 = 74,
+
+	#endif
 
 	Trebochet_To_RH = 46,
 	Trebochet_To_LH = 47,

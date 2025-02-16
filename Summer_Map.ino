@@ -242,7 +242,7 @@ void map_Update() {
 
                     uint8_t offset = world.getBoatCoords_Offset();
 
-                    FX::seekDataArray(Constants::BoatCoords_Start, (world.getCurrentPort() * 2) + offset, 0, 4);
+                    FX::seekDataArray(Constants::BoatCoords_Start, (world.getCurrentPort() << 2) + offset, 0, 4);
                     world.setXBoat(FX::readPendingUInt16());
                     world.setYBoat(FX::readPendingUInt16() - 1);
                     world.setBoatCounter(0);
@@ -279,7 +279,7 @@ void map_Update() {
                 int16_t xOffset = pt.x - world.getXMap();
                 int16_t yOffset = pt.y - world.getYMap();
 
-                if (xOffset > 16)  world.incXMap(1);        // SJH Was 20 & 12
+                if (xOffset > 16)  world.incXMap(1);        
                 if (xOffset < -16) world.incXMap(-1);
                 if (yOffset > 6)  world.incYMap(1);
                 if (yOffset < -6) world.incYMap(-1);
@@ -330,11 +330,15 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         }
 
-        FX::seekDataArray(Constants::PortNames_Coords, i, 0, 4);
-        FX::readObject(pt);
-        FX::readEnd();
+        if (world.getGameState() != GameState::Map_MoveBoat) {
 
-        SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, ((i + (world.getPortVisited(i) ? 14 : 0)) * 3) + currentPlane);
+            FX::seekDataArray(Constants::PortNames_Coords, i, 0, 4);
+            FX::readObject(pt);
+            FX::readEnd();
+
+            SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, ((i + (world.getPortVisited(i) ? 14 : 0)) * 3) + currentPlane);
+
+        }
     
     }
 

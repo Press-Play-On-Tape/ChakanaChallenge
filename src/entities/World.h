@@ -103,8 +103,8 @@ struct World {
 
             this->portsVisited = 0;
             this->frameCount = 0;
-            this->xMap = 0;
-            this->yMap = 0;
+            this->xMap = 256;
+            this->yMap = 88;
             this->xBoat = 14;
             this->yBoat = 6;
             this->boatDirection = BoatDirection::Down;
@@ -120,18 +120,6 @@ struct World {
 
         uint8_t getYOffsetForRendering() {
 
-            // switch (player.getY()) {
-
-            //     case 21 ... 37: 
-            //         return Constants::GroundY;
-
-            //     case -59 ... 20:
-            //         return Constants::GroundY - player.getY() + 22;
-
-            //     default:
-            //         return 118;
-
-            // }
             switch (player.getY()) {
 
                 case 21 ... 37: 
@@ -187,15 +175,34 @@ struct World {
 
         }
 
+        bool absT(int8_t x) {
+            return x < 0 ? -x : x;
+        }
+
         uint8_t getBoatCoords_Offset() {
 
-            if (this->getCurrentPort() < 255 && this->getNextPort() < 255) {
+            uint8_t from = this->getNextPort();
+            uint8_t to = this->getCurrentPort();
 
-                if (this->getCurrentPort() < this->getNextPort() && (this->getNextPort() - this->getCurrentPort() <= 6)) {
+            uint8_t offset = FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from);
+Serial.print("From ");
+Serial.print(from);
+Serial.print(", To ");
+Serial.print(to);
+Serial.print(" = ");
+Serial.print(offset);
+Serial.print(" ");
+Serial.println(offset == 0 ? "Anti" : "Clock");
+            if (from < 255 && to < 255) {
 
-                    return 1;
+                // if (this->getCurrentPort() < this->getNextPort() && (this->getNextPort() - this->getCurrentPort() <= 6)) {
 
-                }
+                //     return 1;
+
+                // }
+                // return (this->getNextPort() == this->getCurrentPort() ? 0 : (this->getNextPort() > this->getCurrentPort() ? 0 : 1));
+                // Serial.println(FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0));
+                return FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0);
 
             }
             
@@ -208,7 +215,7 @@ struct World {
             if (this->frameCount % 4 == 0) {
 
                 uint8_t offset = getBoatCoords_Offset();
-                uint24_t boatCoords = FX::readIndexedUInt24(Constants::BoatCoords, (this->getCurrentPort() * 2) + offset);
+                uint24_t boatCoords = FX::readIndexedUInt24(Constants::BoatCoords, (this->getCurrentPort() << 2) + offset);
 
                 BoatMovement boatMovement;
                 FX::seekData(boatCoords + (this->boatCounter * 3));
@@ -293,50 +300,6 @@ struct World {
 
         }
 
-        // void incBackgroundVal(int8_t val) {
-
-        //     this->background = this->background + val;
-
-        //     if (this->background == -128) { 
-                
-        //         this->background = 0; 
-                
-        //     }
-        //     else if (this->background == 128) { 
-                
-        //         background = 0; 
-
-        //     }
-
-        // }
-        
-        // void incBackgroundVal(int8_t val) {
-
-        //     this->background += val;
-
-        //     if (this->background == 128 || background == -128) {
-        //         this->background = 0;
-        //     }
-                    
-        // }
-
-        // void incWave(int8_t val) {
-
-        //     this->wave = this->wave + val;
-
-        //     if (this->wave <= -256) { 
-                
-        //         this->wave = this->wave + 256;
-                
-        //     }
-        //     else if (this->wave >= 256) { 
-                
-        //         this->wave = this->wave - 256;
-
-        //     }
-
-        // }
-
         void incWave(int8_t val) {
 
             this->wave += val;
@@ -371,7 +334,7 @@ struct World {
 
         void update(bool completeWaves) {
 
-            uint8_t removeItemIdx = 255;
+            uint8_t removeItemIdx = Constants::NoItem;
 
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
@@ -391,8 +354,6 @@ struct World {
                         break;
 
                     case ItemAction::HideCrate_ShowItem:
-// Serial.print("H ");
-// Serial.println(item.getData());
                         doClearMap = true;
                         item.setItemType(static_cast<ItemType>(item.getData()));
                         item.setFrame(0);
@@ -600,7 +561,7 @@ struct World {
 
             }
 
-            if (removeItemIdx != 255) {
+            if (removeItemIdx != Constants::NoItem) {
                 this->removeItem(removeItemIdx);
             }
 
@@ -722,8 +683,12 @@ struct World {
             else if (tile == Tiles::Solid_Walkable)                                     return false;
             else if (tile == Tiles::Poker)                                              return true;
 
+            #ifdef RENDER_RUNS
+
             else if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)        return false;
             else if (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2)    return false;
+
+            #endif
 
             else if (tile == Tiles::Lever_Portal_LH) { 
 
@@ -817,11 +782,21 @@ struct World {
 
             #endif
 
-            return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
-                   tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
-                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower ||
-                   (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide) ||
-                   (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2);
+            #ifdef RENDER_RUNS
+            
+                return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
+                    tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
+                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower ||
+                    (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide) ||
+                    (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2);
+
+            #else
+            
+                return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
+                    tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
+                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
+
+            #endif
             
         }
 
@@ -854,12 +829,22 @@ struct World {
             }
             else {
     
-                return tile == Tiles::Solid_Walkable || 
-                       tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
-                       tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
-                       tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
-                       tile == Tiles::Single_Stair_LH_Upper_TL || 
-                       tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
+                #ifdef RENDER_RUNS
+                
+                    return tile == Tiles::Solid_Walkable || 
+                        tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
+                        tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
+                        tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
+                        tile == Tiles::Single_Stair_LH_Upper_TL || 
+                        tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
+
+                #else 
+
+                    return tile == Tiles::Solid_Walkable || 
+                        tile == Tiles::Single_Stair_LH_Upper_TL || 
+                        tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
+
+                #endif
 
             }
             
@@ -874,12 +859,21 @@ struct World {
         bool canJumpUpOntoTile(uint8_t tile) {
 
             // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable;
-            return tile == Tiles::Solid_Walkable || 
-                   tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
-                   tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
-                   tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
-                   tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-            
+
+            #ifdef RENDER_RUNS
+                
+                return tile == Tiles::Solid_Walkable || 
+                       tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
+                       tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
+                       tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
+                       tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
+
+            #else
+                
+                return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
+
+            #endif
+
         }
 
         #ifdef FALL_THROUGH_PORTAL
