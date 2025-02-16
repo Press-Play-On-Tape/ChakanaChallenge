@@ -9,12 +9,12 @@ class Enemy {
 
     private:
 
-        EnemyType enemyType = EnemyType::None;
-        Stance stance = Stance::Enemy_Walk_LH_01;
+        EnemyType enemyType;
+        Stance stance;
         Item item;
 
-        int16_t x = 0;
-        int8_t y = Constants::GroundY;
+        int16_t x;
+        int8_t y;
         uint8_t health = Constants::HealthMax;
         uint8_t swordWound = 0;
 

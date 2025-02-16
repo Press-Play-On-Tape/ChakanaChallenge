@@ -22,20 +22,19 @@ struct World {
         Enemy enemy[Constants::EnemyCount];
         Item items[Constants::ItemCount_Level];
 
-        uint16_t portsVisited = 0;
-        uint16_t frameCount = 0;
-        uint16_t xMap = 0;
-        uint16_t yMap = 0;
-        uint16_t xBoat = 14;
-        uint16_t yBoat = 6;
-        BoatDirection boatDirection = BoatDirection::Down;
-        uint8_t boatCounter = 0;
-        // int16_t x = 0;
+        uint16_t portsVisited;
+        uint16_t frameCount;
+        uint16_t xMap;
+        uint16_t yMap;
+        uint16_t xBoat;
+        uint16_t yBoat;
+        BoatDirection boatDirection;
+        uint8_t boatCounter;
         int16_t y = 0;
 
-        uint8_t currentPort = 255; //SJH 255
-        uint8_t nextPort = 255; //SJH 255
-        uint8_t nextPortCost = 0;
+        uint8_t currentPort;
+        uint8_t nextPort;
+        uint8_t nextPortCost;
 
         int16_t wave = 0;
         int16_t palm[8];
@@ -103,17 +102,16 @@ struct World {
 
             this->portsVisited = 0;
             this->frameCount = 0;
-            this->xMap = 256;
-            this->yMap = 88;
+            this->xMap = 0;
+            this->yMap = 0;
             this->xBoat = 14;
             this->yBoat = 6;
             this->boatDirection = BoatDirection::Down;
             this->boatCounter = 0;
-            // this->x = 0;
             this->y = 0;
 
-            this->currentPort = 11; //SJH 255
-            this->nextPort = 11; //SJH 255
+            this->currentPort = 255;
+            this->nextPort = 255; 
             this->nextPortCost = 0;
 
         }
@@ -184,15 +182,15 @@ struct World {
             uint8_t from = this->getNextPort();
             uint8_t to = this->getCurrentPort();
 
-            uint8_t offset = FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from);
-Serial.print("From ");
-Serial.print(from);
-Serial.print(", To ");
-Serial.print(to);
-Serial.print(" = ");
-Serial.print(offset);
-Serial.print(" ");
-Serial.println(offset == 0 ? "Anti" : "Clock");
+//             uint8_t offset = FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from);
+// Serial.print("From ");
+// Serial.print(from);
+// Serial.print(", To ");
+// Serial.print(to);
+// Serial.print(" = ");
+// Serial.print(offset);
+// Serial.print(" ");
+// Serial.println(offset == 0 ? "Anti" : "Clock");
             if (from < 255 && to < 255) {
 
                 // if (this->getCurrentPort() < this->getNextPort() && (this->getNextPort() - this->getCurrentPort() <= 6)) {

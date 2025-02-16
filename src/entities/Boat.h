@@ -4,7 +4,7 @@ struct Boat {
 
     private:
 
-        int8_t x = 0;
+        int8_t x;
 
 
     public:

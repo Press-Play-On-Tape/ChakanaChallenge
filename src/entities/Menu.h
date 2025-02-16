@@ -8,9 +8,9 @@ class Menu {
 
     private:
 
-        uint8_t x = 128;
-        uint8_t y = 0;
-        uint8_t top = 0;
+        uint8_t x;
+        uint8_t y;
+        uint8_t top;
 
         Direction direction = Direction::None;
         GameState gameState = GameState::Inventory_Open;
