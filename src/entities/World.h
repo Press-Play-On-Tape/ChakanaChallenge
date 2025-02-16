@@ -947,6 +947,16 @@ struct World {
 
         #endif
 
+        #ifdef SHOW_SIGN
+
+        bool isSignTile(uint8_t tile) {
+
+            return tile == Tiles::Sign_01;
+            
+        }
+
+        #endif
+
         bool isSpikeTile(uint8_t tile) {
 
             return tile == Tiles::Spikes;

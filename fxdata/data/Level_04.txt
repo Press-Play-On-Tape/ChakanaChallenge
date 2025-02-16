@@ -88,22 +88,26 @@ uint16_t Level_04_Enemies[] = {
 96,                             // Position Y
 1125,                             // Stance::Enemy_Sword_Stationary_RH
 0,                             // Inventory ItemType::Glint_Hidden
+0,                              // Data
 
 0                            // EnemyType::None
 0,                             // Position X
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
+0,                             // IData
 
 0                            // EnemyType::None
 0,                             // Position X
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
+0,                             // IData
 
 0                            // EnemyType::None
 0,                             // Position X
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
+0,                             // IData
 };

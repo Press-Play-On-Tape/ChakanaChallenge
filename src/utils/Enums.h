@@ -1575,6 +1575,9 @@ enum class GameState : uint8_t {
         Inventory_Open_Exit_0,
         Inventory_Open_Exit_1,
         Chakana_Open,
+        #ifdef SHOW_SIGN
+        Show_Sign,
+        #endif
     PlayGame_End,
 
     Play_Gamble_Start,

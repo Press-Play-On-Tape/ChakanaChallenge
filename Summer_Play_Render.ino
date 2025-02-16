@@ -265,6 +265,7 @@ void renderWorld() {
             else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                          imgTile = Images::Crate_11a;
             else if (tile11 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Top;
             else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                        imgTile = Images::Spikes_Bottom;
+            else if (tile00 == Tiles::Sign_01 /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                       imgTile = Images::Crate_52;
 
 
 

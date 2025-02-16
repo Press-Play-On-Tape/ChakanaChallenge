@@ -879,7 +879,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_ClimbStairs_LH_05, Stance::Man_ClimbStairs_LH_08);
 
                         }
-                        else if (world.isStairTile_R1(tile_LD) || world.isStairTile_R_Half(tile)) {
+                        else if ((world.isStairTile_R1(tile_LD) || world.isStairTile_R_Half(tile)) && player.getY() < 37) {
 
                             player.pushSequence(Stance::Man_DescendStairs_LH_05, Stance::Man_DescendStairs_LH_08);
 
@@ -889,7 +889,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_LH_01, Stance::Man_DescendStairs_LH_08);
 
                         }
-                        else if (world.isStairTile_R_Half(tile)) {  
+                        else if (world.isStairTile_R_Half(tile) && player.getY() < 37) {  
 
                             player.pushSequence(Stance::Man_DescendStairs_LH_Half_01, Stance::Man_DescendStairs_LH_Half_04);
 
@@ -921,11 +921,22 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             // }
 
                         }     
-                        else if (world.canWalkPastTile(tile_L, Direction::Left) ) {  
+                        else if (world.canWalkPastTile(tile_L, Direction::Left)) {  
 
                             processLadder_MoveLeft(player, tile_L);
 
                         }   
+
+                        #ifdef SHOW_SIGN
+
+                            else if(world.isSignTile(tile_L)) {
+
+                                world.setGameState(GameState::Show_Sign);
+                                endOfLevel_Counter = 0;
+
+                            }                        
+
+                        #endif
                         else {
 
                             if (justPressedOrPressed & A_BUTTON) {
@@ -1224,9 +1235,9 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_ClimbStairs_RH_05, Stance::Man_ClimbStairs_RH_08);
 
                         }
-                        else if (world.isStairTile_L1(tile_RD) || (world.isStairTile_L_Half(tile))) {  
+                        else if ((world.isStairTile_L1(tile_RD) || (world.isStairTile_L_Half(tile))) && player.getY() < 37) {  
 
-                            player.pushSequence(Stance::Man_DescendStairs_RH_05, Stance::Man_DescendStairs_RH_08);
+                         player.pushSequence(Stance::Man_DescendStairs_RH_05, Stance::Man_DescendStairs_RH_08);
 
                         }
                         else if (world.isStairTile_L2(tile_RD)) {  //4, 6
@@ -1234,7 +1245,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             player.pushSequence(Stance::Man_DescendStairs_RH_01, Stance::Man_DescendStairs_RH_08);
 
                         }                        
-                        else if (world.isStairTile_L_Half(tile)) {  
+                        else if (world.isStairTile_L_Half(tile) && player.getY() < 37) {  
 
                             player.pushSequence(Stance::Man_DescendStairs_RH_Half_01, Stance::Man_DescendStairs_RH_Half_04);
 
@@ -1278,6 +1289,17 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             processLadder_MoveRight(player, tile_R);
 
                         }     
+
+                        #ifdef SHOW_SIGN
+
+                            else if(world.isSignTile(tile_R)) {
+
+                                world.setGameState(GameState::Show_Sign);
+                                endOfLevel_Counter = 0;
+
+                            }
+
+                        #endif                                                        
                         else {
 
                             if (justPressedOrPressed & A_BUTTON) {
@@ -1817,6 +1839,18 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             switch (world.getGameState()) {
                 
+                #ifdef SHOW_SIGN
+
+                case GameState::Show_Sign:
+
+                    if (justPressed & B_BUTTON) {
+                        playGame_HandleMenu(GameState::Inventory_Open);
+                    }
+
+                    break;
+
+                #endif
+
                 case GameState::Inventory_Open:
 
                     if (justPressed & B_BUTTON) {
@@ -2055,6 +2089,9 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     case ItemType::Chakana:
 
+                        itemRect.y = itemRect.y + 8;
+                        itemRect.height = 2;
+                        
                         if (collide(playerRect, itemRect) &&  world.getGameState() != GameState::Chakana_Open) {                        
 
                             ignoreKeyPress = 16;
@@ -2924,6 +2961,13 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         case GameState::Play_Dead:
             SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLife, ((endOfLevel_Counter + (player.getLives() == 1 ? 16 : 0)) * 3) + currentPlane);
             break;
+
+        #ifdef SHOW_SIGN
+            case GameState::Show_Sign:
+                SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, ((endOfLevel_Counter + 32) * 3) + currentPlane);
+                world.setXMap(endOfLevel_Counter);
+                break;            
+        #endif
 
         case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_Select_Play:
 

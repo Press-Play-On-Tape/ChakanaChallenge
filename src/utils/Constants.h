@@ -32,6 +32,9 @@
 	// 120 bytes
 	#define BOUNCEJUMP_3
 
+	// 102 bytes
+	#define SHOW_SIGN
+
 #endif
 
 #define AB_BUTTON 12
@@ -592,6 +595,7 @@ enum Tiles : uint8_t {
 	Block_WithWeed = 49,
 	Block_WithWeed_LH = 50,
 	Block_WithWeed_RH = 51,
+	Sign_01 = 52,
 
 };
 

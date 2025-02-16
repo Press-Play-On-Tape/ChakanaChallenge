@@ -67,22 +67,26 @@ uint16_t Level_00_Enemies[] = {
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
+0,                             // IData
 
 0                            // EnemyType::None
 0,                             // Position X
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
+0,                             // IData
 
 0                            // EnemyType::None
 0,                             // Position X
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
+0,                             // IData
 
 0                            // EnemyType::None
 0,                             // Position X
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
+0,                             // IData
 };
