@@ -295,6 +295,19 @@ void map_Update() {
 
 }
 
+void map_RenderScrollMap(uint8_t scrollFrame) {
+
+    SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, scrollFrame);
+
+}
+
+void map_RenderHearts(uint8_t lives, uint8_t chakanas) {
+
+    SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, lives);
+    SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, chakanas);
+
+}
+
 void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     if (a.needsUpdate()) map_Update();
@@ -354,9 +367,10 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             case GameState::Map_ShowMenu_1:
 
-                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, (player.getHealth() * 3) + currentPlane);
-                SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
-                SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
+                map_RenderScrollMap((player.getHealth() * 3) + currentPlane);
+                map_RenderHearts(((player.getLives() - 1) * 3) + currentPlane, (player.getChakanas() * 3) + currentPlane);
+                // SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
+                // SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
 
                 break;
 
@@ -365,7 +379,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             case GameState::Map_ShowMenu_4:
                 {
                     uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_2);
-                    SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, ((frame + 16) * 3) + currentPlane);
+                    map_RenderScrollMap(((frame + 16) * 3) + currentPlane);
 
                     for (uint8_t i = 0; i < 5; i++) {
 
@@ -387,7 +401,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             case GameState::Map_ShowMenu_Back:
             case GameState::Map_ShowMenu_Exit:
 
-                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map,  (15 * 3) + currentPlane);
+                map_RenderScrollMap((15 * 3) + currentPlane);
 
                 if (world.getFrameCount() % 64 < 32) {
 
@@ -401,16 +415,17 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             case GameState::Map_ShowMenu:
 
-                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map_Orig, (player.getHealth() * 3) + currentPlane);
-                SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
-                SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
+                map_RenderScrollMap((player.getHealth() * 3) + currentPlane);
+                // SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
+                // SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
+                map_RenderHearts((player.getChakanas() * 3) + currentPlane, (player.getChakanas() * 3) + currentPlane);
 
                 break;
 
             case GameState::Map_ShowMenu_Back:
             case GameState::Map_ShowMenu_Exit:
 
-                SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map_Orig,  (15 * 3) + currentPlane);
+                map_RenderScrollMap((15 * 3) + currentPlane);
 
                 if (world.getFrameCount() % 64 < 32) {
 
