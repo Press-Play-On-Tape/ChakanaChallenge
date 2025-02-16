@@ -7,6 +7,7 @@
 #include "src/utils/SpritesU.hpp"
 
 bool leftDialogue = false;
+bool centreMap = false;
 
 void map_Init() {
 
@@ -108,6 +109,7 @@ void map_Update() {
                     FX::readEnd();
 
                     leftDialogue = (left == 0);
+                    centreMap = false;
 
                 }
 
@@ -210,7 +212,7 @@ void map_Update() {
 
         case GameState::Map_ShowDialogue:
 
-            if (justPressed & A_BUTTON) {
+            if ((justPressed & A_BUTTON) && !centreMap) {
 
                 if (world.getCurrentPort() == world.getNextPort()) {
 
@@ -279,10 +281,11 @@ void map_Update() {
                 int16_t xOffset = pt.x - world.getXMap();
                 int16_t yOffset = pt.y - world.getYMap();
 
-                if (xOffset > 16)  world.incXMap(1);        
-                if (xOffset < -16) world.incXMap(-1);
-                if (yOffset > 6)  world.incYMap(1);
-                if (yOffset < -6) world.incYMap(-1);
+                centreMap = false;
+                if (xOffset > 16)  { world.incXMap(1);  centreMap = true; }       
+                if (xOffset < -16) { world.incXMap(-1); centreMap = true; }
+                if (yOffset > 6)   { world.incYMap(1);  centreMap = true; }
+                if (yOffset < -6)  { world.incYMap(-1); centreMap = true; }
 
             }
             
