@@ -223,31 +223,6 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
     }
 
     #ifndef DEBUG
-        // if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver) {
-
-        //     uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Hidden);
-        //     Item &item = world.getItem(itemIdx);
-        //     item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_InWater_RH : ItemType::LifeSaver_InWater_LH);
-        //     item.setFrame(0);
-        //     item.setCounter(0);
-        //     item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
-        //     item.setY(37 - player.getY() + 3);   
-        //     removeInventoryItem(GameState::Play_Game);
-
-        // }
-
-        // else if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && selectedItem == ItemType::LifeSaver_Dissolve) {
-
-        //     uint8_t itemIdx = world.getItem(ItemType::LifeSaver_Dissolve_Hidden);
-        //     Item &item = world.getItem(itemIdx);
-        //     item.setItemType(direction == Direction::Right ? ItemType::LifeSaver_Dissolve_InWater_RH : ItemType::LifeSaver_Dissolve_InWater_LH);
-        //     item.setFrame(0);
-        //     item.setCounter(0);
-        //     item.setX(-world.getMiddleground() + (direction == Direction::Left ? static_cast<uint16_t>(-24 + 56 - 2) : static_cast<uint16_t>(16 + 56 - 2)));
-        //     item.setY(37 - player.getY() + 3);   
-        //     removeInventoryItem(GameState::Play_Game);
-
-        // }
 
         if (world.isWaterTile(tile_1D) && world.isWaterTile(tile_3D) && 
             (selectedItem == ItemType::LifeSaver || selectedItem == ItemType::LifeSaver_Dissolve)) {
@@ -266,6 +241,7 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
             item.setY(40 - player.getY());   
             
             removeInventoryItem(GameState::Play_Game);
+
         }    
         else if (world.isWoodenBarrier(tile) && selectedItem == ItemType::Hammer) {
             
@@ -284,7 +260,6 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
     else if (world.isMysteryCrate(tile) && selectedItem == ItemType::PinchBar) {
 
         player.pushSequence(Stance::Man_Levering_RH_00 + stanceOffset, Stance::Man_Levering_RH_10 + stanceOffset);
-        // Serial.println("Start");
         removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::Play_Game);
 
     }
