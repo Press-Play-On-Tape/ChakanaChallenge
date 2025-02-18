@@ -121,6 +121,8 @@ void playGame_Init() {
     world.setBackground(-29);
     player.setStance(Stance::Man_Walk_RH_00);
 
+    player.addInventoryItem(ItemType::Sword);
+
     cookie.hasSavedGame = true;
 
     #ifndef DEBUG
@@ -1717,24 +1719,10 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     if (justPressedOrPressed & A_BUTTON) {
 
-        // switch (player.getDirection()) {
-
-        //     case Direction::Left:
-
-        //         player.pushSequence(Stance::Man_Sword_StandingJump_LH_01, Stance::Man_Sword_StandingJump_LH_07);
-        //         break;
-
-        //     case Direction::Right:
-
-        //         player.pushSequence(Stance::Man_Sword_StandingJump_RH_01, Stance::Man_Sword_StandingJump_RH_07);
-        //         break;
-
-        // }
         player.pushSequence(Stance::Man_Sword_StandingJump_RH_01 + offset, Stance::Man_Sword_StandingJump_RH_07 + offset);
 
     }
 
-    // else if (justPressed & DOWN_BUTTON || pressed & DOWN_BUTTON) {
     else if (justPressedOrPressed & DOWN_BUTTON) {
 
         world.setGameState(GameState::Play_Game);
@@ -1742,30 +1730,12 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    // else if (justPressed & B_BUTTON || pressed & B_BUTTON) {
     else if (justPressedOrPressed & B_BUTTON) {
 
-        // switch (player.getDirection()) {
-
-        //     case Direction::Left:
-
-        //         player.pushSequence(Stance::Man_Sword_Lunge_LH_01, Stance::Man_Sword_Lunge_LH_06);
-        //         break;
-
-        //     case Direction::Right:
-
-        //         player.pushSequence(Stance::Man_Sword_Lunge_RH_01, Stance::Man_Sword_Lunge_RH_06);
-        //         break;
-
-        // }
-
-        // uint16_t offset = 0;
-        // if (player.getDirection() == Direction::Left) offset = static_cast<uint16_t>(Stance::Man_Sword_Lunge_LH_01) - static_cast<uint16_t>(Stance::Man_Sword_Lunge_RH_01);
         player.pushSequence(Stance::Man_Sword_Lunge_RH_01 + offset, Stance::Man_Sword_Lunge_RH_06 + offset);
 
     }
 
-    // else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
     else if (justPressedOrPressed & RIGHT_BUTTON) {
 
         switch (player.getDirection()) {
@@ -1903,7 +1873,9 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         if (world.allPortsComplete()) {
 
                             cookie.hasSavedGame = false;
+                            #ifndef DEBUG
                             saveCookie(true);
+                            #endif
                             world.setGameState(GameState::Title_Init);
 
                         }
@@ -1937,7 +1909,9 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                         }
 
+                        #ifndef DEBUG
                         saveCookie(true);
+                        #endif
 
                     }
 

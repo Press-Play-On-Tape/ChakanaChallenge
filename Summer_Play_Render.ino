@@ -656,24 +656,24 @@ void renderWorld() {
 
             if (enemy.getSwordWound() != 0) {
 
-                int8_t xOffset = 0;
+                int8_t xOffset;
                 uint8_t frameOffset = 0;
 
                 switch (player.getDirection()) {
 
                     case Direction::Left:
                    
-                        xOffset = -4;
+                        xOffset = -1;
                         frameOffset = 4;
                         break;
 
                     case Direction::Right:
-                        xOffset = 6;
+                        xOffset = 10;
                         break;
 
                 }
 
-                SpritesU::drawPlusMaskFX(xEnemyItem + xOffset, yEnemy + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + frameOffset) * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(xEnemy + xOffset, yEnemy + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + frameOffset) * 3) + currentPlane);
 
             }
 

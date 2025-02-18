@@ -22,7 +22,11 @@ void title_StartNewGame() {
     world.init();
     world.getPlayer().init();
     cookie.hasSavedGame = false;
+
+    #ifndef DEBUG
     saveCookie(true);
+    #endif
+    
     world.setGameState(GameState::Map_Init);
 
 }
