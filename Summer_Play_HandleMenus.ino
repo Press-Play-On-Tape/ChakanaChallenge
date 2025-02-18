@@ -273,7 +273,7 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         }
         #endif
 
-    #ifndef DEBUG
+//    #ifndef DEBUG
 
     else if (selectedItem == ItemType::Sword) {
 
@@ -302,7 +302,7 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     }
 
-    #endif
+//    #endif
 
     #endif
 

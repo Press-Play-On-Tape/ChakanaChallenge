@@ -12,6 +12,7 @@
 #define _DEBUG_HANDLE_MENUS
 #define _DEBUG_LOCKED_DOOR
 #define _DEBUG_RENDER_MAP
+#define _DEBUG_SWORD
 
 #ifndef DEBUG
 	// 136 bytes

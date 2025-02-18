@@ -49,6 +49,13 @@ Menu &menu = cookie.menu;
 uint16_t seed = 72;
 #endif
 
+#ifdef DEBUG_SWORD
+int8_t playerX;
+int8_t playerY;
+int8_t enemyX;
+int8_t enemyY;
+#endif
+
 
 void setup() {
 
