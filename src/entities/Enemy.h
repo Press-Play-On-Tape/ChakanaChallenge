@@ -15,7 +15,7 @@ class Enemy {
 
         int16_t x;
         int8_t y;
-        uint8_t health = Constants::HealthMax;
+        int8_t health = Constants::HealthMax;
         uint8_t swordWound = 0;
 
         Stack <Stance, Constants::StackSize_Enemy> stack;
@@ -28,7 +28,7 @@ class Enemy {
 
         int16_t getX()                                      { return this->x; }
         int8_t getY()                                       { return this->y; }
-        uint8_t getHealth()                                 { return this->health; }
+        int8_t getHealth()                                  { return this->health; }
         uint8_t getSwordWound()                             { return this->swordWound; }
 
         void setEnemyType(EnemyType val)                    { this->enemyType = val; }
@@ -36,7 +36,7 @@ class Enemy {
 
         void setX(int16_t val)                              { this->x = val; }
         void setY(int8_t val)                               { this->y = val; }
-        void setHealth(uint8_t val)                         { this->health = val; }
+        void setHealth(int8_t val)                          { this->health = val; }
         void setSwordWound(uint8_t val)                     { this->swordWound = val; }
 
         void init() {
@@ -45,9 +45,10 @@ class Enemy {
 
         }
 
-        void decHealth(uint8_t i) {
+        bool decHealth(uint8_t i) {
 
             this->health = this->health - i;
+            return this->health == 0;
 
         }
 

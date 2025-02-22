@@ -49,6 +49,13 @@ Menu &menu = cookie.menu;
 uint16_t seed = 72;
 #endif
 
+#ifdef DEBUG_SWORD
+int8_t playerX;
+int8_t playerY;
+int8_t enemyX;
+int8_t enemyY;
+#endif
+
 
 void setup() {
 
@@ -64,6 +71,14 @@ void setup() {
     setAudioOn();
     #endif
 
+
+    #ifdef DEBUG_NO_MENU
+    world.init();
+    world.getPlayer().init();
+    world.setCurrentPort(0);
+    world.setGameState(GameState::Play_Game_Init);
+    cookie.hasSavedGame = false;    
+    #endif
 }
 
 void loop() {
@@ -77,28 +92,32 @@ void loop() {
 
     switch (world.getGameState()) {
 
-        case GameState::SplashScreen_Start ... GameState::SplashScreen_End:
-            splashScreen(a);
-            break;
+        #ifndef DEBUG_NO_MENU
+            
+            case GameState::SplashScreen_Start ... GameState::SplashScreen_End:
+                splashScreen(a);
+                break;
 
-        case GameState::Title_Init:
-            title_Init();
-            [[fallthrough]];
+            case GameState::Title_Init:
+                title_Init();
+                [[fallthrough]];
 
-        case GameState::Title_Start ... GameState::Title_End:
-            title(a);
-            break;
+            case GameState::Title_Start ... GameState::Title_End:
+                title(a);
+                break;
 
-        case GameState::Play_Init:
-            play_Init();
-            [[fallthrough]];
+            case GameState::Play_Init:
+                play_Init();
+                [[fallthrough]];
 
-        case GameState::Play_BoatEnters:
-        case GameState::Play_PlayerJumps:
-        case GameState::Play_PlayerCenters:
-        case GameState::Play:
-            play(a);
-            break;
+            case GameState::Play_BoatEnters:
+            case GameState::Play_PlayerJumps:
+            case GameState::Play_PlayerCenters:
+            case GameState::Play:
+                play(a);
+                break;
+        
+        #endif
 
         case GameState::Play_Game_Init:
             playGame_Init();
@@ -111,13 +130,17 @@ void loop() {
             playGame(a);
             break;
 
-        case GameState::Map_Init:
-            map_Init();
-            [[fallthrough]];
+        #ifndef DEBUG_NO_MENU
 
-        case GameState::Map ... GameState::Map_MoveBoat:
-            map(a);
-            break;
+            case GameState::Map_Init:
+                map_Init();
+                [[fallthrough]];
+
+            case GameState::Map ... GameState::Map_MoveBoat:
+                map(a);
+                break;
+
+        #endif
 
     }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Boat.h"
+// #include "Boat.h"
 #include "../utils/Constants.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -43,7 +43,7 @@ struct World {
         int16_t background = 0;
         int16_t middleground = 0;
 
-        Boat boat;
+        // Boat boat;
 
     public:
 
@@ -72,7 +72,7 @@ struct World {
         int16_t getMiddleground()                       { return this->middleground; }
         uint16_t getWaveIdx()                           { return this->waveIdx; }
 
-        Boat& getBoat()                                 { return this->boat; }
+        // Boat& getBoat()                                 { return this->boat; }
 
         void setGameState(GameState val)                { this->gameState = val; }
         void setPrevGameState(GameState val)            { this->prevGameState = val; }
@@ -113,6 +113,19 @@ struct World {
             this->currentPort = 255;
             this->nextPort = 255; 
             this->nextPortCost = 0;
+
+        }
+
+        void init_Level() {
+
+            this->gameState = GameState::Play_Game;
+            this->frameCount = 0;
+            this->middleground = 0;
+            this->background = -29;
+            this->wave = -87;
+
+            this->player.setY(Constants::GroundY);
+            this->player.setStance(Stance::Man_Walk_RH_00);
 
         }
 
@@ -182,24 +195,8 @@ struct World {
             uint8_t from = this->getNextPort();
             uint8_t to = this->getCurrentPort();
 
-//             uint8_t offset = FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from);
-// Serial.print("From ");
-// Serial.print(from);
-// Serial.print(", To ");
-// Serial.print(to);
-// Serial.print(" = ");
-// Serial.print(offset);
-// Serial.print(" ");
-// Serial.println(offset == 0 ? "Anti" : "Clock");
             if (from < 255 && to < 255) {
 
-                // if (this->getCurrentPort() < this->getNextPort() && (this->getNextPort() - this->getCurrentPort() <= 6)) {
-
-                //     return 1;
-
-                // }
-                // return (this->getNextPort() == this->getCurrentPort() ? 0 : (this->getNextPort() > this->getCurrentPort() ? 0 : 1));
-                // Serial.println(FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0));
                 return FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0);
 
             }
@@ -265,12 +262,9 @@ struct World {
                 this->incPalm(i, val);
             }
 
-            // this->incBackgroundVal(val);
-            // this->x = this->x - val;
+            this->background += val;
 
-             this->background += val;
-
-            if (this->background == 128 || background == -128) {
+            if (this->background == 128 || this->background == -128) {
                 this->background = 0;
             }
 
@@ -278,10 +272,10 @@ struct World {
 
         bool incMiddleground(int8_t val) {
 
-            if (this->middleground + val > 0) {
-                this->middleground = 0;
-                return false;
-            }
+            // if (this->middleground + val > 0) {
+            //     this->middleground = 0;
+            //     return false;
+            // }
             if (this->middleground + val <= -496) {
                 this->middleground = -496;
                 return false;
@@ -391,81 +385,6 @@ struct World {
 
                     case ItemType::SwingyThing:
                         {  
-
-                        //     int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
-                        //     int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
-
-                        //     int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
-                        //     int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
-
-
-                        //     Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
-
-                        //     if (collide(playerRect, itemRect)) {
-
-                        //         switch (player.getDirection()) {
-
-                        //             case Direction::Left:
-                        //                 {
-                        //                     switch (item.getFrame()) {
-
-                        //                         case 0 ... 8:
-                                     
-                        //                             initPuff(itemX - 8, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
-                        //                             break;
-
-                        //                         default:
-                                         
-                        //                             initPuff(itemX - 8 + itemRect.width, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
-                        //                             break;
-                                                    
-                        //                     }
-
-                        //                 }
-
-                        //                 break;
-
-                        //             case Direction::Right:
-                        //                 {                                                
-                        //                     item.setItemType(ItemType::SwingyThing_2);
-
-                        //                     switch (item.getFrame()) {
-
-                        //                         case 0 ... 8:
-                                 
-                        //                             initPuff(itemX - 8, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
-                        //                             break;
-
-                        //                         default:
-                                           
-                        //                             initPuff(itemX - 8 + itemRect.width, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
-                        //                             break;
-                                                    
-                        //                     }
-
-                        //                 }
-
-                        //                 break;
-
-                        //         }
-
-                        //     }
-
-                        // }
-
-                            // int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
-                            // int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
-
-                            // int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
-                            // int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
-                            // uint8_t puffX = 0;
-
-                            // Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
-
 
                             int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
                             int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
@@ -625,22 +544,13 @@ struct World {
 
         uint8_t getItem(int16_t xPos, uint8_t yPos) {
 
-// Serial.print("Test ");
-// Serial.print(xPos);
-// Serial.print(",");
-// Serial.println(yPos);
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
                 if (this->items[i].getItemType() == ItemType::Puff) {
-                    // Serial.println("No Match");                    
                     break;
                 }
-// Serial.print("Item ");
-// Serial.print(this->items[i].getX());
-// Serial.print(",");
-// Serial.println(this->items[i].getY());
+
                 if (this->items[i].getX() == xPos && this->items[i].getY() == yPos) {
-// Serial.println("Match");                    
                     return i;
                 }
 
@@ -659,12 +569,25 @@ struct World {
 
         uint8_t getTile_RelativeToPlayer(int8_t xOffset, int8_t yOffset) {
 
-            if (player.getLevel() + yOffset < 0) return 1;
+            if (player.getLevel() + yOffset < 0) return Tiles::Solid_Walkable;
 
             int16_t tileIdx = (-this->getMiddleground() + 65 + (xOffset << 3)) >> 3;
 
             if (tileIdx < 18) return Tiles::Blank;
             return mapData[this->player.getLevel() + yOffset][tileIdx - 18];
+
+        }
+
+        uint8_t getTile_FromCoords(int16_t xPosition, int8_t yPosition) {
+
+            
+
+            int16_t tileIdx = xPosition / 8;
+// Serial.print("(Tile ");
+// Serial.print(tileIdx);
+// Serial.print(") ");
+            if (tileIdx < 18) return Tiles::Blank;
+            return mapData[yPosition >> 3][tileIdx - 18];
 
         }
 
@@ -680,13 +603,6 @@ struct World {
             else if (player.getLevel() == 0)                                            return true;
             else if (tile == Tiles::Solid_Walkable)                                     return false;
             else if (tile == Tiles::Poker)                                              return true;
-
-            #ifdef RENDER_RUNS
-
-            else if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)        return false;
-            else if (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2)    return false;
-
-            #endif
 
             else if (tile == Tiles::Lever_Portal_LH) { 
 
@@ -780,21 +696,9 @@ struct World {
 
             #endif
 
-            #ifdef RENDER_RUNS
-            
-                return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
-                    tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
-                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower ||
-                    (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide) ||
-                    (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2);
-
-            #else
-            
-                return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
-                    tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
-                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
-
-            #endif
+            return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
+                tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji || tile == Tiles::Flame ||
+                tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
             
         }
 
@@ -827,22 +731,9 @@ struct World {
             }
             else {
     
-                #ifdef RENDER_RUNS
-                
-                    return tile == Tiles::Solid_Walkable || 
-                        tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
-                        tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
-                        tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
-                        tile == Tiles::Single_Stair_LH_Upper_TL || 
-                        tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-                #else 
-
-                    return tile == Tiles::Solid_Walkable || 
-                        tile == Tiles::Single_Stair_LH_Upper_TL || 
-                        tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-                #endif
+                return tile == Tiles::Solid_Walkable || 
+                    tile == Tiles::Single_Stair_LH_Upper_TL || 
+                    tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
             }
             
@@ -854,23 +745,15 @@ struct World {
             
         }
 
+        bool isFlameTile(uint8_t tile) {
+
+            return tile == Tiles::Flame;
+            
+        }
+
         bool canJumpUpOntoTile(uint8_t tile) {
 
-            // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable;
-
-            #ifdef RENDER_RUNS
-                
-                return tile == Tiles::Solid_Walkable || 
-                       tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
-                       tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
-                       tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
-                       tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-            #else
-                
-                return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-            #endif
+            return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
         }
 
@@ -890,7 +773,7 @@ struct World {
                     tile == Tiles::Lever_Portal_Auto_LH || tile == Tiles::Lever_Portal_Auto_RH) {
                             
                     int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
-                    uint8_t yItem = (this->player.getLevel() + relY - 1) * 8;
+                    uint8_t yItem = (this->player.getLevel() + relY - 1) << 3;
 
                     if (xItem % 16 != 0) xItem = xItem - 8;
                     if (yItem % 16 != 0) yItem = yItem + 8;

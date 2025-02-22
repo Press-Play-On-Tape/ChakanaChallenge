@@ -346,15 +346,19 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
         }
 
-        if (world.getGameState() != GameState::Map_MoveBoat) {
+        #ifdef MAP_SHOW_PORT_NAMES
+            
+            if (world.getGameState() != GameState::Map_MoveBoat) {
 
-            FX::seekDataArray(Constants::PortNames_Coords, i, 0, 4);
-            FX::readObject(pt);
-            FX::readEnd();
+                FX::seekDataArray(Constants::PortNames_Coords, i, 0, 4);
+                FX::readObject(pt);
+                FX::readEnd();
 
-            SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, ((i + (world.getPortVisited(i) ? 14 : 0)) * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(pt.x - world.getXMap(), pt.y - world.getYMap(), Images::PortNames_WB, ((i + (world.getPortVisited(i) ? 14 : 0)) * 3) + currentPlane);
 
-        }
+            }
+
+        #endif
     
     }
 

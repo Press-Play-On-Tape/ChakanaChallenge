@@ -48,6 +48,8 @@ namespace Constants
     uint8_t Ball_X[] = { 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
     uint8_t Ball_Y[] = { 0, -8, -6, -5,         -4,  -3,  -2, -1, 0, 0, 0, 0,    0,  0, 1,   2,  3, 4, 4, 5 };
 
+    int16_t Palm_X[] = { -27, 93, 253, 333, 87, 37, -49, -109 };
+
 
     uint8_t SwordLunge_Player[] = { 
     2, // stationary 

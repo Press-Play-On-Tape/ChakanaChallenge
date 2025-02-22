@@ -15,7 +15,7 @@ void renderWorld() {
 
     // ____________________________________________________________________________________________________________________________________________________________________________________
     //
-    // Rneder background ..
+    // Render background ..
 
     {
         int8_t y = (yOffset - Constants::GroundY) / 4;
@@ -46,54 +46,47 @@ void renderWorld() {
     //
     // Render foreground ..
 
-
-    #ifdef RENDER_RUNS
-
     uint8_t xMin = 18;
     uint8_t xMax = Constants::Map_X_Count + 18;
 
-    for (uint8_t y = 0; y < 16; y = y + 2) {
+    #ifndef sDEBUG_SWORD
 
-        int16_t renderY = yOffset - (y << 3);
-        if (renderY <= -16 || renderY > 64) continue;
+        for (uint8_t y = 0; y < 16; y = y + 2) {
 
-        for (uint8_t i = xMin; i < xMax; i = i + 2) {
+            int16_t renderY = yOffset - (y << 3);
+            if (renderY <= -16 || renderY > 64) continue;
 
-            int16_t renderX = (i << 3) + world.getMiddleground() - 4;
+            for (uint8_t i = xMin; i < xMax; i = i + 2) {
 
-            if (renderX <= -64)             { xMin = i + 2; continue; }
-            if (renderX > menu.getX())      { xMax = i;     break; }
+                int16_t renderX = (i << 3) + world.getMiddleground() - 4;
 
-            uint8_t tile00 = world.getTile(i, y);
-            uint8_t tile01 = world.getTile(i + 1, y);
-            uint8_t tile10 = world.getTile(i, y + 1);
-            uint8_t tile11 = world.getTile(i + 1, y + 1);
+                if (renderX <= -16)             { xMin = i + 2; continue; }
+                if (renderX > menu.getX())      { xMax = i;     break; }
 
-            uint24_t imgTile = 0;
-            uint8_t frame = 0;
+                uint8_t tile00 = world.getTile(i, y);
+                uint8_t tile01 = world.getTile(i + 1, y);
+                uint8_t tile10 = world.getTile(i, y + 1);
+                uint8_t tile11 = world.getTile(i + 1, y + 1);
 
-            if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)             imgTile = Images::Crate_01;
-            else if (tile00 == Tiles::Solid_2_Wide && tile01 == Tiles::Solid_2_Wide)                                                                                        { imgTile = Images::Crate_01_02; i = i + 2; }
-            else if (tile00 == Tiles::Solid_3_Wide && tile01 == Tiles::Solid_3_Wide)                                                                                        { imgTile = Images::Crate_01_03; i = i + 4; }
-            else if (tile00 == Tiles::Solid_4_Wide && tile01 == Tiles::Solid_4_Wide)                                                                                        { imgTile = Images::Crate_01_04; i = i + 6; }
-            else if (tile00 == Tiles::Solid_Blocking)                                                                                                                       imgTile = Images::Crate_22;
+                uint24_t imgTile = 0;
+                uint8_t frame = 0;
 
-
-            if (imgTile != 0) {
-                SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);
-                imgTile = 0;
-            }
-
-            if (imgTile == 0) {
-
-                // if (renderX <= -16 || renderX > 127) continue;
-                if (renderX <= -16) continue;
-
-                if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                                 imgTile = Images::Crate_10;
+                if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)         imgTile = Images::Crate_01;
+                else if (tile00 == Tiles::Solid_Blocking)                                                                                                                   imgTile = Images::Crate_22;
                 else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper)                                                                                    imgTile = Images::Crate_13;
                 else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle)                                                                                   imgTile = Images::Crate_14;
                 else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper)                                                                                   imgTile = Images::Crate_15;
                 else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle)                                                                                  imgTile = Images::Crate_16;
+                else if (tile00 == Tiles::Block_WithWeed)                                                                                                                   imgTile = Images::Crate_49;
+                else if (tile00 == Tiles::Block_WithWeed_LH)                                                                                                                imgTile = Images::Crate_50;
+                else if (tile00 == Tiles::Block_WithWeed_RH)                                                                                                                imgTile = Images::Crate_51;
+
+                if (imgTile != 0) {
+                    SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);
+                    continue;
+                }
+
+                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                            imgTile = Images::Crate_10;
                 else if (tile00 == Tiles::Decorative_Triangle_LH)                                                                                                           imgTile = Images::Crate_42;
                 else if (tile00 == Tiles::Decorative_Triangle_RH)                                                                                                           imgTile = Images::Crate_43;
                 else if (tile00 == Tiles::Trebochet_To_RH)                                                                                                                  imgTile = Images::Crate_46;
@@ -116,6 +109,7 @@ void renderWorld() {
                 else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                          imgTile = Images::Crate_11a;
                 else if (tile11 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Top;
                 else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                        imgTile = Images::Spikes_Bottom;
+                else if (tile00 == Tiles::Sign_01 /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                       imgTile = Images::Crate_52;
 
 
 
@@ -149,210 +143,59 @@ void renderWorld() {
                 else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower)                                                                                        imgTile = Images::Crate_37;
                 else if (tile11 == Tiles::Vine_Upper)                                                                                                                       imgTile = Images::Crate_38;
 
-            }
 
-            // Lever Portal
-            // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
-
-
-            // Render image?
-
-            if (imgTile != 0) {
-
-                SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, currentPlane);
-
-            }
-            else {
+                // Lever Portal
+                // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
 
 
-                // Rollers R then L
-                uint8_t yOffset = 0;
-
-                frame = ((world.getFrameCount() % 24) / 6 * 3);
-
-                if (world.isRollerTile_RH(tile00))                                                                                                                          { imgTile = Images::Crate_32; yOffset = 8; }
-                else if (world.isRollerTile_RH(tile10))                                                                                                                     { imgTile = Images::Crate_34; }
-                else if (world.isRollerTile_LH(tile00))                                                                                                                     { imgTile = Images::Crate_33; yOffset = 8; }
-                else if (world.isRollerTile_LH(tile10))                                                                                                                     { imgTile = Images::Crate_35; }
+                // Render image?
 
                 if (imgTile != 0) {
-                    SpritesU::drawOverwriteFX(renderX, renderY + yOffset, imgTile, frame + currentPlane);
+
+                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, currentPlane);
+
+                }
+                else {
+
+
+                    // Rollers R then L
+                    uint8_t yOffset = 0;
+
+                    frame = ((world.getFrameCount() % 24) / 6 * 3);
+
+                    if (world.isRollerTile_RH(tile00))                                                                                                                          { imgTile = Images::Crate_32; yOffset = 8; }
+                    else if (world.isRollerTile_RH(tile10))                                                                                                                     { imgTile = Images::Crate_34; }
+                    else if (world.isRollerTile_LH(tile00))                                                                                                                     { imgTile = Images::Crate_33; yOffset = 8; }
+                    else if (world.isRollerTile_LH(tile10))                                                                                                                     { imgTile = Images::Crate_35; }
+
+                    if (imgTile != 0) {
+                        SpritesU::drawOverwriteFX(renderX, renderY + yOffset, imgTile, frame + currentPlane);
+                    }
+
                 }
 
-            }
 
+                // Water
 
-            // Water
+                if (imgTile == 0) {
 
-            if (imgTile == 0) {
+                    frame = ((world.getFrameCount() % 48) / 3 * 3);
+                    
+                    if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain)                                                                                           imgTile = Images::Crate_39;
+                    else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1)                                                                            imgTile = Images::Crate_40;
+                    else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2)                                                                            imgTile = Images::Crate_41;
 
-                frame = ((world.getFrameCount() % 48) / 3 * 3);
-                
-                if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain)                                                                                           imgTile = Images::Crate_39;
-                else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1)                                                                            imgTile = Images::Crate_40;
-                else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2)                                                                            imgTile = Images::Crate_41;
+                    if (imgTile != 0) {
+                        SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
+                    }
 
-                if (imgTile != 0) {
-                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
-                }
-
-            }
-
-        }
-
-    }
-
-    #else
-
-    uint8_t xMin = 18;
-    uint8_t xMax = Constants::Map_X_Count + 18;
-
-    for (uint8_t y = 0; y < 16; y = y + 2) {
-
-        int16_t renderY = yOffset - (y << 3);
-        if (renderY <= -16 || renderY > 64) continue;
-
-        for (uint8_t i = xMin; i < xMax; i = i + 2) {
-
-            int16_t renderX = (i << 3) + world.getMiddleground() - 4;
-
-            if (renderX <= -16)             { xMin = i + 2; continue; }
-            if (renderX > menu.getX())      { xMax = i;     break; }
-
-            uint8_t tile00 = world.getTile(i, y);
-            uint8_t tile01 = world.getTile(i + 1, y);
-            uint8_t tile10 = world.getTile(i, y + 1);
-            uint8_t tile11 = world.getTile(i + 1, y + 1);
-
-            uint24_t imgTile = 0;
-            uint8_t frame = 0;
-
-            if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)         imgTile = Images::Crate_01;
-            else if (tile00 == Tiles::Solid_Blocking)                                                                                                                   imgTile = Images::Crate_22;
-            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Upper)                                                                                    imgTile = Images::Crate_13;
-            else if (tile00 == Tiles::Ladder_Lower && tile10 == Tiles::Ladder_Middle)                                                                                   imgTile = Images::Crate_14;
-            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Upper)                                                                                   imgTile = Images::Crate_15;
-            else if (tile00 == Tiles::Ladder_Middle && tile10 == Tiles::Ladder_Middle)                                                                                  imgTile = Images::Crate_16;
-            else if (tile00 == Tiles::Block_WithWeed)                                                                                                                   imgTile = Images::Crate_49;
-            else if (tile00 == Tiles::Block_WithWeed_LH)                                                                                                                imgTile = Images::Crate_50;
-            else if (tile00 == Tiles::Block_WithWeed_RH)                                                                                                                imgTile = Images::Crate_51;
-
-            if (imgTile != 0) {
-                SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);
-                continue;
-            }
-
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                            imgTile = Images::Crate_10;
-            else if (tile00 == Tiles::Decorative_Triangle_LH)                                                                                                           imgTile = Images::Crate_42;
-            else if (tile00 == Tiles::Decorative_Triangle_RH)                                                                                                           imgTile = Images::Crate_43;
-            else if (tile00 == Tiles::Trebochet_To_RH)                                                                                                                  imgTile = Images::Crate_46;
-            else if (tile00 == Tiles::Trebochet_To_LH)                                                                                                                  imgTile = Images::Crate_47;
-            else if (tile00 == Tiles::Weed)                                                                                                                             imgTile = Images::Crate_48;
-            else if (tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                                                              imgTile = Images::Crate_20;
-            else if (tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                                                              imgTile = Images::Crate_21;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_00;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_03;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_04;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)          imgTile = Images::Crate_05;
-            else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                   imgTile = Images::Crate_02;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)          imgTile = Images::Crate_09;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_02;
-            else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                         imgTile = Images::Crate_06;
-            else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                         imgTile = Images::Crate_07;
-            else if (tile00 == Tiles::Single_Stair_RH_Lower && tile11 == Tiles::Single_Stair_RH_Upper_TR)                                                               imgTile = Images::Crate_44;
-            else if (tile01 == Tiles::Single_Stair_LH_Lower && tile10 == Tiles::Single_Stair_LH_Upper_TL)                                                               imgTile = Images::Crate_45;
-            else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                      imgTile = Images::Crate_11;
-            else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                          imgTile = Images::Crate_11a;
-            else if (tile11 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Top;
-            else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                        imgTile = Images::Spikes_Bottom;
-            else if (tile00 == Tiles::Sign_01 /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                       imgTile = Images::Crate_52;
-
-
-
-
-            // Rope
-
-            else if (/*tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                      imgTile = Images::Crate_17;
-            else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                      imgTile = Images::Crate_18;
-            else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                           imgTile = Images::Crate_19;
-            else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                            imgTile = Images::Crate_23;
-
-
-            // Stairs
-
-            else if (tile11 == Tiles::Single_Stair_RH_Upper_TR)                                                                                                         imgTile = Images::Crate_08;
-            else if (tile11 == Tiles::Single_Stair_LH_Upper_TR)                                                                                                         imgTile = Images::Crate_12;
-
-
-            // Slide
-
-            else if (tile10 == Tiles::Slide_LH_Upper && tile11 == Tiles::Blank)                                                                                         imgTile = Images::Crate_24;
-            else if (tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Slide_LH_Upper)                                                                                imgTile = Images::Crate_28;
-            else if (tile01 == Tiles::Slide_LH_Full && tile10 == Tiles::Slide_LH_Full)                                                                                  imgTile = Images::Crate_29;
-            else if (tile11 == Tiles::Slide_RH_Upper)                                                                                                                   imgTile = Images::Crate_25;
-            else if (tile10 == Tiles::Slide_RH_Upper)                                                                                                                   imgTile = Images::Crate_30;
-            else if (tile00 == Tiles::Slide_RH_Full && tile11 == Tiles::Slide_RH_Full)                                                                                  imgTile = Images::Crate_31;
-
-            // Vertical Vines
-
-            else if (tile00 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Middle)                                                                                      imgTile = Images::Crate_36;
-            else if (tile00 == Tiles::Vine_Lower && tile01 == Tiles::Vine_Lower)                                                                                        imgTile = Images::Crate_37;
-            else if (tile11 == Tiles::Vine_Upper)                                                                                                                       imgTile = Images::Crate_38;
-
-
-            // Lever Portal
-            // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
-
-
-            // Render image?
-
-            if (imgTile != 0) {
-
-                SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, currentPlane);
-
-            }
-            else {
-
-
-                // Rollers R then L
-                uint8_t yOffset = 0;
-
-                frame = ((world.getFrameCount() % 24) / 6 * 3);
-
-                if (world.isRollerTile_RH(tile00))                                                                                                                          { imgTile = Images::Crate_32; yOffset = 8; }
-                else if (world.isRollerTile_RH(tile10))                                                                                                                     { imgTile = Images::Crate_34; }
-                else if (world.isRollerTile_LH(tile00))                                                                                                                     { imgTile = Images::Crate_33; yOffset = 8; }
-                else if (world.isRollerTile_LH(tile10))                                                                                                                     { imgTile = Images::Crate_35; }
-
-                if (imgTile != 0) {
-                    SpritesU::drawOverwriteFX(renderX, renderY + yOffset, imgTile, frame + currentPlane);
-                }
-
-            }
-
-
-            // Water
-
-            if (imgTile == 0) {
-
-                frame = ((world.getFrameCount() % 48) / 3 * 3);
-                
-                if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain)                                                                                           imgTile = Images::Crate_39;
-                else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1)                                                                            imgTile = Images::Crate_40;
-                else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2)                                                                            imgTile = Images::Crate_41;
-
-                if (imgTile != 0) {
-                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
                 }
 
             }
 
         }
-
-    }
 
     #endif
-
 
 
     // ____________________________________________________________________________________________________________________________________________________________________________________
@@ -379,14 +222,11 @@ void renderWorld() {
             case ItemType::Key1:
             case ItemType::Anchor:
             case ItemType::PinchBar:
-            // case ItemType::TrapDoor:
             case ItemType::Potion:
                 frame = frame >> 4;
                 break;
 
             case ItemType::MysteryCrate:
-// Serial.print("MC ");
-// Serial.println(frame);
                 if (frame >= 8) {
                     imageIdx = 0;
                 }
@@ -592,8 +432,10 @@ void renderWorld() {
                 case Stance::Enemy_Sword_Walk_BK_LH_01 ... Stance::Enemy_Sword_Walk_BK_LH_04:
                 case Stance::Enemy_Sword_StandingJump_LH_01 ... Stance::Enemy_Sword_StandingJump_LH_07:
                     {
-                        uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_LH));
-                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
+                        uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint16_t>(enemy.getStance()) - static_cast<uint16_t>(Stance::Enemy_Sword_Stationary_LH));
+                        // renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
 
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame());
@@ -608,8 +450,10 @@ void renderWorld() {
                 case Stance::Enemy_Sword_Walk_BK_RH_01 ... Stance::Enemy_Sword_Walk_BK_RH_04:
                 case Stance::Enemy_Sword_StandingJump_RH_01 ... Stance::Enemy_Sword_StandingJump_RH_07:
                     {
-                        uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint8_t>(enemy.getStance()) - static_cast<uint8_t>(Stance::Enemy_Sword_Stationary_RH));
-                        renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
+                        uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint16_t>(enemy.getStance()) - static_cast<uint16_t>(Stance::Enemy_Sword_Stationary_RH));
+                        // renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame());
@@ -648,24 +492,24 @@ void renderWorld() {
 
             if (enemy.getSwordWound() != 0) {
 
-                int8_t xOffset = 0;
+                int8_t xOffset;
                 uint8_t frameOffset = 0;
 
                 switch (player.getDirection()) {
 
                     case Direction::Left:
                    
-                        xOffset = -4;
+                        xOffset = -1;
                         frameOffset = 4;
                         break;
 
                     case Direction::Right:
-                        xOffset = 6;
+                        xOffset = 10;
                         break;
 
                 }
 
-                SpritesU::drawPlusMaskFX(xEnemyItem + xOffset, yEnemy + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + frameOffset) * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(xEnemy + xOffset, yEnemy + 2, Images::Sword_Wound, (((enemy.getSwordWound() / 3) + frameOffset) * 3) + currentPlane);
 
             }
 
@@ -858,42 +702,11 @@ void renderWorld() {
 
     }
 
-    // a.drawRect(59 + 8, Constants::GroundY - player.getY(), 2, 16);
-    // a.drawRect(160 + world.getMiddleground() - 4 + 4, 0 + 1, 8, 2);
-    // a.drawRect(240 + world.getMiddleground() - 4 + 4, 16 + 1, 8, 2);
-// a.drawRect(288 + world.getMiddleground() - 4 + 3, 16 + 1, 10, 2 );
+    #ifdef DEBUG_SWORD
+    a.drawRect(playerX, playerY, 16, 6);
+    a.drawRect(enemyX, enemyY, 1, 1);
+    #endif
 
-
-//                 Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-// Item &item = world
-
-
-// a.drawRect(59, 16 + 6, 10, 16);
-// a.drawRect(68,16,16,3);
-
-
-// a.drawRect(59, Constants::GroundY - world.getPlayer().getY() + 6, 10, 16 );
-
-
-/* trebochet
-uint8_t yOffset1 = world.getYOffsetForRendering();
-a.drawRect(59, yOffset1 - Constants::GroundY + player.getY(), 10, 16 );
-
-uint8_t itemIdx = world.getItem(ItemType::SwingyThing);
-Item &item1 = world.getItem(itemIdx);
-
-                            int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item1.getFrame());
-                            int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item1.getFrame());
-
-                            int16_t itemX = item1.getX() + 6 + 2 + swingyThing_X;
-                            int8_t itemY = yOffset - item1.getY() + swingyThing_Y + 11;
-                            uint8_t puffX = 0;
-
-                            a.drawRect(itemX + world.getMiddleground() - 4, itemY, 16, 3);
-*/
-
-// a.drawRect(59,Constants::GroundY - 0,10,16);
-// a.drawRect(world.getXMap(), world.getYMap(), 4, 4);
 }
 
 uint8_t getStanceImg(Stance stance) {
