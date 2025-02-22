@@ -47,7 +47,12 @@ class Enemy {
 
         void decHealth(uint8_t i) {
 
-            this->health = this->health - i;
+            if (this->health < i) {
+                this->health == 0;
+            }
+            else {
+                this->health = this->health - i;
+            }
 
         }
 

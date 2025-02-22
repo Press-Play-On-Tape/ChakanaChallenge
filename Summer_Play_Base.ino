@@ -546,59 +546,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 }
                 break;
 
-            // case Direction::Right:
-            //     {
-         
-            //         // uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
-            //         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
-            //         uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
-
-            //         if ((world.isLadderTile_Upper(tile_D) && world.isLadderTile_Upper(tile_RD)) ||
-            //             (world.isVerticalVine_Upper(tile_D) && world.isVerticalVine_Upper(tile_RD))) {
-
-            //             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_01, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
-
-            //         }
-
-            //         else if (world.isLadderTile(tile_D) && world.isLadderTile(tile_RD)) {
-
-            //             if (middleGroundMod8Equals0) {
-            //                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_01, Stance::Man_ClimbLadder_BK_RH_DOWN_07);
-            //             }
-            //             else {
-            //                 player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_DOWN_01, Stance::Man_ClimbLadder_More_BK_RH_DOWN_04);
-            //             }
-
-            //         }
-                    
-            //     }
-            //     break;
-
-            // case Direction::Left:
-            //     {
-
-            //         uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
-            //         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
-            //         uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
-
-
-            //         if ((world.isLadderTile_Upper(tile_LD) && world.isLadderTile_Upper(tile_D)) ||
-            //             (world.isVerticalVine_Upper(tile_LD) && world.isVerticalVine_Upper(tile_D)) ||
-            //             (world.isLadderTile(tile_LD) && world.isLadderTile(tile_D) && world.getMiddleground() % 8 == 0)) {
-
-            //             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_01, Stance::Man_ClimbLadder_BK_LH_DOWN_07);
-
-            //         }
-
-            //         else if (world.isLadderTile(tile_D) && world.isLadderTile(tile_RD) && !middleGroundMod8Equals0) {
-
-            //             player.pushSequence(Stance::Man_ClimbLadder_More_BK_LH_DOWN_01, Stance::Man_ClimbLadder_More_BK_LH_DOWN_04);
-
-            //         }
-
-            //     }
-            //     break;
-
             case Direction::Right:
             case Direction::Left:
                 {
@@ -608,15 +555,9 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
                     uint8_t tile_AdjD = world.getTile_RelativeToPlayer(dir == Direction::Right ? 1 : -1, -1);
                     uint8_t tile_Adj2D = world.getTile_RelativeToPlayer(dir == Direction::Right ? -1 : 1, -1);
-// Serial.print("x ");
-// Serial.print(tile_D);
-// Serial.print(", ");
-// Serial.print(tile_AdjD);
-// Serial.print(", ");
-// Serial.println(tile_Adj2D);
 
                     if (canClimbDown(tile_D, tile_AdjD)) {
-// Serial.println("A");
+
                         player.pushSequence(
                             (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
                             (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);
@@ -624,7 +565,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     }
 
                     else if (canClimbDown(tile_D, tile_Adj2D)) {
-// Serial.println("B");
+
                         player.pushSequence(
                             (dir == Direction::Left) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
                             (dir == Direction::Left) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);                       
@@ -633,15 +574,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     else if (world.isLadderTile(tile_D) && world.isLadderTile(tile_RD)) {
 
                         if (middleGroundMod8Equals0) {
-// Serial.println("C dir ");
-// Serial.println((uint8_t)dir);
-                            // player.pushSequence(
-                            //     (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
-                            //     (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);
                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_01, Stance::Man_ClimbLadder_BK_RH_DOWN_07);                            
                         } 
                         else {
-// Serial.println("D");
+
                             player.pushSequence(
                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_More_BK_LH_DOWN_01,
                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_DOWN_04 : Stance::Man_ClimbLadder_More_BK_LH_DOWN_04);
@@ -1145,7 +1081,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         }
                         else {
-// Serial.println("a1");                  
+
                             uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
                             uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                             uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
@@ -1169,7 +1105,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                             } 
                             else {
-// Serial.println("a2");
+
                                 player.setFalls(0);
                                 player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
 
@@ -2711,6 +2647,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case Stance::Man_Sword_Lunge_RH_03:
                     {
                         Enemy &enemy = world.getEnemy(player.getEnemyIdx());
+                        uint8_t tile_L = world.getTile_FromCoords(enemy.getX(), enemy.getY());
+                        uint8_t tile_R = world.getTile_FromCoords(enemy.getX() + 16, enemy.getY());
 
                         if (enemy.getSwordWound() == 0 && playGame_PlayerStabsEnemy(player)) {
 
@@ -2722,13 +2660,17 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 switch (enemy.getDirection()) {
 
                                     case Direction::Left:
-                                  
-                                        enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_04);
+Serial.println("X1");                   
+                                        if (tile_R == Tiles::Blank) {
+                                            enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_04);
+                                        }
                                         break;
 
                                     case Direction::Right:
                                    
-                                        enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_04);
+                                        if (tile_L == Tiles::Blank) {
+                                            enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_04);
+                                        }
                                         break;
                                     
                                 }      

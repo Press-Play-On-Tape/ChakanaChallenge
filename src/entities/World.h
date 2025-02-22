@@ -182,24 +182,8 @@ struct World {
             uint8_t from = this->getNextPort();
             uint8_t to = this->getCurrentPort();
 
-//             uint8_t offset = FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from);
-// Serial.print("From ");
-// Serial.print(from);
-// Serial.print(", To ");
-// Serial.print(to);
-// Serial.print(" = ");
-// Serial.print(offset);
-// Serial.print(" ");
-// Serial.println(offset == 0 ? "Anti" : "Clock");
             if (from < 255 && to < 255) {
 
-                // if (this->getCurrentPort() < this->getNextPort() && (this->getNextPort() - this->getCurrentPort() <= 6)) {
-
-                //     return 1;
-
-                // }
-                // return (this->getNextPort() == this->getCurrentPort() ? 0 : (this->getNextPort() > this->getCurrentPort() ? 0 : 1));
-                // Serial.println(FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0));
                 return FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0);
 
             }
@@ -392,81 +376,6 @@ struct World {
                     case ItemType::SwingyThing:
                         {  
 
-                        //     int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
-                        //     int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
-
-                        //     int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
-                        //     int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
-
-
-                        //     Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
-
-                        //     if (collide(playerRect, itemRect)) {
-
-                        //         switch (player.getDirection()) {
-
-                        //             case Direction::Left:
-                        //                 {
-                        //                     switch (item.getFrame()) {
-
-                        //                         case 0 ... 8:
-                                     
-                        //                             initPuff(itemX - 8, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
-                        //                             break;
-
-                        //                         default:
-                                         
-                        //                             initPuff(itemX - 8 + itemRect.width, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
-                        //                             break;
-                                                    
-                        //                     }
-
-                        //                 }
-
-                        //                 break;
-
-                        //             case Direction::Right:
-                        //                 {                                                
-                        //                     item.setItemType(ItemType::SwingyThing_2);
-
-                        //                     switch (item.getFrame()) {
-
-                        //                         case 0 ... 8:
-                                 
-                        //                             initPuff(itemX - 8, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
-                        //                             break;
-
-                        //                         default:
-                                           
-                        //                             initPuff(itemX - 8 + itemRect.width, itemY - 16);
-                        //                             player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
-                        //                             break;
-                                                    
-                        //                     }
-
-                        //                 }
-
-                        //                 break;
-
-                        //         }
-
-                        //     }
-
-                        // }
-
-                            // int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
-                            // int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
-
-                            // int16_t itemX = item.getX() + 6 + 2 + swingyThing_X;
-                            // int8_t itemY = yOffset - item.getY() + swingyThing_Y + 11;
-                            // uint8_t puffX = 0;
-
-                            // Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3};
-
-
                             int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item.getFrame());
                             int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item.getFrame());
 
@@ -625,22 +534,13 @@ struct World {
 
         uint8_t getItem(int16_t xPos, uint8_t yPos) {
 
-// Serial.print("Test ");
-// Serial.print(xPos);
-// Serial.print(",");
-// Serial.println(yPos);
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
 
                 if (this->items[i].getItemType() == ItemType::Puff) {
-                    // Serial.println("No Match");                    
                     break;
                 }
-// Serial.print("Item ");
-// Serial.print(this->items[i].getX());
-// Serial.print(",");
-// Serial.println(this->items[i].getY());
+
                 if (this->items[i].getX() == xPos && this->items[i].getY() == yPos) {
-// Serial.println("Match");                    
                     return i;
                 }
 
@@ -659,12 +559,25 @@ struct World {
 
         uint8_t getTile_RelativeToPlayer(int8_t xOffset, int8_t yOffset) {
 
-            if (player.getLevel() + yOffset < 0) return 1;
+            if (player.getLevel() + yOffset < 0) return Tiles::Solid_Walkable;
 
             int16_t tileIdx = (-this->getMiddleground() + 65 + (xOffset << 3)) >> 3;
 
             if (tileIdx < 18) return Tiles::Blank;
             return mapData[this->player.getLevel() + yOffset][tileIdx - 18];
+
+        }
+
+        uint8_t getTile_FromCoords(int16_t xPosition, int8_t yPosition) {
+
+            
+
+            int16_t tileIdx = xPosition / 8;
+// Serial.print("(Tile ");
+// Serial.print(tileIdx);
+// Serial.print(") ");
+            if (tileIdx < 18) return Tiles::Blank;
+            return mapData[yPosition >> 3][tileIdx - 18];
 
         }
 

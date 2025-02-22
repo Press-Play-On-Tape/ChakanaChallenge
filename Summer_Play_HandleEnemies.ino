@@ -84,17 +84,25 @@ void launchTrebochetBall(Enemy &enemy, ItemType itemType) {
 
 // void playGame_WalkForward_Lunge_Retreat_LH(Enemy &enemy) {
 
-//     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-//     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-//     enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
+//     if (tile_LH == 0) {
+
+//         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
+//         enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
+//         enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
+
+//     }
 
 // }
 
 // void playGame_WalkForward_Lunge_Retreat_RH(Enemy &enemy) {
 
-//     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-//     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-//     enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
+//     if (tile_RH == 0) {
+
+//         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
+//         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
+//         enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
+
+//     }
 
 // }
 
@@ -107,7 +115,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         Enemy &enemy = world.getEnemy(i);
 
         if (enemy.getX() == 0) continue;
-            
+
         if (!enemy.isEmpty()) {
 
             Point offset;
@@ -241,9 +249,29 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         }
         else {
 
+
             // Exit if player is dead ..
 
             if (player.getHealth() == 0) break;
+
+
+Serial.print("X ");
+
+Serial.print(enemy.getX());
+Serial.print(" ");
+Serial.print(enemy.getX() - 56);
+Serial.print(" ");
+Serial.print(world.getMiddleground());
+Serial.print(", Y ");
+Serial.print(enemy.getY());
+Serial.print(", Tiles ");
+
+            uint8_t tile_L = world.getTile_FromCoords(enemy.getX()  - 8, enemy.getY());
+            uint8_t tile_R = world.getTile_FromCoords(enemy.getX()  + 16, enemy.getY());
+Serial.print(tile_L);
+Serial.print(" ");
+Serial.print(tile_R);
+Serial.print(" - ");
 
             switch (enemy.getEnemyType()) {
 
@@ -251,7 +279,12 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     {
                         int16_t dist = getDistanceBetween(enemy);
                         bool isLeft = (enemy.getDirection() == Direction::Left);
-
+// Serial.println(dist);
+if (isLeft) {
+Serial.print(" Left ");
+} else {
+Serial.print(" Righ ");
+}
                         switch (enemy.getDirection()) {
 
                             case Direction::Left:
@@ -260,13 +293,17 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                     
                                     // - Enemy to right of player -----------------------------------------------------------------------
 
-                                    case -8000 ... -38:
-                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
+                                    case -120 ... -38:
+                                        if (tile_L == Tiles::Blank) {
+                                            Serial.print("LA");
+                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
+                                        }
                                         break;
                                     
                                     case -37 ... -28:
 
-                                        if (a.randomLFSR(0, 5) == 0) {
+                                        if (tile_L == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
+                                            Serial.print("LB");
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
                                         }
 
@@ -279,8 +316,11 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_03:
 
                                                 if (a.randomLFSR(0, 5) == 0) {
+                                            Serial.print("LC1");
 
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
+                                                    if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
+                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
+                                                    }
                                                     player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06, true);
 
                                                     if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
@@ -297,7 +337,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                                 }
                                                 else {
                                                 
-                                                    if (a.randomLFSR(0, 16) == 0) {
+                                                    if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
+                                            Serial.print("LC2");
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -311,7 +352,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                             case Stance::Man_Sword_Lunge_RH_04 ... Stance::Man_Sword_Lunge_RH_06:
                                             
-                                                if (a.randomLFSR(0, 16) == 0) {
+                                                if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
+                                            Serial.println("LD");
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -323,7 +365,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                             default:
 
-                                                if (a.randomLFSR(0, 24) == 0) {
+                                                if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 24) == 0) {
+                                            Serial.println("LE");
 
                                                     if (a.randomLFSR(0, 8) == 0) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
@@ -343,12 +386,14 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                     case -23 ... -4:
 
-                                        if (a.randomLFSR(0, 5) == 0) {
+                                        if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
+                                            Serial.print("LF");
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
 
                                         }
-                                        else  if (a.randomLFSR(0, 12) == 0) {
+                                        else  if (tile_L == Tiles::Blank && a.randomLFSR(0, 12) == 0) {
+                                            Serial.print("LG");
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -359,14 +404,17 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                     case -3 ... 999:
 
+                                        Serial.print("LH");
                                         enemy.push(Stance::Enemy_Sword_Stationary_RH);
                                         break;
 
                                     default:
+                                        Serial.print("LI");
                                         break;
 
                                 }
 
+                                Serial.println("");
                                 break;
 
 
@@ -376,14 +424,18 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                     
                                     // - Enemy to right of player -----------------------------------------------------------------------
 
-                                    case 34 ... 8000:
+                                    case 34 ... 120:
 
-                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
+                                        if (tile_R == Tiles::Blank) {
+                                            Serial.print("RA");                                            
+                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
+                                        }
                                         break;
                                     
                                     case 20 ... 33:
 
-                                        if (a.randomLFSR(0, 5) == 0) {
+                                        if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
+                                            Serial.print("RB");                                            
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
                                         }
 
@@ -396,8 +448,10 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             case Stance::Man_Sword_Lunge_LH_01 ... Stance::Man_Sword_Lunge_LH_03:
 
                                                 if (a.randomLFSR(0, 5) == 0) {
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
+                                      Serial.print("RC1");  
+                                                    if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
+                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
+                                                    }
                                                     player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06, true);
 
                                                     if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
@@ -414,7 +468,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                                 }
                                                 else {
                                                 
-                                                    if (a.randomLFSR(0, 16) == 0) {
+                                                    if (tile_L == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
+                                            Serial.print("RC2");                                            
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -428,7 +483,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                             case Stance::Man_Sword_Lunge_LH_04 ... Stance::Man_Sword_Lunge_LH_06:
                                             
-                                                if (a.randomLFSR(0, 16) == 0) {
+                                                if (tile_L == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
+                                            Serial.println("RD");                                            
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -440,7 +496,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                             default:
 
-                                                if (a.randomLFSR(0, 24) == 0) {
+                                                if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 24) == 0) {
+                                            Serial.print("RE");                                            
 
                                                     if (a.randomLFSR(0, 8) == 0) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
@@ -460,13 +517,15 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                     case -12 ... -6:
 
-                                        if (a.randomLFSR(0, 5) == 0) {
-                                        // if (rnd < 26) {
+                                        if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
+                                            Serial.print("RF");                                            
+
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
 
                                         }
-                                        else  if (a.randomLFSR(0, 12) == 0) {
+                                        else  if (tile_L == Tiles::Blank && a.randomLFSR(0, 12) == 0) {
+                                            Serial.print("RG");                                            
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -476,15 +535,17 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                         break;
 
                                     case -999 ... -13:
+                                        Serial.print("RH");
 
                                         enemy.push(Stance::Enemy_Sword_Stationary_LH);
                                         break;
 
                                     default:
+                                        Serial.print("RI");
                                         break;
 
                                 }
-
+Serial.println("");
                                 break;
                                 
                         }

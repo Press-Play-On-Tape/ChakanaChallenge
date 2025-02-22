@@ -15,7 +15,7 @@ void renderWorld() {
 
     // ____________________________________________________________________________________________________________________________________________________________________________________
     //
-    // Rneder background ..
+    // Render background ..
 
     {
         int8_t y = (yOffset - Constants::GroundY) / 4;
@@ -207,7 +207,7 @@ void renderWorld() {
         uint8_t xMin = 18;
         uint8_t xMax = Constants::Map_X_Count + 18;
 
-        #ifndef DEBUG_SWORD
+        #ifndef sDEBUG_SWORD
 
             for (uint8_t y = 0; y < 16; y = y + 2) {
 
@@ -383,14 +383,11 @@ void renderWorld() {
             case ItemType::Key1:
             case ItemType::Anchor:
             case ItemType::PinchBar:
-            // case ItemType::TrapDoor:
             case ItemType::Potion:
                 frame = frame >> 4;
                 break;
 
             case ItemType::MysteryCrate:
-// Serial.print("MC ");
-// Serial.println(frame);
                 if (frame >= 8) {
                     imageIdx = 0;
                 }
