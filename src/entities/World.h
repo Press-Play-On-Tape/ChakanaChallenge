@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Boat.h"
+// #include "Boat.h"
 #include "../utils/Constants.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -43,7 +43,7 @@ struct World {
         int16_t background = 0;
         int16_t middleground = 0;
 
-        Boat boat;
+        // Boat boat;
 
     public:
 
@@ -72,7 +72,7 @@ struct World {
         int16_t getMiddleground()                       { return this->middleground; }
         uint16_t getWaveIdx()                           { return this->waveIdx; }
 
-        Boat& getBoat()                                 { return this->boat; }
+        // Boat& getBoat()                                 { return this->boat; }
 
         void setGameState(GameState val)                { this->gameState = val; }
         void setPrevGameState(GameState val)            { this->prevGameState = val; }

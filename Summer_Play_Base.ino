@@ -212,14 +212,7 @@ bool canClimbUp(uint8_t t1, uint8_t t2) {
 
 };
 
-bool canClimbUp_Upper(uint8_t t1, uint8_t t2) {
-
-    return (world.isLadderTile_Upper(t1) && world.isLadderTile_Upper(t2)) ||
-           (world.isVerticalVine_Upper(t1) && world.isVerticalVine_Upper(t2));
-
-};
-
-bool canClimbDown(uint8_t t1, uint8_t t2) {
+bool canClimb_Upper(uint8_t t1, uint8_t t2) {
 
     return (world.isLadderTile_Upper(t1) && world.isLadderTile_Upper(t2)) ||
            (world.isVerticalVine_Upper(t1) && world.isVerticalVine_Upper(t2));
@@ -387,7 +380,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
 
-                    else if (canClimbUp_Upper(tile_R, tile)) {
+                    else if (canClimb_Upper(tile_R, tile)) {
 
                         if (dir == Direction::Left) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_08, Stance::Man_ClimbLadder_BK_LH_UP_14);
@@ -503,7 +496,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile_AdjD = world.getTile_RelativeToPlayer(dir == Direction::Right ? 1 : -1, -1);
                     uint8_t tile_Adj2D = world.getTile_RelativeToPlayer(dir == Direction::Right ? -1 : 1, -1);
 
-                    if (canClimbDown(tile_D, tile_AdjD)) {
+                    if (canClimb_Upper(tile_D, tile_AdjD)) {
 
                         player.pushSequence(
                             (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
@@ -511,7 +504,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
 
-                    else if (canClimbDown(tile_D, tile_Adj2D)) {
+                    else if (canClimb_Upper(tile_D, tile_Adj2D)) {
 
                         player.pushSequence(
                             (dir == Direction::Left) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
@@ -1596,9 +1589,20 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     uint8_t justPressedOrPressed = pressed | justPressed;
     int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
-    
+
+    uint8_t tile_Front = world.getTile_RelativeToPlayer(1, 0);
+    uint8_t tile_Back = world.getTile_RelativeToPlayer(-1, 0);
+
     uint16_t offset = 0;
-    if (player.getDirection() == Direction::Left) offset = Constants::Player_Stance_Offset;
+
+    if (player.getDirection() == Direction::Left) {
+
+        offset = Constants::Player_Stance_Offset;
+        uint8_t temp = tile_Front;
+        tile_Front = tile_Back;
+        tile_Back = temp;
+
+    }
 
     if (justPressedOrPressed & A_BUTTON) {
 
@@ -1610,10 +1614,11 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
         world.setGameState(GameState::Play_Game);
         player.setStance(Stance::Man_Walk_RH_00);
+        player.addInventoryItem(ItemType::Sword);
 
     }
 
-    else if (justPressedOrPressed & B_BUTTON) {
+    else if ((justPressedOrPressed & B_BUTTON) && tile_Front == Tiles::Blank) {
 
         player.pushSequence(Stance::Man_Sword_Lunge_RH_01 + offset, Stance::Man_Sword_Lunge_RH_06 + offset);
 
@@ -1624,9 +1629,13 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
         switch (player.getDirection()) {
 
             case Direction::Left:
-                
+
                 if (dist > 0) {
-                    player.pushSequence(Stance::Man_Sword_Walk_BK_LH_01, Stance::Man_Sword_Walk_BK_LH_02);
+
+                    if (tile_Back == Tiles::Blank) {
+                        player.pushSequence(Stance::Man_Sword_Walk_BK_LH_01, Stance::Man_Sword_Walk_BK_LH_02);
+                    }
+
                 }
                 else {
                     player.push(Stance::Man_Sword_Stationary_RH);            
@@ -1636,7 +1645,10 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
             case Direction::Right:
 
-                player.pushSequence(Stance::Man_Sword_Walk_RH_01, Stance::Man_Sword_Walk_RH_02);
+                if (tile_Front == Tiles::Blank) {
+                    player.pushSequence(Stance::Man_Sword_Walk_RH_01, Stance::Man_Sword_Walk_RH_02);
+                }
+
                 break;
                 
         }
@@ -1651,13 +1663,20 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
             case Direction::Left:
 
-                player.pushSequence(Stance::Man_Sword_Walk_LH_01, Stance::Man_Sword_Walk_LH_02);
+                if (tile_Front == Tiles::Blank) {
+                    player.pushSequence(Stance::Man_Sword_Walk_LH_01, Stance::Man_Sword_Walk_LH_02);
+                }
+
                 break;
 
             case Direction::Right:
 
                 if (dist < 0) {
-                    player.pushSequence(Stance::Man_Sword_Walk_BK_RH_01, Stance::Man_Sword_Walk_BK_RH_02);
+
+                    if (tile_Back == Tiles::Blank) {
+                        player.pushSequence(Stance::Man_Sword_Walk_BK_RH_01, Stance::Man_Sword_Walk_BK_RH_02);
+                    }
+
                 }
                 else {
                     player.push(Stance::Man_Sword_Stationary_LH);            
@@ -2848,7 +2867,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         #ifdef SHOW_SIGN
             case GameState::Show_Sign:
                 SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLevel, ((endOfLevel_Counter + 32) * 3) + currentPlane);
-                world.setXMap(endOfLevel_Counter);
+                // world.setXMap(endOfLevel_Counter);
                 break;            
         #endif
 

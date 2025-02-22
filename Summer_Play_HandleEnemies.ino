@@ -232,7 +232,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             // Exit if player is dead ..
 
-            if (player.getHealth() == 0) break;
+            if (player.getHealth() == 0)    break;
+            if (enemy.getHealth() == 0)     continue;
 
             #ifdef DEBUG_ENEMY_SWORD
             DEBUG_PRINT("X ");

@@ -49,27 +49,20 @@ void playGame_HandleGamble(Player &player, uint8_t justPressed) {
     }
     else if (justPressed & UP_BUTTON) {
         
-        switch (world.getGameState()) {
+        if (world.getGameState() == GameState::Play_Gamble_Select_Play) {
 
-            case GameState::Play_Gamble_Select_Play:
-                world.setGameState(GameState::Play_Gamble_Select_Exit);
-                break;
+            world.setGameState(GameState::Play_Gamble_Select_Exit);
 
         }
 
     }
     else if (justPressed & DOWN_BUTTON) {
 
-        switch (world.getGameState()) {
+        if (world.getGameState() == GameState::Play_Gamble_Select_Exit) {
 
-            case GameState::Play_Gamble_Select_Exit:
-
-                if (player.getChakanas() >= 5) {
-                    world.setGameState(GameState::Play_Gamble_Select_Play);
-                }
-
-                break;
-
+            if (player.getChakanas() >= 5) {
+                world.setGameState(GameState::Play_Gamble_Select_Play);
+            }
 
         }
 

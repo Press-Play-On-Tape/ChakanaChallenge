@@ -171,13 +171,13 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
                     if (menu.getY() == 2) {
 
+                        menu.setY(3);
+
                         if (player.getItemCount() > 2) {
                             menu.setTop(2);
-                            menu.setY(3);
                         }
                         else {
                             menu.setTop(0);
-                            menu.setY(3);
                         }
 
                     }
@@ -264,14 +264,14 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     }
 
-        #ifndef DEBUG_LOCKED_DOOR
+    #ifndef DEBUG_LOCKED_DOOR
 
         else if (world.isLockedDoor(tile) && selectedItem == ItemType::Key1) {
 
             removeWorldandInventoryItem(ItemType::LockedDoor, GameState::Play_Game);
 
         }
-        #endif
+    #endif
 
 //    #ifndef DEBUG
 

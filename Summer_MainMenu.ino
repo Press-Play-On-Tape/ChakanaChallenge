@@ -34,6 +34,7 @@ void title_StartNewGame() {
 void title_SaveSoundSettings() {
     
     soundSettings.setMusic(!soundSettings.getMusic());
+    
     if (soundSettings.getMusic()) {
         playMusic();
     }
