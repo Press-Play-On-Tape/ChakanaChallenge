@@ -268,369 +268,9 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         if (isLeft) { DEBUG_PRINT(" Left "); } 
                         else        { DEBUG_PRINT(" Righ "); }
                         #endif
-/*  
-                        switch (enemy.getDirection()) {
 
-                            case Direction::Left:
-                                
-                                switch (dist) {
-                                    
-                                    // - Enemy to right of player -----------------------------------------------------------------------
-
-                                    case -120 ... -38:
-
-                                        if (tile_L == Tiles::Blank) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("LA");
-                                            #endif
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-                                        }
-                                        break;
-                                    
-                                    case -37 ... -28:
-
-                                        if (tile_L == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("LB");
-                                            #endif
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-                                        }
-
-                                        break;
-
-                                    case -27 ... -24:
-
-                                        switch (player.getStance()) {
-
-                                            case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_03:
-
-                                                if (a.randomLFSR(0, 5) == 0) {
-
-                                                    #ifdef DEBUG_ENEMY_SWORD
-                                                    DEBUG_PRINT("LC1");
-                                                    #endif
-
-                                                    if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
-                                                    }
-                                                    player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06, true);
-
-                                                    if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
-
-                                                        Item &glint = enemy.getItem();
-
-                                                        glint.setItemType(ItemType::Glint);
-                                                        glint.setX(enemy.getX() - 9);
-                                                        glint.setY(enemy.getY() + 1);
-                                                        glint.setFrame(0);
-
-                                                    }
-
-                                                }
-                                                else {
-                                                
-                                                    if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-
-                                                        #ifdef DEBUG_ENEMY_SWORD
-                                                        DEBUG_PRINT("LC2");
-                                                        #endif
-
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-                                                        
-                                                    }
-
-                                                }
-
-                                                break;
-
-                                            case Stance::Man_Sword_Lunge_RH_04 ... Stance::Man_Sword_Lunge_RH_06:
-                                            
-                                                if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-
-                                                    #ifdef DEBUG_ENEMY_SWORD
-                                                    DEBUG_PRINT("LD");
-                                                    #endif
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                                                }
-
-                                                break;
-
-                                            default:
-
-                                                if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 24) == 0) {
-
-                                                    #ifdef DEBUG_ENEMY_SWORD
-                                                    DEBUG_PRINT("LE");
-                                                    #endif
-
-                                                    if (a.randomLFSR(0, 8) == 0) {
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                    }
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                                                }
-
-                                                break;
-
-                                        }
-
-                                        break;
-
-                                    case -23 ... -4:
-
-                                        if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("LF");
-                                            #endif
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-
-                                        }
-                                        else  if (tile_L == Tiles::Blank && a.randomLFSR(0, 12) == 0) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("LG");
-                                            #endif
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                                        }
-                                        break;
-
-                                    case -3 ... 999:
-
-                                        #ifdef DEBUG_ENEMY_SWORD
-                                        DEBUG_PRINT("LH");
-                                        #endif
-
-                                        enemy.push(Stance::Enemy_Sword_Stationary_RH);
-                                        break;
-
-                                    default:
-
-                                        #ifdef DEBUG_ENEMY_SWORD
-                                        DEBUG_PRINT("LI");
-                                        #endif
-
-                                        break;
-
-                                }
-
-
-                                #ifdef DEBUG_ENEMY_SWORD
-                                DEBUG_PRINTLN("");
-                                #endif
-
-                                break;
-
-
-                            case Direction::Right:
-                                    
-                                switch (dist) {
-                                    
-                                    // - Enemy to right of player -----------------------------------------------------------------------
-
-                                    case 34 ... 120:
-
-                                        if (tile_R == Tiles::Blank) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("RA");
-                                            #endif                                           
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-                                        }
-                                        break;
-                                    
-                                    case 20 ... 33:
-
-                                        if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("RB");
-                                            #endif                                           
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-                                        }
-
-                                        break;
-
-                                    case -5 ... 19:
-
-                                        switch (player.getStance()) {
-
-                                            case Stance::Man_Sword_Lunge_LH_01 ... Stance::Man_Sword_Lunge_LH_03:
-
-                                                if (a.randomLFSR(0, 5) == 0) {
-
-                                                    #ifdef DEBUG_ENEMY_SWORD
-                                                    DEBUG_PRINT("RC1");
-                                                    #endif                                           
-
-                                                    if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
-                                                    }
-                                                    player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06, true);
-
-                                                    if (enemy.getItem().getItemType() == ItemType::Glint_Hidden) {
-
-                                                        Item &glint = enemy.getItem();
-
-                                                        glint.setItemType(ItemType::Glint);
-                                                        glint.setX(enemy.getX() - 9);
-                                                        glint.setY(enemy.getY() + 1);
-                                                        glint.setFrame(0);
-
-                                                    }
-
-                                                }
-                                                else {
-                                                
-                                                    if (tile_L == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-
-                                                        #ifdef DEBUG_ENEMY_SWORD
-                                                        DEBUG_PRINT("RC2");
-                                                        #endif                                           
-
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-                                                        
-                                                    }
-
-                                                }
-
-                                                break;
-
-                                            case Stance::Man_Sword_Lunge_LH_04 ... Stance::Man_Sword_Lunge_LH_06:
-                                            
-                                                if (tile_L == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-
-                                                    #ifdef DEBUG_ENEMY_SWORD
-                                                    DEBUG_PRINT("RD");
-                                                    #endif                                              
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-                                                }
-
-                                                break;
-
-                                            default:
-
-                                                if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 24) == 0) {
-
-                                                    #ifdef DEBUG_ENEMY_SWORD
-                                                    DEBUG_PRINT("RE");
-                                                    #endif                                              
-
-                                                    if (a.randomLFSR(0, 8) == 0) {
-                                                        enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                    }
-
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                                    enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-                                                }
-
-                                                break;
-
-                                        }
-
-                                        break;
-
-                                    case -12 ... -6:
-
-                                        if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("RF");
-                                            #endif                                              
-
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-
-                                        }
-                                        else  if (tile_L == Tiles::Blank && a.randomLFSR(0, 12) == 0) {
-
-                                            #ifdef DEBUG_ENEMY_SWORD
-                                            DEBUG_PRINT("RG");
-                                            #endif                                              
-                                          
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-                                            enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-                                        }
-                                        break;
-
-                                    case -999 ... -13:
-
-                                        #ifdef DEBUG_ENEMY_SWORD
-                                        DEBUG_PRINT("RH");
-                                        #endif 
-
-                                        enemy.push(Stance::Enemy_Sword_Stationary_LH);
-                                        break;
-
-                                    default:
-
-                                        #ifdef DEBUG_ENEMY_SWORD
-                                        DEBUG_PRINT("RI");
-                                        #endif 
-
-                                        break;
-
-                                }
-
-                                #ifdef DEBUG_ENEMY_SWORD
-                                DEBUG_PRINTLN("");
-                                #endif 
-
-                                break;
-                                
-                        }
-                        
-
-*/
                         if (isLeft) {
 
-                            // if (dist >= -120 && dist <= -38 && tile_L == Tiles::Blank) {
-
-                            //     #ifdef DEBUG_ENEMY_SWORD
-                            //     DEBUG_PRINT("LA");
-                            //     #endif
-
-                            //     enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                            // }
-                            // else if (dist >= -37 && dist <= -28 && tile_L == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-
-                            //     #ifdef DEBUG_ENEMY_SWORD
-                            //     DEBUG_PRINT("LB");
-                            //     #endif
-
-                            //     enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-                            // }
                             if (tile_L == Tiles::Blank && 
                                ((dist >= -120 && dist <= -38) || 
                                (dist >= -37 && dist <= -28 && a.randomLFSR(0, 5) == 0))) {
@@ -871,7 +511,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                     #ifdef DEBUG_ENEMY_SWORD
                                     DEBUG_PRINT("RG");
                                     #endif                                              
-                                    
+
                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
@@ -949,18 +589,7 @@ bool playGame_EnemyStabsPlayer(Player &player) {
     Rect playerRect = { 61, - Constants::GroundY + player.getY(), 6, 16 };
 
     Point enemyPoint;
-
-    if (stance == Stance::Enemy_Sword_Lunge_LH_03) {
-
-        enemyPoint = { enemy.getX() + world.getMiddleground() - 10, - enemy.getY() + 12 };
-        
-    }
-
-    if (stance == Stance::Enemy_Sword_Lunge_RH_03) {
-
-        enemyPoint = { enemy.getX() + world.getMiddleground() + 17, - enemy.getY() + 12 };
-
-    }
+    enemyPoint = { enemy.getX() + world.getMiddleground() + (stance == Stance::Enemy_Sword_Lunge_LH_03 ? -10 : 17), - enemy.getY() + 12 };
 
     #ifdef DEBUG_SWORD
         playerX = playerRect.x;
@@ -985,23 +614,25 @@ bool playGame_PlayerStabsEnemy(Player &player) {
 
     }
 
-    if (!(player.getStance() == Stance::Man_Sword_Lunge_LH_03) && !(player.getStance() == Stance::Man_Sword_Lunge_RH_03)) {
-        return false;
-    }
+    // if (!(player.getStance() == Stance::Man_Sword_Lunge_LH_03) && !(player.getStance() == Stance::Man_Sword_Lunge_RH_03)) {
+    //     return false;
+    // }
 
     Point playerPoint;
 
-    if (player.getStance() == Stance::Man_Sword_Lunge_RH_03) {
+    // if (player.getStance() == Stance::Man_Sword_Lunge_RH_03) {
 
-        playerPoint = { 61 + 15, - Constants::GroundY + player.getY() + 12 };
+    //     playerPoint = { 61 + 15, - Constants::GroundY + player.getY() + 12 };
 
-     }
+    //  }
 
-    if (player.getStance() == Stance::Man_Sword_Lunge_LH_03) {
+    // if (player.getStance() == Stance::Man_Sword_Lunge_LH_03) {
 
-        playerPoint = { 61 - 10, - Constants::GroundY + player.getY() + 12 };
+    //     playerPoint = { 61 - 10, - Constants::GroundY + player.getY() + 12 };
 
-    }
+    // }
+
+    playerPoint = { 61 + (player.getStance() == Stance::Man_Sword_Lunge_RH_03 ? 15 : -10), - Constants::GroundY + player.getY() + 12 };
 
     return collide(playerPoint, enemyRect);
 

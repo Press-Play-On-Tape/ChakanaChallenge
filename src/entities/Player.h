@@ -15,7 +15,7 @@ class Player {
         int8_t y = Constants::GroundY;
         uint8_t falls;
         uint8_t itemCount;
-        uint8_t health;
+        int8_t health;
         uint8_t enemyIdx;
         uint8_t wound;
         uint8_t chakanas;
@@ -35,7 +35,7 @@ class Player {
         uint8_t getFalls()                                  { return this->falls; }
         uint8_t getLevel()                                  { return (Constants::GroundY - y) >> 3; }
         uint8_t getItemCount()                              { return this->itemCount; }
-        uint8_t getHealth()                                 { return this->health; }
+        int8_t getHealth()                                  { return this->health; }
         uint8_t getEnemyIdx()                               { return this->enemyIdx; }
         uint8_t getWound()                                  { return this->wound; }
         uint8_t getChakanas()                               { return this->chakanas; }
@@ -46,7 +46,7 @@ class Player {
         void setY(int8_t val)                               { this->y = val; }
         void setFalls(uint8_t val)                          { this->falls = val; }
         void setItemCount(uint8_t val)                      { this->itemCount = val; }
-        void setHealth(uint8_t val)                         { this->health = val; }
+        void setHealth(int8_t val)                          { this->health = val; }
         void setEnemyIdx(uint8_t val)                       { this->enemyIdx = val; }
         void setWound(uint8_t val)                          { this->wound = val; }
         void setChakanas(uint8_t val)                       { this->chakanas = val; }
@@ -69,14 +69,8 @@ class Player {
 
         bool decHealth(uint8_t i) {
 
-            if (this->health < i) {
-                this->health == 0;
-                return true;
-            }
-            else {
-                this->health = this->health - i;
-                return false;
-            }
+            this->health = this->health - i;
+            return this->health == 0;
             
         }
 

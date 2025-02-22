@@ -697,7 +697,7 @@ struct World {
             #endif
 
             return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
-                tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
+                tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji || tile == Tiles::Flame ||
                 tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
             
         }
@@ -745,6 +745,12 @@ struct World {
             
         }
 
+        bool isFlameTile(uint8_t tile) {
+
+            return tile == Tiles::Flame;
+            
+        }
+
         bool canJumpUpOntoTile(uint8_t tile) {
 
             return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
@@ -767,7 +773,7 @@ struct World {
                     tile == Tiles::Lever_Portal_Auto_LH || tile == Tiles::Lever_Portal_Auto_RH) {
                             
                     int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
-                    uint8_t yItem = (this->player.getLevel() + relY - 1) * 8;
+                    uint8_t yItem = (this->player.getLevel() + relY - 1) << 3;
 
                     if (xItem % 16 != 0) xItem = xItem - 8;
                     if (yItem % 16 != 0) yItem = yItem + 8;

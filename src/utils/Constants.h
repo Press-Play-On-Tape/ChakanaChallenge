@@ -591,6 +591,7 @@ enum Tiles : uint8_t {
 	Block_WithWeed_LH = 50,
 	Block_WithWeed_RH = 51,
 	Sign_01 = 52,
+	Flame = 53,
 
 };
 
