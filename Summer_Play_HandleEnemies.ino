@@ -82,30 +82,6 @@ void launchTrebochetBall(Enemy &enemy, ItemType itemType) {
 
 }
 
-// void playGame_WalkForward_Lunge_Retreat_LH(Enemy &enemy) {
-
-//     if (tile_LH == 0) {
-
-//         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
-//         enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
-//         enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
-
-//     }
-
-// }
-
-// void playGame_WalkForward_Lunge_Retreat_RH(Enemy &enemy) {
-
-//     if (tile_RH == 0) {
-
-//         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
-//         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
-//         enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
-
-//     }
-
-// }
-
 void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     Player &player = world.getPlayer();
@@ -122,17 +98,6 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             uint16_t stance = enemy.pop();
 
             enemy.setStance(stance);
-
-            // FX::seekData(Constants::StanceDetails + (static_cast<uint16_t>(stance) * 4));
-            // int8_t stanceY = FX::readPendingUInt8();
-            // enemy.setY(enemy.getY() - stanceY);
-
-            // int8_t b = FX::readPendingUInt8();
-            // world.incForeground(b);
-
-            // b = FX::readPendingUInt8();
-            // enemy.setX(enemy.getX() + stanceDetails.middleground);
-            // FX::readEnd();
 
             StanceDetails stanceDetails;
 
