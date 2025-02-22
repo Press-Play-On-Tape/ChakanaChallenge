@@ -1698,7 +1698,6 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    // else if (justPressed & LEFT_BUTTON || pressed & LEFT_BUTTON) {
     else if (justPressedOrPressed & LEFT_BUTTON) {
 
         switch (player.getDirection()) {
@@ -2660,13 +2659,21 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 switch (enemy.getDirection()) {
 
                                     case Direction::Left:
-Serial.println("X1");                   
+
+                                        #ifdef DEBUG_ENEMY_SWORD
+                                        DEBUG_PRINT("X LH");
+                                        #endif 
+
                                         if (tile_R == Tiles::Blank) {
                                             enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_04);
                                         }
                                         break;
 
                                     case Direction::Right:
+
+                                        #ifdef DEBUG_ENEMY_SWORD
+                                        DEBUG_PRINT("X RH");
+                                        #endif 
                                    
                                         if (tile_L == Tiles::Blank) {
                                             enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_04);

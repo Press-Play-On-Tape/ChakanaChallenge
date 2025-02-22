@@ -254,24 +254,27 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             if (player.getHealth() == 0) break;
 
-
-Serial.print("X ");
-
-Serial.print(enemy.getX());
-Serial.print(" ");
-Serial.print(enemy.getX() - 56);
-Serial.print(" ");
-Serial.print(world.getMiddleground());
-Serial.print(", Y ");
-Serial.print(enemy.getY());
-Serial.print(", Tiles ");
+            #ifdef DEBUG_ENEMY_SWORD
+            DEBUG_PRINT("X ");
+            DEBUG_PRINT(enemy.getX());
+            DEBUG_PRINT(" ");
+            DEBUG_PRINT(enemy.getX() - 56);
+            DEBUG_PRINT(" ");
+            DEBUG_PRINT(world.getMiddleground());
+            DEBUG_PRINT(", Y ");
+            DEBUG_PRINT(enemy.getY());
+            DEBUG_PRINT(", Tiles ");
+            #endif
 
             uint8_t tile_L = world.getTile_FromCoords(enemy.getX()  - 8, enemy.getY());
             uint8_t tile_R = world.getTile_FromCoords(enemy.getX()  + 16, enemy.getY());
-Serial.print(tile_L);
-Serial.print(" ");
-Serial.print(tile_R);
-Serial.print(" - ");
+
+            #ifdef DEBUG_ENEMY_SWORD
+            DEBUG_PRINT(tile_L);
+            DEBUG_PRINT(" ");
+            DEBUG_PRINT(tile_R);
+            DEBUG_PRINT(" - ");
+            #endif
 
             switch (enemy.getEnemyType()) {
 
@@ -279,12 +282,12 @@ Serial.print(" - ");
                     {
                         int16_t dist = getDistanceBetween(enemy);
                         bool isLeft = (enemy.getDirection() == Direction::Left);
-// Serial.println(dist);
-if (isLeft) {
-Serial.print(" Left ");
-} else {
-Serial.print(" Righ ");
-}
+
+                        #ifdef DEBUG_ENEMY_SWORD
+                        if (isLeft) { DEBUG_PRINT(" Left "); } 
+                        else        { DEBUG_PRINT(" Righ "); }
+                        #endif
+
                         switch (enemy.getDirection()) {
 
                             case Direction::Left:
@@ -295,7 +298,11 @@ Serial.print(" Righ ");
 
                                     case -120 ... -38:
                                         if (tile_L == Tiles::Blank) {
-                                            Serial.print("LA");
+
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("LA");
+                                            #endif
+
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
                                         }
                                         break;
@@ -303,7 +310,11 @@ Serial.print(" Righ ");
                                     case -37 ... -28:
 
                                         if (tile_L == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-                                            Serial.print("LB");
+
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("LB");
+                                            #endif
+
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_LH_01, Stance::Enemy_Sword_Walk_LH_02);
                                         }
 
@@ -316,7 +327,10 @@ Serial.print(" Righ ");
                                             case Stance::Man_Sword_Lunge_RH_01 ... Stance::Man_Sword_Lunge_RH_03:
 
                                                 if (a.randomLFSR(0, 5) == 0) {
-                                            Serial.print("LC1");
+
+                                                    #ifdef DEBUG_ENEMY_SWORD
+                                                    DEBUG_PRINT("LC1");
+                                                    #endif
 
                                                     if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
@@ -338,7 +352,10 @@ Serial.print(" Righ ");
                                                 else {
                                                 
                                                     if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-                                            Serial.print("LC2");
+
+                                                        #ifdef DEBUG_ENEMY_SWORD
+                                                        DEBUG_PRINT("LC2");
+                                                        #endif
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -353,7 +370,10 @@ Serial.print(" Righ ");
                                             case Stance::Man_Sword_Lunge_RH_04 ... Stance::Man_Sword_Lunge_RH_06:
                                             
                                                 if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-                                            Serial.println("LD");
+
+                                                    #ifdef DEBUG_ENEMY_SWORD
+                                                    DEBUG_PRINT("LD");
+                                                    #endif
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -366,7 +386,10 @@ Serial.print(" Righ ");
                                             default:
 
                                                 if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 24) == 0) {
-                                            Serial.println("LE");
+
+                                                    #ifdef DEBUG_ENEMY_SWORD
+                                                    DEBUG_PRINT("LE");
+                                                    #endif
 
                                                     if (a.randomLFSR(0, 8) == 0) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
@@ -387,13 +410,19 @@ Serial.print(" Righ ");
                                     case -23 ... -4:
 
                                         if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-                                            Serial.print("LF");
+
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("LF");
+                                            #endif
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
 
                                         }
                                         else  if (tile_L == Tiles::Blank && a.randomLFSR(0, 12) == 0) {
-                                            Serial.print("LG");
+
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("LG");
+                                            #endif
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_01, Stance::Enemy_Sword_Lunge_LH_06);
@@ -404,17 +433,28 @@ Serial.print(" Righ ");
 
                                     case -3 ... 999:
 
-                                        Serial.print("LH");
+                                        #ifdef DEBUG_ENEMY_SWORD
+                                        DEBUG_PRINT("LH");
+                                        #endif
+
                                         enemy.push(Stance::Enemy_Sword_Stationary_RH);
                                         break;
 
                                     default:
-                                        Serial.print("LI");
+
+                                        #ifdef DEBUG_ENEMY_SWORD
+                                        DEBUG_PRINT("LI");
+                                        #endif
+
                                         break;
 
                                 }
 
-                                Serial.println("");
+
+                                #ifdef DEBUG_ENEMY_SWORD
+                                DEBUG_PRINTLN("");
+                                #endif
+
                                 break;
 
 
@@ -427,7 +467,11 @@ Serial.print(" Righ ");
                                     case 34 ... 120:
 
                                         if (tile_R == Tiles::Blank) {
-                                            Serial.print("RA");                                            
+
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("RA");
+                                            #endif                                           
+
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
                                         }
                                         break;
@@ -435,7 +479,11 @@ Serial.print(" Righ ");
                                     case 20 ... 33:
 
                                         if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-                                            Serial.print("RB");                                            
+
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("RB");
+                                            #endif                                           
+
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
                                         }
 
@@ -448,7 +496,11 @@ Serial.print(" Righ ");
                                             case Stance::Man_Sword_Lunge_LH_01 ... Stance::Man_Sword_Lunge_LH_03:
 
                                                 if (a.randomLFSR(0, 5) == 0) {
-                                      Serial.print("RC1");  
+
+                                                    #ifdef DEBUG_ENEMY_SWORD
+                                                    DEBUG_PRINT("RC1");
+                                                    #endif                                           
+
                                                     if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
                                                     }
@@ -469,7 +521,10 @@ Serial.print(" Righ ");
                                                 else {
                                                 
                                                     if (tile_L == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-                                            Serial.print("RC2");                                            
+
+                                                        #ifdef DEBUG_ENEMY_SWORD
+                                                        DEBUG_PRINT("RC2");
+                                                        #endif                                           
 
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                         enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -484,7 +539,10 @@ Serial.print(" Righ ");
                                             case Stance::Man_Sword_Lunge_LH_04 ... Stance::Man_Sword_Lunge_LH_06:
                                             
                                                 if (tile_L == Tiles::Blank && a.randomLFSR(0, 16) == 0) {
-                                            Serial.println("RD");                                            
+
+                                                    #ifdef DEBUG_ENEMY_SWORD
+                                                    DEBUG_PRINT("RD");
+                                                    #endif                                              
 
                                                     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                                     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
@@ -497,7 +555,10 @@ Serial.print(" Righ ");
                                             default:
 
                                                 if (tile_L == Tiles::Blank && tile_R == Tiles::Blank && a.randomLFSR(0, 24) == 0) {
-                                            Serial.print("RE");                                            
+
+                                                    #ifdef DEBUG_ENEMY_SWORD
+                                                    DEBUG_PRINT("RE");
+                                                    #endif                                              
 
                                                     if (a.randomLFSR(0, 8) == 0) {
                                                         enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
@@ -518,15 +579,20 @@ Serial.print(" Righ ");
                                     case -12 ... -6:
 
                                         if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
-                                            Serial.print("RF");                                            
 
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("RF");
+                                            #endif                                              
 
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
 
                                         }
                                         else  if (tile_L == Tiles::Blank && a.randomLFSR(0, 12) == 0) {
-                                            Serial.print("RG");                                            
 
+                                            #ifdef DEBUG_ENEMY_SWORD
+                                            DEBUG_PRINT("RG");
+                                            #endif                                              
+                                          
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                             enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
                                             enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
@@ -535,17 +601,28 @@ Serial.print(" Righ ");
                                         break;
 
                                     case -999 ... -13:
-                                        Serial.print("RH");
+
+                                        #ifdef DEBUG_ENEMY_SWORD
+                                        DEBUG_PRINT("RH");
+                                        #endif 
 
                                         enemy.push(Stance::Enemy_Sword_Stationary_LH);
                                         break;
 
                                     default:
-                                        Serial.print("RI");
+
+                                        #ifdef DEBUG_ENEMY_SWORD
+                                        DEBUG_PRINT("RI");
+                                        #endif 
+
                                         break;
 
                                 }
-Serial.println("");
+
+                                #ifdef DEBUG_ENEMY_SWORD
+                                DEBUG_PRINTLN("");
+                                #endif 
+
                                 break;
                                 
                         }
