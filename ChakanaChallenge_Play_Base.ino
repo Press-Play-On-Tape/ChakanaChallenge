@@ -2074,15 +2074,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         }
                         else {
                             
-                            itemRect = { item.getX() + world.getMiddleground() - 4 + 4, item.getY() + 14, 8, 2 };
-// Serial.print(playerRect.x);
-// Serial.print(" ");
-// Serial.print(playerRect.y);
-// Serial.print(" ");
-// Serial.print(itemRect.x);
-// Serial.print(" ");
-// Serial.print(itemRect.y);
-// Serial.println(" ");
+                            itemRect = { item.getX() + world.getMiddleground() - 4 + 7, item.getY() + 14, 2, 2 };
 
                             if (collide(playerRect, itemRect) && player.getHealth() > 0) {
 
@@ -2095,46 +2087,15 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             player.setY(Constants::GroundY - item.getY());
                                             player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
 
-// Serial.println("here");
                                             uint8_t xPos = item.getX() + world.getMiddleground();
-// Serial.println(xPos);
 
-                                            if (xPos % 8 != 0) {
+                                            if (xPos % 8 == 0) {
 
-                                                player.push(Stance::Man_Die_Fire_Adj_LH_02);
                                                 player.push(Stance::Man_Die_Fire_Adj_LH_02);
 
                                             }
 
                                         }
-//                                         switch (stance) {
-
-//                                             case Stance::Man_WalkingJump_LH_2_08:
-//                                                 {
-//                                                     uint8_t xPos = item.getX() + world.getMiddleground();
-// Serial.print(xPos);
-//                                                     if (xPos == 56) {
-
-//                                                         player.push(Stance::Man_Die_Fire_Adj_LH_02);
-
-//                                                     }
-//                                                     else if (xPos == 64) {
-
-//                                                         player.push(Stance::Man_Die_Fire_Adj_LH_01);
-
-//                                                     }
-
-//                                                 }
-//                                                 break;
-
-//                                             case Stance::Man_Walk_LH_02:
-
-//                                                 player.pushSequence(Man_Walk_LH_03, Stance::Man_Walk_LH_06);
-
-//                                                 break;
-
-
-//                                         }
 
                                         break;
 
@@ -2145,50 +2106,14 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
 
                                             uint8_t xPos = item.getX() + world.getMiddleground();
-// Serial.println(xPos);
-                                            if (xPos % 8 != 0) {
 
-                                                player.push(Stance::Man_Die_Fire_Adj_RH_02);
+                                            if (xPos % 8 == 0) {
+
                                                 player.push(Stance::Man_Die_Fire_Adj_RH_02);
 
                                             }
 
                                         }
-
-                                        // world.setMiddleground(64 - item.getX() - 4);
-
-
-//                                                     uint8_t xPos = item.getX() + world.getMiddleground();
-// Serial.print(xPos);
-//                                         switch (stance) {
-
-//                                             case Stance::Man_WalkingJump_RH_2_08:
-//                                                 {
-//                                                     uint8_t xPos = item.getX() + world.getMiddleground();
-// Serial.print(xPos);
-
-//                                                     if (xPos == 56) {
-
-//                                                         player.push(Stance::Man_Die_Fire_Adj_RH_01); //+ 4
-
-//                                                     }
-//                                                     else if (xPos == 64) {
-
-//                                                         player.push(Stance::Man_Die_Fire_Adj_RH_02);// -4
-
-//                                                     }
-
-//                                                 }
-//                                                 break;
-
-//                                             case Stance::Man_Walk_RH_03:
-
-//                                                 // player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
-//                                                 player.pushSequence(Man_Walk_RH_04, Stance::Man_Walk_RH_06);
-
-//                                                 break;
-
-//                                         }
 
                                         break;
 
