@@ -29,7 +29,7 @@ uint16_t Level_00_Items[] = {
 
 uint16_t Level_00_Enemies[] = {
 3                            // EnemyType::SwordFighter
-256,                             // Position X
+240,                             // Position X
 0,                             // Position Y
 1051,                             // Stance::Enemy_Sword_Stationary_LH
 50,                             // Inventory ItemType::Glint_Hidden

@@ -17,7 +17,7 @@
 
 #ifndef DEBUG
 	// 136 bytes
-	#define MAP_SHOW_PORTS_VISITED
+	#define _MAP_SHOW_PORTS_VISITED
 
 	// 216 bytes
 	#define TRAP_DOOR
