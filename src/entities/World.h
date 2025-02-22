@@ -116,6 +116,19 @@ struct World {
 
         }
 
+        void init_Level() {
+
+            this->gameState = GameState::Play_Game;
+            this->frameCount = 0;
+            this->middleground = 0;
+            this->background = -29;
+            this->wave = -87;
+
+            this->player.setY(Constants::GroundY);
+            this->player.setStance(Stance::Man_Walk_RH_00);
+
+        }
+
         uint8_t getYOffsetForRendering() {
 
             switch (player.getY()) {
@@ -249,12 +262,10 @@ struct World {
                 this->incPalm(i, val);
             }
 
-            // this->incBackgroundVal(val);
-            // this->x = this->x - val;
+            this->background += val;
 
-             this->background += val;
-
-            if (this->background == 128 || background == -128) {
+            // if (absT(this->background == 128)) {
+            if (this->background == 128 || this->background == -128) {
                 this->background = 0;
             }
 
@@ -594,13 +605,6 @@ struct World {
             else if (tile == Tiles::Solid_Walkable)                                     return false;
             else if (tile == Tiles::Poker)                                              return true;
 
-            #ifdef RENDER_RUNS
-
-            else if (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide)        return false;
-            else if (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2)    return false;
-
-            #endif
-
             else if (tile == Tiles::Lever_Portal_LH) { 
 
                 if (direction == Direction::Left) { 
@@ -693,21 +697,9 @@ struct World {
 
             #endif
 
-            #ifdef RENDER_RUNS
-            
-                return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
-                    tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
-                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower ||
-                    (tile >= Tiles::Solid_2_Wide && tile <= Tiles::Solid_4_Wide) ||
-                    (tile >= Tiles::Solid_2_Wide_2 && tile <= Tiles::Solid_4_Wide_2);
-
-            #else
-            
-                return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
-                    tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
-                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
-
-            #endif
+            return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
+                tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji ||
+                tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
             
         }
 
@@ -740,22 +732,9 @@ struct World {
             }
             else {
     
-                #ifdef RENDER_RUNS
-                
-                    return tile == Tiles::Solid_Walkable || 
-                        tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
-                        tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
-                        tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
-                        tile == Tiles::Single_Stair_LH_Upper_TL || 
-                        tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-                #else 
-
-                    return tile == Tiles::Solid_Walkable || 
-                        tile == Tiles::Single_Stair_LH_Upper_TL || 
-                        tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-                #endif
+                return tile == Tiles::Solid_Walkable || 
+                    tile == Tiles::Single_Stair_LH_Upper_TL || 
+                    tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
             }
             
@@ -769,21 +748,7 @@ struct World {
 
         bool canJumpUpOntoTile(uint8_t tile) {
 
-            // return tile == Tiles::Solid_Walkable || tile == Tiles::Solid_NonWalkable;
-
-            #ifdef RENDER_RUNS
-                
-                return tile == Tiles::Solid_Walkable || 
-                       tile == Tiles::Solid_2_Wide || tile == Tiles::Solid_2_Wide_2 || 
-                       tile == Tiles::Solid_3_Wide || tile == Tiles::Solid_3_Wide_2 || 
-                       tile == Tiles::Solid_4_Wide || tile == Tiles::Solid_4_Wide_2 || 
-                       tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-            #else
-                
-                return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
-
-            #endif
+            return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
         }
 

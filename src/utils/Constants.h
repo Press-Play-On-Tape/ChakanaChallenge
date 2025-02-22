@@ -18,7 +18,7 @@
 #ifndef DEBUG
 
 	// 142 bytes
-	#define _MAP_SHOW_PORT_NAMES
+	#define MAP_SHOW_PORT_NAMES
 
 	// 136 bytes
 	#define MAP_SHOW_PORTS_VISITED
@@ -32,11 +32,8 @@
 	// 242 bytes
 	#define MULTIPLE_ITEMS
 
-	// 208 bytes
-	#define _RENDER_RUNS
-
 	// 120 bytes
-	#define BOUNCEJUMP_3
+	#define _BOUNCEJUMP_3
 
 	// 102 bytes
 	#define SHOW_SIGN
@@ -585,18 +582,6 @@ enum Tiles : uint8_t {
 
 	Decorative_Triangle_LH = 42,
 	Decorative_Triangle_RH = 43,
-
-	Solid_2_Wide = 62,
-	Solid_3_Wide = 63,
-	Solid_4_Wide = 64,
-
-	#ifdef RENDER_RUNS
-	
-		Solid_2_Wide_2 = 72,
-		Solid_3_Wide_2 = 73,
-		Solid_4_Wide_2 = 74,
-
-	#endif
 
 	Trebochet_To_RH = 46,
 	Trebochet_To_LH = 47,

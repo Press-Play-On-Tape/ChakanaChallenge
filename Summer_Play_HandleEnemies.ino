@@ -182,10 +182,9 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             {
                                 if (player.getWound() == 0 && playGame_EnemyStabsPlayer(player)) {
 
-                                    player.decHealth(1);
                                     player.setWound(12);
 
-                                    if (player.getHealth() == 0) {
+                                    if (player.decHealth(a.randomLFSR(1, 3))) {
 
                                         int16_t dist = getDistanceBetween(enemy);
                                         player.clear();
