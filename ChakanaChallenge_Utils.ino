@@ -20,6 +20,13 @@ uint8_t getPressedButtons() {
 
 }
 
+template<typename T> T absT(const T & v) {
+
+	return (v < 0) ? -v : v;
+
+}
+
+
 void saveCookie(bool enableLEDs) {
 
     #ifdef USE_LED

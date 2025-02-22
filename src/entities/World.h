@@ -24,8 +24,8 @@ struct World {
 
         uint16_t portsVisited;
         uint16_t frameCount;
-        uint16_t xMap;
-        uint16_t yMap;
+        int16_t xMap;
+        int16_t yMap;
         uint16_t xBoat;
         uint16_t yBoat;
         BoatDirection boatDirection;
@@ -53,8 +53,8 @@ struct World {
         Item &getItem(uint8_t idx)                      { return this->items[idx]; }
         Player &getPlayer()                             { return this->player; }
         Enemy &getEnemy(uint8_t idx)                    { return this->enemy[idx]; }
-        uint16_t getXMap()                              { return this->xMap; }
-        uint16_t getYMap()                              { return this->yMap; }
+        int16_t getXMap()                               { return this->xMap; }
+        int16_t getYMap()                               { return this->yMap; }
         uint16_t getXBoat()                             { return this->xBoat; }
         uint16_t getYBoat()                             { return this->yBoat; }
         BoatDirection  getBoatDirection()               { return this->boatDirection; }
@@ -77,8 +77,8 @@ struct World {
         void setGameState(GameState val)                { this->gameState = val; }
         void setPrevGameState(GameState val)            { this->prevGameState = val; }
 
-        void setXMap(uint16_t val)                      { this->xMap = val; }
-        void setYMap(uint16_t val)                      { this->yMap = val; }
+        void setXMap(int16_t val)                       { this->xMap = val; }
+        void setYMap(int16_t val)                       { this->yMap = val; }
         void setXBoat(uint16_t val)                     { this->xBoat = val; }
         void setYBoat(uint16_t val)                     { this->yBoat = val; }
         void setBoatDirection(BoatDirection val)        { this->boatDirection = val; }
@@ -195,7 +195,7 @@ struct World {
             uint8_t from = this->getNextPort();
             uint8_t to = this->getCurrentPort();
 
-            if (from < 255 && to < 255) {
+            if (from < Constants::NoPort && to < Constants::NoPort) {
 
                 return FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0);
 
@@ -235,15 +235,33 @@ struct World {
         }
 
         void incXMap(int8_t val) {
-
-            this->xMap = this->xMap + val;
             
+            if (val < 0) {
+
+                if (this->xMap + val >= 0) this->xMap = this->xMap + val;
+
+            }
+            else {
+
+                if (this->xMap + val <= 256) this->xMap = this->xMap + val;
+
+            }
+
         }
 
         void incYMap(int8_t val) {
-
-            this->yMap = this->yMap + val;
             
+            if (val < 0) {
+
+                if (this->yMap + val >= 0) this->yMap = this->yMap + val;
+
+            }
+            else {
+
+                if (this->yMap + val <= 308) this->yMap = this->yMap + val;
+
+            }
+
         }
 
         void incForeground(int8_t val) {

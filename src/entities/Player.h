@@ -58,7 +58,7 @@ class Player {
         void init() {
 
             this->lives = 3;
-            this->chakanas = 200;
+            this->chakanas = 20;
             this->falls = 0;
             this->itemCount = 0;
             this->health = Constants::HealthMax;
@@ -70,7 +70,7 @@ class Player {
         bool decHealth(uint8_t i) {
 
             this->health = this->health - i;
-            return this->health == 0;
+            return this->health <= 0;
             
         }
 

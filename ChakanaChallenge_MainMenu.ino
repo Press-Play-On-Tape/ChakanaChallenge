@@ -135,8 +135,6 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     if (a.needsUpdate()) title_Update();
 
-    currentPlane = a.currentPlane();
-
     #ifndef DEBUG
 
         switch (world.getGameState()) {

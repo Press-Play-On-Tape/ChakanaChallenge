@@ -48,7 +48,7 @@ class Enemy {
         bool decHealth(uint8_t i) {
 
             this->health = this->health - i;
-            return this->health == 0;
+            return this->health <= 0;
 
         }
 

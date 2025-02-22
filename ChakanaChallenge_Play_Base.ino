@@ -2701,7 +2701,6 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     if (a.needsUpdate()) playGame_Update(a);
 
     uint8_t yOffset = world.getYOffsetForRendering();
-    currentPlane = a.currentPlane();
 
     renderWorld();
 
@@ -2752,7 +2751,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     renderGamblePanel(1 + frame);
 
-                    if (currentPlane == 2) {
+                    if (a.currentPlane() == 2) {
                         titleCounter++;
                     }
 

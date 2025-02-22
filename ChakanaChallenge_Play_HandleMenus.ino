@@ -127,7 +127,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Reset_1:
             case GameState::Inventory_Open_Reset_Exit_1:
             case GameState::Inventory_Open_More_Exit:  
-                world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) - 1));
+                // world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) - 1));
+                world.decGameState();
                 break;
 
         }
@@ -196,7 +197,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Reset_0:
             case GameState::Inventory_Open_Reset_Exit_0:
             case GameState::Inventory_Open_More_Reset:  
-                world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) + 1));
+                // world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) + 1));
+                world.incGameState();
                 break;
 
         }

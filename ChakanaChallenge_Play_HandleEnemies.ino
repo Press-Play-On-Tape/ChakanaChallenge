@@ -184,7 +184,24 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                     player.setWound(12);
 
-                                    if (player.decHealth(a.randomLFSR(1, 3))) {
+                                    uint8_t health = 0;
+
+                                    switch (player.getStance()) {
+
+                                        case Stance::Man_Sword_Start_RH ... Stance::Man_Sword_End_RH:
+                                        case Stance::Man_Sword_Start_LH ... Stance::Man_Sword_End_LH:
+
+                                            health = a.randomLFSR(1, 4);
+                                            break;
+
+                                        default:
+
+                                            health = a.randomLFSR(3, 7);
+                                            break;
+
+                                    }
+
+                                    if (player.decHealth(health)) {
 
                                         int16_t dist = getDistanceBetween(enemy);
                                         player.clear();
@@ -294,10 +311,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             DEBUG_PRINT("LC1");
                                             #endif
 
-                                            if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
-                                                enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
-                                            }
-
+                                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_LH_05, Stance::Enemy_Sword_Lunge_LH_06);
                                             player.pushSequence(Stance::Man_Sword_Lunge_RH_05, Stance::Man_Sword_Lunge_RH_06, true);
                                             playGame_SetGlint(enemy);
 
@@ -344,7 +358,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             DEBUG_PRINT("LE");
                                             #endif
 
-                                            if (a.randomLFSR(0, 8) == 0) {
+                                            if (a.randomLFSR(0, 4) == 0) {
                                                 enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_LH_01, Stance::Enemy_Sword_Walk_BK_LH_02);
                                             }
 
@@ -430,10 +444,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             DEBUG_PRINT("RC1");
                                             #endif                                           
 
-                                            if (tile_L == Tiles::Blank && tile_R == Tiles::Blank) {
-                                                enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
-                                            }
-
+                                            enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_05, Stance::Enemy_Sword_Lunge_RH_06);
                                             player.pushSequence(Stance::Man_Sword_Lunge_LH_05, Stance::Man_Sword_Lunge_LH_06, true);
                                             playGame_SetGlint(enemy);
 
@@ -480,7 +491,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             DEBUG_PRINT("RE");
                                             #endif                                              
 
-                                            if (a.randomLFSR(0, 8) == 0) {
+                                            if (a.randomLFSR(0, 4) == 0) {
                                                 enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
                                             }
 
