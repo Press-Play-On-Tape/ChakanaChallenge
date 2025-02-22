@@ -702,43 +702,6 @@ void renderWorld() {
 
     }
 
-    // a.drawRect(59 + 8, Constants::GroundY - player.getY(), 2, 16);
-    // a.drawRect(160 + world.getMiddleground() - 4 + 4, 0 + 1, 8, 2);
-    // a.drawRect(240 + world.getMiddleground() - 4 + 4, 16 + 1, 8, 2);
-// a.drawRect(288 + world.getMiddleground() - 4 + 3, 16 + 1, 10, 2 );
-
-
-//                 Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-// Item &item = world
-
-
-// a.drawRect(59, 16 + 6, 10, 16);
-// a.drawRect(68,16,16,3);
-
-
-// a.drawRect(59, Constants::GroundY - world.getPlayer().getY() + 6, 10, 16 );
-
-
-/* trebochet
-uint8_t yOffset1 = world.getYOffsetForRendering();
-a.drawRect(59, yOffset1 - Constants::GroundY + player.getY(), 10, 16 );
-
-uint8_t itemIdx = world.getItem(ItemType::SwingyThing);
-Item &item1 = world.getItem(itemIdx);
-
-                            int8_t swingyThing_X = FX::readIndexedUInt8(Constants::swingyThing_X, item1.getFrame());
-                            int8_t swingyThing_Y = FX::readIndexedUInt8(Constants::swingyThing_Y, item1.getFrame());
-
-                            int16_t itemX = item1.getX() + 6 + 2 + swingyThing_X;
-                            int8_t itemY = yOffset - item1.getY() + swingyThing_Y + 11;
-                            uint8_t puffX = 0;
-
-                            a.drawRect(itemX + world.getMiddleground() - 4, itemY, 16, 3);
-*/
-
-// a.drawRect(59,Constants::GroundY - 0,10,16);
-// a.drawRect(world.getXMap(), world.getYMap(), 4, 4);
-
     #ifdef DEBUG_SWORD
     a.drawRect(playerX, playerY, 16, 6);
     a.drawRect(enemyX, enemyY, 1, 1);

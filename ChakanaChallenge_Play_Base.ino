@@ -92,23 +92,23 @@ void playGame_Init() {
     // Load Map Enemies ..
     {
 
-        // uint24_t levelEnemiesStart = FX::readIndexedUInt24(Levels::Level_Enemies, world.getCurrentPort());
-        // FX::seekData(levelEnemiesStart);
+        uint24_t levelEnemiesStart = FX::readIndexedUInt24(Levels::Level_Enemies, world.getCurrentPort());
+        FX::seekData(levelEnemiesStart);
 
-        // for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
+        for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
 
-        //     Enemy &enemy = world.getEnemy(i);
+            Enemy &enemy = world.getEnemy(i);
 
-        //     enemy.setEnemyType(static_cast<EnemyType>(FX::readPendingUInt16()));
-        //     enemy.setX(FX::readPendingUInt16());
-        //     enemy.setY(FX::readPendingUInt16());
-        //     enemy.setStance(FX::readPendingUInt16());
-        //     enemy.getItem().setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
-        //     enemy.getItem().setData(FX::readPendingUInt16());
+            enemy.setEnemyType(static_cast<EnemyType>(FX::readPendingUInt16()));
+            enemy.setX(FX::readPendingUInt16());
+            enemy.setY(FX::readPendingUInt16());
+            enemy.setStance(FX::readPendingUInt16());
+            enemy.getItem().setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
+            enemy.getItem().setData(FX::readPendingUInt16());
 
-        // }
+        }
 
-        // FX::readEnd();
+        FX::readEnd();
 
     }
 

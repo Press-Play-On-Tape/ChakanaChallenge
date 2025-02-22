@@ -2,6 +2,6 @@
     "configuration": "core=arduboy-core,boot=cathy3k",
     "board": "arduboy-homemade:avr:arduboy-fx",
     "output": "/Users/simonholmes/projects/build",
-    "sketch": "SummerFX.ino",
+    "sketch": "ChakanaChallenge.ino",
     "port": "/dev/tty.usbmodem14601"
 }

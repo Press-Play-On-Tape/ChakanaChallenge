@@ -59,6 +59,15 @@ class Enemy {
         }
 
 
+        // void pushLungeSequence(bool facingLeft) {
+
+        //     enemy.pushSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_02);
+        //     enemy.pushSequence(Stance::Enemy_Sword_Lunge_RH_01, Stance::Enemy_Sword_Lunge_RH_06);
+        //     enemy.pushSequence(Stance::Enemy_Sword_Walk_RH_01, Stance::Enemy_Sword_Walk_RH_02);
+
+        // }
+
+
         // Other Utils ..
 
         Direction getDirection() {

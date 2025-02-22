@@ -264,7 +264,6 @@ struct World {
 
             this->background += val;
 
-            // if (absT(this->background == 128)) {
             if (this->background == 128 || this->background == -128) {
                 this->background = 0;
             }
@@ -273,10 +272,10 @@ struct World {
 
         bool incMiddleground(int8_t val) {
 
-            if (this->middleground + val > 0) {
-                this->middleground = 0;
-                return false;
-            }
+            // if (this->middleground + val > 0) {
+            //     this->middleground = 0;
+            //     return false;
+            // }
             if (this->middleground + val <= -496) {
                 this->middleground = -496;
                 return false;
