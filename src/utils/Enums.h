@@ -1538,6 +1538,8 @@ enum class GameState : uint8_t {
 
     Title_Init,
     Title_Start,
+        Title_ShowCredits,
+        Title_ShowCredits_Alt,
         Title_OptPlay,
         Title_OptSound,
         Title_OptCredits,
@@ -1550,7 +1552,6 @@ enum class GameState : uint8_t {
         Title_OptSound_Music2,
         Title_OptSound_SFX2,
         Title_OptSound_Volume2,
-        Title_ShowCredits,
     Title_End,
 
     Play_Init,

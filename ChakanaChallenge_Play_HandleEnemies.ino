@@ -625,26 +625,7 @@ bool playGame_PlayerStabsEnemy(Player &player) {
 
     }
 
-    // if (!(player.getStance() == Stance::Man_Sword_Lunge_LH_03) && !(player.getStance() == Stance::Man_Sword_Lunge_RH_03)) {
-    //     return false;
-    // }
-
-    Point playerPoint;
-
-    // if (player.getStance() == Stance::Man_Sword_Lunge_RH_03) {
-
-    //     playerPoint = { 61 + 15, - Constants::GroundY + player.getY() + 12 };
-
-    //  }
-
-    // if (player.getStance() == Stance::Man_Sword_Lunge_LH_03) {
-
-    //     playerPoint = { 61 - 10, - Constants::GroundY + player.getY() + 12 };
-
-    // }
-
-    playerPoint = { 61 + (player.getStance() == Stance::Man_Sword_Lunge_RH_03 ? 15 : -10), - Constants::GroundY + player.getY() + 12 };
-
+    Point playerPoint = { 61 + (player.getStance() == Stance::Man_Sword_Lunge_RH_03 ? 15 : -10), - Constants::GroundY + player.getY() + 12 };
     return collide(playerPoint, enemyRect);
 
  }

@@ -40,30 +40,6 @@ void map_Update() {
         case GameState::Map:
 
             if (world.getFrameCount() % 4 == 0) {
-
-                // if (pressed & LEFT_BUTTON) {
-
-                //     if (world.getXMap() > 0) world.incXMap(-4);
-
-                // }
-
-                // if (pressed & RIGHT_BUTTON) {
-
-                //     if (world.getXMap() < 256) world.incXMap(4);
-
-                // }
-
-                // if (pressed & DOWN_BUTTON) {
-
-                //     if (world.getYMap() < 308) world.incYMap(4);
-
-                // }
-
-                // if (pressed & UP_BUTTON) {
-
-                //     if (world.getYMap() > 0) world.incYMap(-4);
-
-                // }
                 
                 if (pressed & LEFT_BUTTON)          world.incXMap(-4);
                 else if (pressed & RIGHT_BUTTON)    world.incXMap(4);
@@ -79,11 +55,14 @@ void map_Update() {
 
                 FX::seekData(Constants::Port_Coords);
 
+                int16_t xMap = world.getXMap();
+                int16_t yMap = world.getYMap();
+
                 for (uint8_t i = 0; i < Constants::NoOfPorts; i++) {
                     
                     FX::readObject(pt);
 
-                    if (absT(pt.x - world.getXMap()) < 128 && absT(pt.y - world.getYMap()) < 64) {
+                    if (pt.x > xMap && pt.x < xMap + 128 && pt.y > yMap && pt.y < yMap + 64) {
 
                         world.setNextPort(i);
                         break;
@@ -99,18 +78,13 @@ void map_Update() {
                     uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
                     uint8_t toPort = world.getNextPort() + 1;
 
-                    // if (toPort < fromPort) toPort = toPort + 13;
-                    // if (toPort - fromPort > 6) toPort = toPort - 13;
                     if (toPort < fromPort) toPort = toPort + 14;
                     if (toPort - fromPort > 6) fromPort = fromPort + 14 + (fromPort == 0 ? 1 : 0);
-// Serial.print(fromPort);
-// Serial.print(" ");
-// Serial.print(toPort);
+
                     FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
                     world.setNextPortCost(FX::readPendingUInt8());
                     FX::readEnd();
-// Serial.print(" ");
-// Serial.println(world.getNextPortCost());
+
                     world.setGameState(GameState::Map_ShowDialogue);
                     world.setFrameCount(0);
 
@@ -382,8 +356,6 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 map_RenderScrollMap((player.getHealth() * 3) + currentPlane);
                 map_RenderHearts(((player.getLives() - 1) * 3) + currentPlane, (player.getChakanas() * 3) + currentPlane);
-                // SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
-                // SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
 
                 break;
 
@@ -429,8 +401,6 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             case GameState::Map_ShowMenu:
 
                 map_RenderScrollMap((player.getHealth() * 3) + currentPlane);
-                // SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, (player.getChakanas() * 3) + currentPlane);
-                // SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, ((player.getLives() - 1) * 3) + currentPlane);
                 map_RenderHearts((player.getChakanas() * 3) + currentPlane, (player.getChakanas() * 3) + currentPlane);
 
                 break;

@@ -127,7 +127,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Reset_1:
             case GameState::Inventory_Open_Reset_Exit_1:
             case GameState::Inventory_Open_More_Exit:  
-                // world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) - 1));
+
                 world.decGameState();
                 break;
 
@@ -275,8 +275,6 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         }
     #endif
 
-//    #ifndef DEBUG
-
     else if (selectedItem == ItemType::Sword) {
 
         uint8_t enemySwordIdx = world.getClosestEnemy(EnemyType::SwordFighter);
@@ -303,8 +301,6 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
         launchPuff(player);
 
     }
-
-//    #endif
 
     #endif
 

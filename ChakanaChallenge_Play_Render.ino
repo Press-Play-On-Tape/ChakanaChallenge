@@ -82,7 +82,11 @@ void renderWorld() {
                 else if (tile00 == Tiles::Block_WithWeed_RH)                                                                                                                imgTile = Images::Crate_51;
 
                 if (imgTile != 0) {
+                    #ifdef RENDER_16X16
+                    SpritesU::drawOverwriteFX(renderX, renderY, 16, 16, imgTile, currentPlane);
+                    #else
                     SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);
+                    #endif
                     continue;
                 }
 
@@ -137,6 +141,7 @@ void renderWorld() {
                 else if (tile10 == Tiles::Slide_RH_Upper)                                                                                                                   imgTile = Images::Crate_30;
                 else if (tile00 == Tiles::Slide_RH_Full && tile11 == Tiles::Slide_RH_Full)                                                                                  imgTile = Images::Crate_31;
 
+
                 // Vertical Vines
 
                 else if (tile00 == Tiles::Vine_Middle && tile10 == Tiles::Vine_Middle)                                                                                      imgTile = Images::Crate_36;
@@ -144,15 +149,15 @@ void renderWorld() {
                 else if (tile11 == Tiles::Vine_Upper)                                                                                                                       imgTile = Images::Crate_38;
 
 
-                // Lever Portal
-                // if (tile00 == 34 && tile01 == 34 && tile10 == 34 && tile11 == 34)     imgTile = Images::Crate_38; // SJH Should be commented out (no need for rendering).
-
-
                 // Render image?
 
                 if (imgTile != 0) {
 
+                    #ifdef RENDER_16X16
+                    SpritesU::drawPlusMaskFX(renderX, renderY, 16, 16, imgTile, currentPlane);
+                    #else
                     SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, currentPlane);
+                    #endif
 
                 }
                 else {
@@ -344,7 +349,6 @@ void renderWorld() {
         case Stance::Man_Sword_Walk_BK_RH_01 ... Stance::Man_Sword_Walk_BK_RH_04:
         case Stance::Man_Sword_StandingJump_RH_01 ... Stance::Man_Sword_StandingJump_RH_07:
             {
-                // uint8_t stanceImg = getStanceImg(stance);
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
                 renderPlayerAndHealth(stanceImg, 56 + x, yOffset - Constants::GroundY + player.getY(), player.getHealth());
             }
@@ -356,7 +360,6 @@ void renderWorld() {
         case Stance::Man_Sword_Walk_BK_LH_01 ... Stance::Man_Sword_Walk_BK_LH_04:
         case Stance::Man_Sword_StandingJump_LH_01 ... Stance::Man_Sword_StandingJump_LH_07:
             {
-                // uint8_t stanceImg = getStanceImg(stance);
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
                 renderPlayerAndHealth(stanceImg, 56 - x, yOffset - Constants::GroundY + player.getY(), player.getHealth());
             }
@@ -364,8 +367,13 @@ void renderWorld() {
 
         default:
             {
-                // uint8_t stanceImg = getStanceImg(stance);
+               
+                #ifdef RENDER_16X16
+                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), 16, 16, Images::Player, (stanceImg * 3) + currentPlane);
+                #else
                 SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+                #endif
+
             }
             break;
         
@@ -435,7 +443,12 @@ void renderWorld() {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint16_t>(enemy.getStance()) - static_cast<uint16_t>(Stance::Enemy_Sword_Stationary_LH));
                         // renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
+
+                        #ifdef RENDER_16X16_SECONDARY
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), 16,16, Images::Enemy, (stanceImg * 3) + currentPlane);
+                        #else
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
+                        #endif
 
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame());
@@ -453,7 +466,12 @@ void renderWorld() {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint16_t>(enemy.getStance()) - static_cast<uint16_t>(Stance::Enemy_Sword_Stationary_RH));
                         // renderPlayerAndHealth(stanceImg, xEnemy - x, yEnemy, enemy.getHealth());
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
+
+                        #ifdef RENDER_16X16_SECONDARY
+                        SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), 16, 16, Images::Enemy, (stanceImg * 3) + currentPlane);
+                        #else
                         SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
+                        #endif
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame());
@@ -465,7 +483,12 @@ void renderWorld() {
                 default:
                     {
 
+                        #ifdef RENDER_16X16_SECONDARY
+                        SpritesU::drawPlusMaskFX(xEnemy, yEnemy, Images::Enemy, 16, 16, (stanceImg * 3) + currentPlane);
+                        #else
                         SpritesU::drawPlusMaskFX(xEnemy, yEnemy, Images::Enemy, (stanceImg * 3) + currentPlane);
+                        #endif
+
                         ItemType enemyItemType = enemy.getItem().getItemType();
 
                         if (enemyItemType == ItemType::Arrow_RH || enemyItemType == ItemType::Arrow_LH) {

@@ -38,6 +38,12 @@
 	// 102 bytes
 	#define SHOW_SIGN
 
+	// 46 Bytes
+	#define RENDER_16X16
+
+	// 64 Bytes
+	#define _RENDER_16X16_SECONDARY
+
 #endif
 
 #define AB_BUTTON 12

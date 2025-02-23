@@ -101,11 +101,6 @@ void title_Update() {
                 world.incGameState();
                 break;
 
-            case GameState::Title_OptSound2:
-
-                world.setGameState(GameState::Title_OptCredits);
-                break;
-
         }
 
     }
@@ -131,40 +126,15 @@ void title_Update() {
 
 void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
-    uint8_t frame = 0;
+    uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_Start);
+
+    if (world.getGameState() > GameState::Title_ShowCredits) {
+        frame = frame + (soundSettings.getMusic() ? 0 : 6);
+    }
 
     if (a.needsUpdate()) title_Update();
 
-    #ifndef DEBUG
-
-        switch (world.getGameState()) {
-
-            case GameState::Title_OptPlay ... GameState::Title_OptSound_Volume2:
-
-                frame = 1;
-                break;
-
-            case GameState::Title_ShowCredits:
-
-                frame = 2;
-                break;
-
-        }
-
-    #endif
-
     SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
-
-
-    // Render Options ?
-
-    if (frame == 1) {
-
-        frame = (static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_OptPlay)) + (soundSettings.getMusic() ? 0 : 6);
-        SpritesU::drawPlusMaskFX(64, 36, Images::Title_Options, (3 * frame) + currentPlane);
-
-    }
-
     SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
 
 }

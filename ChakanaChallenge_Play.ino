@@ -57,8 +57,6 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     Player &player = world.getPlayer();
     if (a.needsUpdate()) play_Update();
 
-    // currentPlane = a.currentPlane();
-
     SpritesU::drawOverwriteFX(0, 0, Images::BoatEnters, (titleCounter * 3) + currentPlane);    
 
     #endif

@@ -1,6 +1,5 @@
 #pragma once
 
-// #include "Boat.h"
 #include "../utils/Constants.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -43,8 +42,6 @@ struct World {
         int16_t background = 0;
         int16_t middleground = 0;
 
-        // Boat boat;
-
     public:
 
         GameState getGameState()                        { return this->gameState; }
@@ -64,15 +61,11 @@ struct World {
         uint8_t  getNextPort()                          { return this->nextPort; }
         uint8_t  getNextPortCost()                      { return this->nextPortCost; }
 
-        // int16_t getX()                                  { return this->x; }
         int16_t getY()                                  { return this->y; }
-
         int16_t getWave()                               { return this->wave; }
         int16_t getBackground()                         { return this->background; }
         int16_t getMiddleground()                       { return this->middleground; }
         uint16_t getWaveIdx()                           { return this->waveIdx; }
-
-        // Boat& getBoat()                                 { return this->boat; }
 
         void setGameState(GameState val)                { this->gameState = val; }
         void setPrevGameState(GameState val)            { this->prevGameState = val; }
@@ -88,9 +81,7 @@ struct World {
         void setNextPort(uint8_t val)                   { this->nextPort = val; }
         void setNextPortCost(uint8_t val)               { this->nextPortCost = val; }
 
-        // void setX(int16_t val)                          { this->x = val; }
         void setY(int16_t val)                          { this->y = val; }
-
         void setWave(int16_t val)                       { this->wave = val; }
         void setBackground(int16_t val)                 { this->background = val; }
         void setMiddleground(int16_t val)               { this->middleground = val; }
@@ -290,10 +281,6 @@ struct World {
 
         bool incMiddleground(int8_t val) {
 
-            // if (this->middleground + val > 0) {
-            //     this->middleground = 0;
-            //     return false;
-            // }
             if (this->middleground + val <= -496) {
                 this->middleground = -496;
                 return false;
@@ -396,7 +383,6 @@ struct World {
                 }
 
                 uint8_t yOffset = this->getYOffsetForRendering();
-                // Rect playerRect = { 59, Constants::GroundY - player.getY() + 6, 10, 16 };
                 Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
 
                 switch (item.getItemType()) {
@@ -414,23 +400,6 @@ struct World {
                             Rect itemRect = { itemX + this->getMiddleground() - 4, itemY, 16, 3 };
 
                             if (collide(playerRect, itemRect)) {
-
-// Serial.print(playerRect.x);
-// Serial.print(" ");
-// Serial.print(playerRect.y);
-// Serial.print(" ");
-// Serial.print(playerRect.width);
-// Serial.print(" ");
-// Serial.print(playerRect.height);
-// Serial.print(" - ");
-// Serial.print(itemRect.x);
-// Serial.print(" ");
-// Serial.print(itemRect.y);
-// Serial.print(" ");
-// Serial.print(itemRect.width);
-// Serial.print(" ");
-// Serial.println(itemRect.height);
-// DEBUG_BREAK
 
                                 switch (player.getDirection()) {
 
@@ -598,12 +567,8 @@ struct World {
 
         uint8_t getTile_FromCoords(int16_t xPosition, int8_t yPosition) {
 
-            
-
             int16_t tileIdx = xPosition / 8;
-// Serial.print("(Tile ");
-// Serial.print(tileIdx);
-// Serial.print(") ");
+
             if (tileIdx < 18) return Tiles::Blank;
             return mapData[yPosition >> 3][tileIdx - 18];
 
@@ -1074,30 +1039,6 @@ struct World {
 
                         break;
 
-                    // case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
-
-                    //     if (this->gameState != GameState::Play_Dead) {
-                                
-                    //         if (enemy.getCount() == 0 && a.randomLFSR(0, 120) == 0) {
-
-                    //             switch (enemy.getDirection()) {
-
-                    //                 case Direction::Left:
-                    //                     enemy.pushSequence(Stance::Enemy_Trebochet_Release_LH_01, Stance::Enemy_Trebochet_Release_LH_14);
-                    //                     break;
-
-                    //                 case Direction::Right:
-                    //                     enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01, Stance::Enemy_Trebochet_Release_RH_14);
-                    //                     break;
-
-                    //             }
-
-                    //         }
-
-                    //     }
-
-                    //     break;
-
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
 
                         if (item.getData() > 0) item.setData(item.getData() - 1);
@@ -1120,69 +1061,6 @@ struct World {
 
                 switch (item.getItemType()) {
 
-                    // case ItemType::Arrow_LH:
-                    //     {
-                    //         enemy.getItem().update();
-
-                    //         uint8_t yOffset = Constants::GroundY;
-                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-
-                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
-                            
-                    //         if (collide(playerRect, arrowRect)) {
-
-                    //             enemy.getItem().setItemType(ItemType::None);
-
-                    //             switch (this->player.getDirection()) {
-
-                    //                 case Direction::Right:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_RH_01, Stance::Man_Die_Arrow_FallBackward_RH_04, true);
-                    //                     break;
-
-                    //                 case Direction::Left:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_LH_01, Stance::Man_Die_Arrow_FallForward_LH_04, true);
-                    //                     break;
-                                        
-                    //             }
-
-                    //         }
-
-                    //     }
-
-                    //     break;
-
-                    // case ItemType::Arrow_RH:
-                    //     {
-                    //         enemy.getItem().update();
-
-                    //         uint8_t yOffset = Constants::GroundY;
-                    //         if (player.getY() < 5) yOffset = Constants::GroundY - player.getY();
-
-                    //         Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                    //         Rect arrowRect = { enemy.getItem().getX() + this->getMiddleground() - 4 + 1, yOffset - enemy.getItem().getY() + 1, 9, 3 };
-                            
-                    //         if (collide(playerRect, arrowRect)) {
-
-                    //             enemy.getItem().setItemType(ItemType::None);
-
-                    //             switch (this->player.getDirection()) {
-
-                    //                 case Direction::Right:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallForward_RH_01, Stance::Man_Die_Arrow_FallForward_RH_04, true);
-                    //                     break;
-
-                    //                 case Direction::Left:
-                    //                     this->player.pushSequence(Stance::Man_Die_Arrow_FallBackward_LH_01, Stance::Man_Die_Arrow_FallBackward_LH_04, true);
-                    //                     break;
-                                        
-                    //             }
-
-                    //         }
-
-                    //     }
-
-                    //     break;
 
                     case ItemType::Arrow_LH:
                     case ItemType::Arrow_RH:
@@ -1252,90 +1130,6 @@ struct World {
                         }
 
                         break;
-
-
-                    // case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
-                    //     {
-                    //         enemy.getItem().update(); 
-
-                    //         // uint8_t yOffset = this->getYOffsetForRendering();
-                    //         // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                    //         // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
-                    //         Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-                    //         // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
-                    //         Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 3, enemy.getItem().getY(), 4, 4 };
-                          
-                    //         if (collide(playerRect, trebochetRect)) {
-
-                    //             enemy.getItem().setItemType(ItemType::Trebochet_Ball_Left_Hidden);
-                    //             enemy.getItem().setFrame(0);
-                    //             item.setCounter(3);
-
-                    //             this->initPuff(item.getX(), item.getY());
-                    //             Stance stance = 0;
-
-                    //             switch (this->player.getDirection()) {
-
-                    //                 case Direction::Right:
-                    //                     stance = Stance::Man_Die_BWD_RH_01;
-                    //                     // this->player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
-                    //                     break;
-
-                    //                 case Direction::Left:
-                    //                     stance = Stance::Man_Die_FWD_LH_01;
-                    //                     // this->player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
-                    //                     break;
-                                        
-                    //             }
-
-                    //             this->player.pushSequence(stance, stance + 3, true);
-
-                    //         }                            
-
-                    //     }
-                    //     break;   
-
-                    // case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
-                    //     {
-                    //         enemy.getItem().update(); 
-
-                    //         // uint8_t yOffset = this->getYOffsetForRendering();
-                    //         // Rect playerRect = { 59, yOffset - Constants::GroundY + player.getY(), 10, 16 };
-                    //         // Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, yOffset - enemy.getItem().getY(), 4, 4 };
-                    //         Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
-                    //         Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() - 4, enemy.getItem().getY(), 4, 4 };
-                            
-                    //         if (collide(playerRect, trebochetRect)) {
-
-                    //             enemy.getItem().setItemType(ItemType::Trebochet_Ball_Right_Hidden);
-                    //             enemy.getItem().setFrame(0);
-                    //             item.setCounter(3);
-                    //             Stance stance = 0;
-
-                    //             this->initPuff(item.getX(), item.getY());
-
-                    //             switch (this->player.getDirection()) {
-
-                    //                 case Direction::Right:
-                    //                     stance = Stance::Man_Die_FWD_RH_01;
-                    //                     // this->player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
-                    //                     break;
-
-                    //                 case Direction::Left:
-                    //                     stance = Stance::Man_Die_BWD_LH_01;
-                    //                     // this->player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
-                    //                     break;
-                                        
-                    //             }
-
-                    //             this->player.pushSequence(stance, stance + 3, true);
-
-                    //         }                            
-
-                    //     }
-                    //     break;  
-
-
 
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                     case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
