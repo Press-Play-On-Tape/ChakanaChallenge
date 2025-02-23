@@ -289,7 +289,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         if (isLeft) {
 
                             if (tile_L == Tiles::Blank && 
-                               ((dist >= -120 && dist <= -38) || 
+                               ((dist >= -enemy.getItem().getData() && dist <= -38) || 
                                (dist >= -37 && dist <= -28 && a.randomLFSR(0, 5) == 0))) {
 
                                 #ifdef DEBUG_ENEMY_SWORD
@@ -422,7 +422,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         else {
 
                             if (tile_R == Tiles::Blank &&
-                               ((dist >= 34 && dist <= 120) ||    
+                               ((dist >= 34 && dist <= enemy.getItem().getData()) ||    
                                 (dist >= 20 && dist <= 33 && a.randomLFSR(0, 5) == 0))) {    
 
                                 #ifdef DEBUG_ENEMY_SWORD

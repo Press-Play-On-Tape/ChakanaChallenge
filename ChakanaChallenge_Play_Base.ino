@@ -162,6 +162,7 @@ void processLadder_MoveRight(Player &player, Tiles tile) {
     if (world.getMiddleground() % 8 != 0) {
 
         if (world.isEmptyTile(tile)) {
+// Serial.println("a");            
             player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
             end = 1;
             player.setFalls(0);
@@ -722,19 +723,40 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             }
 
                         }
+//                         else if (world.isLadderTile(tile_L)) {
+// //Removed 8 Feb due to level 01.
+//                             // if (world.canWalkPastTile(tile_L2, Direction::Left)) {
+//                                 processLadder_MoveLeft(player, tile_LD);
+//                             // }
+
+//                         }     
+//                         else if (world.canWalkPastTile(tile_L, Direction::Left)) {  
+
+//                             processLadder_MoveLeft(player, tile_L);
+
+//                         }   
                         else if (world.isLadderTile(tile_L)) {
-//Removed 8 Feb due to level 01.
-                            // if (world.canWalkPastTile(tile_L2, Direction::Left)) {
+
+                            if (world.getMiddleground() % 8 == 0 && world.canWalkPastTile(tile_L, Direction::Right)) {  
+// Serial.println("L1");
                                 processLadder_MoveLeft(player, tile_LD);
-                            // }
 
-                        }     
-                        else if (world.canWalkPastTile(tile_L, Direction::Left)) {  
+                            }       
+                            else if (world.canWalkPastTile(tile_L2, Direction::Left)) {
+// Serial.println("L2");
 
-                            processLadder_MoveLeft(player, tile_L);
+                                processLadder_MoveLeft(player, tile_L);
+
+                            }
 
                         }   
+                        else if (world.canWalkPastTile(tile_L, Direction::Left)) {  
+// // Serial.print(tile_R);
+// // Serial.println(" L3");
 
+                            processLadder_MoveLeft(player, tile_LD);
+
+                        }                             
                         #ifdef SHOW_SIGN
 
                             else if(world.isSignTile(tile_L)) {
@@ -878,6 +900,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                                 }     
                                 else {
+// Serial.println("b");            
 
                                     player.setFalls(0);
                                     player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
@@ -975,7 +998,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                             } 
                             else {
-
+// Serial.println("c");            
+// Serial.println(tile_R);      
                                 player.setFalls(0);
                                 player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
 
@@ -1077,11 +1101,12 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         else if (world.isLadderTile(tile_R)) {
            
                             if (world.getMiddleground() % 8 == 0 && world.canWalkPastTile(tile_R, Direction::Right)) {  
-
+// Serial.println("L1");
                                 processLadder_MoveRight(player, tile_R);
 
                             }       
                             else if (world.canWalkPastTile(tile_R2, Direction::Right)) {
+// Serial.println("L2");
 
                                 processLadder_MoveRight(player, tile_R2D);
 
@@ -1089,8 +1114,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                         }     
                         else if (world.canWalkPastTile(tile_R, Direction::Right)) {  
+// // Serial.print(tile_R);
+// // Serial.println(" L3");
 
-                            processLadder_MoveRight(player, tile_R);
+                            processLadder_MoveRight(player, tile_RD);
 
                         }     
 
@@ -1425,6 +1452,7 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
                     uint8_t tile_R3D = world.getTile_RelativeToPlayer(3, -1);
 
                     if (world.isEmptyTile(tile_R) && world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R2D) && world.canWalkOnTile(tile_R3D)) {
+                    // if (world.areEmptyTiles(tile_R, tile_RD, tile_R2D) && world.canWalkOnTile(tile_R3D)) {
 
                         player.pushSequence(Stance::Man_WalkingJump_RH_25_02, Stance::Man_WalkingJump_RH_25_11, true); 
 
@@ -1899,7 +1927,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             world.setGameState(GameState::Chakana_Open);
                             world.setPortVisited(world.getCurrentPort());
                             endOfLevel_Counter = 0;
-                            titleCounter = a.randomLFSR(12, 26);
+                            titleCounter = a.randomLFSR(10, 21);
                             
                         }
                         break;
@@ -2415,7 +2443,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             enemy.setSwordWound(12);
 
-                            if (!enemy.decHealth(1)) {
+                            if (!enemy.decHealth(10)) {
                                     
                                 switch (enemy.getDirection()) {
 
@@ -2449,7 +2477,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 int16_t dist = getDistanceBetween(enemy);
                                 world.setGameState(GameState::Play_Game);
 
-                                player.removeInventoryItem(menu.getY());
+                                //player.removeInventoryItem(menu.getY());
                                 menu.decY();
                                 enemy.clear();
                                 player.insert(Stance::Man_Walk_RH_00 + (player.getDirection() == Direction::Left ? Constants::Player_Stance_Offset : 0));

@@ -9,7 +9,7 @@ struct InventoryItem {
 
     private:
 
-        ItemType itemType;
+        ItemType itemType = ItemType::None;
 
     public:
 

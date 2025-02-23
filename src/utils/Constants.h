@@ -14,9 +14,11 @@
 #define _DEBUG_RENDER_MAP
 #define _DEBUG_SWORD
 #define _DEBUG_NO_MENU
-#define _DEBUG_LOTS_OF_CHAKANAS
+#define DEBUG_LOTS_OF_CHAKANAS
 
 #ifndef DEBUG
+
+	// Want to Keep !
 
 	// 142 bytes
 	#define MAP_SHOW_PORT_NAMES
@@ -33,14 +35,16 @@
 	// 242 bytes
 	#define MULTIPLE_ITEMS
 
-	// 120 bytes
-	#define _BOUNCEJUMP_3
-
 	// 102 bytes
 	#define SHOW_SIGN
 
 	// 46 Bytes
 	#define RENDER_16X16
+
+	// Not fussed!
+
+	// 120 bytes
+	#define _BOUNCEJUMP_3
 
 	// 64 Bytes
 	#define _RENDER_16X16_SECONDARY

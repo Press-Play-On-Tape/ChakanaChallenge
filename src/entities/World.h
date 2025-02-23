@@ -597,7 +597,8 @@ struct World {
 
                 if (direction != Direction::Left) { 
 
-                    return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    return isEmptyTile_XY(tile, 1, 0);
+                    // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
                     
                 }
 
@@ -612,7 +613,8 @@ struct World {
 
                 if (direction != Direction::Left) { 
 
-                    return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+                    return isEmptyTile_XY(tile, 1, 0);
+                    // return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
                     
                 }
 
@@ -627,7 +629,8 @@ struct World {
 
                 if (direction != Direction::Right) { 
 
-                    return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    return isEmptyTile_XY(tile, -1, 0);
+                    // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
                     
                 }
 
@@ -642,7 +645,8 @@ struct World {
 
                 if (direction != Direction::Right) { 
 
-                    return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+                    return isEmptyTile_XY(tile, -1, 0);
+                    // return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
                     
                 }
 
@@ -738,6 +742,16 @@ struct World {
 
             return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
+        }
+
+        bool areEmptyTiles(uint8_t tile1, uint8_t tile2, uint8_t tile3) {
+
+            if (!this->isEmptyTile(tile1)) return false;
+            if (!this->isEmptyTile(tile2)) return false;
+            if (!this->isEmptyTile(tile3)) return false;
+
+            return true;
+            
         }
 
         #ifdef FALL_THROUGH_PORTAL
@@ -1192,14 +1206,14 @@ struct World {
 
         uint8_t getClosestEnemy(EnemyType enemyType) {
             
-            int16_t dist = 16000;
+            int16_t dist = 128;
             uint8_t idx = 255;
 
             for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
 
                 Enemy &enemy = this->enemy[i];
 
-                if (enemy.getEnemyType() == EnemyType::None)                break;
+                if (enemy.getEnemyType() != enemyType)                      continue;
                 if (enemy.getY() != player.getY_RelativeToGround())         continue;
 
                 int16_t dist_Test = -this->getMiddleground() + 56 - enemy.getX();
