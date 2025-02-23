@@ -1137,7 +1137,7 @@ struct World {
                             ItemType itemType = item.getItemType();
                             enemy.getItem().update();
 
-                            Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                            Rect playerRect = { 59, player.getY_RelativeToGround(), 10, 16 };
                             int xOffset = (itemType >= ItemType::Trebochet_Ball_Left_1) ? -3 : -4;
                             Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() + xOffset, enemy.getItem().getY(), 4, 4 };
                             
@@ -1199,11 +1199,12 @@ struct World {
 
                 Enemy &enemy = this->enemy[i];
 
-                if (enemy.getEnemyType() == EnemyType::None) break;
+                if (enemy.getEnemyType() == EnemyType::None)                break;
+                if (enemy.getY() != player.getY_RelativeToGround())         continue;
 
                 int16_t dist_Test = -this->getMiddleground() + 56 - enemy.getX();
 
-                if (dist_Test < 0) dist_Test = dist_Test * -1;
+                if (dist_Test < 0) dist_Test = -dist_Test;
 
                 if (dist_Test < dist) {
 

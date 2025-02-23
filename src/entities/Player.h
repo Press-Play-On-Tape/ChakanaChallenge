@@ -67,6 +67,12 @@ class Player {
 
         }
 
+        uint8_t getY_RelativeToGround() {
+
+            return Constants::GroundY - this->y;
+
+        }
+
         bool decHealth(uint8_t i) {
 
             this->health = this->health - i;

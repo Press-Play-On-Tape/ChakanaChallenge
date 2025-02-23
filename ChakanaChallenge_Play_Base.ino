@@ -1761,7 +1761,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             #ifdef TRAP_DOOR
 
-                Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                Rect playerRect = { 59, player.getY_RelativeToGround(), 10, 16 };
 
                 for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
             
@@ -1828,7 +1828,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             for (uint8_t i = 0; i < Constants::ItemCount_Level; i++) {
           
-                Rect playerRect = { 59, Constants::GroundY - player.getY(), 10, 16 };
+                Rect playerRect = { 59, player.getY_RelativeToGround(), 10, 16 };
                 Item &item = world.getItem(i);
 
                 
@@ -2600,7 +2600,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             break;
 
         case GameState::Play_Dead:
-        
+
             SpritesU::drawPlusMaskFX(36, 0, Images::EndOfLife, ((endOfLevel_Counter + (player.getLives() == 1 ? 16 : 0)) * 3) + currentPlane);
             break;
 
@@ -2771,7 +2771,7 @@ void launchPuff(Player &player) {
     Item &puff = world.getItem(world.getItem(ItemType::Puff));
 
     puff.setX(-world.getMiddleground() + 56 + 4);
-    puff.setY(Constants::GroundY - player.getY());
+    puff.setY(player.getY_RelativeToGround());
 
     puff.setFrame(0);
     puff.setData(1);
@@ -2783,7 +2783,7 @@ void launchPuffLand(Player &player) {
     Item &puff = world.getItem(world.getItem(ItemType::Puff));
 
     puff.setX(-world.getMiddleground() + 56 + 4);
-    puff.setY(Constants::GroundY - player.getY());
+    puff.setY(player.getY_RelativeToGround());
 
     puff.setFrame(0);
     puff.setData(2);
