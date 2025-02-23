@@ -58,12 +58,17 @@ class Player {
         void init() {
 
             this->lives = 3;
-            this->chakanas = 20;
             this->falls = 0;
             this->itemCount = 0;
             this->health = Constants::HealthMax;
             this->enemyIdx = Constants::NoEnemy;
             this->wound = 0;
+            
+            #ifdef DEBUG_LOTS_OF_CHAKANAS
+            this->chakanas = 255;
+            #else
+            this->chakanas = 20;
+            #endif
 
         }
 

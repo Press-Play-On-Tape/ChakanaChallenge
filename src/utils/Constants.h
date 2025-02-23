@@ -14,6 +14,7 @@
 #define _DEBUG_RENDER_MAP
 #define _DEBUG_SWORD
 #define _DEBUG_NO_MENU
+#define _DEBUG_LOTS_OF_CHAKANAS
 
 #ifndef DEBUG
 

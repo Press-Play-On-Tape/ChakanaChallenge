@@ -1899,7 +1899,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             world.setGameState(GameState::Chakana_Open);
                             world.setPortVisited(world.getCurrentPort());
                             endOfLevel_Counter = 0;
-                            titleCounter = a.randomLFSR(15, 30);
+                            titleCounter = a.randomLFSR(12, 26);
                             
                         }
                         break;
