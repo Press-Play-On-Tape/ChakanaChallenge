@@ -879,7 +879,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     #else
                     if (world.isEmptyTile(tile_RD) && world.isEmptyTile(tile_R)) {
                     #endif
-
+ 
                         if (justPressedOrPressed & A_BUTTON) { 
 
                             uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);

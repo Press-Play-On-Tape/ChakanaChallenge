@@ -122,16 +122,21 @@ struct World {
 
         uint8_t getYOffsetForRendering() {
 
-            switch (player.getY()) {
+            int8_t playerY = player.getY();
 
-                case 21 ... 37: 
-                    return Constants::GroundY;
+            if (playerY >= 21 && playerY <= 37) {
 
-                case -53 ... 20:
-                    return Constants::GroundY - player.getY() + 22;
+                return Constants::GroundY;
 
-                default:
-                    return 112;
+            }
+            else if (playerY >= -53 && playerY <= 20) {
+
+                return Constants::GroundY - playerY + 22;
+
+            }
+            else {
+
+                return 112;
 
             }
 
@@ -273,7 +278,10 @@ struct World {
 
             this->background += val;
 
-            if (this->background == 128 || this->background == -128) {
+            // if (this->background == 128 || this->background == -128) {
+            //     this->background = 0;
+            // }
+            if ((uint8_t)this->background == 128) {
                 this->background = 0;
             }
 
@@ -587,7 +595,8 @@ struct World {
             else if (tile == Tiles::Solid_Walkable)                                     return false;
             else if (tile == Tiles::Poker)                                              return true;
 
-            else if (tile == Tiles::Lever_Portal_LH) { 
+            else if (tile == Tiles::Lever_Portal_LH || 
+                     tile == Tiles::Lever_Portal_Auto_LH) { 
 
                 if (direction == Direction::Left) { 
 
@@ -603,23 +612,24 @@ struct World {
                 }
 
             }
-            else if (tile == Tiles::Lever_Portal_Auto_LH) {
+            // else if (tile == Tiles::Lever_Portal_Auto_LH) {
                 
-                if (direction == Direction::Left) { 
+            //     if (direction == Direction::Left) { 
 
-                    return true;
+            //         return true;
 
-                }
+            //     }
 
-                if (direction != Direction::Left) { 
+            //     if (direction != Direction::Left) { 
 
-                    return isEmptyTile_XY(tile, 1, 0);
-                    // return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+            //         return isEmptyTile_XY(tile, 1, 0);
+            //         // return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
                     
-                }
+            //     }
 
-            }
-            else if (tile == Tiles::Lever_Portal_RH) {
+            // }
+            else if (tile == Tiles::Lever_Portal_RH ||
+                     tile == Tiles::Lever_Portal_Auto_RH) {
                 
                 if (direction == Direction::Right) { 
 
@@ -635,22 +645,22 @@ struct World {
                 }
 
             }
-            else if (tile == Tiles::Lever_Portal_Auto_RH) {
+            // else if (tile == Tiles::Lever_Portal_Auto_RH) {
 
-                if (direction == Direction::Right) { 
+            //     if (direction == Direction::Right) { 
 
-                    return true;
+            //         return true;
 
-                }
+            //     }
 
-                if (direction != Direction::Right) { 
+            //     if (direction != Direction::Right) { 
 
-                    return isEmptyTile_XY(tile, -1, 0);
-                    // return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
+            //         return isEmptyTile_XY(tile, -1, 0);
+            //         // return this->getItem(ItemType::Lever_Portal_Auto_Open) < Constants::NoItem;
                     
-                }
+            //     }
 
-            }
+            // }
           
             else if (tile == Tiles::WoodenBarrier) { 
 
@@ -663,6 +673,7 @@ struct World {
                 return false; 
                 
             }
+     
 
             #ifndef DEBUG_LOCKED_DOOR
 
@@ -742,16 +753,6 @@ struct World {
 
             return tile == Tiles::Solid_Walkable || tile == Tiles::Rollers_Left || tile == Tiles::Rollers_Right;
 
-        }
-
-        bool areEmptyTiles(uint8_t tile1, uint8_t tile2, uint8_t tile3) {
-
-            if (!this->isEmptyTile(tile1)) return false;
-            if (!this->isEmptyTile(tile2)) return false;
-            if (!this->isEmptyTile(tile3)) return false;
-
-            return true;
-            
         }
 
         #ifdef FALL_THROUGH_PORTAL
@@ -1074,7 +1075,6 @@ struct World {
                 }
 
                 switch (item.getItemType()) {
-
 
                     case ItemType::Arrow_LH:
                     case ItemType::Arrow_RH:
