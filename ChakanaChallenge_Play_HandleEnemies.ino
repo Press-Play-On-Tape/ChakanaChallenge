@@ -290,7 +290,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             if (tile_L == Tiles::Blank && 
                                ((dist >= -enemy.getItem().getData() && dist <= -38) || 
-                               (dist >= -37 && dist <= -28 && a.randomLFSR(0, 5) == 0))) {
+                                (dist >= -37 && dist <= -28 && a.randomLFSR(0, 5) == 0))) {
 
                                 #ifdef DEBUG_ENEMY_SWORD
                                 DEBUG_PRINT("LB");

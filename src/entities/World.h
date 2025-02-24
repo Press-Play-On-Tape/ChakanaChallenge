@@ -792,16 +792,26 @@ struct World {
                             
                     int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
                     uint8_t yItem = (this->player.getLevel() + relY) << 3;
+                    bool yAdjust = false;
 
                     // if (xItem % 16 != 0) xItem = xItem - 8;
-                    // if (yItem % 16 != 0) yItem = yItem + 8;
+                    if (yItem % 16 != 0) {
+                        yItem = yItem - 8;
+                        yAdjust = true;
+                    }
+
                     if (xItem % 8 != 0) xItem = xItem - 4;
                     if (xItem % 16 != 0) xItem = xItem - 8;
 
                     // Serial.print(xItem);
                     // Serial.print(",");
                     // Serial.println(yItem);
-                    uint8_t idx = this->getItem(xItem, yItem);
+                    uint8_t idx = 0;
+
+                    idx = this->getItem(xItem, yItem);
+                    if (yAdjust && idx == Constants::NoItem) {
+                        idx = this->getItem(xItem, yItem + 16);
+                    }
 
                     if (idx != Constants::NoItem) {
                         
@@ -1094,7 +1104,7 @@ struct World {
 
                                 const uint16_t diff = Stance::Enemy_Trebochet_Release_LH_01 - Stance::Enemy_Trebochet_Release_RH_01;
                                 uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
-                                enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01 + stanceOffset, Stance::Enemy_Trebochet_Release_RH_14 + diff);
+                                enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01 + stanceOffset, Stance::Enemy_Trebochet_Release_RH_14 + stanceOffset);
 
                             }
 

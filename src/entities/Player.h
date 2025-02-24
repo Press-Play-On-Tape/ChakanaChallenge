@@ -65,7 +65,7 @@ class Player {
             this->wound = 0;
             
             #ifdef DEBUG_LOTS_OF_CHAKANAS
-            this->chakanas = 255;
+            this->chakanas = 200;
             #else
             this->chakanas = 20;
             #endif

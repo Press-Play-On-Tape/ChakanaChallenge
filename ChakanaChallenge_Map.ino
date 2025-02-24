@@ -285,7 +285,7 @@ void map_RenderScrollMap(uint8_t scrollFrame) {
 
 }
 
-void map_RenderHearts(uint8_t lives, uint8_t chakanas) {
+void map_RenderHearts(uint8_t lives, uint16_t chakanas) {
 
     SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, lives);
     SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, chakanas);

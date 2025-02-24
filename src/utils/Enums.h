@@ -19,6 +19,11 @@ struct StanceDetails {
     
 };
 
+enum PuffType : uint8_t {
+    Object,
+    Health,
+    Fall
+};
 
 enum class MusicSong : uint8_t {
     MainTheme
