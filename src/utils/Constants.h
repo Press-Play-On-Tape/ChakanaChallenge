@@ -16,7 +16,12 @@
 #define _DEBUG_NO_MENU
 #define DEBUG_LOTS_OF_CHAKANAS
 
-#ifndef DEBUG
+
+#ifdef DEBUG
+
+    #define FALL_THROUGH_PORTAL
+
+#else
 
 	// Want to Keep !
 

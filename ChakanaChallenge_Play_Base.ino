@@ -128,59 +128,6 @@ void killPlayer(Player &player) {
 
 }
 
-void processLadder_MoveLeft(Player &player, Tiles tile) {
-
-    uint8_t start = 0;
-    uint8_t end;
-
-    if (world.getMiddleground() % 8 != 0) {
-
-        if (world.isEmptyTile(tile)) {
-            player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
-            end = 1;
-            player.setFalls(0);
-        }
-        else {
-            start = 2;
-            end = 7;
-        }
-
-    }
-    else {
-        end = 3;
-    }
-
-    player.pushSequence(Stance::Man_Walk_LH_01 + start, Stance::Man_Walk_LH_01 + end);
-
-}
-
-void processLadder_MoveRight(Player &player, Tiles tile) {
-
-    uint8_t start = 0;
-    uint8_t end;
-
-    if (world.getMiddleground() % 8 != 0) {
-
-        if (world.isEmptyTile(tile)) {
-// Serial.println("a");            
-            player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
-            end = 1;
-            player.setFalls(0);
-        }
-        else {
-            start = 2;
-            end = 7;
-        }
-
-    }
-    else {
-        end = 3;
-    }
-
-    player.pushSequence(Stance::Man_Walk_RH_01 + start, Stance::Man_Walk_RH_01 + end);
-
-}
-
 boolean isMidLadderOrVineStance_RH(Stance stance) {
 
     return stance == Stance::Man_ClimbLadder_BK_RH_UP_07 || stance == Stance::Man_ClimbLadder_BK_RH_DOWN_07 ||
@@ -237,8 +184,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile_U2 = world.getTile_RelativeToPlayer(0, 2);
                     uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
                     uint8_t tile_RU2 = world.getTile_RelativeToPlayer(1, 2);
+// Serial.print("U1 ");
+// Serial.print(tile);
+// Serial.print(" ");
+// Serial.println(tile_U);
 
                     if (world.isLadderTile_Upper(tile) && world.canWalkPastTile(tile_U2, Direction::Backward)) {
+// Serial.println("U2");
 
                         if (justPressedOrPressed & RIGHT_BUTTON || isMidLadderOrVineStance_RH(stance)) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_08, Stance::Man_ClimbLadder_BK_RH_UP_14);
@@ -250,6 +202,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
                     else if (world.isVerticalVine_Upper(tile_U)) {
+// Serial.println("U3");
 
                         if ((justPressedOrPressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
                             player.setFalls(0);
@@ -263,13 +216,14 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
                     else if (world.isVerticalVine_Upper(tile_U2) && world.isVerticalVine_Upper(tile_RU2)) {
+// Serial.println("U4");
 
                         player.pushSequence(Stance::Man_ClimbLadder_More_BK_RH_UP_01, Stance::Man_ClimbLadder_More_BK_RH_UP_04);
 
                     }
                     else if ((world.isLadderTile_Middle(tile) && world.isLadderTile_Middle(tile_R)) ||
                             (world.isVerticalVine_CanClimbUp(tile) && world.isVerticalVine_CanClimbUp(tile_R))) {
-
+// Serial.println("U5");
 
                         // Climb further up ..
 
@@ -492,7 +446,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
             case Direction::Left:
                 {
-                
+                    playGame_HandlePlayerMovements(justPressedOrPressed, Direction::Left);
+/*
                     uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
                     uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
                     uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
@@ -792,7 +747,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         }       
 
                     }     
-
+*/
                 }
                 break;
 
@@ -868,7 +823,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
             case Direction::Right:
                 {
-
+                    playGame_HandlePlayerMovements(justPressedOrPressed, Direction::Right);
+/*                    
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                     uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                     uint8_t tile_R3 = world.getTile_RelativeToPlayer(3, 0);
@@ -1156,7 +1112,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         }
 
                     }
-
+*/
                 }                    
                 break;
 
@@ -1242,7 +1198,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 }
 
                 break;
-
+/*
             case Direction::Right:
                 {
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
@@ -1259,28 +1215,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
                     else {
-                        playGame_HandleGamePlay_Basics(player, Stance::Man_Start);
+                        playGame_HandleGamePlay_Basics(player, Stance::Man_Start); // << should be 0?
                     }
     
                 }                
-                break;
-
-            case Direction::Forward:
-                {
-                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-
-                    if (tile == 0) {
-
-                        player.stageSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
-
-                    }
-                    else {
-
-                        player.stageSequence(Stance::Man_StandingJump_FW_UP_01, Stance::Man_StandingJump_FW_UP_06); 
-
-                    }
-
-                }
                 break;
 
             case Direction::Left:
@@ -1300,6 +1238,74 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     }
                     else {
                         playGame_HandleGamePlay_Basics(player, Constants::Player_Stance_Offset);
+                    }
+
+                }
+                break;
+*/
+            case Direction::Left:
+            case Direction::Right:
+                {
+                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                    uint8_t tile_F = world.getTile_RelativeToPlayer(player.getDirection() == Direction::Left ? -1 : 1, 0);
+
+                    if (tile == Tiles::Poker || tile_F == Tiles::Poker) {
+
+                        if (justPressed & A_BUTTON) {
+
+                            world.setGameState(GameState::Play_Gamble_Select_Open);
+                            playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
+
+                        }
+
+                    }
+                    else {
+
+                        if (player.getDirection() == Direction::Left) {
+                            playGame_HandleGamePlay_Basics(player, Constants::Player_Stance_Offset);
+                        }
+                        else {
+                            playGame_HandleGamePlay_Basics(player, Stance::Man_Start); // << should be 0?
+                        }
+                    }
+    
+                }                
+                break;
+
+                {
+                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                    uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+
+                    if (tile == Tiles::Poker || tile_L == Tiles::Poker) {
+
+                        if (justPressed & A_BUTTON) {
+
+                            world.setGameState(GameState::Play_Gamble_Select_Open);
+                            playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
+
+                        }
+
+                    }
+                    else {
+                        playGame_HandleGamePlay_Basics(player, Constants::Player_Stance_Offset);
+                    }
+
+                }
+                break;
+
+            case Direction::Forward:
+                {
+                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+
+                    if (tile == 0) {
+
+                        player.stageSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
+
+                    }
+                    else {
+
+                        player.stageSequence(Stance::Man_StandingJump_FW_UP_01, Stance::Man_StandingJump_FW_UP_06); 
+
                     }
 
                 }
@@ -1606,8 +1612,6 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
                 break;
                 
         }
-
-        
 
     }
 
@@ -2033,7 +2037,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 player.setHealth(0);
 
                                 switch (player.getDirection()) {
-
+/*
                                     case Direction::Left:
                                         {
                                             player.setY(Constants::GroundY - item.getY());
@@ -2068,6 +2072,26 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                         }
 
                                         break;
+*/
+                                    case Direction::Left:
+                                    case Direction::Right:
+                                        {
+                                            uint16_t stanceOffset = (player.getDirection() == Direction::Left ? Constants::Player_Stance_Offset : 0);
+                                            player.setY(Constants::GroundY - item.getY());
+                                            player.pushSequence(Stance::Man_Die_Fire_RH_01 + stanceOffset, Stance::Man_Die_Fire_RH_12 + stanceOffset, true);
+
+                                            uint8_t xPos = item.getX() + world.getMiddleground();
+
+                                            if (xPos % 8 == 0) {
+
+                                                player.push(Stance::Man_Die_Fire_Adj_RH_02 + stanceOffset);
+
+                                            }
+
+                                        }
+
+                                        break;
+
 
                                 }
 

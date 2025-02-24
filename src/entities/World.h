@@ -603,8 +603,13 @@ struct World {
                     return true;
 
                 }
+                else if (direction == Direction::Backward) { 
 
-                if (direction != Direction::Left) { 
+                    return isEmptyTile_XY(tile, 0, 1);
+                    // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    
+                }
+                else if (direction != Direction::Left) { 
 
                     return isEmptyTile_XY(tile, 1, 0);
                     // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
@@ -636,8 +641,13 @@ struct World {
                     return true;
 
                 }
+                else if (direction == Direction::Backward) { 
 
-                if (direction != Direction::Right) { 
+                    return isEmptyTile_XY(tile, 0, 1);
+                    // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
+                    
+                }
+                else if (direction != Direction::Right) { 
 
                     return isEmptyTile_XY(tile, -1, 0);
                     // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
@@ -764,6 +774,16 @@ struct World {
         }
 
         bool isEmptyTile_XY(uint8_t tile, int8_t relX, int8_t relY) {
+            // Serial.print("Ply ");
+            // Serial.print(player.getLevel());
+
+            // Serial.print(" isEmptyTile_XY(");
+            // Serial.print(tile);
+            // Serial.print(",");
+            // Serial.print(relX);
+            // Serial.print(",");
+            // Serial.print(relY);
+            // Serial.println(")");
 
             if (relX != Constants::NoOffset) {
 
@@ -771,14 +791,22 @@ struct World {
                     tile == Tiles::Lever_Portal_Auto_LH || tile == Tiles::Lever_Portal_Auto_RH) {
                             
                     int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
-                    uint8_t yItem = (this->player.getLevel() + relY - 1) << 3;
+                    uint8_t yItem = (this->player.getLevel() + relY) << 3;
 
+                    // if (xItem % 16 != 0) xItem = xItem - 8;
+                    // if (yItem % 16 != 0) yItem = yItem + 8;
+                    if (xItem % 8 != 0) xItem = xItem - 4;
                     if (xItem % 16 != 0) xItem = xItem - 8;
-                    if (yItem % 16 != 0) yItem = yItem + 8;
-                    
+
+                    // Serial.print(xItem);
+                    // Serial.print(",");
+                    // Serial.println(yItem);
                     uint8_t idx = this->getItem(xItem, yItem);
 
                     if (idx != Constants::NoItem) {
+                        
+                        // Serial.print("Found ");
+                        // Serial.println(idx);
 
                         Item &item = this->getItem(idx);
 
@@ -795,6 +823,8 @@ struct World {
                     return false;
 
                 }
+
+                // return false;
 
             }
 
