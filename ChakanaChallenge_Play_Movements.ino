@@ -59,7 +59,7 @@ void processLadder_MoveRight(Player &player, Tiles tile) {
 
 }
 
-void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction direction) {
+void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
 
     Player &player = world.getPlayer();
     Stance stance = player.getStance();
@@ -85,7 +85,7 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
     if (world.isEmptyTile(tile_FD) && world.isEmptyTile(tile_F)) {
     #endif
 
-        if (justPressedOrPressed & A_BUTTON) { 
+        if (pressed & A_BUTTON) { 
 
             // uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
             // uint8_t tile_L3 = world.getTile_RelativeToPlayer(-3, 0);
@@ -528,7 +528,7 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
         }   
         // else if (tile == Tiles::Poker || tile_L == Tiles::Poker) {
 
-        //     if (justPressedOrPressed & A_BUTTON) {
+        //     if (pressed & A_BUTTON) {
 
         //         world.setGameState(GameState::Play_Gamble_Select_Open);
         //         playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
@@ -543,7 +543,7 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
         // }
         else if (tile == Tiles::Poker || tile_F == Tiles::Poker) {
 
-            if (justPressedOrPressed & A_BUTTON) {
+            if (pressed & A_BUTTON) {
 
                 world.setGameState(GameState::Play_Gamble_Select_Open);
                 playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
@@ -636,7 +636,7 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
         #endif
         else {
 
-            // if (justPressedOrPressed & A_BUTTON) {
+            // if (pressed & A_BUTTON) {
 
             //     if (!world.canWalkPastTile(tile_L) && world.canWalkOnTile(tile_L) && world.isEmptyTile(tile_U)) {     
 
@@ -645,7 +645,7 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
             //     }                       
                 
             // }
-            if (justPressedOrPressed & A_BUTTON) {
+            if (pressed & A_BUTTON) {
 
                 if (!world.canWalkPastTile(tile_F) && world.canWalkOnTile(tile_F) && world.isEmptyTile(tile_U)) {     
 

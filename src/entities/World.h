@@ -741,15 +741,19 @@ struct World {
 
             if (tile == Tiles::Water_Plain) {
 
-                uint8_t idx = this->getItem(ItemType::LifeSaver_InWater_LH, ItemType::LifeSaver_InWater_RH);
+                uint8_t index = 0;
 
-                if (idx == Constants::NoItem) {
+                for (index = 0; index < Constants::ItemCount_Level; ++index) {
+                    const auto itemType = this->items[index].getItemType();
 
-                    idx = this->getItem(ItemType::LifeSaver_Dissolve_InWater_LH, ItemType::LifeSaver_Dissolve_InWater_RH);
-
+                    if (itemType == ItemType::LifeSaver_InWater_LH) break;
+                    if (itemType == ItemType::LifeSaver_InWater_RH) break;
+                    if (itemType == ItemType::LifeSaver_Dissolve_InWater_LH) break;
+                    if (itemType == ItemType::LifeSaver_Dissolve_InWater_RH) break;
+                    
                 }
 
-                return idx != Constants::NoItem;
+                return (index != Constants::ItemCount_Level);
 
             }
 

@@ -166,10 +166,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     player.stageSequence(Stance::None, Stance::None);
     Stance stance = player.getStance();
-    uint8_t justPressedOrPressed = pressed | justPressed;
+
     bool middleGroundMod8Equals0 = world.getMiddleground() % 8 == 0;
 
-    if (justPressedOrPressed & UP_BUTTON) {
+    if (pressed & UP_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -187,23 +187,23 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     if (world.isLadderTile_Upper(tile) && world.canWalkPastTile(tile_U2, Direction::Backward)) {
 
-                        if (justPressedOrPressed & RIGHT_BUTTON || isMidLadderOrVineStance_RH(stance)) {
+                        if (pressed & RIGHT_BUTTON || isMidLadderOrVineStance_RH(stance)) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_UP_08, Stance::Man_ClimbLadder_BK_RH_UP_14);
                         }
 
-                        else if (justPressedOrPressed & LEFT_BUTTON || isMidLadderOrVineStance_LH(stance)) {
+                        else if (pressed & LEFT_BUTTON || isMidLadderOrVineStance_LH(stance)) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_UP_08, Stance::Man_ClimbLadder_BK_LH_UP_14);
                         }
 
                     }
                     else if (world.isVerticalVine_Upper(tile_U)) {
 
-                        if ((justPressedOrPressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
+                        if ((pressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
                         }
 
-                        else if ((justPressedOrPressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
+                        else if ((pressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
                         }
@@ -296,7 +296,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
-    else if (justPressedOrPressed & DOWN_BUTTON) {
+    else if (pressed & DOWN_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -310,11 +310,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     if (world.isLadderTile_Lower(tile_D) && world.isLadderTile_Lower(tile_RD)) {
 
-                        if (justPressedOrPressed & RIGHT_BUTTON || isMidLadderOrVineStance_LH(stance)) {
+                        if (pressed & RIGHT_BUTTON || isMidLadderOrVineStance_LH(stance)) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
                         }
 
-                        else if (justPressedOrPressed & LEFT_BUTTON || isMidLadderOrVineStance_RH(stance)) {
+                        else if (pressed & LEFT_BUTTON || isMidLadderOrVineStance_RH(stance)) {
                             player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                         }
 
@@ -327,11 +327,11 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                         }
                         else {
                                 
-                            if (justPressedOrPressed & RIGHT_BUTTON || isMidLadderOrVineStance_RH(stance)) {
+                            if (pressed & RIGHT_BUTTON || isMidLadderOrVineStance_RH(stance)) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_08, Stance::Man_ClimbLadder_BK_RH_DOWN_14);
                             }
 
-                            else if (justPressedOrPressed & LEFT_BUTTON || isMidLadderOrVineStance_LH(stance)) {
+                            else if (pressed & LEFT_BUTTON || isMidLadderOrVineStance_LH(stance)) {
                                 player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_08, Stance::Man_ClimbLadder_BK_LH_DOWN_14);
                             }
 
@@ -432,13 +432,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
-    else if (justPressedOrPressed & LEFT_BUTTON) {
+    else if (pressed & LEFT_BUTTON) {
 
         switch (player.getDirection()) {
 
             case Direction::Left:
 
-                playGame_HandlePlayerMovements(justPressedOrPressed, Direction::Left);
+                playGame_HandlePlayerMovements(pressed, Direction::Left);
                 break;
 
             case Direction::Forward:
@@ -507,13 +507,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     }
 
     // else if (justPressed & RIGHT_BUTTON || pressed & RIGHT_BUTTON) {
-    else if (justPressedOrPressed & RIGHT_BUTTON) {
+    else if (pressed & RIGHT_BUTTON) {
 
         switch (player.getDirection()) {
 
             case Direction::Right:
 
-                playGame_HandlePlayerMovements(justPressedOrPressed, Direction::Right);
+                playGame_HandlePlayerMovements(pressed, Direction::Right);
                 break;
 
             case Direction::Forward:
@@ -573,7 +573,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
     }
 
-    else if (justPressedOrPressed & A_BUTTON) {
+    else if (pressed & A_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -879,11 +879,10 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
 
 }
 
-void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t justPressed) {
+void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed) {
 
     #ifndef DEBUG_DISABLE_PLAY
 
-    uint8_t justPressedOrPressed = pressed | justPressed;
     int16_t dist = getDistanceBetween(player, EnemyType::SwordFighter);
 
     uint8_t tile_Front = world.getTile_RelativeToPlayer(1, 0);
@@ -900,13 +899,13 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    if (justPressedOrPressed & A_BUTTON) {
+    if (pressed & A_BUTTON) {
 
         player.pushSequence(Stance::Man_Sword_StandingJump_RH_01 + offset, Stance::Man_Sword_StandingJump_RH_07 + offset);
 
     }
 
-    else if (justPressedOrPressed & DOWN_BUTTON) {
+    else if (pressed & DOWN_BUTTON) {
 
         world.setGameState(GameState::Play_Game);
         player.setStance(Stance::Man_Walk_RH_00);
@@ -914,13 +913,13 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    else if ((justPressedOrPressed & B_BUTTON) && tile_Front == Tiles::Blank) {
+    else if ((pressed & B_BUTTON) && tile_Front == Tiles::Blank) {
 
         player.pushSequence(Stance::Man_Sword_Lunge_RH_01 + offset, Stance::Man_Sword_Lunge_RH_06 + offset);
 
     }
 
-    else if (justPressedOrPressed & RIGHT_BUTTON) {
+    else if (pressed & RIGHT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -951,7 +950,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed, uint8_t j
 
     }
 
-    else if (justPressedOrPressed & LEFT_BUTTON) {
+    else if (pressed & LEFT_BUTTON) {
 
         switch (player.getDirection()) {
 
@@ -1112,7 +1111,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case GameState::Play_Battle:
 
-                    playGame_HandleSwordFight_Player(player, pressed, justPressed);          
+                    playGame_HandleSwordFight_Player(player, pressed);          
                     break;
 
                 case GameState::Play_Gamble_Select_Exit ... GameState::Play_Gamble_End:
