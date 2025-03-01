@@ -1373,42 +1373,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 player.setHealth(0);
 
                                 switch (player.getDirection()) {
-/*
-                                    case Direction::Left:
-                                        {
-                                            player.setY(Constants::GroundY - item.getY());
-                                            player.pushSequence(Stance::Man_Die_Fire_LH_01, Stance::Man_Die_Fire_LH_12, true);
 
-                                            uint8_t xPos = item.getX() + world.getMiddleground();
-
-                                            if (xPos % 8 == 0) {
-
-                                                player.push(Stance::Man_Die_Fire_Adj_LH_02);
-
-                                            }
-
-                                        }
-
-                                        break;
-
-                                    case Direction::Right:
-                                        {
-
-                                            player.setY(Constants::GroundY - item.getY());
-                                            player.pushSequence(Stance::Man_Die_Fire_RH_01, Stance::Man_Die_Fire_RH_12, true);
-
-                                            uint8_t xPos = item.getX() + world.getMiddleground();
-
-                                            if (xPos % 8 == 0) {
-
-                                                player.push(Stance::Man_Die_Fire_Adj_RH_02);
-
-                                            }
-
-                                        }
-
-                                        break;
-*/
                                     case Direction::Left:
                                     case Direction::Right:
                                         {
@@ -1927,6 +1892,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     if (ignoreKeyPress > 0) {
         ignoreKeyPress--;
+    }
+
+    if (player.getBuzzCount() > 0) {
+        player.setBuzzCount(player.getBuzzCount() - 1);
     }
 
     #endif

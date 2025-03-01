@@ -266,6 +266,13 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     }
 
+    else if (selectedItem == ItemType::Amulet) {
+
+        player.setBuzzCount(Constants::Buzz_Time);
+        removeInventoryItem(GameState::Play_Game);
+
+    }
+
     #ifndef DEBUG_LOCKED_DOOR
 
         else if (world.isLockedDoor(tile) && selectedItem == ItemType::Key1) {

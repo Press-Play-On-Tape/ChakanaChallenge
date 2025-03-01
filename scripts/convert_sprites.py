@@ -165,6 +165,7 @@ convert_header(IMAGES + 'Hearts.png',                                           
 convert_header(IMAGES + 'InventoryPanel.png',                                                           BASE + 'Images.hpp', 'InventoryPanel', 4, 32, 64)
 convert_header(IMAGES + 'InventoryPanel_Cursor.png',                                                    BASE + 'Images.hpp', 'InventoryPanel_Cursor', 4)
 convert_header(IMAGES + 'Cursor.png',                                                                   BASE + 'Images.hpp', 'Cursor', 4)
+convert_header(IMAGES + 'Buzz.png',                                                                     BASE + 'Images.hpp', 'Buzz', 4, 16, 16)
 
 convert_header(IMAGES + 'Items/Item_00.png',                                                            BASE + 'Images.hpp', 'Item_00', 4, 16, 16)
 convert_header(IMAGES + 'Items/Item_01.png',                                                            BASE + 'Images.hpp', 'Item_01', 4, 16, 16)

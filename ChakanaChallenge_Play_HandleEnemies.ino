@@ -276,6 +276,23 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             switch (enemy.getEnemyType()) {
 
+                case EnemyType::Archer:
+                    {
+                        uint8_t playerX = 64 - world.getMiddleground();
+
+                        if (playerX > enemy.getX() && enemy.getStance() == Stance::Enemy_Fire_LH_12) {
+
+                            enemy.setStance(Stance::Enemy_Fire_RH_12);
+                        }
+                        else if (playerX < enemy.getX() && enemy.getStance() == Stance::Enemy_Fire_RH_12) {
+
+                            enemy.setStance(Stance::Enemy_Fire_LH_12);
+                        }
+                    
+                    }
+
+                    break;
+
                 case EnemyType::SwordFighter:
                     {
                       
@@ -610,6 +627,13 @@ bool playGame_EnemyStabsPlayer(Player &player) {
         enemyY = enemyPoint.y;
     #endif
 
+    if (player.getBuzzCount() > 0) {
+
+        player.setBuzzCount(0);
+        return false;
+
+    }
+    
     return collide(enemyPoint, playerRect);
 
 }

@@ -380,6 +380,23 @@ void renderWorld() {
     }
 
 
+    // Render Buzz?
+
+    {
+        uint16_t buzzCount = player.getBuzzCount();
+
+        if (buzzCount > 0 && player.getHealth() > 0) {
+
+            uint8_t frame = ((Constants::Buzz_Time - buzzCount) % 32) / 4;
+
+            if (buzzCount < 32) frame = frame + 8;
+            SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY() + 4, 16, 16, Images::Buzz, (frame * 3) + currentPlane);
+
+        }
+
+    }
+
+    
     // ____________________________________________________________________________________________________________________________________________________________________________________
     //
     // Render wound if applicable ..

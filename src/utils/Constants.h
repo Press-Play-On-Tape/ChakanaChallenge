@@ -13,7 +13,7 @@
 #define _DEBUG_LOCKED_DOOR
 #define _DEBUG_RENDER_MAP
 #define _DEBUG_SWORD
-#define _DEBUG_NO_MENU
+#define _DEBUG_NO_MAIN_MENU
 #define DEBUG_LOTS_OF_CHAKANAS
 
 
@@ -649,6 +649,7 @@ namespace Constants {
     constexpr uint8_t GamblePanel_Win = 11;
     constexpr uint8_t GamblePanel_Lose = 9;
     constexpr uint16_t AllPortsComplete = 16383;
+    constexpr uint16_t Buzz_Time = 400;
 
 };
 

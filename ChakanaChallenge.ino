@@ -71,7 +71,7 @@ void setup() {
     #endif
 
 
-    #ifdef DEBUG_NO_MENU
+    #ifdef DEBUG_NO_MAIN_MENU
     world.init();
     world.getPlayer().init();
     world.setCurrentPort(0);
@@ -92,7 +92,7 @@ void loop() {
 
     switch (world.getGameState()) {
 
-        #ifndef DEBUG_NO_MENU
+        #ifndef DEBUG_NO_MAIN_MENU
             
             case GameState::SplashScreen_Start ... GameState::SplashScreen_End:
                 splashScreen(a);
@@ -130,7 +130,7 @@ void loop() {
             playGame(a);
             break;
 
-        #ifndef DEBUG_NO_MENU
+        #ifndef DEBUG_NO_MAIN_MENU
 
             case GameState::Map_Init:
                 map_Init();

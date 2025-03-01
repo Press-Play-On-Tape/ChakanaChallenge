@@ -1167,44 +1167,56 @@ struct World {
 
                             if (collide(playerRect, arrowRect)) {
 
-                                if (this->player.getHealth() < 4) {
+                                if (this->player.getBuzzCount() > 0) {
 
-                                    Stance stance;
+                                    this->player.setBuzzCount(0);
 
-                                    bool isArrowTravellingRight = (item.getItemType() == ItemType::Arrow_RH);
-                                    bool isPlayerFacingRight = (this->player.getDirection() == Direction::Right);
-
-                                    if (isArrowTravellingRight) {
-
-                                        stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallForward_RH_01 : Stance::Man_Die_Arrow_FallBackward_LH_01;
-
-                                    } else {
-
-                                        stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallBackward_RH_01 : Stance::Man_Die_Arrow_FallForward_LH_01;
-                                        
-                                    }
-
-                                    enemy.getItem().setItemType(static_cast<ItemType>(static_cast<uint8_t>(enemy.getItem().getItemType()) + 1));
-                                    this->player.pushSequence(stance, stance + 3, true);
-
-                                }
+                                }   
                                 else {
+                                                                    
+                                    if (this->player.getHealth() < 4) {
 
-                                    this->player.setWound(12);
-                                    this->player.setEnemyIdx(0);
+                                        Stance stance;
 
-                                    if (item.getItemType() == ItemType::Arrow_LH) {
+                                        bool isArrowTravellingRight = (item.getItemType() == ItemType::Arrow_RH);
+                                        bool isPlayerFacingRight = (this->player.getDirection() == Direction::Right);
 
-                                        enemy.getItem().setItemType(ItemType::Arrow_LH_Hidden);
+                                        if (isArrowTravellingRight) {
+
+                                            stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallForward_RH_01 : Stance::Man_Die_Arrow_FallBackward_LH_01;
+
+                                        } else {
+
+                                            stance = isPlayerFacingRight ? Stance::Man_Die_Arrow_FallBackward_RH_01 : Stance::Man_Die_Arrow_FallForward_LH_01;
+                                            
+                                        }
+
+                                        enemy.getItem().setItemType(static_cast<ItemType>(static_cast<uint8_t>(enemy.getItem().getItemType()) + 1));
+                                        this->player.pushSequence(stance, stance + 3, true);
 
                                     }
                                     else {
 
-                                        enemy.getItem().setItemType(ItemType::Arrow_RH_Hidden);
+                                        this->player.setWound(12);
+                                        this->player.setEnemyIdx(0);
+
+                                        this->player.setHealth(this->player.getHealth() - 4);
 
                                     }
 
-                                    this->player.setHealth(this->player.getHealth() - 4);
+                                }
+
+
+                                // Hide Arrow 
+
+                                if (item.getItemType() == ItemType::Arrow_LH) {
+
+                                    enemy.getItem().setItemType(ItemType::Arrow_LH_Hidden);
+
+                                }
+                                else {
+
+                                    enemy.getItem().setItemType(ItemType::Arrow_RH_Hidden);
 
                                 }
 
@@ -1226,19 +1238,27 @@ struct World {
                             
                             if (collide(playerRect, trebochetRect)) {
                                 
-                                ItemType hiddenType = (itemType >= ItemType::Trebochet_Ball_Left_1) ?
-                                    ItemType::Trebochet_Ball_Left_Hidden : ItemType::Trebochet_Ball_Right_Hidden;
-                                
-                                enemy.getItem().setItemType(hiddenType);
-                                enemy.getItem().setFrame(0);
-                                item.setCounter(3);
-                                this->initPuff(item.getX(), item.getY());
-                                
-                                Stance stance = (this->player.getDirection() == Direction::Right) ?
-                                    ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_RH_01) :
-                                    ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_FWD_LH_01 : Stance::Man_Die_BWD_LH_01);
-                                
-                                this->player.pushSequence(stance, stance + 3, true);
+                                if (player.getBuzzCount() > 0) {
+
+                                    this->player.setBuzzCount(0);
+
+                                }
+                                else {
+                                        
+                                    ItemType hiddenType = (itemType >= ItemType::Trebochet_Ball_Left_1) ? ItemType::Trebochet_Ball_Left_Hidden : ItemType::Trebochet_Ball_Right_Hidden;
+                                    
+                                    enemy.getItem().setItemType(hiddenType);
+                                    enemy.getItem().setFrame(0);
+                                    item.setCounter(3);
+                                    this->initPuff(item.getX(), item.getY());
+                                    
+                                    Stance stance = (this->player.getDirection() == Direction::Right) ?
+                                        ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_RH_01) :
+                                        ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_FWD_LH_01 : Stance::Man_Die_BWD_LH_01);
+                                    
+                                    this->player.pushSequence(stance, stance + 3, true);
+
+                                }
 
                             }
 
@@ -1301,4 +1321,5 @@ struct World {
             return idx;
 
         }
+
 };
