@@ -629,27 +629,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 }                
                 break;
 
-                {
-                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-                    uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
-
-                    if (tile == Tiles::Poker || tile_L == Tiles::Poker) {
-
-                        if (justPressed & A_BUTTON) {
-
-                            world.setGameState(GameState::Play_Gamble_Select_Open);
-                            playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
-
-                        }
-
-                    }
-                    else {
-                        playGame_HandleGamePlay_Basics(player, Constants::Player_Stance_Offset);
-                    }
-
-                }
-                break;
-
             case Direction::Forward:
                 {
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);

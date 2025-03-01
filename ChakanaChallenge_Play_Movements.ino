@@ -97,10 +97,36 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
             uint8_t tile_F3 = world.getTile_RelativeToPlayer(3 * xLeftOrRight, 0);
             uint8_t tile_F2D = world.getTile_RelativeToPlayer(2 * xLeftOrRight, -1);
             uint8_t tile_F2D2 = world.getTile_RelativeToPlayer(2 * xLeftOrRight, -2);
+            uint8_t tile_F2D3 = world.getTile_RelativeToPlayer(2 * xLeftOrRight, -3);
             uint8_t tile_F3D = world.getTile_RelativeToPlayer(3 * xLeftOrRight, -1);
             uint8_t tile_F3D2 = world.getTile_RelativeToPlayer(3 * xLeftOrRight, -2);
+            uint8_t tile_F3D3 = world.getTile_RelativeToPlayer(3 * xLeftOrRight, -3);
+            uint8_t tile_F4D2 = world.getTile_RelativeToPlayer(4 * xLeftOrRight, -2);
+            uint8_t tile_F4D3 = world.getTile_RelativeToPlayer(4 * xLeftOrRight, -3);
 
-            // if (world.isVineTile_RH(tile_L) && (stance < Stance::Man_Vine_LH_01 || stance > Stance::Man_Vine_LH_20)) {
+            #ifdef DEBUG_MOVEMENTS
+                DEBUG_PRINT(tile_F2);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F3);
+                DEBUG_PRINT(" - ");
+                DEBUG_PRINT(tile_F2D);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F2D2);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F2D3);
+                DEBUG_PRINT(" - ");
+                DEBUG_PRINT(tile_F3D);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F3D2);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F3D3);
+                DEBUG_PRINT(" - ");
+                DEBUG_PRINT(tile_F4D2);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F4D3);
+                DEBUG_PRINTLN(" ");
+            #endif
+                                                                                                // if (world.isVineTile_RH(tile_L) && (stance < Stance::Man_Vine_LH_01 || stance > Stance::Man_Vine_LH_20)) {
             // if (world.isVineTile_LH(tile_R) && (stance < Stance::Man_Vine_RH_01 || stance > Stance::Man_Vine_RH_20)) {
             if ((direction == Direction::Left  && world.isVineTile_RH(tile_F) && (stance < Stance::Man_Vine_LH_01 || stance > Stance::Man_Vine_LH_20)) ||
                 (direction == Direction::Right && world.isVineTile_LH(tile_F) && (stance < Stance::Man_Vine_RH_01 || stance > Stance::Man_Vine_RH_20))) {
@@ -187,9 +213,12 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
             }                     
             // else if (world.isEmptyTile(tile_L2) && world.isEmptyTile(tile_L3) &&
             //          world.isEmptyTile(tile_L2D) && world.isEmptyTile(tile_L3D)) {     
-            else if (world.isEmptyTile(tile_F2) && world.isEmptyTile(tile_F3) &&
+            //added after LR
+            // else if (world.isEmptyTile(tile_F2) && world.isEmptyTile(tile_F3) &&
+            //          world.isEmptyTile(tile_F2D) && world.isEmptyTile(tile_F3D)) {     
+            else if (world.isEmptyTile(tile_F2) &&
                      world.isEmptyTile(tile_F2D) && world.isEmptyTile(tile_F3D)) {     
-   
+
                 // if (world.isWaterTile(tile_L2D2)) {
                 if (world.isWaterTile(tile_F2D2)) {
 
@@ -232,13 +261,23 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
 
                 }
                 else {
-
-                    player.setFalls(0);
-                    // player.pushSequence(Stance::Man_WalkingJump_LH_2D_25_01, Stance::Man_WalkingJump_LH_2D_25_11);
-                    // player.pushSequence(Stance::Man_WalkingJump_RH_2D_25_01 + stanceOffset, Stance::Man_WalkingJump_RH_2D_25_11 + stanceOffset);
                     
-                    // Added after conversion to Fwd/Bwd
-                    player.pushSequence(Stance::Man_Walk_FallDown_RH_01 + stanceOffset, Stance::Man_Walk_FallDown_RH_06 + stanceOffset);
+                    player.setFalls(0);
+
+                    if (player.getLevel() != 2 && world.canWalkOnTile(tile_F3D3)) {
+
+                        player.pushSequence(Stance::Man_WalkingJump_RH_2D_25_01 + stanceOffset, Stance::Man_WalkingJump_RH_2D_25_11 + stanceOffset);
+
+                    }
+                    else {
+                        // player.pushSequence(Stance::Man_WalkingJump_LH_2D_25_01, Stance::Man_WalkingJump_LH_2D_25_11);
+                        // player.pushSequence(Stance::Man_WalkingJump_RH_2D_25_01 + stanceOffset, Stance::Man_WalkingJump_RH_2D_25_11 + stanceOffset);
+                        
+                        // Added after conversion to Fwd/Bwd
+                        player.pushSequence(Stance::Man_Walk_FallDown_RH_01 + stanceOffset, Stance::Man_Walk_FallDown_RH_06 + stanceOffset);
+
+                    }
+
                 }
 
             }    
@@ -264,6 +303,27 @@ void playGame_HandlePlayerMovements(uint8_t justPressedOrPressed, Direction dire
             uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
             uint8_t tile_FU = world.getTile_RelativeToPlayer(xLeftOrRight, 1);
             uint8_t tile_F2U = world.getTile_RelativeToPlayer(2 * xLeftOrRight, 1);
+
+            #ifdef DEBUG_MOVEMENTS
+                DEBUG_PRINT(tile_F2);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F3);
+                DEBUG_PRINT(" - ");
+                DEBUG_PRINT(tile_F2D);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F3D);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_D);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_BU);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_U);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_FU);
+                DEBUG_PRINT(" ");
+                DEBUG_PRINT(tile_F2U);
+                DEBUG_PRINTLN(" ");
+            #endif
 
             // if (world.isStairTile_R_Half(tile_D) ) {
             if ((direction == Direction::Left  && world.isStairTile_R_Half(tile_D)) ||

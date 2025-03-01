@@ -405,17 +405,17 @@ class Item {
 
                                 case ItemType::Trebochet_Ball_Left_1:
                                 case ItemType::Trebochet_Ball_Right_1:
-                                    this->setX(this->getX() + (direction * 6));
+                                    this->setX(this->getX() + (direction * 5));
                                     break;
 
                                 case ItemType::Trebochet_Ball_Left_2:
                                 case ItemType::Trebochet_Ball_Right_2:
-                                    this->setX(this->getX() + (direction * (6 + (this->counter % 2))));
+                                    this->setX(this->getX() + (direction * (5 + (this->counter % 2))));
                                     break;
 
                                 case ItemType::Trebochet_Ball_Left_3:
                                 case ItemType::Trebochet_Ball_Right_3:
-                                    this->setX(this->getX() + (direction * 5));
+                                    this->setX(this->getX() + (direction * 4));
                                     break;
 
                             }

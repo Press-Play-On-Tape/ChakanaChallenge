@@ -162,7 +162,7 @@ struct World {
 
         int16_t getPalm(uint8_t idx) { return this->palm[idx]; }
 
-        int16_t setPalm(uint8_t idx, int16_t val) { this->palm[idx] = val; }
+        void setPalm(uint8_t idx, int16_t val) { this->palm[idx] = val; }
 
         void incFrameCount() {
 
@@ -182,7 +182,7 @@ struct World {
 
         }
 
-        bool absT(int8_t x) {
+        static bool absT(int8_t x) {
             return x < 0 ? -x : x;
         }
 
@@ -259,9 +259,10 @@ struct World {
             }
 
         }
-
+        
         void incForeground(int8_t val) {
 
+            
             for (uint8_t i = 0; i < 3; i++) {
                 this->incPalm(i, val);
             }
@@ -413,21 +414,33 @@ struct World {
 
                                     case Direction::Left:
                                         {
-                                            switch (item.getFrame()) {
+                                            // switch (item.getFrame()) {
 
-                                                case 0 ... 8:
+                                            //     case 0 ... 8:
                                      
-                                                    player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
-                                                    break;
+                                            //         player.pushSequence(Stance::Man_Die_FWD_LH_01, Stance::Man_Die_FWD_LH_04, true);
+                                            //         break;
 
-                                                default:
+                                            //     default:
                                          
-                                                    puffX = itemRect.width;
-                                                    player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
-                                                    break;
+                                            //         puffX = itemRect.width;
+                                            //         player.pushSequence(Stance::Man_Die_BWD_LH_01, Stance::Man_Die_BWD_LH_04, true);
+                                            //         break;
                                                     
-                                            }
+                                            // }
+                                            const auto frame = item.getFrame();
 
+                                            Stance from = Stance::Man_Die_FWD_LH_01;
+                                            
+                                            if (frame > 8) {
+
+                                                from = Stance::Man_Die_BWD_LH_01;
+                                                puffX = itemRect.width;
+
+                                            }
+                                            
+                                            player.pushSequence(from, from + 4, true);
+                                            
                                         }
 
                                         break;
@@ -436,20 +449,33 @@ struct World {
                                         {                                                
                                             item.setItemType(ItemType::SwingyThing_2);
 
-                                            switch (item.getFrame()) {
+                                            // switch (item.getFrame()) {
 
-                                                case 0 ... 8:
+                                            //     case 0 ... 8:
                                  
-                                                    player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
-                                                    break;
+                                            //         player.pushSequence(Stance::Man_Die_BWD_RH_01, Stance::Man_Die_BWD_RH_04, true);
+                                            //         break;
 
-                                                default:
+                                            //     default:
                                            
-                                                    puffX = itemRect.width;
-                                                    player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
-                                                    break;
+                                            //         puffX = itemRect.width;
+                                            //         player.pushSequence(Stance::Man_Die_FWD_RH_01, Stance::Man_Die_FWD_RH_04, true);
+                                            //         break;
                                                     
+                                            // }
+
+                                            const auto frame = item.getFrame();
+
+                                            Stance from = Stance::Man_Die_BWD_RH_01;;
+                                            
+                                            if (frame > 8) {
+
+                                                from = Stance::Man_Die_FWD_RH_01;
+                                                puffX = itemRect.width;
+
                                             }
+                                            
+                                            player.pushSequence(from, from + 4, true);
 
                                         }
 
@@ -499,12 +525,13 @@ struct World {
 
             for (uint8_t i = itemIdx; i < Constants::ItemCount_Level - 1; i++) {
 
-                this->items[i].setItemType(items[i + 1].getItemType());
-                this->items[i].setFrame(items[i + 1].getFrame());
-                this->items[i].setX(items[i + 1].getX());
-                this->items[i].setY(items[i + 1].getY());
-                this->items[i].setData(items[i + 1].getData());
-                this->items[i].setCounter(items[i + 1].getCounter());
+                // this->items[i].setItemType(items[i + 1].getItemType());
+                // this->items[i].setFrame(items[i + 1].getFrame());
+                // this->items[i].setX(items[i + 1].getX());
+                // this->items[i].setY(items[i + 1].getY());
+                // this->items[i].setData(items[i + 1].getData());
+                // this->items[i].setCounter(items[i + 1].getCounter());
+                this->items[i] = this->items[i + 1];
 
             }
 
@@ -590,13 +617,13 @@ struct World {
 
         bool canWalkPastTile(uint8_t tile, Direction direction) {
             
-            if (tile == Tiles::Solid_Blocking)                                          return false;
-            else if (player.getLevel() == 0)                                            return true;
-            else if (tile == Tiles::Solid_Walkable)                                     return false;
-            else if (tile == Tiles::Poker)                                              return true;
+            if (tile == Tiles::Solid_Blocking)                                     return false;
+            if (player.getLevel() == 0)                                            return true;
+            if (tile == Tiles::Solid_Walkable)                                     return false;
+            if (tile == Tiles::Poker)                                              return true;
 
-            else if (tile == Tiles::Lever_Portal_LH || 
-                     tile == Tiles::Lever_Portal_Auto_LH) { 
+            if (tile == Tiles::Lever_Portal_LH || 
+                tile == Tiles::Lever_Portal_Auto_LH) { 
 
                 if (direction == Direction::Left) { 
 
@@ -609,7 +636,7 @@ struct World {
                     // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
                     
                 }
-                else if (direction != Direction::Left) { 
+                else { 
 
                     return isEmptyTile_XY(tile, 1, 0);
                     // return this->getItem(ItemType::Lever_Portal_Open) < Constants::NoItem;
@@ -842,7 +869,8 @@ struct World {
                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || 
                    tile == Tiles::Vine_Lower ||
                    tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
-                   tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker;
+                   tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker || tile == Tiles::Sign_01 || 
+                   tile == Tiles::Sign_01 || tile == Tiles::Trebochet_To_RH || tile == Tiles::Trebochet_To_LH;
             
         }
 
@@ -854,7 +882,8 @@ struct World {
                    tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || 
                    tile == Tiles::Vine_Lower ||
                    tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
-                   tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker;
+                   tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker || 
+                   tile == Tiles::Sign_01 || tile == Tiles::Trebochet_To_RH || tile == Tiles::Trebochet_To_LH;
             
         }
 

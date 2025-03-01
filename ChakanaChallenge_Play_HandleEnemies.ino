@@ -7,6 +7,7 @@
 #include "src/utils/SpritesU.hpp"
 
 
+
 // Function to determine player's death animation based on distance and direction
 void playGame_applyDeathAnimation(Player& player, int16_t dist) {
 
@@ -170,7 +171,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             }
                             break;
                     }
-
+                    
                     break;
                 
                 case EnemyType::SwordFighter:

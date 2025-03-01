@@ -42,7 +42,7 @@ namespace Constants
     include "data/Ports.txt"
     include "data/Stances.txt"
 
-    int8_t swingyThing_X[] = { 0, -2, -4, -5, -6, -5, -4, -2, 0, 2, 4, 5, 6, 5, 4, 2 };
+    int8_t swingyThing_X[] = { 0, -2, -4, -5, -6, -5, -4, -2, 0,  2,  4,  5,  6,  5,  4,  2 };
     int8_t swingyThing_Y[] = { 0, -1, -2, -3, -4, -3, -2, -1, 0, -1, -2, -3, -4, -3, -2, -1 };
 
     uint8_t Ball_X[] = { 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
