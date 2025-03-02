@@ -596,7 +596,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     if (tile == Tiles::Poker || tile_F == Tiles::Poker) {
 
-                        if (justPressed & A_BUTTON) {
+                        if (pressed & A_BUTTON) {
 
                             world.setGameState(GameState::Play_Gamble_Select_Open);
                             playGame_HandleMenu(GameState::Play_Gamble_Select_Exit);
@@ -1262,7 +1262,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     case ItemType::Lever_LH:
                     case ItemType::Lever_RH:
 
-                        if (collide(playerRect, itemRect) && (justPressed & A_BUTTON)) {                        
+                        if (collide(playerRect, itemRect) && (pressed & A_BUTTON)) {                        
 
                             ignoreKeyPress = 16;
                             player.stageSequence(Stance::None, Stance::None);

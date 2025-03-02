@@ -278,7 +278,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case EnemyType::Archer:
                     {
-                        uint8_t playerX = 64 - world.getMiddleground();
+                        uint16_t playerX = 64 - world.getMiddleground();
 
                         if (playerX > enemy.getX() && enemy.getStance() == Stance::Enemy_Fire_LH_12) {
 

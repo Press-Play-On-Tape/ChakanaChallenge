@@ -17,113 +17,123 @@ uint8_t Level_06[] = {
 { 2, 2,  50, 50,  51, 51,  2, 2,  0, 0, 48,48,  0, 0,  0, 0,  2, 2,  49, 49,  2, 2,  2, 2,  0, 0,  0, 0, 32,32,  0, 0,  2, 2,  2, 2,  49, 49,  2, 2,  2,11,  0, 0, 32,32,  0, 0,  0, 0,},
 };
 
-uint16_t Level_06_Items[] = {
+uint8_t Level_06_Items[] = {
 41,                             // ItemType::Chakana
-160,                             // Position X
+160, 0,                             // Position X
 16,                             // Position Y
 9,                             // Frame
-0,                             // Data
-0,                             // Counter
+0, 0,                         // Data
+0, 0,                             // Counter
 
 3,                             // ItemType::TrapDoor
-256,                             // Position X
+0, 1,                             // Position X
 112,                             // Position Y
 0,                             // Frame
-0,                             // Data
-0,                             // Counter
+0, 0,                             // Data
+0, 0,                             // Counter
 
 4,                             // ItemType::Punji
-320,                             // Position X
+64, 1,                             // Position X
 96,                             // Position Y
 0,                             // Frame
-0,                             // Data
-0,                             // Counter
+0, 0,                             // Data
+0, 0,                             // Counter
 
 7,                             // ItemType::Amulet
-528,                             // Position X
+16, 2,                             // Position X
 48,                             // Position Y
 0,                             // Frame
-0,                             // Data
-0,                             // Counter
+0, 0,                             // Data
+0, 0,                              // Counter
 
 9,                             // ItemType::PinchBar
-352,                             // Position X
+96, 1,                             // Position X
 48,                             // Position Y
 0,                             // Frame
-0,                             // Data
-0,                             // Counter
+0, 0,                             // Data
+0, 0,                             // Counter
 
 11,                             // ItemType::MysteryCrate
-208,                             // Position X
+208, 0,                             // Position X
 80,                             // Position Y
 0,                             // Frame
-12,                              // Data
-0,                             // Counter
+12, 0,                              // Data
+0, 0,                            // Counter
 
 43,                             // ItemType::Lever_LH
-528,                             // Position X
+16, 2,                             // Position X
 0,                             // Position Y
 0,                             // Frame
-4,                             // Data
-0,                             // Counter
+4, 0,                             // Data
+0, 0,                             // Counter
 
 44,                             // ItemType::Lever_RH
-496,                             // Position X
+240, 1,                             // Position X
 80,                             // Position Y
 0,                             // Frame
-4,                             // Data
-0,                             // Counter
+4, 0,                             // Data
+0, 0,                            // Counter
 
 44,                             // ItemType::Lever_RH
-288,                             // Position X
+32, 1,                             // Position X
 16,                             // Position Y
 0,                             // Frame
-4,                             // Data
-0,                             // Counter
+4, 0,                             // Data
+0, 0,                            // Counter
 
 45,                             // ItemType::Lever_Portal_Closed
-464,                             // Position X
+208, 1,                             // Position X
 80,                             // Position Y
 0,                             // Frame
-0,                             // Data
-0,                             // Counter
+0, 0,                             // Data
+0, 0,                            // Counter
 
 47,                             // ItemType::Lever_Portal_Auto_Closed
-384,                             // Position X
+128, 1,                             // Position X
 80,                             // Position Y
 0,                             // Frame
-1024,                             // Data
-0,                             // Counter
+0, 4,                             // Data
+0, 0,                             // Counter
 
 48,                             // ItemType::Lever_Portal_Auto_Open
-192,                             // Position X
+192, 0,                             // Position X
 80,                             // Position Y
 9,                             // Frame
-1200,                             // Data
-0,                             // Counter
+176, 4,                             // Data
+0, 0,                             // Counter
 
 63,                             // ItemType::Puff
-0,                             // Position X
+0, 0,                            // Position X
 0,                             // Position Y
 255,                             // Frame
-0,                             // Data
-0,                             // Counter
+0, 0,                           // Data
+0, 0,                            // Counter
 };
 
-uint16_t Level_06_Enemies[] = {
+uint8_t Level_06_Enemies[] = {
 1                            // EnemyType::Archer
-144,                             // Position X
+144, 0,                             // Position X
 112,                             // Position Y
-963,                             // Stance::Enemy_Walk_Bow_RH_00
+195, 3,                             // Stance::Enemy_Walk_Bow_RH_00
+12,                              // Health
+0,                              // Sword Wound
 25,                             // Inventory ItemType::Arrow_RH_Hidden
-56,                              // Data
+0, 0, 0, 0,                               // Padding
+56, 0,                              // Data
+0, 0,                             // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
 
 1                            // EnemyType::Archer
-464,                             // Position X
+208, 1,                             // Position X
 48,                             // Position Y
-963,                             // Stance::Enemy_Walk_Bow_RH_00
+195, 3,                             // Stance::Enemy_Walk_Bow_RH_00
+12,                              // Health
+0,                              // Sword Wound
 25,                             // Inventory ItemType::Arrow_RH_Hidden
-26,                              // Data
+0, 0, 0, 0,                               // Padding
+26, 0,                              // Data
+0, 0,                             // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
 
 0                            // EnemyType::None
 0,                             // Position X
@@ -133,9 +143,33 @@ uint16_t Level_06_Enemies[] = {
 0,                             // IData
 
 0                            // EnemyType::None
+0, 0,                             // Position X
+0,                             // Position Y
+0, 0,                             // Stance::None
+12,                              // Health
+0,                              // Sword Wound
+0,                             // Inventory ItemType::None
+0, 0, 0, 0,                               // Padding
+0, 0,                              // Data
+0, 0,                             // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
+
+0                            // EnemyType::None
 0,                             // Position X
 0,                             // Position Y
 0,                             // Stance::Enemy_None
 0,                             // Inventory ItemType::None
 0,                             // IData
+
+0                            // EnemyType::None
+0, 0,                             // Position X
+0,                             // Position Y
+0, 0,                             // Stance::None
+12,                              // Health
+0,                              // Sword Wound
+0,                             // Inventory ItemType::None
+0, 0, 0, 0,                               // Padding
+0, 0,                              // Data
+0, 0,                             // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
 };
