@@ -1225,7 +1225,11 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     case ItemType::Hammer:
                     case ItemType::Amulet:
                     case ItemType::Potion:
+
+                    #ifdef SHOW_ANCHOR
                     case ItemType::Anchor:
+                    #endif
+
                     case ItemType::Sword:
                     case ItemType::LifeSaver:
                     case ItemType::LifeSaver_Dissolve:
@@ -1582,28 +1586,14 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
 
-                        #ifdef FALL_THROUGH_PORTAL
                         if (world.isEmptyTile_XY(tile_D, 0, -1)) {
-                        #else
-                        if (world.isEmptyTile(tile_D)) {
-                        #endif
 
-                            #ifdef FALL_THROUGH_PORTAL
-                                if (world.isEmptyTile_XY(tile_D2, 0, -2)) {
+                            if (world.isEmptyTile_XY(tile_D2, 0, -2)) {
 
-                                    player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
-                                    player.incFalls();
+                                player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
+                                player.incFalls();
 
-                                }
-                            #else
-                                if (world.isEmptyTile(tile_D2)) {
-
-                                    player.pushSequence(Stance::Man_Walk_FallMore_RH_01, Stance::Man_Walk_FallMore_RH_02); 
-                                    player.incFalls();
-
-                                }
-                            #endif
-
+                            }
                             else if (world.isSpikeTile(tile_D)) {
 
                                 player.pushSequence(Stance::Man_Die_Fall_RH_01, Stance::Man_Die_Fall_RH_04); 
@@ -1679,28 +1669,14 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                         uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                             
-                        #ifdef FALL_THROUGH_PORTAL    
                         if (world.isEmptyTile_XY(tile_D, 0, -1)) {
-                        #else
-                        if (world.isEmptyTile(tile_D)) {
-                        #endif
 
-                            #ifdef FALL_THROUGH_PORTAL    
-                                if (world.isEmptyTile_XY(tile_D2, 0, -2)) {
+                            if (world.isEmptyTile_XY(tile_D2, 0, -2)) {
 
-                                    player.pushSequence(Stance::Man_Walk_FallMore_LH_01, Stance::Man_Walk_FallMore_LH_02); 
-                                    player.incFalls();
+                                player.pushSequence(Stance::Man_Walk_FallMore_LH_01, Stance::Man_Walk_FallMore_LH_02); 
+                                player.incFalls();
 
-                                }
-                            #else
-                                if (world.isEmptyTile(tile_D2)) {
-
-                                    player.pushSequence(Stance::Man_Walk_FallMore_LH_01, Stance::Man_Walk_FallMore_LH_02); 
-                                    player.incFalls();
-
-                                }
-                            #endif
-
+                            }
                             else if (world.isSpikeTile(tile_D)) {
 
                                 player.pushSequence(Stance::Man_Die_Fall_LH_01, Stance::Man_Die_Fall_LH_04); 
@@ -1755,7 +1731,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             enemy.setSwordWound(12);
 
-                            if (!enemy.decHealth(10)) {
+                            if (!enemy.decHealth(2)) {
                                     
                                 switch (enemy.getDirection()) {
 

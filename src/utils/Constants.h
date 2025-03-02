@@ -16,12 +16,7 @@
 #define _DEBUG_NO_MAIN_MENU
 #define DEBUG_LOTS_OF_CHAKANAS
 
-
-#ifdef DEBUG
-
-    #define FALL_THROUGH_PORTAL
-
-#else
+#ifndef DEBUG
 
 	// Want to Keep !
 
@@ -29,15 +24,12 @@
 	#define MAP_SHOW_PORT_NAMES
 
 	// 136 bytes
-	#define _MAP_SHOW_PORTS_VISITED
+	#define MAP_SHOW_PORTS_VISITED
 
 	// 216 bytes
 	#define TRAP_DOOR
 
-	// 208 bytes
-	#define FALL_THROUGH_PORTAL
-
-	// 242 bytes
+	// 242 bytes9
 	#define MULTIPLE_ITEMS
 
 	// 102 bytes
@@ -48,11 +40,14 @@
 
 	// Not fussed!
 
-	// 120 bytes
-	#define _BOUNCEJUMP_3
-
 	// 64 Bytes
 	#define _RENDER_16X16_SECONDARY
+
+	// 4 Bytes
+	#define _SHOW_ANCHOR
+
+	// 120 bytes
+	#define _BOUNCEJUMP_3
 
 #endif
 

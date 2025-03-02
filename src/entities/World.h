@@ -193,6 +193,7 @@ struct World {
 
             if (from < Constants::NoPort && to < Constants::NoPort) {
 
+                // player.setY(((to * 14) + from) + (absT(from - to) == 1 ? 2 : 0));
                 return FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0);
 
             }
@@ -716,7 +717,37 @@ struct World {
 
                 else if (tile == Tiles::LockedDoor) { 
 
-                    uint8_t idx = this->getItem(ItemType::LockedDoor);
+                    // int8_t relX = 0;
+                    // int8_t relY = 0;
+                    
+                    // int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
+                    // uint8_t yItem = (this->player.getLevel() + relY) << 3;
+                    // bool yAdjust = false;
+
+                    // // if (xItem % 16 != 0) xItem = xItem - 8;
+                    // if (yItem % 16 != 0) {
+                    //     yItem = yItem - 8;
+                    //     yAdjust = true;
+                    // }
+
+                    // if (xItem % 8 != 0) xItem = xItem - 4;
+                    // if (xItem % 16 != 0) xItem = xItem - 8;
+
+                    // // Serial.print(xItem);
+                    // // Serial.print(",");
+                    // // Serial.println(yItem);
+                    // // uint8_t idx = 0;
+
+                    // uint8_t idx = this->getItem(xItem, yItem);
+
+                    // if (yAdjust && idx == Constants::NoItem) {
+                    //     idx = this->getItem(xItem, yItem + 16);
+                    // }
+
+
+                    // uint8_t idx = this->getItem(ItemType::LockedDoor);
+
+                    uint8_t idx = this->getItem_ByXY(0, 0);
 
                     if (idx != Constants::NoItem) {
                         
@@ -796,53 +827,47 @@ struct World {
 
         }
 
-        #ifdef FALL_THROUGH_PORTAL
-
         bool isEmptyTile(uint8_t tile) {
 
             return isEmptyTile_XY(tile, Constants::NoOffset, Constants::NoOffset);
 
         }
 
-        bool isEmptyTile_XY(uint8_t tile, int8_t relX, int8_t relY) {
-            // Serial.print("Ply ");
-            // Serial.print(player.getLevel());
+        uint8_t getItem_ByXY(int8_t relX, int8_t relY) {
+        
+            int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
+            uint8_t yItem = (this->player.getLevel() + relY) << 3;
 
-            // Serial.print(" isEmptyTile_XY(");
-            // Serial.print(tile);
-            // Serial.print(",");
-            // Serial.print(relX);
-            // Serial.print(",");
-            // Serial.print(relY);
-            // Serial.println(")");
+            bool yAdjust = false;
+
+            // if (xItem % 16 != 0) xItem = xItem - 8;
+            if (yItem % 16 != 0) {
+                yItem = yItem - 8;
+                yAdjust = true;
+            }
+
+            if (xItem % 8 != 0) xItem = xItem - 4;
+            if (xItem % 16 != 0) xItem = xItem - 8;
+
+            uint8_t idx = 0;
+
+            idx = this->getItem(xItem, yItem);
+            if (yAdjust && idx == Constants::NoItem) {
+                idx = this->getItem(xItem, yItem + 16);
+            }
+
+            return idx;
+            
+        }
+
+        bool isEmptyTile_XY(uint8_t tile, int8_t relX, int8_t relY) {
 
             if (relX != Constants::NoOffset) {
 
                 if (tile == Tiles::Lever_Portal_LH || tile == Tiles::Lever_Portal_RH ||
                     tile == Tiles::Lever_Portal_Auto_LH || tile == Tiles::Lever_Portal_Auto_RH) {
                             
-                    int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
-                    uint8_t yItem = (this->player.getLevel() + relY) << 3;
-                    bool yAdjust = false;
-
-                    // if (xItem % 16 != 0) xItem = xItem - 8;
-                    if (yItem % 16 != 0) {
-                        yItem = yItem - 8;
-                        yAdjust = true;
-                    }
-
-                    if (xItem % 8 != 0) xItem = xItem - 4;
-                    if (xItem % 16 != 0) xItem = xItem - 8;
-
-                    // Serial.print(xItem);
-                    // Serial.print(",");
-                    // Serial.println(yItem);
-                    uint8_t idx = 0;
-
-                    idx = this->getItem(xItem, yItem);
-                    if (yAdjust && idx == Constants::NoItem) {
-                        idx = this->getItem(xItem, yItem + 16);
-                    }
+                    uint8_t idx = this->getItem_ByXY(relX, relY);
 
                     if (idx != Constants::NoItem) {
                         
@@ -865,8 +890,6 @@ struct World {
 
                 }
 
-                // return false;
-
             }
 
             return tile == Tiles::Blank || tile == Tiles::Spikes || 
@@ -877,21 +900,6 @@ struct World {
                    tile == Tiles::Sign_01 || tile == Tiles::Trebochet_To_RH || tile == Tiles::Trebochet_To_LH;
             
         }
-
-        #else
-
-        bool isEmptyTile(uint8_t tile) {
-
-            return tile == Tiles::Blank || tile == Tiles::Spikes || 
-                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || 
-                   tile == Tiles::Vine_Lower ||
-                   tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
-                   tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker || 
-                   tile == Tiles::Sign_01 || tile == Tiles::Trebochet_To_RH || tile == Tiles::Trebochet_To_LH;
-            
-        }
-
-        #endif
 
         #ifdef SHOW_SIGN
 

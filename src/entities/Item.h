@@ -113,7 +113,9 @@ class Item {
                 case ItemType::Key1:
                 case ItemType::PinchBar:
                 case ItemType::Potion:
+                #ifdef SHOW_ANCHOR
                 case ItemType::Anchor:
+                #endif
 
                     updateFrame(128);
 

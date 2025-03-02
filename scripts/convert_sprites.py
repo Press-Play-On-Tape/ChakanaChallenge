@@ -176,7 +176,7 @@ convert_header(IMAGES + 'Items/Item_05.png',                                    
 convert_header(IMAGES + 'Items/Item_06.png',                                                            BASE + 'Images.hpp', 'Item_06', 4, 16, 16)
 convert_header(IMAGES + 'Items/Item_07.png',                                                            BASE + 'Images.hpp', 'Item_07', 4, 16, 16)
 convert_header(IMAGES + 'Items/Item_08.png',                                                            BASE + 'Images.hpp', 'Item_08', 4, 16, 16)
-convert_header(IMAGES + 'Items/Item_09.png',                                                            BASE + 'Images.hpp', 'Item_09', 4, 16, 16)
+convert_header(IMAGES + 'Items/Item_09.png',                                                            BASE + 'Images.hpp', 'Item_09', 4, 16, 16, maskImage=True)
 convert_header(IMAGES + 'Items/Item_09a.png',                                                           BASE + 'Images.hpp', 'Item_09a', 4)
 convert_header(IMAGES + 'Items/Item_10.png',                                                            BASE + 'Images.hpp', 'Item_10', 4, 16, 16)
 convert_header(IMAGES + 'Items/Item_11.png',                                                            BASE + 'Images.hpp', 'Item_11', 4, 16, 16)
