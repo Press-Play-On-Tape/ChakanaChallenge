@@ -10,14 +10,14 @@ class Enemy {
     private:
 
         EnemyType enemyType;
-        Stance stance;
-        Item item;
 
         int16_t x;
         int8_t y;
+        Stance stance;
         int8_t health = Constants::HealthMax;
         uint8_t swordWound = 0;
 
+        Item item;
         Stack <Stance, Constants::StackSize_Enemy> stack;
 
     public:

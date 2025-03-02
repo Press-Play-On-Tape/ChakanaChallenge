@@ -47,13 +47,7 @@ void playGame_Init() {
 
             if (!puffFound) {
 
-                item.setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
-
-                item.setX(FX::readPendingUInt16());
-                item.setY(FX::readPendingUInt16());
-                item.setFrame(FX::readPendingUInt16());
-                item.setData(FX::readPendingUInt16());
-                item.setCounter(FX::readPendingUInt16());
+                FX::readObject(item);
 
                 if (item.getItemType() == ItemType::Puff) {
                     puffFound = true;
@@ -66,11 +60,11 @@ void playGame_Init() {
 
             }
 
-            if (i < Constants::ItemCount_Player - 1) {
+            // if (i < Constants::ItemCount_Player - 1) {
 
-                player.getItem(i).setItemType(ItemType::None);
+            //     player.getItem(i).setItemType(ItemType::None);
 
-            }
+            // }
 
         }
 
@@ -88,13 +82,7 @@ void playGame_Init() {
         for (uint8_t i = 0; i < Constants::EnemyCount; i++) {
 
             Enemy &enemy = world.getEnemy(i);
-
-            enemy.setEnemyType(static_cast<EnemyType>(FX::readPendingUInt16()));
-            enemy.setX(FX::readPendingUInt16());
-            enemy.setY(FX::readPendingUInt16());
-            enemy.setStance(FX::readPendingUInt16());
-            enemy.getItem().setItemType(static_cast<ItemType>(FX::readPendingUInt16()));
-            enemy.getItem().setData(FX::readPendingUInt16());
+            FX::readObject(enemy);
 
         }
 
@@ -1242,7 +1230,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     case ItemType::LifeSaver:
                     case ItemType::LifeSaver_Dissolve:
 
-                        if (collide(playerRect, itemRect)) {
+                        if (player.getItemCount() < Constants::ItemCount_Player && collide(playerRect, itemRect)) {
 
                             if (item.getCounter() == 0) {
 
