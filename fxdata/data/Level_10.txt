@@ -32,7 +32,7 @@ uint8_t Level_10_Items[] = {
 0, 0,                         // Data
 0, 0,                             // Counter
 
-28,                             // ItemType::Trebochet_Left
+28,                             // ItemType::Trebuchet_Left
 32, 1,                             // Position X
 16,                             // Position Y
 0,                             // Frame
@@ -118,13 +118,13 @@ uint8_t Level_10_Items[] = {
 };
 
 uint8_t Level_10_Enemies[] = {
-2                            // EnemyType::TrebochetOperator
+2                            // EnemyType::TrebuchetOperator
 62, 1,                             // Position X
 0,                             // Position Y
-13, 4,                             // Stance::Enemy_Trebochet_Release_LH_01
+13, 4,                             // Stance::Enemy_Trebuchet_Release_LH_01
 12,                              // Health
 0,                              // Sword Wound
-33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden
+33,                             // Inventory ItemType::Trebuchet_Ball_Left_Hidden
 0, 0, 0, 0,                               // Padding
 0, 0,                           // Data
 0, 0,                             // Counter

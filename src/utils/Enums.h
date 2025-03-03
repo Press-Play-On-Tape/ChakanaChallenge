@@ -74,7 +74,7 @@ enum class Direction : uint8_t {
 enum class EnemyType : uint8_t {
     None,
     Archer,
-    TrebochetOperator,
+    TrebuchetOperator,
     SwordFighter,
     Guard_RH,
     Guard_LH,
@@ -109,16 +109,16 @@ enum class ItemType : uint8_t {
     Arrow_RH_Hidden,
     Sword,
     Sword_Hidden,
-    Trebochet_Left,
-    Trebochet_Right,
-    Trebochet_Ball_Left_1, // 6
-    Trebochet_Ball_Left_2, // 5, 6
-    Trebochet_Ball_Left_3, // 5
-    Trebochet_Ball_Left_Hidden,
-    Trebochet_Ball_Right_1, // 6
-    Trebochet_Ball_Right_2, // 5, 6
-    Trebochet_Ball_Right_3, // 5
-    Trebochet_Ball_Right_Hidden,
+    Trebuchet_Left,
+    Trebuchet_Right,
+    Trebuchet_Ball_Left_1, // 6
+    Trebuchet_Ball_Left_2, // 5, 6
+    Trebuchet_Ball_Left_3, // 5
+    Trebuchet_Ball_Left_Hidden,
+    Trebuchet_Ball_Right_1, // 6
+    Trebuchet_Ball_Right_2, // 5, 6
+    Trebuchet_Ball_Right_3, // 5
+    Trebuchet_Ball_Right_Hidden,
     SwingyThing,
     SwingyThing_2,
     SwingyThing_Hidden,
@@ -1334,20 +1334,20 @@ enum Stance : uint16_t {
             Enemy_Fire_RH_11,
             Enemy_Fire_RH_12,
 
-            Enemy_Trebochet_Release_RH_01,
-            Enemy_Trebochet_Release_RH_02,
-            Enemy_Trebochet_Release_RH_03,
-            Enemy_Trebochet_Release_RH_04,
-            Enemy_Trebochet_Release_RH_05,
-            Enemy_Trebochet_Release_RH_06,
-            Enemy_Trebochet_Release_RH_07,
-            Enemy_Trebochet_Release_RH_08,
-            Enemy_Trebochet_Release_RH_09,
-            Enemy_Trebochet_Release_RH_10,
-            Enemy_Trebochet_Release_RH_11,
-            Enemy_Trebochet_Release_RH_12,
-            Enemy_Trebochet_Release_RH_13,
-            Enemy_Trebochet_Release_RH_14,
+            Enemy_Trebuchet_Release_RH_01,
+            Enemy_Trebuchet_Release_RH_02,
+            Enemy_Trebuchet_Release_RH_03,
+            Enemy_Trebuchet_Release_RH_04,
+            Enemy_Trebuchet_Release_RH_05,
+            Enemy_Trebuchet_Release_RH_06,
+            Enemy_Trebuchet_Release_RH_07,
+            Enemy_Trebuchet_Release_RH_08,
+            Enemy_Trebuchet_Release_RH_09,
+            Enemy_Trebuchet_Release_RH_10,
+            Enemy_Trebuchet_Release_RH_11,
+            Enemy_Trebuchet_Release_RH_12,
+            Enemy_Trebuchet_Release_RH_13,
+            Enemy_Trebuchet_Release_RH_14,
 
             Enemy_Sword_Start_RH,
 
@@ -1408,20 +1408,20 @@ enum Stance : uint16_t {
             Enemy_Fire_LH_11,
             Enemy_Fire_LH_12,
 
-            Enemy_Trebochet_Release_LH_01,
-            Enemy_Trebochet_Release_LH_02,
-            Enemy_Trebochet_Release_LH_03,
-            Enemy_Trebochet_Release_LH_04,
-            Enemy_Trebochet_Release_LH_05,
-            Enemy_Trebochet_Release_LH_06,
-            Enemy_Trebochet_Release_LH_07,
-            Enemy_Trebochet_Release_LH_08,
-            Enemy_Trebochet_Release_LH_09,
-            Enemy_Trebochet_Release_LH_10,
-            Enemy_Trebochet_Release_LH_11,
-            Enemy_Trebochet_Release_LH_12,
-            Enemy_Trebochet_Release_LH_13,
-            Enemy_Trebochet_Release_LH_14,
+            Enemy_Trebuchet_Release_LH_01,
+            Enemy_Trebuchet_Release_LH_02,
+            Enemy_Trebuchet_Release_LH_03,
+            Enemy_Trebuchet_Release_LH_04,
+            Enemy_Trebuchet_Release_LH_05,
+            Enemy_Trebuchet_Release_LH_06,
+            Enemy_Trebuchet_Release_LH_07,
+            Enemy_Trebuchet_Release_LH_08,
+            Enemy_Trebuchet_Release_LH_09,
+            Enemy_Trebuchet_Release_LH_10,
+            Enemy_Trebuchet_Release_LH_11,
+            Enemy_Trebuchet_Release_LH_12,
+            Enemy_Trebuchet_Release_LH_13,
+            Enemy_Trebuchet_Release_LH_14,
 
             Enemy_Sword_Start_LH,
 

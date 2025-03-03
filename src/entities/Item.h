@@ -113,7 +113,7 @@ class Item {
                 case ItemType::Key1:
                 case ItemType::PinchBar:
                 case ItemType::Potion:
-                #ifdef SHOW_ANCHOR
+                #ifdef ENABLE_ANCHOR
                 case ItemType::Anchor:
                 #endif
 
@@ -390,11 +390,11 @@ class Item {
 
                     break;
                 
-                case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
-                case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3: 
+                case ItemType::Trebuchet_Ball_Left_1 ... ItemType::Trebuchet_Ball_Left_3:
+                case ItemType::Trebuchet_Ball_Right_1 ... ItemType::Trebuchet_Ball_Right_3: 
                     {
                             
-                        bool isLeft = (this->itemType >= ItemType::Trebochet_Ball_Left_1 && this->itemType <= ItemType::Trebochet_Ball_Left_3);
+                        bool isLeft = (this->itemType >= ItemType::Trebuchet_Ball_Left_1 && this->itemType <= ItemType::Trebuchet_Ball_Left_3);
                         int8_t direction = isLeft ? -1 : 1;  // -1 for left, 1 for right
 
                         if (this->counter > 0) {
@@ -405,18 +405,18 @@ class Item {
 
                             switch (this->itemType) {
 
-                                case ItemType::Trebochet_Ball_Left_1:
-                                case ItemType::Trebochet_Ball_Right_1:
+                                case ItemType::Trebuchet_Ball_Left_1:
+                                case ItemType::Trebuchet_Ball_Right_1:
                                     this->setX(this->getX() + (direction * 5));
                                     break;
 
-                                case ItemType::Trebochet_Ball_Left_2:
-                                case ItemType::Trebochet_Ball_Right_2:
+                                case ItemType::Trebuchet_Ball_Left_2:
+                                case ItemType::Trebuchet_Ball_Right_2:
                                     this->setX(this->getX() + (direction * (5 + (this->counter % 2))));
                                     break;
 
-                                case ItemType::Trebochet_Ball_Left_3:
-                                case ItemType::Trebochet_Ball_Right_3:
+                                case ItemType::Trebuchet_Ball_Left_3:
+                                case ItemType::Trebuchet_Ball_Right_3:
                                     this->setX(this->getX() + (direction * 4));
                                     break;
 
@@ -437,7 +437,7 @@ class Item {
                             uint8_t frameLimit = isLeft ? 9 : 17;
 
                             if (this->frame == frameLimit) {
-                                this->itemType = isLeft ? ItemType::Trebochet_Ball_Left_Hidden : ItemType::Trebochet_Ball_Right_Hidden;
+                                this->itemType = isLeft ? ItemType::Trebuchet_Ball_Left_Hidden : ItemType::Trebuchet_Ball_Right_Hidden;
                                 this->frame = 0;
                             }
 

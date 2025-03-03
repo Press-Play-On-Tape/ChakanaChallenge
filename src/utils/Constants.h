@@ -44,7 +44,7 @@
 	#define _RENDER_16X16_SECONDARY
 
 	// 4 Bytes
-	#define _SHOW_ANCHOR
+	#define _ENABLE_ANCHOR
 
 	// 120 bytes
 	#define _BOUNCEJUMP_3
@@ -594,8 +594,8 @@ enum Tiles : uint8_t {
 	Decorative_Triangle_LH = 42,
 	Decorative_Triangle_RH = 43,
 
-	Trebochet_To_RH = 46,
-	Trebochet_To_LH = 47,
+	Trebuchet_To_RH = 46,
+	Trebuchet_To_LH = 47,
 
 	Weed = 48,
 	Block_WithWeed = 49,

@@ -63,14 +63,14 @@ class Enemy {
                 case Stance::Enemy_Walk_RH_00 ... Stance::Enemy_Walk_RH_03:
                 case Stance::Enemy_Walk_Bow_RH_00 ... Stance::Enemy_Walk_Bow_RH_03:
                 case Stance::Enemy_Fire_RH_00 ... Stance::Enemy_Fire_RH_12:
-                case Stance::Enemy_Trebochet_Release_RH_01 ... Stance::Enemy_Trebochet_Release_RH_14:
+                case Stance::Enemy_Trebuchet_Release_RH_01 ... Stance::Enemy_Trebuchet_Release_RH_14:
                 case Stance::Enemy_Sword_Start_RH ... Stance::Enemy_Sword_End_RH:
                     return Direction::Right;
 
                 case Stance::Enemy_Walk_LH_00 ... Stance::Enemy_Walk_LH_03:
                 case Stance::Enemy_Walk_Bow_LH_00 ... Stance::Enemy_Walk_Bow_LH_03:
                 case Stance::Enemy_Fire_LH_00 ... Stance::Enemy_Fire_LH_12:
-                case Stance::Enemy_Trebochet_Release_LH_01 ... Stance::Enemy_Trebochet_Release_LH_14:
+                case Stance::Enemy_Trebuchet_Release_LH_01 ... Stance::Enemy_Trebuchet_Release_LH_14:
                 case Stance::Enemy_Sword_Start_LH ... Stance::Enemy_Sword_End_LH:
                     return Direction::Left;         
 

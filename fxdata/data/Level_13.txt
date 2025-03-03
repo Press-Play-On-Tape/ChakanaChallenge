@@ -67,18 +67,11 @@ uint8_t Level_13_Items[] = {
 0, 0,                             // Data
 0, 0,                             // Counter
 
-5,                             // ItemType::Hammer
-192, 1,                             // Position X
-48,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                             // Counter
-
 11,                             // ItemType::MysteryCrate
 32, 1,                             // Position X
 112,                             // Position Y
 0,                             // Frame
-55, 0,                              // Data
+5, 0,                              // Data
 0, 0,                            // Counter
 
 2,                             // ItemType::WoodenBarrier
@@ -101,6 +94,13 @@ uint8_t Level_13_Items[] = {
 0,                             // Frame
 0, 0,                            // Data
 0, 0,                            // Counter
+
+51,                             // ItemType::LifeSaver
+192, 1,                             // Position X
+48,                             // Position Y
+0,                             // Frame
+0, 0,                            // Data
+0, 0,                             // Counter
 
 43,                             // ItemType::Lever_LH
 176, 0,                             // Position X

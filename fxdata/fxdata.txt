@@ -37,7 +37,7 @@ namespace Constants
 
     }
 
-    uint8_t TrebochetImgs[] = { 0, 1, 2, 3, 4, 4, 4, 3, 3, 2, 2, 1, 1, 0};
+    uint8_t TrebuchetImgs[] = { 0, 1, 2, 3, 4, 4, 4, 3, 3, 2, 2, 1, 1, 0};
 
     include "data/Ports.txt"
     include "data/Stances.txt"
@@ -106,16 +106,16 @@ namespace Images
         Item_00,                // Arrow_RH_Hidden,
         Item_17,                // Sword,
         0,                      // Sword_Hidden,
-        Item_14,                // Trebochet_Left,
-        Item_15,                // Trebochet_Right,
-        Trebochet_Ball,         // Trebochet_Ball_Left_1, // 6
-        Trebochet_Ball,         // Trebochet_Ball_Left_2, // 5, 6
-        Trebochet_Ball,         // Trebochet_Ball_Left_3, // 5
-        0,                      // Trebochet_Ball_Left_Hidden,
-        Trebochet_Ball,         // Trebochet_Ball_Right_1, // 6
-        Trebochet_Ball,         // Trebochet_Ball_Right_2, // 5, 6
-        Trebochet_Ball,         // Trebochet_Ball_Right_3, // 5
-        0,                      // Trebochet_Ball_Right_Hidden,
+        Item_14,                // Trebuchet_Left,
+        Item_15,                // Trebuchet_Right,
+        Trebuchet_Ball,         // Trebuchet_Ball_Left_1, // 6
+        Trebuchet_Ball,         // Trebuchet_Ball_Left_2, // 5, 6
+        Trebuchet_Ball,         // Trebuchet_Ball_Left_3, // 5
+        0,                      // Trebuchet_Ball_Left_Hidden,
+        Trebuchet_Ball,         // Trebuchet_Ball_Right_1, // 6
+        Trebuchet_Ball,         // Trebuchet_Ball_Right_2, // 5, 6
+        Trebuchet_Ball,         // Trebuchet_Ball_Right_3, // 5
+        0,                      // Trebuchet_Ball_Right_Hidden,
         Item_16,                // SwingyThing,
         Item_16,                // SwingyThing_2,
         0,                      // SwingyThing_Hidden,
@@ -174,16 +174,16 @@ namespace Images
         0,                // Arrow_RH_Hidden,
         0,                // Sword,
         0,                // Sword_Hidden,
-        0,                // Trebochet_Left,
-        0,                // Trebochet_Right,
-        0,                // Trebochet_Ball_Left_1, // 6
-        0,                // Trebochet_Ball_Left_2, // 5, 6
-        0,                // Trebochet_Ball_Left_3, // 5
-        0,                // Trebochet_Ball_Left_Hidden,
-        0,                // Trebochet_Ball_Right_1, // 6
-        0,                // Trebochet_Ball_Right_2, // 5, 6
-        0,                // Trebochet_Ball_Right_3, // 5
-        0,                // Trebochet_Ball_Right_Hidden,
+        0,                // Trebuchet_Left,
+        0,                // Trebuchet_Right,
+        0,                // Trebuchet_Ball_Left_1, // 6
+        0,                // Trebuchet_Ball_Left_2, // 5, 6
+        0,                // Trebuchet_Ball_Left_3, // 5
+        0,                // Trebuchet_Ball_Left_Hidden,
+        0,                // Trebuchet_Ball_Right_1, // 6
+        0,                // Trebuchet_Ball_Right_2, // 5, 6
+        0,                // Trebuchet_Ball_Right_3, // 5
+        0,                // Trebuchet_Ball_Right_Hidden,
         0,                // SwingyThing,
         0,                // SwingyThing_2,
         0,                // SwingyThing_Hidden,

@@ -93,8 +93,8 @@ void renderWorld() {
                 else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Blank && tile11 == Tiles::Blank)                            imgTile = Images::Crate_10;
                 else if (tile00 == Tiles::Decorative_Triangle_LH)                                                                                                           imgTile = Images::Crate_42;
                 else if (tile00 == Tiles::Decorative_Triangle_RH)                                                                                                           imgTile = Images::Crate_43;
-                else if (tile00 == Tiles::Trebochet_To_RH)                                                                                                                  imgTile = Images::Crate_46;
-                else if (tile00 == Tiles::Trebochet_To_LH)                                                                                                                  imgTile = Images::Crate_47;
+                else if (tile00 == Tiles::Trebuchet_To_RH)                                                                                                                  imgTile = Images::Crate_46;
+                else if (tile00 == Tiles::Trebuchet_To_LH)                                                                                                                  imgTile = Images::Crate_47;
                 else if (tile00 == Tiles::Weed)                                                                                                                             imgTile = Images::Crate_48;
                 else if (tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                                                              imgTile = Images::Crate_20;
                 else if (tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                                                              imgTile = Images::Crate_21;
@@ -224,7 +224,7 @@ void renderWorld() {
 
         switch (item.getItemType()) {
 
-            #ifdef SHOW_ANCHOR
+            #ifdef ENABLE_ANCHOR
             case ItemType::Anchor:
             #endif
             case ItemType::Key1:
@@ -517,10 +517,10 @@ void renderWorld() {
 
                         }
 
-                        else if ((enemyItemType >= ItemType::Trebochet_Ball_Left_1 && enemyItemType <= ItemType::Trebochet_Ball_Left_3) || 
-                                 (enemyItemType >= ItemType::Trebochet_Ball_Right_1 && enemyItemType <= ItemType::Trebochet_Ball_Right_3)) {
+                        else if ((enemyItemType >= ItemType::Trebuchet_Ball_Left_1 && enemyItemType <= ItemType::Trebuchet_Ball_Left_3) || 
+                                 (enemyItemType >= ItemType::Trebuchet_Ball_Right_1 && enemyItemType <= ItemType::Trebuchet_Ball_Right_3)) {
 
-                            SpritesU::drawPlusMaskFX(xEnemyItem - 4, yEnemyItem, Images::Trebochet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
+                            SpritesU::drawPlusMaskFX(xEnemyItem - 4, yEnemyItem, Images::Trebuchet_Ball, (enemy.getItem().getFrame() * 3) + currentPlane);
 
                         }
                         

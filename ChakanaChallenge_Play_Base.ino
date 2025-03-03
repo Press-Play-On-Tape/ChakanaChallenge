@@ -1226,7 +1226,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     case ItemType::Amulet:
                     case ItemType::Potion:
 
-                    #ifdef SHOW_ANCHOR
+                    #ifdef ENABLE_ANCHOR
                     case ItemType::Anchor:
                     #endif
 

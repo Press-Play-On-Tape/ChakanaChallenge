@@ -897,7 +897,7 @@ struct World {
                    tile == Tiles::Vine_Lower ||
                    tile == Tiles::Water_Plain || tile == Tiles::Water_Bubbling_1 || 
                    tile == Tiles::Water_Bubbling_2 || tile == Tiles::Poker || tile == Tiles::Sign_01 || 
-                   tile == Tiles::Sign_01 || tile == Tiles::Trebochet_To_RH || tile == Tiles::Trebochet_To_LH;
+                   tile == Tiles::Sign_01 || tile == Tiles::Trebuchet_To_RH || tile == Tiles::Trebuchet_To_LH;
             
         }
 
@@ -1135,7 +1135,7 @@ struct World {
 
                         break;
 
-                    case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Right_Hidden:
+                    case ItemType::Trebuchet_Ball_Left_1 ... ItemType::Trebuchet_Ball_Right_Hidden:
 
                         if (item.getData() > 0) item.setData(item.getData() - 1);
 
@@ -1143,9 +1143,9 @@ struct World {
                                 
                             if (enemy.getCount() == 0 && a.randomLFSR(0, 40) == 0) {
 
-                                const uint16_t diff = Stance::Enemy_Trebochet_Release_LH_01 - Stance::Enemy_Trebochet_Release_RH_01;
+                                const uint16_t diff = Stance::Enemy_Trebuchet_Release_LH_01 - Stance::Enemy_Trebuchet_Release_RH_01;
                                 uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
-                                enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01 + stanceOffset, Stance::Enemy_Trebochet_Release_RH_14 + stanceOffset);
+                                enemy.pushSequence(Stance::Enemy_Trebuchet_Release_RH_01 + stanceOffset, Stance::Enemy_Trebuchet_Release_RH_14 + stanceOffset);
 
                             }
 
@@ -1238,17 +1238,17 @@ struct World {
 
                         break;
 
-                    case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
-                    case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
+                    case ItemType::Trebuchet_Ball_Left_1 ... ItemType::Trebuchet_Ball_Left_3:
+                    case ItemType::Trebuchet_Ball_Right_1 ... ItemType::Trebuchet_Ball_Right_3:
                         {
                             ItemType itemType = item.getItemType();
                             enemy.getItem().update();
 
                             Rect playerRect = { 59, player.getY_RelativeToGround(), 10, 16 };
-                            int xOffset = (itemType >= ItemType::Trebochet_Ball_Left_1) ? -3 : -4;
-                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() + xOffset, enemy.getItem().getY(), 4, 4 };
+                            int xOffset = (itemType >= ItemType::Trebuchet_Ball_Left_1) ? -3 : -4;
+                            Rect trebuchetRect = { enemy.getItem().getX() + this->getMiddleground() + xOffset, enemy.getItem().getY(), 4, 4 };
                             
-                            if (collide(playerRect, trebochetRect)) {
+                            if (collide(playerRect, trebuchetRect)) {
                                 
                                 if (player.getBuzzCount() > 0) {
 
@@ -1257,7 +1257,7 @@ struct World {
                                 }
                                 else {
                                         
-                                    ItemType hiddenType = (itemType >= ItemType::Trebochet_Ball_Left_1) ? ItemType::Trebochet_Ball_Left_Hidden : ItemType::Trebochet_Ball_Right_Hidden;
+                                    ItemType hiddenType = (itemType >= ItemType::Trebuchet_Ball_Left_1) ? ItemType::Trebuchet_Ball_Left_Hidden : ItemType::Trebuchet_Ball_Right_Hidden;
                                     
                                     enemy.getItem().setItemType(hiddenType);
                                     enemy.getItem().setFrame(0);
@@ -1265,8 +1265,8 @@ struct World {
                                     this->initPuff(item.getX(), item.getY());
                                     
                                     Stance stance = (this->player.getDirection() == Direction::Right) ?
-                                        ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_RH_01) :
-                                        ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_FWD_LH_01 : Stance::Man_Die_BWD_LH_01);
+                                        ((itemType >= ItemType::Trebuchet_Ball_Left_1) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_RH_01) :
+                                        ((itemType >= ItemType::Trebuchet_Ball_Left_1) ? Stance::Man_Die_FWD_LH_01 : Stance::Man_Die_BWD_LH_01);
                                     
                                     this->player.pushSequence(stance, stance + 3, true);
 
