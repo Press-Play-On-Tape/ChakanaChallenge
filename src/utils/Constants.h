@@ -7,7 +7,7 @@
 #define DEBUG_BREAK    asm volatile("break\n");
 
 #define _DEBUG
-#define _DEBUG_SOUND
+#define DEBUG_SOUND
 #define _DEBUG_DISABLE_PLAY
 #define _DEBUG_HANDLE_MENUS
 #define _DEBUG_LOCKED_DOOR
