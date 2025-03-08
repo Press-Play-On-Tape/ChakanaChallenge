@@ -1219,6 +1219,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 launchPuff(item);
                                 player.setChakanas(player.getChakanas() + item.getData());
 
+                                #ifndef DEBUG_SOUND
+                                playSFX(MusicSFX::SFX_XPGain);
+                                #endif
+
                             }
 
                         }
@@ -1243,6 +1247,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             if (item.getCounter() == 0) {
 
                                 launchPuff(item);
+
+                                #ifndef DEBUG_SOUND
+                                playSFX(MusicSFX::SFX_PickUpItem);
+                                #endif
 
                             }
 
@@ -1312,6 +1320,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 }
 
                             }
+
+                            #ifndef DEBUG_SOUND
+                            playSFX(MusicSFX::SFX_PlayerBlip);
+                            #endif
                             
                         }
                         break;

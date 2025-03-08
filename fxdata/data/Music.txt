@@ -8,6 +8,9 @@ namespace Music {
     raw_t SFX_LandHard = "music/SFX_LandHard.bin"
     raw_t SFX_PlayerBlip = "music/SFX_PlayerBlip.bin"
     raw_t SFX_EnemyBlip = "music/SFX_EnemyBlip.bin"
+    raw_t SFX_PickUpItem = "music/SFX_PickUpItem.bin"
+    raw_t SFX_XPGain = "music/SFX_XPGain.bin"
+    raw_t SFX_Glint = "music/SFX_Glint.bin"
 
     uint24_t Songs[] = { Song_MainTheme,
                          Song_FastIntro };
@@ -17,6 +20,9 @@ namespace Music {
                          SFX_LandHard,
                          SFX_PlayerBlip,
                          SFX_EnemyBlip,
+                         SFX_PickUpItem,
+                         SFX_XPGain,
+                         SFX_Glint,
                        };
 
 

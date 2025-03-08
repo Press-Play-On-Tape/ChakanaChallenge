@@ -749,6 +749,11 @@ void renderWorld() {
     a.drawRect(enemyX, enemyY, 1, 1);
     #endif
 
+    #ifdef DEBUG_TREBOCHET
+    a.drawRect(59, 0, 10, 16);
+    a.drawRect(56, 13, 4, 4);
+    #endif
+
 }
 
 uint8_t getStanceImg(Stance stance) {

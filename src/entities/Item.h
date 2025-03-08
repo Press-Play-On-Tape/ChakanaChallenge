@@ -403,24 +403,28 @@ class Item {
                             this->setCounter(this->getCounter() - 1);
                             this->setY(this->getY() + yOffset);
 
+                            int8_t incX = 0;
+
                             switch (this->itemType) {
 
                                 case ItemType::Trebochet_Ball_Left_1:
                                 case ItemType::Trebochet_Ball_Right_1:
-                                    this->setX(this->getX() + (direction * 5));
+                                    incX = direction * 5;
                                     break;
 
                                 case ItemType::Trebochet_Ball_Left_2:
                                 case ItemType::Trebochet_Ball_Right_2:
-                                    this->setX(this->getX() + (direction * (5 + (this->counter % 2))));
+                                    incX = direction * (4 + (this->counter % 2));
                                     break;
 
                                 case ItemType::Trebochet_Ball_Left_3:
                                 case ItemType::Trebochet_Ball_Right_3:
-                                    this->setX(this->getX() + (direction * 4));
+                                    incX = direction * 4;
                                     break;
 
                             }
+
+                            this->setX(this->getX() + incX);
 
                             if (this->counter == 0) {
 

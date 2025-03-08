@@ -36,6 +36,9 @@ enum class MusicSFX : uint8_t {
     SFX_LandHard,
     SFX_PlayerBlip,
     SFX_EnemyBlip,
+    SFX_PickUpItem,
+    SFX_XPGain,
+    SFX_Glint,
 };
 
 enum class BoatDirection : uint8_t {

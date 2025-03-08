@@ -55,6 +55,12 @@ int8_t enemyX;
 int8_t enemyY;
 #endif
 
+#ifdef DEBUG_TREBOCHET
+int8_t playerX;
+int8_t playerY;
+int8_t enemyX;
+int8_t enemyY;
+#endif
 
 void setup() {
 

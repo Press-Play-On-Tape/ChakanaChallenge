@@ -50,6 +50,10 @@ void playGame_SetGlint(Enemy &enemy) {
         glint.setY(enemy.getY() + 1);
         glint.setFrame(0);
 
+        #ifndef DEBUG_SOUND
+        playSFX(MusicSFX::SFX_Glint);
+        #endif
+
     }
 
 }
@@ -80,10 +84,11 @@ void launchTrebochetBall(Enemy &enemy, ItemType itemType) {
 
     Item &item = enemy.getItem();
     uint8_t r = a.randomLFSR(static_cast<uint8_t>(0), static_cast<uint8_t>(3));
+
     item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(itemType) + r));
     item.setCounter(20);
     item.setData(120);
-    item.setY(enemy.getY() + 8);
+    item.setY(enemy.getY() + 14);
 
     if (itemType == ItemType::Trebochet_Ball_Left_1) {
 
@@ -188,7 +193,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                     #ifndef DEBUG_SOUND
                                     playSFX(MusicSFX::SFX_PlayerBlip);
                                     #endif
-                                    
+
                                     uint8_t health = 0;
 
                                     switch (player.getStance()) {
@@ -529,7 +534,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             }
                             else if (dist >= -12 && dist <= -6) {  
-
+                                
                                 if (tile_R == Tiles::Blank && a.randomLFSR(0, 5) == 0) {
 
                                     #ifdef DEBUG_ENEMY_SWORD

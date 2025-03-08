@@ -8,6 +8,7 @@
 
 #define _DEBUG
 #define _DEBUG_SOUND
+#define _DEBUG_TREBOCHET
 #define _DEBUG_DISABLE_PLAY
 #define _DEBUG_HANDLE_MENUS
 #define _DEBUG_LOCKED_DOOR

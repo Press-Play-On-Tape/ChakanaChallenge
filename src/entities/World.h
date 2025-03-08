@@ -183,18 +183,9 @@ struct World {
         }
 
         static bool absT(int8_t x) {
-            // Serial.print("absT ");
-            // Serial.print(x);
-            // Serial.print(" ");
-            // if(x < 0) {
-            //     Serial.print(-x);
-            // }
-            // else {
-            //     Serial.print(x);
 
-            // }
-            // Serial.println("");
             return x < 0 ? -x : x;
+
         }
 
         uint8_t getBoatCoords_Offset() {
@@ -206,19 +197,6 @@ struct World {
 
             uint8_t from = this->getNextPort();
             uint8_t to = this->getCurrentPort();
-
-            // Serial.print("Fr ");
-            // Serial.print(from);            
-            // Serial.print(", To ");
-            // Serial.print(to);   
-            // Serial.print(", AbsT(f-t) ");
-            // Serial.print(abs(from - to));            
-            // Serial.print(" > ");
-            // Serial.print((to * 14) + from) + (abs(from - to) == 1 ? 2 : 0);   
-            // Serial.print(" = ");
-            // Serial.print(FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from));   
-            // Serial.print(", ");
-            // Serial.println(FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (abs(from - to) == 1 ? 2 : 0));   
 
             if (from < Constants::NoPort && to < Constants::NoPort) {
 
@@ -237,9 +215,6 @@ struct World {
 
                 uint8_t offset = getBoatCoords_Offset();
                 uint24_t boatCoords = FX::readIndexedUInt24(Constants::BoatCoords, (this->getCurrentPort() << 2) + offset);
-
-// Serial.print("UpdateBoat ");
-// Serial.println((this->getCurrentPort() << 2) + offset);
 
                 BoatMovement boatMovement;
                 FX::seekData(boatCoords + (this->boatCounter * 3));
@@ -749,37 +724,7 @@ struct World {
 
                 else if (tile == Tiles::LockedDoor) { 
 
-                    // int8_t relX = 0;
-                    // int8_t relY = 0;
-                    
-                    // int16_t xItem = -this->getMiddleground() + 64 + (relX << 3);
-                    // uint8_t yItem = (this->player.getLevel() + relY) << 3;
-                    // bool yAdjust = false;
-
-                    // // if (xItem % 16 != 0) xItem = xItem - 8;
-                    // if (yItem % 16 != 0) {
-                    //     yItem = yItem - 8;
-                    //     yAdjust = true;
-                    // }
-
-                    // if (xItem % 8 != 0) xItem = xItem - 4;
-                    // if (xItem % 16 != 0) xItem = xItem - 8;
-
-                    // // Serial.print(xItem);
-                    // // Serial.print(",");
-                    // // Serial.println(yItem);
-                    // // uint8_t idx = 0;
-
-                    // uint8_t idx = this->getItem(xItem, yItem);
-
-                    // if (yAdjust && idx == Constants::NoItem) {
-                    //     idx = this->getItem(xItem, yItem + 16);
-                    // }
-
-
-                    // uint8_t idx = this->getItem(ItemType::LockedDoor);
-
-                    uint8_t idx = this->getItem_ByXY(0, 0);
+                     uint8_t idx = this->getItem_ByXY(0, 0);
 
                     if (idx != Constants::NoItem) {
                         
@@ -794,9 +739,9 @@ struct World {
 
             #endif
 
-            return tile == Tiles::Blank || /*tile == Tiles::Solid_Walkable ||*/ tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH /*rope lh*/ || 
-                tile == Tiles::Rope_Support_RH /*rope rh*/ || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji || tile == Tiles::Flame ||
-                tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
+            return tile == Tiles::Blank || tile == Tiles::Ladder_Lower || tile == Tiles::Ladder_Middle || tile == Tiles::Rope_Support_LH || 
+                   tile == Tiles::Rope_Support_RH || tile == Tiles::Spring_LH || tile == Tiles::Spring_RH || tile == Tiles::Punji || tile == Tiles::Flame ||
+                   tile == Tiles::Swinging_Vine_LH || tile == Tiles::Swinging_Vine_RH || tile == Tiles::Vine_Lower;
             
         }
 
@@ -902,9 +847,6 @@ struct World {
                     uint8_t idx = this->getItem_ByXY(relX, relY);
 
                     if (idx != Constants::NoItem) {
-                        
-                        // Serial.print("Found ");
-                        // Serial.println(idx);
 
                         Item &item = this->getItem(idx);
 
@@ -1279,9 +1221,19 @@ struct World {
                             Rect playerRect = { 59, player.getY_RelativeToGround(), 10, 16 };
                             int xOffset = (itemType >= ItemType::Trebochet_Ball_Left_1) ? -3 : -4;
                             Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() + xOffset, enemy.getItem().getY(), 4, 4 };
-                            
-                            if (collide(playerRect, trebochetRect)) {
-                                
+
+                            if (collide(playerRect, trebochetRect) && item.getCounter() > 0 && item.getCounter() < 19) {
+
+                                #ifdef DEBUG_TREBOCHET
+                                DEBUG_PRINT(playerRect.x);
+                                DEBUG_PRINT(" ");
+                                DEBUG_PRINT(playerRect.y);
+                                DEBUG_PRINT(" ");
+                                DEBUG_PRINT(trebochetRect.x);
+                                DEBUG_PRINT(" ");
+                                DEBUG_PRINTLN(trebochetRect.y);
+                                #endif
+                                                                                                                                                                
                                 if (player.getBuzzCount() > 0) {
 
                                     this->player.setBuzzCount(0);
