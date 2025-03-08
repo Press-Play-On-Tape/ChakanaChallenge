@@ -93,16 +93,16 @@ struct World {
 
             this->portsVisited = 0;
             this->frameCount = 0;
-            this->xMap = 0;
-            this->yMap = 0;
+            this->xMap = 0; //0;
+            this->yMap = 0; //0;
             this->xBoat = 14;
             this->yBoat = 6;
             this->boatDirection = BoatDirection::Down;
             this->boatCounter = 0;
             this->y = 0;
 
-            this->currentPort = 255;
-            this->nextPort = 255; 
+            this->currentPort = 255;//255;
+            this->nextPort = 255;//255; 
             this->nextPortCost = 0;
 
         }
@@ -183,18 +183,47 @@ struct World {
         }
 
         static bool absT(int8_t x) {
+            // Serial.print("absT ");
+            // Serial.print(x);
+            // Serial.print(" ");
+            // if(x < 0) {
+            //     Serial.print(-x);
+            // }
+            // else {
+            //     Serial.print(x);
+
+            // }
+            // Serial.println("");
             return x < 0 ? -x : x;
         }
 
         uint8_t getBoatCoords_Offset() {
 
+            /* Returns  0 Normal AC
+                        1 Normal CW 
+                        2 Alternate AC 
+                        3 Alternate CW */
+
             uint8_t from = this->getNextPort();
             uint8_t to = this->getCurrentPort();
+
+            // Serial.print("Fr ");
+            // Serial.print(from);            
+            // Serial.print(", To ");
+            // Serial.print(to);   
+            // Serial.print(", AbsT(f-t) ");
+            // Serial.print(abs(from - to));            
+            // Serial.print(" > ");
+            // Serial.print((to * 14) + from) + (abs(from - to) == 1 ? 2 : 0);   
+            // Serial.print(" = ");
+            // Serial.print(FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from));   
+            // Serial.print(", ");
+            // Serial.println(FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (abs(from - to) == 1 ? 2 : 0));   
 
             if (from < Constants::NoPort && to < Constants::NoPort) {
 
                 // player.setY(((to * 14) + from) + (absT(from - to) == 1 ? 2 : 0));
-                return FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (absT(from - to) == 1 ? 2 : 0);
+                return FX::readIndexedUInt8(Constants::PortOffsets, (to * 14) + from) + (abs(from - to) == 1 ? 2 : 0);
 
             }
             
@@ -208,6 +237,9 @@ struct World {
 
                 uint8_t offset = getBoatCoords_Offset();
                 uint24_t boatCoords = FX::readIndexedUInt24(Constants::BoatCoords, (this->getCurrentPort() << 2) + offset);
+
+// Serial.print("UpdateBoat ");
+// Serial.println((this->getCurrentPort() << 2) + offset);
 
                 BoatMovement boatMovement;
                 FX::seekData(boatCoords + (this->boatCounter * 3));

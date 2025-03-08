@@ -94,36 +94,36 @@ void renderWorld() {
                 else if (tile00 == Tiles::Decorative_Triangle_LH)                                                                                                           imgTile = Images::Crate_42;
                 else if (tile00 == Tiles::Decorative_Triangle_RH)                                                                                                           imgTile = Images::Crate_43;
                 else if (tile00 == Tiles::Trebochet_To_RH)                                                                                                                  imgTile = Images::Crate_46;
-                else if (tile00 == Tiles::Trebochet_To_LH)                                                                                                                  imgTile = Images::Crate_47;
+                // else if (tile00 == Tiles::Trebochet_To_LH)                                                                                                                  imgTile = Images::Crate_47;
                 else if (tile00 == Tiles::Weed)                                                                                                                             imgTile = Images::Crate_48;
                 else if (tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                                                              imgTile = Images::Crate_20;
                 else if (tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                                                              imgTile = Images::Crate_21;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_00;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_03;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_04;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)          imgTile = Images::Crate_05;
-                else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                   imgTile = Images::Crate_02;
-                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)          imgTile = Images::Crate_09;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_00;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_03;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_04;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)          imgTile = Images::Crate_05;
+                // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                   imgTile = Images::Crate_02;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)          imgTile = Images::Crate_09;
                 else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_02;
                 else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                         imgTile = Images::Crate_06;
                 else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                         imgTile = Images::Crate_07;
                 else if (tile00 == Tiles::Single_Stair_RH_Lower && tile11 == Tiles::Single_Stair_RH_Upper_TR)                                                               imgTile = Images::Crate_44;
                 else if (tile01 == Tiles::Single_Stair_LH_Lower && tile10 == Tiles::Single_Stair_LH_Upper_TL)                                                               imgTile = Images::Crate_45;
-                else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                      imgTile = Images::Crate_11;
-                else if (tile00 == Tiles::Single_Stair_LH_Lower /*&& tile01 == Tiles::Blank && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                          imgTile = Images::Crate_11a;
+                // else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                      imgTile = Images::Crate_11;
+                else if (tile00 == Tiles::Single_Stair_LH_Lower)                                                                                                            imgTile = Images::Crate_11a;
                 else if (tile11 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Top;
-                else if (tile00 == Tiles::Spikes /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                        imgTile = Images::Spikes_Bottom;
-                else if (tile00 == Tiles::Sign_01 /*&& tile01 == Tiles::Spikes && tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                       imgTile = Images::Crate_52;
+                else if (tile00 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Bottom;
+                else if (tile00 == Tiles::Sign_01)                                                                                                                          imgTile = Images::Crate_52;
 
 
 
 
                 // Rope
 
-                else if (/*tile00 == Tiles::Rope_Support_LH && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                      imgTile = Images::Crate_17;
-                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Rope_Support_RH && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                      imgTile = Images::Crate_18;
-                else if (/*tile00 == Tiles::Blank && tile01 == Tiles::Blank && */ tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                           imgTile = Images::Crate_19;
-                else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                                            imgTile = Images::Crate_23;
+                else if (tile10 == Tiles::Rope_Support_LH && tile11 == Tiles::Rope)                                                                                         imgTile = Images::Crate_17;
+                else if (tile10 == Tiles::Rope && tile11 == Tiles::Rope_Support_RH)                                                                                         imgTile = Images::Crate_18;
+                else if (tile10 == Tiles::Rope && tile11 == Tiles::Rope)                                                                                                    imgTile = Images::Crate_19;
+                else if (tile00 == Tiles::Rope && tile01 == Tiles::Rope)                                                                                                    imgTile = Images::Crate_23;
 
 
                 // Stairs

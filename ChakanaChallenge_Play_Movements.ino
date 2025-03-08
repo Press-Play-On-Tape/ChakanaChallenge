@@ -14,10 +14,11 @@ void processLadder_MoveLeft(Player &player, Tiles tile) {
     if (world.getMiddleground() % 8 != 0) {
 
         if (world.isEmptyTile(tile)) {
+
             player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
             end = 1;
-            player.setFalls(0);
-        }
+            player.setFalls(2);
+}
         else {
             start = 2;
             end = 7;
@@ -44,6 +45,7 @@ void processLadder_MoveRight(Player &player, Tiles tile) {
             player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
             end = 1;
             player.setFalls(0);
+
         }
         else {
             start = 2;
@@ -126,7 +128,7 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
 
                     }     
                     else {
-                    
+
                         player.setFalls(0);
                         player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
 
@@ -198,7 +200,7 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
 
                 }
                 else {
-                    
+             
                     player.setFalls(0);
 
                     if (player.getLevel() != 2 && world.canWalkOnTile(tile_F3D3)) {
@@ -268,7 +270,7 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
             } 
             else {
 
-                player.setFalls(0);
+                player.setFalls(2);
                 player.pushSequence(Stance::Man_Walk_FallDown_RH_01 + stanceOffset, Stance::Man_Walk_FallDown_RH_06 + stanceOffset);
 
             }

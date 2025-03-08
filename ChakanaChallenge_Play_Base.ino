@@ -310,8 +310,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     else if (world.isVerticalVine_Lower(tile_D) && world.isVerticalVine_Lower(tile_RD)) {
 
                         if (world.isEmptyTile(tile_D2)) {
+
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Walk_FallMore_BK_01, Stance::Man_Walk_FallMore_BK_02);
+
                         }
                         else {
                                 
@@ -342,8 +344,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     }
                     else if (stance == Stance::Man_Rope_Start_RH_07 || stance == Stance::Man_Rope_Start_LH_07) {
-                
-                        player.setFalls(0);
+
+                        player.setFalls(2);
                         player.push(Stance::Man_Walk_FallMore_BK_02);
 
                     }
@@ -454,8 +456,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R))) {
 
                         if (world.isEmptyTile(tile_L)) {
-                            player.setFalls(0);
+
+                            player.setFalls(1);
                             player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
+
                         }
                         else { /* Do nothing, prevents a turn */}
 
@@ -528,8 +532,10 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             (world.isVerticalVine_Middle(tile) && world.isVerticalVine_Middle(tile_R))) {
 
                         if (world.isEmptyTile(tile_R2)) {
+
                             player.setFalls(1);
                             player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
+
                         }
                         else { /* Do nothing, prevents a turn */}
 
@@ -1258,8 +1264,11 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             world.setGameState(GameState::Chakana_Open);
                             world.setPortVisited(world.getCurrentPort());
                             endOfLevel_Counter = 0;
-                            titleCounter = a.randomLFSR(10, 21);
+                            titleCounter = a.randomLFSR(8, 19);
                             
+                            #ifndef DEBUG_SOUND
+                            playSFX(MusicSFX::SFX_Victory);
+                            #endif
                         }
                         break;
 
@@ -1613,7 +1622,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                         player.pushSequence(Stance::Man_Walk_FallLand_RH_01, Stance::Man_Walk_FallLand_RH_04); 
                                         break;
 
-                                    case 3:
+                                    case 3 ... 4:
                                         player.decHealth(2);
                                         player.pushSequence(Stance::Man_Walk_FallLand_RH_01_Puff, Stance::Man_Walk_FallLand_RH_04_Puff); 
                                         break;
@@ -1813,6 +1822,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     player.setHealth(0);
                     world.setGameState(GameState::Play_Dead);
                     endOfLevel_Counter = 0;
+
+                    #ifndef DEBUG_SOUND
+                    playSFX(MusicSFX::SFX_Death);
+                    #endif
 
                     break;
 
