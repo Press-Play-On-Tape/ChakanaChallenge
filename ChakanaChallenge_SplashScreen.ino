@@ -12,7 +12,7 @@ void splashScreen_Update() {
 
     if (titleCounter < 32) titleCounter++;   
 
-    uint8_t justPressed = getJustPressedButtons();
+    const uint8_t justPressed = getJustPressedButtons();
 
     if (justPressed > 0 && titleCounter == 32) {
         

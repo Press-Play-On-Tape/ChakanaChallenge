@@ -150,4 +150,9 @@ def convert_sym(sym, outfile, **args):
 
 convert_sym('../music/Death', 'SFX_Death', tracks=1)
 convert_sym('../music/Victory', 'SFX_Victory', tracks=1)
+convert_sym('../music/LandHard', 'SFX_LandHard', tracks=1)
+convert_sym('../music/PlayerBlip', 'SFX_PlayerBlip', tracks=1)
+convert_sym('../music/EnemyBlip', 'SFX_EnemyBlip', tracks=1)
+
 convert_sym('../music/cc-main-theme-v2', 'MainTheme', tracks=2)
+convert_sym('../music/cc-fast-intro', 'FastIntro', tracks=2)

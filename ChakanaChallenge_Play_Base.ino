@@ -60,12 +60,6 @@ void playGame_Init() {
 
             }
 
-            // if (i < Constants::ItemCount_Player - 1) {
-
-            //     player.getItem(i).setItemType(ItemType::None);
-
-            // }
-
         }
 
         FX::readEnd();
@@ -100,6 +94,10 @@ void playGame_Init() {
 
     #ifndef DEBUG
     saveCookie(true);
+    #endif
+
+    #ifndef DEBUG_MUSIC
+    playSong(MusicSong::MainTheme);
     #endif
 
     #endif
@@ -1301,9 +1299,6 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                     switch (item2.getItemType()) {
 
                                         case ItemType::Lever_Portal_Closed:
-                                            item2.setFrame(1);
-                                            break;
-
                                         case ItemType::Lever_Portal_Auto_Closed:
                                             item2.setFrame(1);
                                             break;
@@ -1330,16 +1325,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         }
                         else {
                             
-                            switch (player.getDirection()) {
+                            if (player.getDirection()== Direction::Right) {
 
-                                case Direction::Left:
-                                    playerRect.width = 1;
-                                    break;
-
-                                case Direction::Right:
-                                    playerRect.x = playerRect.x + 8;
-                                    playerRect.width = 1;
-                                    break;
+                                playerRect.x = playerRect.x + 8;
+                                break;
 
                             }
 
@@ -1358,14 +1347,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         break;
 
                     case ItemType::Flame:
-                            
-                        if ((player.getStance() >= Stance::Man_WalkingJump_LH_25_01 && player.getStance() <= Stance::Man_WalkingJump_LH_25_11) ||
-                            (player.getStance() >= Stance::Man_WalkingJump_RH_25_01 && player.getStance() <= Stance::Man_WalkingJump_RH_25_11)) {
 
-                                // Do nothing. 
-                        }
-                        else {
-                            
+                        if (!((player.getStance() >= Stance::Man_WalkingJump_LH_25_01 && player.getStance() <= Stance::Man_WalkingJump_LH_25_11) ||
+                              (player.getStance() >= Stance::Man_WalkingJump_RH_25_01 && player.getStance() <= Stance::Man_WalkingJump_RH_25_11))) {
+                           
                             itemRect = { item.getX() + world.getMiddleground() - 4 + 7, item.getY() + 14, 2, 2 };
 
                             if (collide(playerRect, itemRect) && player.getHealth() > 0) {
@@ -1739,6 +1724,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         if (enemy.getSwordWound() == 0 && playGame_PlayerStabsEnemy(player)) {
 
                             enemy.setSwordWound(12);
+
+                            #ifndef DEBUG_SOUND
+                            playSFX(MusicSFX::SFX_EnemyBlip);
+                            #endif
 
                             if (!enemy.decHealth(2)) {
                                     
@@ -2119,5 +2108,9 @@ void launchPuffLand(Player &player) {
 
     puff.setFrame(0);
     puff.setData(PuffType::Fall);
+
+    #ifndef DEBUG_SOUND
+    playSFX(MusicSFX::SFX_LandHard);
+    #endif
 
 }

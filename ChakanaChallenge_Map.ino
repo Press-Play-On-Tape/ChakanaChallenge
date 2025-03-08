@@ -212,6 +212,10 @@ void map_Update() {
                 }
                 else if (player.getChakanas() >= world.getNextPortCost()) {
 
+                    #ifndef DEBUG_MUSIC
+                    playSong(MusicSong::FastIntro);
+                    #endif
+                    
                     world.setGameState(GameState::Map_MoveBoat);
                     world.setFrameCount(0);
                     player.setChakanas(player.getChakanas() - world.getNextPortCost());

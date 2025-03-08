@@ -1,14 +1,22 @@
 namespace Music {
    
     raw_t Song_MainTheme = "music/MainTheme.bin"
+    raw_t Song_FastIntro = "music/FastIntro.bin"
 
     raw_t SFX_Death = "music/SFX_Death.bin"
     raw_t SFX_Victory = "music/SFX_Victory.bin"
+    raw_t SFX_LandHard = "music/SFX_LandHard.bin"
+    raw_t SFX_PlayerBlip = "music/SFX_PlayerBlip.bin"
+    raw_t SFX_EnemyBlip = "music/SFX_EnemyBlip.bin"
 
-    uint24_t Songs[] = { Song_MainTheme };
+    uint24_t Songs[] = { Song_MainTheme,
+                         Song_FastIntro };
 
     uint24_t SFXs[] =  { SFX_Death, 
-                         SFX_Victory
+                         SFX_Victory,
+                         SFX_LandHard,
+                         SFX_PlayerBlip,
+                         SFX_EnemyBlip,
                        };
 
 

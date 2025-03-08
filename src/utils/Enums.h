@@ -26,12 +26,16 @@ enum PuffType : uint8_t {
 };
 
 enum class MusicSong : uint8_t {
-    MainTheme
+    MainTheme,
+    FastIntro
 };
 
 enum class MusicSFX : uint8_t {
     SFX_Death,
     SFX_Victory,
+    SFX_LandHard,
+    SFX_PlayerBlip,
+    SFX_EnemyBlip,
 };
 
 enum class BoatDirection : uint8_t {

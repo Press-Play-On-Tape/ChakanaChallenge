@@ -185,6 +185,10 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                     player.setWound(12);
 
+                                    #ifndef DEBUG_SOUND
+                                    playSFX(MusicSFX::SFX_PlayerBlip);
+                                    #endif
+                                    
                                     uint8_t health = 0;
 
                                     switch (player.getStance()) {
