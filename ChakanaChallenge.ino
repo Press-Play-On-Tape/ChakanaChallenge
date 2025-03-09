@@ -93,7 +93,6 @@ void loop() {
     a.waitForNextPlane(WHITE);
     FX::disableOLED();
 
-    Player &player = world.getPlayer();
     currentPlane = a.currentPlane();
 
     switch (world.getGameState()) {

@@ -71,8 +71,8 @@ void playGame_HandleGamble(Player &player, uint8_t justPressed) {
 
         switch (world.getGameState()) {
 
-            case GameState::Play_Gamble_Select_Play:
             case GameState::Play_Gamble_Select_Exit:
+            case GameState::Play_Gamble_Select_Play:
                 playGame_HandleMenu(world.getGameState());
                 break;
 

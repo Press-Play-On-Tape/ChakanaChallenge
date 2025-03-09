@@ -44,7 +44,7 @@ void processLadder_MoveRight(Player &player, Tiles tile) {
 
             player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
             end = 1;
-            player.setFalls(0);
+            player.setFalls(2);
 
         }
         else {

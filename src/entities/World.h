@@ -269,7 +269,6 @@ struct World {
         }
         
         void incForeground(int8_t val) {
-
             
             for (uint8_t i = 0; i < 3; i++) {
                 this->incPalm(i, val);

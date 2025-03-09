@@ -6,10 +6,8 @@
 #include "src/entities/Entities.h"
 #include "src/utils/SpritesU.hpp"
 
-
 void renderWorld() {
 
-    Player &player = world.getPlayer();
     uint8_t yOffset = world.getYOffsetForRendering();
 
 
@@ -297,6 +295,7 @@ void renderWorld() {
     //
     // Render player ..
 
+    Player &player = world.getPlayer();
     Stance stance = player.getStance();
     uint8_t stanceImg = getStanceImg(stance);
 
@@ -453,18 +452,11 @@ void renderWorld() {
                     {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint16_t>(enemy.getStance()) - static_cast<uint16_t>(Stance::Enemy_Sword_Stationary_LH));
                         renderEnemyAndHealth(stanceImg, enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), enemy.getHealth());
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
-
-                        // #ifdef RENDER_16X16_SECONDARY
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), 16,16, Images::Enemy, (stanceImg * 3) + currentPlane);
-                        // #else
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
-                        // #endif
 
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem - 4, yEnemyItem, enemy.getItem().getFrame());
                         }                        
-
+                        
                     }
                     break;
 
@@ -476,13 +468,6 @@ void renderWorld() {
                     {
                         uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Enemy, static_cast<uint16_t>(enemy.getStance()) - static_cast<uint16_t>(Stance::Enemy_Sword_Stationary_RH));
                         renderEnemyAndHealth(stanceImg, enemy.getX() + world.getMiddleground() - 4 - x, yOffset - enemy.getY(), enemy.getHealth());
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY() - 5, Images::Health, ((Constants::HealthMax - enemy.getHealth()) * 3) + currentPlane);
-
-                        // #ifdef RENDER_16X16_SECONDARY
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), 16, 16, Images::Enemy, (stanceImg * 3) + currentPlane);
-                        // #else
-                        // SpritesU::drawPlusMaskFX(enemy.getX() + world.getMiddleground() - 4 + x, yOffset - enemy.getY(), Images::Enemy, (stanceImg * 3) + currentPlane);
-                        // #endif
                         
                         if (enemy.getItem().getItemType() == ItemType::Glint) {
                             renderGlint(xEnemyItem + 15, yEnemyItem, enemy.getItem().getFrame());

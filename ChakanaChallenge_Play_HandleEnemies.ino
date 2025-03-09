@@ -8,7 +8,8 @@
 
 
 
-// Function to determine player's death animation based on distance and direction
+// Function to determine player's death animation based on distance and direction ..
+
 void playGame_applyDeathAnimation(Player& player, int16_t dist) {
 
     bool fallsForward = (dist <= 0);
@@ -37,6 +38,7 @@ void playGame_applyDeathAnimation(Player& player, int16_t dist) {
             break;
 
     }
+
 }
 
 void playGame_SetGlint(Enemy &enemy) {
