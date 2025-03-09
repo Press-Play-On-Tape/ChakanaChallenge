@@ -20,7 +20,7 @@ class Player {
         uint8_t wound;
         uint8_t chakanas;
         uint8_t lives;
-        uint16_t buzzCount;
+        uint8_t buzzCount;
 		
         Stance fromStance = Stance::None;
         Stance toStance = Stance::None;
@@ -41,7 +41,7 @@ class Player {
         uint8_t getWound()                                  { return this->wound; }
         uint8_t getChakanas()                               { return this->chakanas; }
         uint8_t getLives()                                  { return this->lives; }
-        uint16_t getBuzzCount()                             { return this->buzzCount; }
+        uint8_t getBuzzCount()                              { return this->buzzCount; }
 
         void setStance(Stance val)                          { this->stance = val; }
 
@@ -53,7 +53,7 @@ class Player {
         void setWound(uint8_t val)                          { this->wound = val; }
         void setChakanas(uint8_t val)                       { this->chakanas = val; }
         void setLives(uint8_t val)                          { this->lives = val; }
-        void setBuzzCount(uint16_t val)                     { this->buzzCount = val; }
+        void setBuzzCount(uint8_t val)                      { this->buzzCount = val; }
 
         void incY(int8_t val)                               { this->y = this->y + val; }
         void incFalls()                                     { this->falls++; }

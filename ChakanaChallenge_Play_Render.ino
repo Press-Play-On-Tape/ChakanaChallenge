@@ -81,11 +81,22 @@ void renderWorld() {
                 else if (tile00 == Tiles::Block_WithWeed_LH)                                                                                                                imgTile = Images::Crate_50;
                 else if (tile00 == Tiles::Block_WithWeed_RH)                                                                                                                imgTile = Images::Crate_51;
 
+                else {
+
+                    if (world.isRollerTile_RH(tile10))                                                                                                                      imgTile = Images::Crate_34;
+                    else if (world.isRollerTile_LH(tile10))                                                                                                                 imgTile = Images::Crate_35;
+
+                    if (imgTile != 0) {
+                        frame = ((world.getFrameCount() % 24) / 6 * 3);
+                    }
+
+                }
+
                 if (imgTile != 0) {
                     #ifdef RENDER_16X16
-                    SpritesU::drawOverwriteFX(renderX, renderY, 16, 16, imgTile, currentPlane);
+                    SpritesU::drawOverwriteFX(renderX, renderY, 16, 16, imgTile, frame + currentPlane);
                     #else
-                    SpritesU::drawOverwriteFX(renderX, renderY, imgTile, currentPlane);
+                    SpritesU::drawOverwriteFX(renderX, renderY, imgTile, frame + currentPlane);
                     #endif
                     continue;
                 }
@@ -96,15 +107,15 @@ void renderWorld() {
                 else if (tile00 == Tiles::Trebochet_To_RH)                                                                                                                  imgTile = Images::Crate_46;
                 // else if (tile00 == Tiles::Trebochet_To_LH)                                                                                                                  imgTile = Images::Crate_47;
                 else if (tile00 == Tiles::Weed)                                                                                                                             imgTile = Images::Crate_48;
-                else if (tile10 == Tiles::Spring_LH && tile11 == Tiles::Blank)                                                                                              imgTile = Images::Crate_20;
-                else if (tile10 == Tiles::Blank && tile11 == Tiles::Spring_RH)                                                                                              imgTile = Images::Crate_21;
+                else if (tile10 == Tiles::Spring_LH)                                                                                                                        imgTile = Images::Crate_20;
+                else if (tile11 == Tiles::Spring_RH)                                                                                                                        imgTile = Images::Crate_21;
                 // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_00;
                 // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)             imgTile = Images::Crate_03;
                 // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_NonWalkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_04;
                 // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Solid_Walkable)          imgTile = Images::Crate_05;
                 // else if (tile00 == Tiles::Solid_Walkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                   imgTile = Images::Crate_02;
                 // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_NonWalkable)          imgTile = Images::Crate_09;
-                else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_02;
+                // else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Solid_Walkable && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                imgTile = Images::Crate_02;
                 else if (tile00 == Tiles::Solid_NonWalkable && tile01 == Tiles::Blank && tile10 == Tiles::Solid_Walkable && tile11 == Tiles::Blank)                         imgTile = Images::Crate_06;
                 else if (tile00 == Tiles::Blank && tile01 == Tiles::Solid_NonWalkable && tile10 == Tiles::Blank && tile11 == Tiles::Solid_Walkable)                         imgTile = Images::Crate_07;
                 else if (tile00 == Tiles::Single_Stair_RH_Lower && tile11 == Tiles::Single_Stair_RH_Upper_TR)                                                               imgTile = Images::Crate_44;
@@ -149,52 +160,33 @@ void renderWorld() {
                 else if (tile11 == Tiles::Vine_Upper)                                                                                                                       imgTile = Images::Crate_38;
 
 
+                // Water
+
+                if (imgTile == 0) {
+                   
+                    if (tile00 == Tiles::Water_Plain)                                                                                                                       imgTile = Images::Crate_39;
+                    else if (tile00 == Tiles::Water_Bubbling_1)                                                                                                             imgTile = Images::Crate_40;
+                    else if (tile00 == Tiles::Water_Bubbling_2)                                                                                                             imgTile = Images::Crate_41;
+
+                    if (imgTile != 0) {
+                        frame = ((world.getFrameCount() % 48) / 3 * 3);
+                    }
+
+                }
+
                 // Render image?
 
                 if (imgTile != 0) {
 
                     #ifdef RENDER_16X16
-                    SpritesU::drawPlusMaskFX(renderX, renderY, 16, 16, imgTile, currentPlane);
+                    SpritesU::drawPlusMaskFX(renderX, renderY, 16, 16, imgTile, frame + currentPlane);
                     #else
-                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, currentPlane);
+                    SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
                     #endif
 
                 }
-                else {
 
 
-                    // Rollers R then L
-                    uint8_t yOffset = 0;
-
-                    frame = ((world.getFrameCount() % 24) / 6 * 3);
-
-                    if (world.isRollerTile_RH(tile00))                                                                                                                          { imgTile = Images::Crate_32; yOffset = 8; }
-                    else if (world.isRollerTile_RH(tile10))                                                                                                                     { imgTile = Images::Crate_34; }
-                    else if (world.isRollerTile_LH(tile00))                                                                                                                     { imgTile = Images::Crate_33; yOffset = 8; }
-                    else if (world.isRollerTile_LH(tile10))                                                                                                                     { imgTile = Images::Crate_35; }
-
-                    if (imgTile != 0) {
-                        SpritesU::drawOverwriteFX(renderX, renderY + yOffset, imgTile, frame + currentPlane);
-                    }
-
-                }
-
-
-                // Water
-
-                if (imgTile == 0) {
-
-                    frame = ((world.getFrameCount() % 48) / 3 * 3);
-                    
-                    if (tile00 == Tiles::Water_Plain && tile01 == Tiles::Water_Plain)                                                                                           imgTile = Images::Crate_39;
-                    else if (tile00 == Tiles::Water_Bubbling_1 && tile01 == Tiles::Water_Bubbling_1)                                                                            imgTile = Images::Crate_40;
-                    else if (tile00 == Tiles::Water_Bubbling_2 && tile01 == Tiles::Water_Bubbling_2)                                                                            imgTile = Images::Crate_41;
-
-                    if (imgTile != 0) {
-                        SpritesU::drawPlusMaskFX(renderX, renderY, imgTile, frame + currentPlane);
-                    }
-
-                }
 
             }
 
@@ -385,13 +377,13 @@ void renderWorld() {
     // Render Buzz?
 
     {
-        uint16_t buzzCount = player.getBuzzCount();
+        uint8_t buzzCount = player.getBuzzCount();
 
         if (buzzCount > 0 && player.getHealth() > 0) {
 
-            uint8_t frame = ((Constants::Buzz_Time - buzzCount) % 32) / 4;
+            uint8_t frame = (Constants::Buzz_Time - buzzCount) % 8;
+            if (buzzCount < 8) frame = frame + 8;
 
-            if (buzzCount < 32) frame = frame + 8;
             SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY() + 4, 16, 16, Images::Buzz, (frame * 3) + currentPlane);
 
         }

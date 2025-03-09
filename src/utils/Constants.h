@@ -15,7 +15,7 @@
 #define _DEBUG_RENDER_MAP
 #define _DEBUG_SWORD
 #define _DEBUG_NO_MAIN_MENU
-#define _DEBUG_LOTS_OF_CHAKANAS
+#define DEBUG_LOTS_OF_CHAKANAS
 
 #ifndef DEBUG
 
@@ -635,7 +635,7 @@ namespace Constants {
     constexpr uint8_t ItemCount_Level = 15;
     constexpr uint8_t ItemCount_Player = 5;
 
-    constexpr uint8_t StackSize_Enemy = 14;
+    constexpr uint8_t StackSize_Enemy = 14  ;
     constexpr uint8_t StackSize_Player = 35;
 
     constexpr uint8_t GroundY = 37;
@@ -645,7 +645,7 @@ namespace Constants {
     constexpr uint8_t GamblePanel_Win = 11;
     constexpr uint8_t GamblePanel_Lose = 9;
     constexpr uint16_t AllPortsComplete = 16383;
-    constexpr uint16_t Buzz_Time = 400;
+    constexpr uint8_t Buzz_Time = 104;
 
 };
 

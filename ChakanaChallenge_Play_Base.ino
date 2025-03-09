@@ -1330,12 +1330,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     case ItemType::Punji:
                             
-                        if ((player.getStance() >= Stance::Man_WalkingJump_LH_25_01 && player.getStance() <= Stance::Man_WalkingJump_LH_25_11) ||
-                            (player.getStance() >= Stance::Man_WalkingJump_RH_25_01 && player.getStance() <= Stance::Man_WalkingJump_RH_25_11)) {
-
-                                // Do nothing. 
-                        }
-                        else {
+                        if (!((player.getStance() >= Stance::Man_WalkingJump_LH_25_01 && player.getStance() <= Stance::Man_WalkingJump_LH_25_11) ||
+                              (player.getStance() >= Stance::Man_WalkingJump_RH_25_01 && player.getStance() <= Stance::Man_WalkingJump_RH_25_11))) {
                             
                             if (player.getDirection()== Direction::Right) {
 
@@ -1871,7 +1867,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         ignoreKeyPress--;
     }
 
-    if (player.getBuzzCount() > 0) {
+    if (player.getBuzzCount() > 0 && (world.getFrameCount() % 4 == 0)) {
         player.setBuzzCount(player.getBuzzCount() - 1);
     }
 

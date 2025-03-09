@@ -66,7 +66,7 @@ void playSong(MusicSong song) {
 
     current_song = song;
 
-    if (soundSettings.getMusic() && isAudioEnabled()) {
+    if (soundSettings.getSounds() && isAudioEnabled()) {
 
         uint24_t musicStart = FX::readIndexedUInt24(Music::Songs, static_cast<uint8_t>(song));
         SynthU::play(musicStart);
@@ -77,7 +77,7 @@ void playSong(MusicSong song) {
 
 void playSFX(MusicSFX sfx) {
 
-    if (soundSettings.getSFX() && isAudioEnabled()) {
+    if (soundSettings.getSounds() && isAudioEnabled()) {
 
         uint24_t sfxStart = FX::readIndexedUInt24(Music::SFXs, static_cast<uint8_t>(sfx));
         SynthU::playSFX(sfxStart);
