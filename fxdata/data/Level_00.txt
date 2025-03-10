@@ -33,8 +33,8 @@ uint8_t Level_00_Items[] = {
 0, 0,                             // Counter
 
 41,                             // ItemType::Chakana
-192, 0,                             // Position X
-0,                             // Position Y
+240, 1,                             // Position X
+16,                             // Position Y
 9,                             // Frame
 0, 0,                         // Data
 0, 0,                             // Counter
