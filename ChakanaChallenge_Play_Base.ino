@@ -1926,6 +1926,20 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 if (frame < 16 && endOfLevel_Counter > 12) {
                     SpritesU::drawOverwriteFX(63, 37, Images::Numbers_6x4_2D_BW, (titleCounter * 3) + currentPlane);
                 }
+
+                #ifdef END_OF_GAME_PUFF
+
+                    if (world.allPortsComplete()) {
+
+                        uint8_t modFrameCount = world.getFrameCount() % 192;
+
+                        if (modFrameCount < 12) {
+                            SpritesU::drawPlusMaskFX(48, 25, Images::EndOfLevel_Puff, (modFrameCount * 3) + currentPlane);
+                        }
+
+                    }
+                    
+                #endif
                 
             }
 

@@ -133,7 +133,6 @@ convert_header(IMAGES + 'GamblePanel.png',                                      
 
 convert_header(IMAGES + 'Scroll.png',                                                                   BASE + 'Images.hpp', 'Scroll', 4, 56, 64, maskImage=True)
 convert_header(IMAGES + 'Chakana.png',                                                                  BASE + 'Images.hpp', 'Chakana', 4, 32, 32)
-convert_header(IMAGES + 'ArrowUpDown.png',                                                              BASE + 'Images.hpp', 'ArrowUpDown', 4)
 convert_header(IMAGES + 'Spikes_Top.png',                                                               BASE + 'Images.hpp', 'Spikes_Top', 4, maskImage=True)
 convert_header(IMAGES + 'Spikes_Bottom.png',                                                            BASE + 'Images.hpp', 'Spikes_Bottom', 4, maskImage=True)
 convert_header(IMAGES + 'Trebochet_Ball.png',                                                           BASE + 'Images.hpp', 'Trebochet_Ball', 4, 16, 16, maskImage=True)
@@ -141,6 +140,7 @@ convert_header(IMAGES + 'Health.png',                                           
 convert_header(IMAGES + 'Glint.png',                                                                    BASE + 'Images.hpp', 'Glint', 4, 16, 16)
 convert_header(IMAGES + 'Sword_Wound.png',                                                              BASE + 'Images.hpp', 'Sword_Wound', 4, 6, 16)
 convert_header(IMAGES + 'EndOfLevel.png',                                                               BASE + 'Images.hpp', 'EndOfLevel', 4, 56, 64)
+convert_header(IMAGES + 'EndOfLevel_Puff.png',                                                          BASE + 'Images.hpp', 'EndOfLevel_Puff', 4, 17, 24)
 convert_header(IMAGES + 'EndOfLife.png',                                                                BASE + 'Images.hpp', 'EndOfLife', 4, 56, 64)
 convert_header(IMAGES + 'Checkbox.png',                                                                 BASE + 'Images.hpp', 'Checkbox', 4)
 
@@ -157,7 +157,6 @@ convert_header(IMAGES + 'Players/Enemy.png',                                    
 convert_header(IMAGES + 'Players/Player_Bounce.png',                                                    BASE + 'Images.hpp', 'Player_Bounce', 4, 16, 24)
 convert_header(IMAGES + 'Waves.png',                                                                    BASE + 'Images.hpp', 'Waves', 4, 128, 8)
 convert_header(IMAGES + 'Beach_LH.png',                                                                 BASE + 'Images.hpp', 'Beach_LH', 4, 50, 32)
-convert_header(IMAGES + 'Boat.png',                                                                     BASE + 'Images.hpp', 'Boat', 4)
 convert_header(IMAGES + 'Boat_Small.png',                                                               BASE + 'Images.hpp', 'Boat_Small', 4, 10, 16)
 convert_header(IMAGES + 'Arrow.png',                                                                    BASE + 'Images.hpp', 'Arrow', 4, 11, 8)
 convert_header(IMAGES + 'Hearts.png',                                                                   BASE + 'Images.hpp', 'Hearts', 4, 17, 8)

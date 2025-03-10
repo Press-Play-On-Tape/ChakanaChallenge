@@ -39,6 +39,9 @@
 	// 46 Bytes
 	#define RENDER_16X16
 
+	// 200 Bytes
+	#define END_OF_GAME_PUFF
+
 	// Not fussed!
 
 	// 222 bytes
@@ -636,7 +639,7 @@ namespace Constants {
 
     constexpr uint8_t EnemyCount = 3;
     constexpr uint8_t ItemCount_Level = 14;
-    constexpr uint8_t ItemCount_Player = 5;
+    constexpr uint8_t ItemCount_Player = 6;
 
     constexpr uint8_t StackSize_Enemy = 14;
     constexpr uint8_t StackSize_Player = 35;
