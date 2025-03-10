@@ -16,7 +16,7 @@
 #define _DEBUG_SWORD
 #define _DEBUG_NO_MAIN_MENU
 #define _DEBUG_LOTS_OF_CHAKANAS
-
+#define SOUND_SIMPLE
 #ifndef DEBUG
 
 	// Want to Keep !

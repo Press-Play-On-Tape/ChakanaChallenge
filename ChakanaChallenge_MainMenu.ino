@@ -33,16 +33,32 @@ void title_StartNewGame() {
 
 void title_SaveSoundSettings() {
     
-    soundSettings.setSounds(!soundSettings.getSounds());
+    #ifdef SOUND_SIMPLE
+
+        soundSettings.setSounds(!soundSettings.getSounds());
+        
+        if (soundSettings.getSounds()) {
+            playMusic();
+        }
+        else {
+            SynthU::stop();
+        }
+        
+    #else
+
+        soundSettings.setMusic(!soundSettings.getMusic());
     
-    if (soundSettings.getSounds()) {
-        playMusic();
-    }
-    else {
-        SynthU::stop();
-    }
+        if (soundSettings.getMusic()) {
+            playMusic();
+        }
+        else {
+            SynthU::stop();
+        }
+
+    #endif
 
 }
+
 void title_Update() {
 
     world.incFrameCount();
@@ -128,13 +144,28 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_Start);
 
-    if (world.getGameState() > GameState::Title_ShowCredits) {
-        frame = frame + (soundSettings.getSounds() ? 0 : 6);
-    }
+    #ifdef SOUND_SIMPLE
+        
+        if (world.getGameState() > GameState::Title_ShowCredits) {
+            frame = frame + (soundSettings.getSounds() ? 0 : 6);
+        }
 
-    if (a.needsUpdate()) title_Update();
+        if (a.needsUpdate()) title_Update();
 
-    SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
-    SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
+        SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
+        SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
+
+    #else
+                
+        if (world.getGameState() > GameState::Title_ShowCredits) {
+            frame = frame + (soundSettings.getMusic() ? 0 : 6);
+        }
+
+        if (a.needsUpdate()) title_Update();
+
+        SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
+        SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
+
+    #endif
 
 }
