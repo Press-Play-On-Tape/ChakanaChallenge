@@ -138,7 +138,7 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
                 else {
 
                     // if ((counter >= 0 && counter < 32) || (counter >= 320 && counter < 352)) {
-                    if ((counter >= 0 && counter < 52) || (counter >= 340 && counter < 352)) {
+                    if ((counter >= 0 && counter < 52) || (counter >= 300 && counter < 352)) {
 
                         item.setCounter(6);
                         player.pushSequence(Stance::Man_Vine_RH_01, Stance::Man_Vine_RH_20, true);

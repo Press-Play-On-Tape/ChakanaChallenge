@@ -46,7 +46,24 @@ void title_SaveSoundSettings() {
         
     #else
 
-        soundSettings.setMusic(!soundSettings.getMusic());
+        if (!soundSettings.getMusic() && !soundSettings.getSFX()) {
+
+            soundSettings.setMusic(true);
+            soundSettings.setSFX(true);
+
+        }
+        else if (!soundSettings.getMusic() && soundSettings.getSFX()) {
+
+            soundSettings.setMusic(false);
+            soundSettings.setSFX(false);
+
+        }
+        else if (soundSettings.getMusic() && soundSettings.getSFX()) {
+
+            soundSettings.setMusic(false);
+            soundSettings.setSFX(true);
+
+        }
     
         if (soundSettings.getMusic()) {
             playMusic();
@@ -158,7 +175,14 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     #else
                 
         if (world.getGameState() > GameState::Title_ShowCredits) {
-            frame = frame + (soundSettings.getMusic() ? 0 : 6);
+
+            if (!soundSettings.getMusic() && !soundSettings.getSFX()) {
+                frame = frame + (soundSettings.getMusic() ? 0 : 6);
+            }
+            else if (!soundSettings.getMusic() && soundSettings.getSFX()) {
+                frame = frame + (soundSettings.getMusic() ? 0 : 12);
+            }
+
         }
 
         if (a.needsUpdate()) title_Update();
