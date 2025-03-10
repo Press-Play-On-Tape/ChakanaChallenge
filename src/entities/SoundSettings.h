@@ -6,7 +6,7 @@
 #include "../utils/Enums.h"
 #include "../../fxdata/fxdata.h"
 
-#ifdef SOUND_SIMPLE
+#ifndef SOUND_SIMPLE
 
 struct SoundSettings {
 

@@ -6,22 +6,23 @@
 #define DEBUG_PRINTLN  Serial.println
 #define DEBUG_BREAK    asm volatile("break\n");
 
-#define DEBUG
-#define DEBUG_SOUND
+#define _DEBUG
+#define _DEBUG_SOUND
 #define _DEBUG_TREBOCHET
 #define _DEBUG_DISABLE_PLAY
 #define _DEBUG_HANDLE_MENUS
 #define _DEBUG_LOCKED_DOOR
 #define _DEBUG_RENDER_MAP
 #define _DEBUG_SWORD
-#define DEBUG_NO_MAIN_MENU
-#define _DEBUG_LOTS_OF_CHAKANAS
+#define _DEBUG_NO_MAIN_MENU
+#define DEBUG_LOTS_OF_CHAKANAS
 
 #ifndef DEBUG
 
 	// Want to Keep !
 
-	#define _SOUND_SIMPLE
+	// 48 bytes
+	#define SOUND_SIMPLE
 
 	// 142 bytes
 	#define MAP_SHOW_PORT_NAMES

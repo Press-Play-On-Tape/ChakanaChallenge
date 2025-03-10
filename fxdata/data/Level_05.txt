@@ -114,7 +114,7 @@ uint8_t Level_05_Enemies[] = {
 1                            // EnemyType::Archer
 176, 0,                             // Position X
 96,                             // Position Y
-195, 3,                             // Stance::Enemy_Walk_Bow_RH_00
+217, 3,                             // Stance::Enemy_Walk_Bow_RH_00
 12,                              // Health
 0,                              // Sword Wound
 25,                             // Inventory ItemType::Arrow_RH_Hidden
@@ -126,7 +126,7 @@ uint8_t Level_05_Enemies[] = {
 5                            // EnemyType::Guard_LH
 16, 2,                             // Position X
 16,                             // Position Y
-103, 4,                             // Stance::Enemy_Sword_Stationary_LH
+125, 4,                             // Stance::Enemy_Sword_Stationary_LH
 12,                              // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden

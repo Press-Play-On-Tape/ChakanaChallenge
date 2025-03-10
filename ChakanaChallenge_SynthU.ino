@@ -66,7 +66,7 @@ void playSong(MusicSong song) {
 
     current_song = song;
 
-    #ifdef SOUND_SIMPLE
+    #ifndef SOUND_SIMPLE
         
         if (soundSettings.getSounds() && isAudioEnabled()) {
 
@@ -89,7 +89,7 @@ void playSong(MusicSong song) {
 
 void playSFX(MusicSFX sfx) {
 
-    #ifdef SOUND_SIMPLE
+    #ifndef SOUND_SIMPLE
 
         if (soundSettings.getSounds() && isAudioEnabled()) {
 

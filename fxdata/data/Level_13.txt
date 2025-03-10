@@ -121,7 +121,7 @@ uint8_t Level_13_Enemies[] = {
 1                            // EnemyType::Archer
 224, 1,                             // Position X
 16,                             // Position Y
-252, 3,                             // Stance::Enemy_Walk_Bow_LH_00
+18, 4,                             // Stance::Enemy_Walk_Bow_LH_00
 12,                              // Health
 0,                              // Sword Wound
 23,                             // Inventory ItemType::Arrow_LH_Hidden
@@ -133,7 +133,7 @@ uint8_t Level_13_Enemies[] = {
 3                            // EnemyType::SwordFighter
 112, 1,                             // Position X
 0,                             // Position Y
-27, 4,                             // Stance::Enemy_Sword_Stationary_LH
+49, 4,                             // Stance::Enemy_Sword_Stationary_LH
 12,                              // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden

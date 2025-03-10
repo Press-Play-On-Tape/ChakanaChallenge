@@ -33,7 +33,7 @@ void title_StartNewGame() {
 
 void title_SaveSoundSettings() {
     
-    #ifdef SOUND_SIMPLE
+    #ifndef SOUND_SIMPLE
 
         soundSettings.setSounds(!soundSettings.getSounds());
         
@@ -161,7 +161,7 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_Start);
 
-    #ifdef SOUND_SIMPLE
+    #ifndef SOUND_SIMPLE
         
         if (world.getGameState() > GameState::Title_ShowCredits) {
             frame = frame + (soundSettings.getSounds() ? 0 : 6);

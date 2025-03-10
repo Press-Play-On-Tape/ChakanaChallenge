@@ -114,7 +114,7 @@ uint8_t Level_02_Enemies[] = {
 2                               // EnemyType::TrebochetOperator
 238, 1,                         // Position X
 0,                              // Position Y
-13, 4,                          // Stance::Enemy_Trebochet_Release_LH_01
+35, 4,                          // Stance::Enemy_Trebochet_Release_LH_01
 12,                             // Health
 0,                              // Sword Wound
 33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden
@@ -128,7 +128,7 @@ uint8_t Level_02_Enemies[] = {
 3                               // EnemyType::SwordFighter
 240, 0,                         // Position X
 0,                              // Position Y
-27, 4,                          // Stance::Enemy_Sword_Stationary_LH
+49, 4,                          // Stance::Enemy_Sword_Stationary_LH
 12,                             // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden
