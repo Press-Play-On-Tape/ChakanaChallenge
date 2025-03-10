@@ -390,6 +390,8 @@ class Item {
 
                     break;
                 
+                #ifdef TREBOCHET_RIGHT
+
                 case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                 case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3: 
                     {
@@ -450,6 +452,63 @@ class Item {
                     }
 
                     break;
+
+                #else
+
+                case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
+                    {
+
+                        if (this->counter > 0) {
+
+                            int8_t yOffset = FX::readIndexedUInt8(Constants::Ball_Y, this->getCounter());
+                            this->setCounter(this->getCounter() - 1);
+                            this->setY(this->getY() + yOffset);
+
+                            int8_t incX = 0;
+
+                            switch (this->itemType) {
+
+                                case ItemType::Trebochet_Ball_Left_1:
+                                    incX = -5;
+                                    break;
+
+                                case ItemType::Trebochet_Ball_Left_2:
+                                    incX = -(4 + (this->counter % 2));
+                                    break;
+
+                                case ItemType::Trebochet_Ball_Left_3:
+                                    incX = -4;
+                                    break;
+
+                            }
+
+                            this->setX(this->getX() + incX);
+
+                            if (this->counter == 0) {
+
+                                this->setX(this->getX() - 12);
+
+                            }
+
+                        }
+
+                        if (this->counter == 0) {
+
+                            this->frame++;
+                            uint8_t frameLimit = 9;
+
+                            if (this->frame == frameLimit) {
+                                this->itemType = ItemType::Trebochet_Ball_Left_Hidden;
+                                this->frame = 0;
+                            }
+
+                        }
+
+                    }
+
+                    break;
+
+                #endif
                 
                 case ItemType::SwingyThing:
                 case ItemType::SwingyThing_2:

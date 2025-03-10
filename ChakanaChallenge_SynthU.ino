@@ -17,7 +17,7 @@ void audioUpdate() {
     if (SynthU::playingSFX()) {
 
         SynthU::setVolume(v > 6 ? v - 6 : 0);
-        SynthU::setVolumeSFX(v);
+        SynthU::setVolumeSFX(10);
 
     }
     else {

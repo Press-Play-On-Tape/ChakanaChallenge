@@ -15,7 +15,7 @@
 #define _DEBUG_RENDER_MAP
 #define _DEBUG_SWORD
 #define _DEBUG_NO_MAIN_MENU
-#define DEBUG_LOTS_OF_CHAKANAS
+#define _DEBUG_LOTS_OF_CHAKANAS
 
 #ifndef DEBUG
 
@@ -40,6 +40,9 @@
 	#define RENDER_16X16
 
 	// Not fussed!
+
+	// 222 bytes
+	#define _TREBOCHET_RIGHT
 
 	// 64 Bytes
 	#define _RENDER_16X16_SECONDARY
@@ -631,11 +634,11 @@ namespace Constants {
     constexpr uint8_t HealthMax = 14;
     constexpr uint8_t NoOfPorts = 14;
 
-    constexpr uint8_t EnemyCount = 4;
-    constexpr uint8_t ItemCount_Level = 15;
+    constexpr uint8_t EnemyCount = 3;
+    constexpr uint8_t ItemCount_Level = 14;
     constexpr uint8_t ItemCount_Player = 5;
 
-    constexpr uint8_t StackSize_Enemy = 14  ;
+    constexpr uint8_t StackSize_Enemy = 14;
     constexpr uint8_t StackSize_Player = 35;
 
     constexpr uint8_t GroundY = 37;

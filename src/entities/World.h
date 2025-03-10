@@ -1211,6 +1211,8 @@ struct World {
 
                         break;
 
+                    #ifdef TREBOCHET_RIGHT
+
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                     case ItemType::Trebochet_Ball_Right_1 ... ItemType::Trebochet_Ball_Right_3:
                         {
@@ -1259,6 +1261,56 @@ struct World {
 
                         }
                         break;  
+
+                    #else
+
+                    case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
+                        {
+                            ItemType itemType = item.getItemType();
+                            enemy.getItem().update();
+
+                            Rect playerRect = { 59, player.getY_RelativeToGround(), 10, 16 };
+                            int xOffset = -3;
+                            Rect trebochetRect = { enemy.getItem().getX() + this->getMiddleground() + xOffset, enemy.getItem().getY(), 4, 4 };
+
+                            if (collide(playerRect, trebochetRect) && item.getCounter() > 0 && item.getCounter() < 19) {
+
+                                #ifdef DEBUG_TREBOCHET
+                                DEBUG_PRINT(playerRect.x);
+                                DEBUG_PRINT(" ");
+                                DEBUG_PRINT(playerRect.y);
+                                DEBUG_PRINT(" ");
+                                DEBUG_PRINT(trebochetRect.x);
+                                DEBUG_PRINT(" ");
+                                DEBUG_PRINTLN(trebochetRect.y);
+                                #endif
+                                                                                                                                                                
+                                if (player.getBuzzCount() > 0) {
+
+                                    this->player.setBuzzCount(0);
+
+                                }
+                                else {
+                                        
+                                    ItemType hiddenType = ItemType::Trebochet_Ball_Left_Hidden;
+                                    
+                                    enemy.getItem().setItemType(hiddenType);
+                                    enemy.getItem().setFrame(0);
+                                    item.setCounter(3);
+                                    this->initPuff(item.getX(), item.getY());
+                                    
+                                    Stance stance = (this->player.getDirection() == Direction::Right) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_LH_01;
+                                    
+                                    this->player.pushSequence(stance, stance + 3, true);
+
+                                }
+
+                            }
+
+                        }
+                        break;  
+
+                    #endif
 
                     case ItemType::Glint:
                         enemy.getItem().update(); 

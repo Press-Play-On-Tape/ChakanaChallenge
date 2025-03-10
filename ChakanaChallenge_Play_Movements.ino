@@ -17,7 +17,7 @@ void processLadder_MoveLeft(Player &player, Tiles tile) {
 
             player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
             end = 1;
-            player.setFalls(2);
+            player.setFalls(0);
 }
         else {
             start = 2;
@@ -44,7 +44,7 @@ void processLadder_MoveRight(Player &player, Tiles tile) {
 
             player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
             end = 1;
-            player.setFalls(2);
+            player.setFalls(0);
 
         }
         else {
@@ -111,8 +111,7 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
                 DEBUG_PRINT(tile_F4D3);
                 DEBUG_PRINTLN(" ");
             #endif
-                                                                                                // if (world.isVineTile_RH(tile_L) && (stance < Stance::Man_Vine_LH_01 || stance > Stance::Man_Vine_LH_20)) {
-            // if (world.isVineTile_LH(tile_R) && (stance < Stance::Man_Vine_RH_01 || stance > Stance::Man_Vine_RH_20)) {
+
             if ((direction == Direction::Left  && world.isVineTile_RH(tile_F) && (stance < Stance::Man_Vine_LH_01 || stance > Stance::Man_Vine_LH_20)) ||
                 (direction == Direction::Right && world.isVineTile_LH(tile_F) && (stance < Stance::Man_Vine_RH_01 || stance > Stance::Man_Vine_RH_20))) {
 
@@ -121,7 +120,8 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
 
                 if (direction == Direction::Left) {
 
-                    if ((counter >= 144 && counter < 208)) {
+//                    if ((counter >= 144 && counter < 208)) {
+                      if ((counter >= 144 && counter < 228)) {
 
                         item.setCounter(182);
                         player.pushSequence(Stance::Man_Vine_LH_01, Stance::Man_Vine_LH_20, true);
@@ -130,14 +130,15 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
                     else {
 
                         player.setFalls(0);
-                        player.pushSequence(Stance::Man_Walk_FallDown_LH_01, Stance::Man_Walk_FallDown_LH_06);
-
+                        player.pushSequence(Stance::Man_WalkingJump_Fall_LH_25_01, Stance::Man_WalkingJump_Fall_LH_25_11);
+                        
                     }
 
                 }
                 else {
 
-                    if ((counter >= 0 && counter < 32) || (counter >= 320 && counter < 352)) {
+                    // if ((counter >= 0 && counter < 32) || (counter >= 320 && counter < 352)) {
+                    if ((counter >= 0 && counter < 52) || (counter >= 340 && counter < 352)) {
 
                         item.setCounter(6);
                         player.pushSequence(Stance::Man_Vine_RH_01, Stance::Man_Vine_RH_20, true);
@@ -146,7 +147,7 @@ void playGame_HandlePlayerMovements(uint8_t pressed, Direction direction) {
                     else {
 
                         player.setFalls(0);
-                        player.pushSequence(Stance::Man_Walk_FallDown_RH_01, Stance::Man_Walk_FallDown_RH_06);
+                        player.pushSequence(Stance::Man_WalkingJump_Fall_RH_25_01, Stance::Man_WalkingJump_Fall_RH_25_11);
 
                     }
 

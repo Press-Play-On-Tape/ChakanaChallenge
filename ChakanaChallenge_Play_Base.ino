@@ -1583,6 +1583,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case Stance::Man_Slide_RH_11:
                 case Stance::Man_Rollers_Fall_RH_04:
                 case Stance::Man_Vine_Exit_RH_08:
+                case Stance::Man_WalkingJump_Fall_RH_25_11:
                     {
 
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
@@ -1666,6 +1667,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case Stance::Man_Slide_LH_11:
                 case Stance::Man_Rollers_Fall_LH_04:
                 case Stance::Man_Vine_Exit_LH_08:
+                case Stance::Man_WalkingJump_Fall_LH_25_11:
                     {
                            
                         uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);

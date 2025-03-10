@@ -105,13 +105,6 @@ uint8_t Level_03_Items[] = {
 
 uint8_t Level_03_Enemies[] = {
 0                            // EnemyType::None
-0,                             // Position X
-0,                             // Position Y
-0,                             // Stance::Enemy_None
-0,                             // Inventory ItemType::None
-0,                             // IData
-
-0                            // EnemyType::None
 0, 0,                             // Position X
 0,                             // Position Y
 0, 0,                             // Stance::None
@@ -124,13 +117,6 @@ uint8_t Level_03_Enemies[] = {
 0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
 
 0                            // EnemyType::None
-0,                             // Position X
-0,                             // Position Y
-0,                             // Stance::Enemy_None
-0,                             // Inventory ItemType::None
-0,                             // IData
-
-0                            // EnemyType::None
 0, 0,                             // Position X
 0,                             // Position Y
 0, 0,                             // Stance::None
@@ -141,32 +127,6 @@ uint8_t Level_03_Enemies[] = {
 0, 0,                              // Data
 0, 0,                             // Counter
 0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
-
-0                            // EnemyType::None
-0,                             // Position X
-0,                             // Position Y
-0,                             // Stance::Enemy_None
-0,                             // Inventory ItemType::None
-0,                             // IData
-
-0                            // EnemyType::None
-0, 0,                             // Position X
-0,                             // Position Y
-0, 0,                             // Stance::None
-12,                              // Health
-0,                              // Sword Wound
-0,                             // Inventory ItemType::None
-0, 0, 0, 0,                               // Padding
-0, 0,                              // Data
-0, 0,                             // Counter
-0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
-
-0                            // EnemyType::None
-0,                             // Position X
-0,                             // Position Y
-0,                             // Stance::Enemy_None
-0,                             // Inventory ItemType::None
-0,                             // IData
 
 0                            // EnemyType::None
 0, 0,                             // Position X
