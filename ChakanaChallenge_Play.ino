@@ -54,7 +54,6 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     #ifndef DEBUG
 
-    Player &player = world.getPlayer();
     if (a.needsUpdate()) play_Update();
 
     SpritesU::drawOverwriteFX(0, 0, Images::BoatEnters, (titleCounter * 3) + currentPlane);    

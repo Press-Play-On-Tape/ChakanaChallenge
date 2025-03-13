@@ -147,6 +147,8 @@ void loop() {
 
         #endif
 
+        default: break;
+
     }
 
     #ifndef DEBUG_SOUND

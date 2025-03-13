@@ -203,7 +203,7 @@ class Item {
 
                             this->counter++;
 
-                            if (this->counter == this->data && this->itemType == ItemType::Lever_Portal_Auto_Open) {
+                            if (static_cast<int16_t>(this->counter) == this->data && this->itemType == ItemType::Lever_Portal_Auto_Open) {
                                 this->counter = 0;
                                 this->frame = 8;
                             }
@@ -384,6 +384,7 @@ class Item {
 
                         if (this->getCounter() == 0) {
                             this->itemType = (this->itemType == ItemType::Arrow_LH) ? ItemType::Arrow_LH_Hidden : ItemType::Arrow_RH_Hidden;
+                            this->setCounter(64);
                         }
 
                     }
@@ -423,6 +424,8 @@ class Item {
                                 case ItemType::Trebochet_Ball_Right_3:
                                     incX = direction * 4;
                                     break;
+
+                                default: break;
 
                             }
 
@@ -480,6 +483,8 @@ class Item {
                                     incX = -4;
                                     break;
 
+                                default: break;
+
                             }
 
                             this->setX(this->getX() + incX);
@@ -518,6 +523,9 @@ class Item {
                     }
                     
                     break;
+
+
+                default: break;
 
             }
 

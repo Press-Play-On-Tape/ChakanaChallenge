@@ -3,5 +3,9 @@
     "board": "arduboy-homemade:avr:arduboy-fx",
     "output": "/Users/simonholmes/projects/build",
     "sketch": "ChakanaChallenge.ino",
-    "port": "/dev/tty.usbmodem14601"
+    "port": "/dev/tty.usbmodem14601",
+    "buildPreferences": [
+        ["compiler.c.extra_flags", "-Wall -Wmissing-noreturn -Werror=return-type"],
+        ["compiler.cpp.extra_flags", "{compiler.c.extra_flags}"]
+    ]
 }

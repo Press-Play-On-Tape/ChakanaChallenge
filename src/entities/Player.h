@@ -66,11 +66,11 @@ class Player {
             this->health = Constants::HealthMax;
             this->enemyIdx = Constants::NoEnemy;
             this->wound = 0;
-            
-            #ifdef DEBUG_LOTS_OF_CHAKANAS
-            this->chakanas = 200;
+        
+            #ifdef SELECT_PORT
+                this->chakanas = 25;
             #else
-            this->chakanas = 20;
+                this->chakanas = 20;
             #endif
 
         }
@@ -242,14 +242,14 @@ class Player {
         }
 
         bool push(Stance item) {
-            return this->stack.push(static_cast<uint16_t>(item));
+            return this->stack.push(static_cast<Stance>(item));
         }
 
         void insertSequence(Stance fromStance, Stance toStance) {
 
             for (uint16_t x = toStance; x >= fromStance; x--) {
 
-                this->stack.insert(static_cast<uint16_t>(x));
+                this->stack.insert(static_cast<Stance>(x));
 
             }
 
@@ -296,9 +296,9 @@ class Player {
                 this->stack.clear();
             }
 
-            for (uint16_t x = toStance; x >= fromStance; x--) {
+            for (uint16_t x = static_cast<uint16_t>(toStance); x >= static_cast<uint16_t>(fromStance); x--) {
 
-                this->stack.push(static_cast<uint16_t>(x));
+                this->stack.push(static_cast<Stance>(x));
 
             }
 

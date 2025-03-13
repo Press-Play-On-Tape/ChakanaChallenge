@@ -120,7 +120,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             Point offset;
             uint16_t stance = enemy.pop();
 
-            enemy.setStance(stance);
+            enemy.setStance(static_cast<Stance>(stance));
 
             StanceDetails stanceDetails;
 
@@ -245,6 +245,8 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     break;
 
+                default: break;
+
             }
 
             FX::seekData(Constants::SubsititueStance + (static_cast<uint16_t>(stance) * 2));
@@ -252,7 +254,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             FX::readEnd();
 
             if (subsituteStance != 65535) {
-                enemy.setStance(subsituteStance);
+                enemy.setStance(static_cast<Stance>(subsituteStance));
             }
 
 
@@ -291,13 +293,13 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 case EnemyType::Archer:
                     {
-                        uint16_t playerX = 64 - world.getMiddleground();
+                        int16_t playerX = 64 - world.getMiddleground();
 
                         if (playerX > enemy.getX() && enemy.getStance() == Stance::Enemy_Fire_LH_12) {
 
                             enemy.setStance(Stance::Enemy_Fire_RH_12);
                         }
-                        else if (playerX < enemy.getX() && enemy.getStance() == Stance::Enemy_Fire_RH_12) {
+                        else if (static_cast<int16_t>(playerX) < enemy.getX() && enemy.getStance() == Stance::Enemy_Fire_RH_12) {
 
                             enemy.setStance(Stance::Enemy_Fire_LH_12);
                         }
@@ -603,8 +605,7 @@ void playGame_HandleEnemies(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     break;
 
-                default:
-                    break;
+                default: break;
 
             }
 

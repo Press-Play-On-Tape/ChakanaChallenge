@@ -1,0 +1,67 @@
+
+# Objective
+
+Sail from port to port and visit the Incan temples you find.  Along the way, collect any valuables you find before exiting back to your boat. Visit all 14 ports to complete the game.
+
+
+# Sailing the High Seas
+
+
+Travelling from on eport to another is expensive and can be paid for using Chakanas you find on shore.  Visiting ports near your current position is much cheaper than visiting those far away.
+
+You start your travels in the top, left-hand corner of the world.
+
+SC_05
+
+Scroll the map to a nearby port and click the 'A' button.
+
+If you have enough money, you can elect to sail there by pressing 'A' a second time.
+
+SC_07
+
+Alternatively, you can see your Chakana balance and a list of ports you have visited by selecting the 'B' button to reveal the menu and by pressing 'A' to cycle through the screens. 
+
+Press 'B' to close the dialogue and return to sailing your boat.
+
+You can exit the game and return to the main menu by selecting Exit.
+
+SC_11, SC_12, SC_13, SC_14, SC_15
+
+
+# Navigating a Temple
+
+After selecting a port, you will land your boat and progress to an Incan Temple.  Climb the ladders and vines to locate all the treasures, tools and weapons you can find.  
+
+You will need tools, such as the keys, pinch bar and hammer, to navigate past the doors, pallets and crates that block your way.
+
+You can view your inventory by clicking the 'B' button.
+
+SC-16
+
+To use a tool you have collected on an obstacle, stand right next to the obstacle and then select your tool from the inventory.  Certain tools will only work on certain obstacles - keys can only be used on a door for example.  If you cannot seelct a tool, check to see that it is appropriate for the obstacle you have encoutered - also make sure you are standing as close tot he obstacle as you can! 
+
+SC_18, SC_19
+
+When confronted by an enemy with a sword, select your own sword from your inventory and attack using the 'B' button.  
+
+Your health will be visible during the sword fight.
+
+You can put your sword away during fighting by clicking the 'Down' button. You may want to do this to select an amulet or to drink potion from your inventory.
+
+SC_21, SC_22
+
+When you find the large, spinning Chakana you will be rewarded for your efforts and you will return to the boat allowing you to sail to the next port.
+
+
+# Hints
+
+If you get caught in a location where you cannot progress, you can always reset the level by selecting 'Reset' from the menu.  This will cost a live and return you to the start of the level.
+
+When jumping onto a vine, you must run towards the vine as it swings close to you. While still running, press and hold the 'A' button to jump and hold onto the vine.
+
+Amulets can ward off injury from arrows, trebochet balls and even swords - once!  They are rare so use them sparingly.
+
+Do not leave treasures behind - especially small Chanakas - as you will need them to travel between ports.
+
+
+

@@ -13,7 +13,6 @@ void playGame_Init() {
 
     #ifndef DEBUG_DISABLE_PLAY
 
-    Player &player = world.getPlayer();
     world.init_Level();
     menu.reset();
 
@@ -93,7 +92,7 @@ void playGame_Init() {
     cookie.hasSavedGame = true;
 
     #ifndef DEBUG
-    saveCookie(true);
+    saveCookie();
     #endif
 
     #ifndef DEBUG_MUSIC
@@ -110,7 +109,8 @@ void playGame_Init() {
 void killPlayer(Player &player) {
 
     Stance startStance = (player.getDirection() == Direction::Left) ? Stance::Man_Die_Fall_LH_01 : Stance::Man_Die_Fall_RH_01;
-    player.pushSequence(startStance, startStance + 3, true);
+    player.pushSequence(startStance, static_cast<Stance>(static_cast<uint16_t>(startStance) + 3), true);
+
 
 }
 
@@ -146,7 +146,7 @@ bool canClimb_Upper(uint8_t t1, uint8_t t2) {
 
 };
 
-void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPressed) {
+void playGame_HandleGamePlay(Player &player, uint8_t pressed) {
 
     #ifndef DEBUG_DISABLE_PLAY
 
@@ -168,7 +168,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                     uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
                     uint8_t tile_U2 = world.getTile_RelativeToPlayer(0, 2);
-                    uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
+                    // uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
                     uint8_t tile_RU2 = world.getTile_RelativeToPlayer(1, 2);
 
                     if (world.isLadderTile_Upper(tile) && world.canWalkPastTile(tile_U2, Direction::Backward)) {
@@ -228,7 +228,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                     Direction dir = player.getDirection();
 
-                    uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
+                    // uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
 
@@ -278,6 +278,9 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                 }
                 break;
+
+            default: break;
+            
         }
 
     }
@@ -288,8 +291,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
             case Direction::Backward:
                 {
-                    uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
-                    uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
+                    // uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                    // uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
                     uint8_t tile_D = world.getTile_RelativeToPlayer(0, -1);
                     uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                     uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
@@ -416,6 +419,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 }
                 break;
 
+            default: break;
+
         }
 
     }
@@ -439,8 +444,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
                     uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
                     uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
-                    uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
-                    uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
+                    // uint8_t tile_L2 = world.getTile_RelativeToPlayer(-2, 0);
+                    // uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
                     uint8_t tile_L2U = world.getTile_RelativeToPlayer(-2, 1);
                     uint8_t tile_LU = world.getTile_RelativeToPlayer(-1, 1);
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
@@ -475,7 +480,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     //New
                     else if (world.canWalkPastTile(tile_L)) {
 
-                        processLadder_MoveLeft(player, tile_LD);
+                        processLadder_MoveLeft(player, static_cast<Tiles>(tile_LD));
 
                     }     
                     else {
@@ -491,6 +496,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
 
                 player.push(Stance::Man_Walk_FW_01);
                 break;
+
+            default: break;
 
         }
 
@@ -519,7 +526,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                     uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
                     uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                     uint8_t tile_R2U = world.getTile_RelativeToPlayer(2, 1);
-                    uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
+                    // uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
 
                     if (!world.canWalkPastTile(tile_RU) && !world.isRopeTile(tile_RU) && world.isRopeTile(tile_U)) {
 
@@ -560,6 +567,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
             case Direction::Left:
                 player.push(Stance::Man_Walk_FW_01);
                 break;
+
+            default: break;
 
         }
 
@@ -614,7 +623,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                             playGame_HandleGamePlay_Basics(player, Constants::Player_Stance_Offset);
                         }
                         else {
-                            playGame_HandleGamePlay_Basics(player, Stance::Man_Start); // << should be 0?
+                            playGame_HandleGamePlay_Basics(player, 0); // << should be 0?
                         }
                     }
     
@@ -639,6 +648,8 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
                 }
                 break;
 
+            default: break;
+
         }
 
     }
@@ -646,7 +657,7 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed, uint8_t justPresse
     #endif
 }
 
-void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
+void playGame_HandleGamePlay_Basics(Player &player, uint16_t stanceOffset) {
 
     #ifndef DEBUG_DISABLE_PLAY
 
@@ -657,24 +668,24 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
 
         if (world.canJumpUpOntoTile(tile)) {
 
-            player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+            player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_06) + stanceOffset));
 
             if (tile == Tiles::Rollers_Left) {
 
                 player.pushSequence(Stance::Man_Rollers_RH_01, Stance::Man_Rollers_RH_04);
-                player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+                player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_06) + stanceOffset));
 
             }
             else if (tile == Tiles::Rollers_Right) {
 
                 player.pushSequence(Stance::Man_Rollers_LH_01, Stance::Man_Rollers_LH_04);
-                player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+                player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_06) + stanceOffset));
 
             }
 
             else {
 
-                player.stageSequence(Stance::Man_StandingJump_RH_UP_01 + stanceOffset, Stance::Man_StandingJump_RH_UP_06 + stanceOffset); 
+                player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_UP_06) + stanceOffset));
 
             }
 
@@ -688,12 +699,12 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
 
             if (world.isRopeTile(tile_3U)) {
 
-                player.stageSequence(Stance::Man_BounceJump_RH_3_01 + stanceOffset, Stance::Man_BounceJump_RH_3_32 + stanceOffset);
+                player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_BounceJump_RH_3_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_BounceJump_RH_3_32) + stanceOffset));
 
             }
             else if (world.isRopeTile(tile_4U)) {
 
-                player.stageSequence(Stance::Man_BounceJump_RH_4_01 + stanceOffset, Stance::Man_BounceJump_RH_4_34 + stanceOffset);
+                player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_BounceJump_RH_4_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_BounceJump_RH_4_34) + stanceOffset));
 
             }
 
@@ -703,7 +714,7 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
 
             if (world.isRopeTile(tile_4U)) {
 
-                player.stageSequence(Stance::Man_BounceJump_RH_4_01 + stanceOffset, Stance::Man_BounceJump_RH_4_34 + stanceOffset);
+                player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_BounceJump_RH_4_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_BounceJump_RH_4_34) + stanceOffset));
 
             }
             
@@ -712,14 +723,14 @@ void playGame_HandleGamePlay_Basics(Player &player, Stance stanceOffset) {
         }   
         else {
 
-            player.stageSequence(Stance::Man_StandingJump_RH_01 + stanceOffset, Stance::Man_StandingJump_RH_07 + stanceOffset); 
+            player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_RH_07) + stanceOffset));
 
         }
 
     }
     else {
 
-        player.stageSequence(Stance::Man_StandingJump_Small_RH_01 + stanceOffset, Stance::Man_StandingJump_Small_RH_03 + stanceOffset); 
+        player.stageSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_Small_RH_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_StandingJump_Small_RH_03) + stanceOffset));
 
     }
 
@@ -743,8 +754,8 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
 
                     uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                     uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
-                    uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
-                    uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
+                    // uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
+                    // uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
                     uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
 
                     if (tile_D2 == Tiles::Water_Plain) {
@@ -804,7 +815,7 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
                 {                            
                     uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
                     uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
-                    uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
+                    // uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
                     uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
 
                     if (tile_D2 == Tiles::Water_Plain) {
@@ -893,7 +904,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed) {
 
     if (pressed & A_BUTTON) {
 
-        player.pushSequence(Stance::Man_Sword_StandingJump_RH_01 + offset, Stance::Man_Sword_StandingJump_RH_07 + offset);
+        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Sword_StandingJump_RH_01) + offset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Sword_StandingJump_RH_07) + offset));
 
     }
 
@@ -907,7 +918,7 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed) {
 
     else if ((pressed & B_BUTTON) && tile_Front == Tiles::Blank) {
 
-        player.pushSequence(Stance::Man_Sword_Lunge_RH_01 + offset, Stance::Man_Sword_Lunge_RH_06 + offset);
+        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Sword_Lunge_RH_01) + offset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Sword_Lunge_RH_06) + offset));
 
     }
 
@@ -937,6 +948,8 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed) {
                 }
 
                 break;
+
+            default: break;
                 
         }
 
@@ -968,7 +981,9 @@ void playGame_HandleSwordFight_Player(Player &player, uint8_t pressed) {
                 }
 
                 break;
-                
+
+            default: break;
+
         }
 
     }
@@ -1013,7 +1028,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         playGame_HandleMenu(GameState::Inventory_Open);
                     }
                     else {
-                        playGame_HandleMenu(player, pressed, justPressed);
+                        playGame_HandleMenu(player, justPressed);
                     }
 
                     break;
@@ -1031,7 +1046,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         world.setGameState(GameState::Inventory_Open);
                     }
                     else {
-                        playGame_HandleMenu(player, pressed, justPressed);
+                        playGame_HandleMenu(player, justPressed);
                     }
 
                     break;
@@ -1044,7 +1059,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     else {
 
                         if (ignoreKeyPress == 0) {
-                            playGame_HandleGamePlay(player, pressed, justPressed);          
+                            playGame_HandleGamePlay(player, pressed);          
                         }
 
                     }
@@ -1059,7 +1074,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             cookie.hasSavedGame = false;
                             #ifndef DEBUG
-                            saveCookie(true);
+                            saveCookie();
                             #endif
                             world.setGameState(GameState::Title_Init);
 
@@ -1085,6 +1100,10 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             player.setHealth(Constants::HealthMax);
                             player.setLives(player.getLives() - 1);
 
+                            for (uint8_t i = player.getItemCount(); i < Constants::ItemCount_Player; i++) {
+                                player.getItem(i).setItemType(ItemType::None);
+                            }
+
                         }
                         else {
 
@@ -1094,7 +1113,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         }
 
                         #ifndef DEBUG
-                        saveCookie(true);
+                        saveCookie();
                         #endif
 
                     }
@@ -1112,6 +1131,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                     pressed = 0;
                     justPressed = 0;
                     break;
+
+                default: break;
 
             }
 
@@ -1166,6 +1187,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case GameState::Play_Game:
                     playGame_HandleJump(player, pressed);
                     break;
+
+                default: break;
 
             }
 
@@ -1270,7 +1293,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             world.setGameState(GameState::Chakana_Open);
                             world.setPortVisited(world.getCurrentPort());
                             endOfLevel_Counter = 0;
-                            titleCounter = a.randomLFSR(8, 19);
+                            titleCounter = a.randomLFSR(10, 18);
+                            cookie.hasPlayedBefore = true;
                             
                             #ifndef DEBUG_SOUND
                             playSFX(MusicSFX::SFX_Victory);
@@ -1285,17 +1309,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                             ignoreKeyPress = 16;
                             player.stageSequence(Stance::None, Stance::None);
-
-                            if (item.getItemType() == ItemType::Lever_LH)  {
-
-                                item.setItemType(ItemType::Lever_RH);
-
-                            }
-                            else {
-
-                                item.setItemType(ItemType::Lever_LH);
-
-                            }
+                            item.setItemType(item.getItemType() == ItemType::Lever_LH ? ItemType::Lever_RH : ItemType::Lever_LH);
 
                             for (uint8_t x = 0; x < 15; x++) {
 
@@ -1372,13 +1386,13 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                         {
                                             uint16_t stanceOffset = (player.getDirection() == Direction::Left ? Constants::Player_Stance_Offset : 0);
                                             player.setY(Constants::GroundY - item.getY());
-                                            player.pushSequence(Stance::Man_Die_Fire_RH_01 + stanceOffset, Stance::Man_Die_Fire_RH_12 + stanceOffset, true);
+                                            player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Die_Fire_RH_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Die_Fire_RH_12) + stanceOffset), true);
 
                                             uint8_t xPos = item.getX() + world.getMiddleground();
 
                                             if (xPos % 8 == 0) {
 
-                                                player.push(Stance::Man_Die_Fire_Adj_RH_02 + stanceOffset);
+                                                player.push(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Die_Fire_Adj_RH_02) + stanceOffset));
 
                                             }
 
@@ -1386,6 +1400,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                         break;
 
+                                    default: break;
 
                                 }
 
@@ -1395,8 +1410,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                         break;
 
-                    default:
-                        break;
+                    default: break;
 
                 }
 
@@ -1764,6 +1778,8 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                             enemy.insertSequence(Stance::Enemy_Sword_Walk_BK_RH_01, Stance::Enemy_Sword_Walk_BK_RH_04);
                                         }
                                         break;
+
+                                    default: break;
                                     
                                 }      
 
@@ -1776,7 +1792,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                 //player.removeInventoryItem(menu.getY());
                                 menu.decY();
                                 enemy.clear();
-                                player.insert(Stance::Man_Walk_RH_00 + (player.getDirection() == Direction::Left ? Constants::Player_Stance_Offset : 0));
+                                player.insert(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Walk_RH_00) + (player.getDirection() == Direction::Left ? Constants::Player_Stance_Offset : 0)));
 
                                 bool isLeft = (enemy.getDirection() == Direction::Left);
                                 Stance start;
@@ -1835,7 +1851,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         FX::readEnd();
 
                         if (subsituteStance != 65535) {
-                            player.setStance(subsituteStance);
+                            player.setStance(static_cast<Stance>(subsituteStance));
                         }
 
                     }
@@ -1882,7 +1898,7 @@ uint16_t playGame_PopEntry(Player &player) {
     #ifndef DEBUG_DISABLE_PLAY
     uint16_t stance = player.pop();
 
-    player.setStance(stance);
+    player.setStance(static_cast<Stance>(stance));
 
     StanceDetails stanceDetails;
 
@@ -1910,8 +1926,6 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
     Player &player = world.getPlayer();
 
     if (a.needsUpdate()) playGame_Update(a);
-
-    uint8_t yOffset = world.getYOffsetForRendering();
 
     renderWorld();
 
@@ -2025,8 +2039,7 @@ void playGame(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             }
             break;
 
-        default:    
-            break;
+        default: break;
 
     }
 

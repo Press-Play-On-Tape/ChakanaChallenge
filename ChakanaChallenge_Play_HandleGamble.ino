@@ -76,6 +76,8 @@ void playGame_HandleGamble(Player &player, uint8_t justPressed) {
                 playGame_HandleMenu(world.getGameState());
                 break;
 
+            default: break;
+
         }
 
     }

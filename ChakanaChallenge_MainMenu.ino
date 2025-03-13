@@ -15,34 +15,104 @@ void title_Init() {
         world.setGameState(GameState::Title_OptResume);
     }
 
-}
-
-void title_StartNewGame() {
-
-    world.init();
-    world.getPlayer().init();
-    cookie.hasSavedGame = false;
-
-    #ifndef DEBUG
-    saveCookie(true);
+    #ifdef DEBUG
+    cookie.hasPlayedBefore = 1;
     #endif
-    
-    world.setGameState(GameState::Map_Init);
-
 }
+
+#ifndef SELECT_PORT
+
+    void title_StartNewGame() {
+
+        world.init();
+        world.getPlayer().init();
+        cookie.hasSavedGame = false;
+
+
+        #ifndef DEBUG
+        saveCookie();
+        #endif
+        
+        world.setGameState(GameState::Map_Init);
+
+    }
+
+#else
+
+    void title_StartNewGame() {
+
+        world.init();
+        world.getPlayer().init();
+        cookie.hasSavedGame = false;
+
+        uint8_t i = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_Port_01);
+
+        FX::seekData(Constants::Starting_Ports + (i * 6));
+        world.setCurrentPort(FX::readPendingUInt16());
+        world.setXMap(FX::readPendingUInt16());
+        world.setYMap(FX::readPendingUInt16());
+        FX::readEnd();
+
+        world.getPlayer().setChakanas(i == 0 ? 20 : 25); 
+        #ifdef DEBUG_LOTS_OF_CHAKANAS
+        world.getPlayer().setChakanas(200); 
+        #endif
+
+        #ifndef DEBUG
+        saveCookie();
+        #endif
+        
+        world.setGameState(GameState::Map_Init);
+
+    }
+
+#endif
 
 void title_SaveSoundSettings() {
     
-    soundSettings.setSounds(!soundSettings.getSounds());
+    #ifndef SOUND_SIMPLE
+
+        soundSettings.setSounds(!soundSettings.getSounds());
+        
+        if (soundSettings.getSounds()) {
+            playMusic();
+        }
+        else {
+            SynthU::stop();
+        }
+        
+    #else
+
+        if (!soundSettings.getMusic() && !soundSettings.getSFX()) {
+
+            soundSettings.setMusic(true);
+            soundSettings.setSFX(true);
+
+        }
+        else if (!soundSettings.getMusic() && soundSettings.getSFX()) {
+
+            soundSettings.setMusic(false);
+            soundSettings.setSFX(false);
+
+        }
+        else if (soundSettings.getMusic() && soundSettings.getSFX()) {
+
+            soundSettings.setMusic(false);
+            soundSettings.setSFX(true);
+
+        }
     
-    if (soundSettings.getSounds()) {
-        playMusic();
-    }
-    else {
-        SynthU::stop();
-    }
+        if (soundSettings.getMusic()) {
+            playMusic();
+        }
+        else {
+            SynthU::stop();
+        }
+
+    #endif
 
 }
+
 void title_Update() {
 
     world.incFrameCount();
@@ -58,11 +128,22 @@ void title_Update() {
                 world.setGameState(GameState::Title_OptPlay);
                 break;
 
-            case GameState::Title_OptPlay:
-            case GameState::Title_OptPlay2:
+            #ifndef SELECT_PORT
+                case GameState::Title_OptPlay:
+                case GameState::Title_OptPlay2:
 
-                title_StartNewGame();
-                break;
+                    title_StartNewGame();
+                    break;
+            #else
+                case GameState::Title_OptPlay:
+                case GameState::Title_OptPlay2:
+
+                    world.setGameState(GameState::Title_Port_01);
+                    if (!cookie.hasPlayedBefore) {
+                        title_StartNewGame();
+                    }
+                    break;
+            #endif
 
             case GameState::Title_ShowCredits:
 
@@ -86,6 +167,14 @@ void title_Update() {
                 world.setGameState(GameState::Title_ShowCredits);
                 break;
 
+            #ifdef SELECT_PORT
+                case GameState::Title_Port_01 ... GameState::Title_Port_04:
+                    title_StartNewGame();
+                    break;
+            #endif
+
+            default: break;
+
         }
 
     }
@@ -98,8 +187,15 @@ void title_Update() {
             case GameState::Title_OptResume:
             case GameState::Title_OptSound:
 
+            #ifdef SELECT_PORT
+            case GameState::Title_Port_01:
+            case GameState::Title_Port_02:
+            case GameState::Title_Port_03:
+            #endif
                 world.incGameState();
                 break;
+
+            default: break;
 
         }
 
@@ -113,8 +209,16 @@ void title_Update() {
             case GameState::Title_OptSound2:
             case GameState::Title_OptCredits:
 
+            #ifdef SELECT_PORT
+            case GameState::Title_Port_02:
+            case GameState::Title_Port_03:
+            case GameState::Title_Port_04:
+            #endif
+
                 world.decGameState();
                 break;
+
+            default: break;
 
         }
 
@@ -128,13 +232,68 @@ void title(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     uint8_t frame = static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Title_Start);
 
-    if (world.getGameState() > GameState::Title_ShowCredits) {
-        frame = frame + (soundSettings.getSounds() ? 0 : 6);
-    }
+    #ifndef SOUND_SIMPLE
+        
+        if (world.getGameState() > GameState::Title_ShowCredits) {
+            frame = frame + (soundSettings.getSounds() ? 0 : 6);
+        }
 
-    if (a.needsUpdate()) title_Update();
+        if (a.needsUpdate()) title_Update();
 
-    SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
-    SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
+        SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
+        SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
+
+    #else
+
+        #ifndef SELECT_PORT
+                    
+            if (world.getGameState() > GameState::Title_ShowCredits) {
+
+                if (!soundSettings.getMusic() && !soundSettings.getSFX()) {
+                    frame = frame + (soundSettings.getMusic() ? 0 : 6);
+                }
+                else if (!soundSettings.getMusic() && soundSettings.getSFX()) {
+                    frame = frame + (soundSettings.getMusic() ? 0 : 12);
+                }
+
+            }
+
+            if (a.needsUpdate()) title_Update();
+
+            SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
+            SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
+
+        #else
+
+            switch (world.getGameState()) {
+
+                case GameState::Title_ShowCredits ... GameState::Title_OptSound_Volume2:
+
+                    if (!soundSettings.getMusic() && !soundSettings.getSFX()) {
+                        frame = frame + (soundSettings.getMusic() ? 0 : 6);
+                    }
+                    else if (!soundSettings.getMusic() && soundSettings.getSFX()) {
+                        frame = frame + (soundSettings.getMusic() ? 0 : 12);
+                    }
+
+                    break;
+
+                case GameState::Title_Port_01 ... GameState::Title_Port_04:
+                    
+                    frame = frame + 6;
+                    break;
+
+                default: break;
+
+            }
+
+            if (a.needsUpdate()) title_Update();
+
+            SpritesU::drawOverwriteFX(0, 0, Images::Title_Base, (3 * frame) + currentPlane);
+            SpritesU::drawPlusMaskFX(20, 22, Images::Chakana, (((world.getFrameCount() / 4) % 20) * 3) + currentPlane);
+        
+        #endif
+
+    #endif
 
 }

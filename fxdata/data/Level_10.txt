@@ -121,7 +121,7 @@ uint8_t Level_10_Enemies[] = {
 2                            // EnemyType::TrebochetOperator
 62, 1,                             // Position X
 0,                             // Position Y
-13, 4,                             // Stance::Enemy_Trebochet_Release_LH_01
+35, 4,                             // Stance::Enemy_Trebochet_Release_LH_01
 12,                              // Health
 0,                              // Sword Wound
 33,                             // Inventory ItemType::Trebochet_Ball_Left_Hidden

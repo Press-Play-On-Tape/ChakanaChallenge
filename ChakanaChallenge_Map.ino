@@ -73,29 +73,65 @@ void map_Update() {
 
                 FX::readEnd();
 
-                if (world.getNextPort() != Constants::NoPort) {
+                #ifndef SELECT_PORT
+                    
+                    if (world.getNextPort() != Constants::NoPort) {
 
-                    uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
-                    uint8_t toPort = world.getNextPort() + 1;
+                        uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
+                        uint8_t toPort = world.getNextPort() + 1;
 
-                    if (toPort < fromPort) toPort = toPort + 14;
-                    if (toPort - fromPort > 6) fromPort = fromPort + 14 + (fromPort == 0 ? 1 : 0);
+                        if (toPort < fromPort) toPort = toPort + 14;
+                        if (toPort - fromPort > 6) fromPort = fromPort + 14 + (fromPort == 0 ? 1 : 0);
 
-                    FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
-                    world.setNextPortCost(FX::readPendingUInt8());
-                    FX::readEnd();
+                        FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
+                        world.setNextPortCost(FX::readPendingUInt8());
+                        FX::readEnd();
 
-                    world.setGameState(GameState::Map_ShowDialogue);
-                    world.setFrameCount(0);
+                        world.setGameState(GameState::Map_ShowDialogue);
+                        world.setFrameCount(0);
 
-                    FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
-                    uint16_t left = FX::readPendingUInt16();
-                    FX::readEnd();
+                        FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
+                        uint16_t left = FX::readPendingUInt16();
+                        FX::readEnd();
 
-                    leftDialogue = (left == 0);
-                    centreMap = false;
+                        leftDialogue = (left == 0);
+                        centreMap = false;
 
-                }
+                    }
+
+                #else
+                    
+                    if (world.getNextPort() != Constants::NoPort) {
+
+                        // If the first selection in a game is valid, tweak the ports around to make it work ..
+
+                        if (world.getCurrentPort() == world.getNextPort() && !world.getPortVisited(world.getCurrentPort())) {
+                            world.setCurrentPort((world.getCurrentPort() + 1) % 14);
+                        }
+
+                        uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
+                        uint8_t toPort = world.getNextPort() + 1;
+
+                        if (toPort < fromPort) toPort = toPort + 14;
+                        if (toPort - fromPort > 6) fromPort = fromPort + 14 + (fromPort == 0 ? 1 : 0);
+                        
+                        FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
+                        world.setNextPortCost(FX::readPendingUInt8());
+                        FX::readEnd();
+
+                        world.setGameState(GameState::Map_ShowDialogue);
+                        world.setFrameCount(0);
+
+                        FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
+                        uint16_t left = FX::readPendingUInt16();
+                        FX::readEnd();
+
+                        leftDialogue = (left == 0);
+                        centreMap = false;
+
+                    }
+
+                #endif
 
             }
 
@@ -270,29 +306,31 @@ void map_Update() {
                 int16_t yOffset = pt.y - world.getYMap();
 
                 centreMap = false;
-                if (xOffset > 16)  { world.incXMap(1);  centreMap = true; }       
-                if (xOffset < -16) { world.incXMap(-1); centreMap = true; }
-                if (yOffset > 6)   { world.incYMap(1);  centreMap = true; }
-                if (yOffset < -6)  { world.incYMap(-1); centreMap = true; }
+                if (xOffset > 16)           { world.incXMap(1);  centreMap = true; }       
+                else if (xOffset < -16)     { world.incXMap(-1); centreMap = true; }
+                if (yOffset > 6)            { world.incYMap(1);  centreMap = true; }
+                else if (yOffset < -6)      { world.incYMap(-1); centreMap = true; }
 
             }
             
             break;
-        
+
+        default: break;
+
     }
 
 }
 
 void map_RenderScrollMap(uint8_t scrollFrame) {
 
-    SpritesU::drawPlusMaskFX(74, 0, Images::Scroll_Map, scrollFrame);
+    SpritesU::drawPlusMaskFX(73, 0, Images::Scroll_Map, scrollFrame);
 
 }
 
 void map_RenderHearts(uint8_t lives, uint16_t chakanas) {
 
-    SpritesU::drawOverwriteFX(93, 26,  Images::Hearts, lives);
-    SpritesU::drawOverwriteFX(98, 15,  Images::Numbers_6x4_3D_BW, chakanas);
+    SpritesU::drawOverwriteFX(92, 26,  Images::Hearts, lives);
+    SpritesU::drawOverwriteFX(97, 15,  Images::Numbers_6x4_3D_BW, chakanas);
 
 }
 
@@ -378,7 +416,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                         if (world.getPortVisited(port)) {
 
-                            SpritesU::drawPlusMaskFX(86, 15 + (7 * i), Images::Checkbox, a.currentPlane());
+                            SpritesU::drawPlusMaskFX(85, 15 + (7 * i), Images::Checkbox, a.currentPlane());
 
                         }
                         
@@ -394,7 +432,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 if (world.getFrameCount() % 64 < 32) {
 
-                    renderInventoryPanelCursor(90, 30 + ((static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) << 3));
+                    renderInventoryPanelCursor(89, 30 + ((static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) << 3));
 
                 }
                 
@@ -416,7 +454,7 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                 if (world.getFrameCount() % 64 < 32) {
 
-                    renderInventoryPanelCursor(90, 30 + ((static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) << 3));
+                    renderInventoryPanelCursor(89, 30 + ((static_cast<uint8_t>(world.getGameState()) - static_cast<uint8_t>(GameState::Map_ShowMenu_Back)) << 3));
 
                 }
                 
@@ -480,6 +518,8 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
         case GameState::Map_MoveBoat:
 
             break;
+
+        default: break;
         
     }
 

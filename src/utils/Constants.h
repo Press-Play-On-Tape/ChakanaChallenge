@@ -17,9 +17,14 @@
 #define _DEBUG_NO_MAIN_MENU
 #define _DEBUG_LOTS_OF_CHAKANAS
 
+#define SELECT_PORT
+
 #ifndef DEBUG
 
 	// Want to Keep !
+
+	// 48 bytes
+	#define SOUND_SIMPLE
 
 	// 142 bytes
 	#define MAP_SHOW_PORT_NAMES
@@ -137,7 +142,7 @@ enum Tiles : uint8_t {
 	********   ********   
 	.*******   *******.      
 
-
+	*/
 
 	// --------------------------------------------------------------------------------------------
 	/* Single Stair RH Upper

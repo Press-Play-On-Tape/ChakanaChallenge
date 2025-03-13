@@ -19,103 +19,116 @@ uint8_t Level_04[] = {
 
 uint8_t Level_04_Items[] = {
 41,                             // ItemType::Chakana
-192, 1,                             // Position X
+192, 1,                         // Position X
 48,                             // Position Y
-9,                             // Frame
-0, 0,                         // Data
-0, 0,                             // Counter
+9,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
-0,                             // ItemType::Key1
-176, 0,                             // Position X
+0,                              // ItemType::Key1
+176, 0,                         // Position X
 80,                             // Position Y
-0,                             // Frame
-0, 0,                            // Data
-0, 0,                            // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 14,                             // ItemType::LockedDoor
-176, 1,                             // Position X
+176, 1,                         // Position X
 16,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                             // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
-3,                             // ItemType::TrapDoor
-16, 1,                             // Position X
+3,                              // ItemType::TrapDoor
+16, 1,                          // Position X
 96,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                             // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 61,                             // ItemType::Poker
-96, 1,                             // Position X
-0,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                            // Counter
+96, 1,                          // Position X
+0,                              // Position Y
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
-7,                             // ItemType::Amulet
-176, 1,                             // Position X
+7,                              // ItemType::Amulet
+176, 1,                         // Position X
 80,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                              // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
+							
+59,                             // ItemType::Chakana_Small							
+144, 1,                         // Position X							
+64,                             // Position Y							
+9,                              // Frame							
+5, 0,                           // Data							
+0, 0,                           // Counter							
 
 43,                             // ItemType::Lever_LH
-208, 0,                             // Position X
+208, 0,                         // Position X
 80,                             // Position Y
-0,                             // Frame
-1, 0,                             // Data
-0, 0,                             // Counter
+0,                              // Frame
+1, 0,                           // Data
+0, 0,                           // Counter
 
 47,                             // ItemType::Lever_Portal_Auto_Closed
-112, 1,                             // Position X
+112, 1,                         // Position X
 96,                             // Position Y
-0,                             // Frame
-64, 6,                             // Data
-0, 0,                             // Counter
+0,                              // Frame
+64, 6,                          // Data
+0, 0,                           // Counter
 
 63,                             // ItemType::Puff
-0, 0,                            // Position X
-0,                             // Position Y
-255,                             // Frame
+0, 0,                           // Position X
+0,                              // Position Y
+255,                            // Frame
 0, 0,                           // Data
-0, 0,                            // Counter
+0, 0,                           // Counter
 };
 
 uint8_t Level_04_Enemies[] = {
-4                            // EnemyType::Guard_RH
-160, 0,                             // Position X
+4                               // EnemyType::Guard_RH
+160, 0,                         // Position X
 96,                             // Position Y
-101, 4,                             // Stance::Enemy_Sword_Stationary_RH
-12,                              // Health
+123, 4,                         // Stance::Enemy_Sword_Stationary_RH
+12,                             // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden
-0, 0, 0, 0,                               // Padding
-0, 0,                              // Data
-0, 0,                             // Counter
-0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
+0, 0, 0, 0,                     // Padding
+0, 0,                           // Data
+0, 0,                           // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,          // Stack
 
-0                            // EnemyType::None
-0, 0,                             // Position X
-0,                             // Position Y
-0, 0,                             // Stance::None
-12,                              // Health
+0                               // EnemyType::None
+0, 0,                           // Position X
+0,                              // Position Y
+0, 0,                           // Stance::None
+12,                             // Health
 0,                              // Sword Wound
-0,                             // Inventory ItemType::None
-0, 0, 0, 0,                               // Padding
-0, 0,                              // Data
-0, 0,                             // Counter
-0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
+0,                              // Inventory ItemType::None
+0, 0, 0, 0,                     // Padding
+0, 0,                           // Data
+0, 0,                           // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,          // Stack
 
-0                            // EnemyType::None
-0, 0,                             // Position X
-0,                             // Position Y
-0, 0,                             // Stance::None
-12,                              // Health
+0                               // EnemyType::None
+0, 0,                           // Position X
+0,                              // Position Y
+0, 0,                           // Stance::None
+12,                             // Health
 0,                              // Sword Wound
-0,                             // Inventory ItemType::None
-0, 0, 0, 0,                               // Padding
-0, 0,                              // Data
-0, 0,                             // Counter
-0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
+0,                              // Inventory ItemType::None
+0, 0, 0, 0,                     // Padding
+0, 0,                           // Data
+0, 0,                           // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,          // Stack
 };

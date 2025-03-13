@@ -1571,6 +1571,14 @@ enum class GameState : uint8_t {
         Title_OptSound_Music2,
         Title_OptSound_SFX2,
         Title_OptSound_Volume2,
+
+        #ifdef SELECT_PORT
+        Title_Port_01,
+        Title_Port_02,
+        Title_Port_03,
+        Title_Port_04,
+        #endif
+        
     Title_End,
 
     Play_Init,
