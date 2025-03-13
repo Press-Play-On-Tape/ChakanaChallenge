@@ -388,6 +388,8 @@ struct World {
                         item.setItemType(static_cast<ItemType>(static_cast<uint8_t>(itemType) + 1));
                         break;
 
+                    default: break;
+
                 }
 
                 if (doClearMap) {
@@ -446,7 +448,7 @@ struct World {
 
                                             }
                                             
-                                            player.pushSequence(from, from + 4, true);
+                                            player.pushSequence(from, static_cast<Stance>(static_cast<uint16_t>(from) + 4), true);
                                             
                                         }
 
@@ -482,11 +484,13 @@ struct World {
 
                                             }
                                             
-                                            player.pushSequence(from, from + 4, true);
+                                            player.pushSequence(from, static_cast<Stance>(static_cast<uint16_t>(from) + 4), true);
 
                                         }
 
                                         break;
+
+                                    default: break;
 
                                 }
 
@@ -501,6 +505,8 @@ struct World {
                         }
 
                         break;
+
+                    default: break;
 
                 }
 
@@ -855,6 +861,8 @@ struct World {
                             case ItemType::Lever_Portal_Auto_Open:
                                 return true;
 
+                            default: break;
+
                         }
 
                     }
@@ -1096,13 +1104,16 @@ struct World {
 
                 switch (item.getItemType()) {
 
-                    case ItemType::Arrow_LH ... ItemType::Arrow_RH_Hidden:
+                    case ItemType::Arrow_LH_Hidden:
+                    case ItemType::Arrow_RH_Hidden:
 
-                        if (enemy.getCount() == 0 && a.randomLFSR(0, 140) == 0) {
+                        if (item.getCounter() > 0 && this->frameCount % 4 == 0) item.setCounter(item.getCounter() - 1);
 
-                            const uint16_t diff = Stance::Enemy_Fire_LH_00 - Stance::Enemy_Fire_RH_00;
+                        if (item.getCounter() == 0 && a.randomLFSR(0, 60) == 0) {
+
+                            const uint16_t diff = static_cast<uint16_t>(Stance::Enemy_Fire_LH_00) - static_cast<uint16_t>(Stance::Enemy_Fire_RH_00);
                             uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
-                            enemy.pushSequence(Stance::Enemy_Fire_RH_00 + stanceOffset, Stance::Enemy_Fire_RH_12 + stanceOffset);
+                            enemy.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Enemy_Fire_RH_00) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Enemy_Fire_RH_12) + stanceOffset));
 
                         }
 
@@ -1118,13 +1129,15 @@ struct World {
 
                                 const uint16_t diff = Stance::Enemy_Trebochet_Release_LH_01 - Stance::Enemy_Trebochet_Release_RH_01;
                                 uint16_t stanceOffset = (enemy.getDirection() == Direction::Left ? diff : 0);
-                                enemy.pushSequence(Stance::Enemy_Trebochet_Release_RH_01 + stanceOffset, Stance::Enemy_Trebochet_Release_RH_14 + stanceOffset);
+                                enemy.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Enemy_Trebochet_Release_RH_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Enemy_Trebochet_Release_RH_14) + stanceOffset));
 
                             }
 
                         }
 
                         break;
+
+                    default: break;
 
                 }
 
@@ -1177,7 +1190,7 @@ struct World {
                                         }
 
                                         enemy.getItem().setItemType(static_cast<ItemType>(static_cast<uint8_t>(enemy.getItem().getItemType()) + 1));
-                                        this->player.pushSequence(stance, stance + 3, true);
+                                        this->player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(stance) + 3), static_cast<Stance>(static_cast<uint16_t>(stance) + 3), true);
 
                                     }
                                     else {
@@ -1253,7 +1266,7 @@ struct World {
                                         ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_RH_01) :
                                         ((itemType >= ItemType::Trebochet_Ball_Left_1) ? Stance::Man_Die_FWD_LH_01 : Stance::Man_Die_BWD_LH_01);
                                     
-                                    this->player.pushSequence(stance, stance + 3, true);
+                                    this->player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(stance) + 3), static_cast<Stance>(static_cast<uint16_t>(stance) + 3), true);
 
                                 }
 
@@ -1266,7 +1279,6 @@ struct World {
 
                     case ItemType::Trebochet_Ball_Left_1 ... ItemType::Trebochet_Ball_Left_3:
                         {
-                            ItemType itemType = item.getItemType();
                             enemy.getItem().update();
 
                             Rect playerRect = { 59, player.getY_RelativeToGround(), 10, 16 };
@@ -1301,7 +1313,7 @@ struct World {
                                     
                                     Stance stance = (this->player.getDirection() == Direction::Right) ? Stance::Man_Die_BWD_RH_01 : Stance::Man_Die_FWD_LH_01;
                                     
-                                    this->player.pushSequence(stance, stance + 3, true);
+                                    this->player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(stance) + 3), static_cast<Stance>(static_cast<uint16_t>(stance) + 3), true);
 
                                 }
 
@@ -1315,6 +1327,8 @@ struct World {
                     case ItemType::Glint:
                         enemy.getItem().update(); 
                         break;
+
+                    default: break;
 
                 }
 
@@ -1330,8 +1344,8 @@ struct World {
                      rect2.y + rect2.height <= rect1.y);
 
         }
-
-        bool initPuff(uint16_t x, int8_t y) {
+        
+        void initPuff(uint16_t x, int8_t y) {
 
             Item &puff = this->getItem(this->getItem(ItemType::Puff));
             puff.setX(x);

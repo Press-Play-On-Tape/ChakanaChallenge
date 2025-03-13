@@ -15,7 +15,9 @@
 #define _DEBUG_RENDER_MAP
 #define _DEBUG_SWORD
 #define _DEBUG_NO_MAIN_MENU
-#define DEBUG_LOTS_OF_CHAKANAS
+#define _DEBUG_LOTS_OF_CHAKANAS
+
+#define SELECT_PORT
 
 #ifndef DEBUG
 
@@ -140,7 +142,7 @@ enum Tiles : uint8_t {
 	********   ********   
 	.*******   *******.      
 
-
+	*/
 
 	// --------------------------------------------------------------------------------------------
 	/* Single Stair RH Upper

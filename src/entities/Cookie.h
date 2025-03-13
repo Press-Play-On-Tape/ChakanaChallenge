@@ -6,6 +6,7 @@
 struct Cookie {
 
     bool hasSavedGame;
+    bool hasPlayedBefore;
     SoundSettings soundSettings;
     World world;
     Menu menu;

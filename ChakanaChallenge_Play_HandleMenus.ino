@@ -7,7 +7,7 @@
 #include "src/utils/SpritesU.hpp"
 
 
-void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
+void playGame_HandleMenu(Player &player, uint8_t justPressed) {
 
     #ifndef DEBUG_HANDLE_MENUS
 
@@ -33,13 +33,15 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 
                             case Direction::Right:
 
-                                playGame_HandleMenu_LR(player, Direction::Right, Stance::Man_Start);
+                                playGame_HandleMenu_LR(player, Direction::Right, 0);
                                 break;
 
                             case Direction::Left:
 
                                 playGame_HandleMenu_LR(player, Direction::Left, Constants::Player_Stance_Offset);
                                 break;
+
+                            default: break;
 
                         }
 
@@ -131,6 +133,8 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
                 world.decGameState();
                 break;
 
+            default: break;
+
         }
 
     }
@@ -197,9 +201,10 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
             case GameState::Inventory_Open_Reset_0:
             case GameState::Inventory_Open_Reset_Exit_0:
             case GameState::Inventory_Open_More_Reset:  
-                // world.setGameState(static_cast<GameState>(static_cast<uint8_t>(world.getGameState()) + 1));
                 world.incGameState();
                 break;
+
+            default: break;
 
         }
 
@@ -210,7 +215,7 @@ void playGame_HandleMenu(Player &player, uint8_t pressed, uint8_t justPressed) {
 }
 
 
-void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOffset) {
+void playGame_HandleMenu_LR(Player &player, Direction direction, uint16_t stanceOffset) {
 
     #ifndef DEBUG_HANDLE_MENUS
 
@@ -253,15 +258,14 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
     #endif
 
-
-        player.pushSequence(Stance::Man_Hammering_RH_00 + stanceOffset, Stance::Man_Hammering_RH_10 + stanceOffset);
+        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Hammering_RH_00) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Hammering_RH_10) + stanceOffset));
         removeWorldandInventoryItem(ItemType::WoodenBarrier, GameState::Play_Game);
 
     }
 
     else if (world.isMysteryCrate(tile) && selectedItem == ItemType::PinchBar) {
 
-        player.pushSequence(Stance::Man_Levering_RH_00 + stanceOffset, Stance::Man_Levering_RH_10 + stanceOffset);
+        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Levering_RH_00) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Levering_RH_10) + stanceOffset));
         removeWorldandInventoryItem(ItemType::MysteryCrate, GameState::Play_Game);
 
     }
@@ -289,9 +293,7 @@ void playGame_HandleMenu_LR(Player &player, Direction direction, Stance stanceOf
 
         if (enemySwordIdx != 255) {
 
-            Enemy &enemy = world.getEnemy(enemySwordIdx);
-
-            player.push(Stance::Man_Sword_Stationary_RH + stanceOffset);
+            player.push(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_Sword_Stationary_RH) + stanceOffset));
             menu.setDirection(direction);
             menu.setGameState(GameState::Play_Battle);
             removeInventoryItem(GameState::Play_Battle);

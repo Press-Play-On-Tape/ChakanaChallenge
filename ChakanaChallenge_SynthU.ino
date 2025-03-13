@@ -2,7 +2,6 @@
 #include "src/utils/SynthU.hpp"
 
 static MusicSong current_song;
-static MusicSong current_song_bkp;
 
 void audioUpdate() {
 

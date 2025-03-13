@@ -1117,7 +1117,6 @@ void SpritesU::fillRect_i8(int8_t x, int8_t y, uint8_t w, uint8_t h, uint8_t col
 #endif
 
     uint8_t rows = r1 - r0; // middle rows + 1
-    uint8_t f = 0;
     uint8_t bot = c1;
     if(m0  == 0) ++rows; // no top fragment
     if(bot == 0) ++rows; // no bottom fragment

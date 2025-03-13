@@ -27,46 +27,9 @@ template<typename T> T absT(const T & v) {
 }
 
 
-void saveCookie(bool enableLEDs) {
-
-    #ifdef USE_LED
-    if (enableLEDs) {
-        #ifndef MICROCADE
-            a.setRGBled(RED_LED, 32);
-        #else
-            a.setRGBledGreenOff();
-            a.setRGBledBlueOff();
-        #endif
-    }
-    #endif
+void saveCookie() {
 
     FX::saveGameState(cookie);
-
-    #ifdef USE_LED
-    if (enableLEDs) {
-        #ifndef MICROCADE
-            a.setRGBled(RED_LED, 0);
-            a.setRGBled(GREEN_LED, 32);
-        #else
-            a.setRGBledRedOff();
-            a.setRGBledGreenOn();
-        #endif
-    }
-    #endif
-
-}
-
-void deactivateLEDs() {
-
-    #ifdef USE_LED
-        #ifndef MICROCADE
-            a.setRGBled(0, 0, 0);
-        #else
-            a.setRGBledRedOff();
-            a.setRGBledGreenOff();
-            a.setRGBledBlueOff();
-        #endif
-    #endif
 
 }
 
@@ -92,5 +55,4 @@ inline void debug_break() {
     asm volatile("break\n");
 
 }
-
 

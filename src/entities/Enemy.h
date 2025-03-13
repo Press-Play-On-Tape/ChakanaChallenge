@@ -121,14 +121,14 @@ class Enemy {
         }
 
         bool push(Stance item) {
-            return this->stack.push(static_cast<uint16_t>(item));
+            return this->stack.push(static_cast<Stance>(item));
         }
 
         void insertSequence(Stance fromStance, Stance toStance) {
 
             for (uint16_t x = toStance; x >= fromStance; x--) {
 
-                this->stack.insert(static_cast<uint16_t>(x));
+                this->stack.insert(static_cast<Stance>(x));
 
             }
 
@@ -149,7 +149,7 @@ class Enemy {
 
             for (uint16_t x = toStance; x >= fromStance; x--) {
 
-                this->stack.push(static_cast<uint16_t>(x));
+                this->stack.push(static_cast<Stance>(x));
 
             }
 
