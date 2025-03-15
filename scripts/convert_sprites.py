@@ -137,6 +137,7 @@ convert_header(IMAGES + 'Spikes_Top.png',                                       
 convert_header(IMAGES + 'Spikes_Bottom.png',                                                            BASE + 'Images.hpp', 'Spikes_Bottom', 4, maskImage=True)
 convert_header(IMAGES + 'Trebochet_Ball.png',                                                           BASE + 'Images.hpp', 'Trebochet_Ball', 4, 16, 16, maskImage=True)
 convert_header(IMAGES + 'Health.png',                                                                   BASE + 'Images.hpp', 'Health', 4, 15, 8)
+convert_header(IMAGES + 'Health_Big.png',                                                               BASE + 'Images.hpp', 'Health_Big', 4, 37, 8)
 convert_header(IMAGES + 'Glint.png',                                                                    BASE + 'Images.hpp', 'Glint', 4, 16, 16)
 convert_header(IMAGES + 'Sword_Wound.png',                                                              BASE + 'Images.hpp', 'Sword_Wound', 4, 6, 16)
 convert_header(IMAGES + 'EndOfLevel.png',                                                               BASE + 'Images.hpp', 'EndOfLevel', 4, 56, 64)

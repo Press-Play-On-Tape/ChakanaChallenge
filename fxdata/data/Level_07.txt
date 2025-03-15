@@ -19,103 +19,109 @@ uint8_t Level_07[] = {
 
 uint8_t Level_07_Items[] = {
 41,                             // ItemType::Chakana
-240, 1,                             // Position X
+240, 1,                         // Position X
 64,                             // Position Y
-9,                             // Frame
-0, 0,                         // Data
-0, 0,                             // Counter
+9,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 12,                             // ItemType::Potion
-208, 1,                             // Position X
+208, 1,                         // Position X
 16,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                            // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 20,                             // ItemType::Flame
-160, 1,                             // Position X
-0,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                             // Counter
+160, 1,                         // Position X
+0,                              // Position Y
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
-5,                             // ItemType::Hammer
-160, 0,                             // Position X
+5,                              // ItemType::Hammer
+160, 0,                         // Position X
 80,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                             // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 26,                             // ItemType::Sword
-192, 0,                             // Position X
+192, 0,                         // Position X
 64,                             // Position Y
-0,                             // Frame
-0, 0,                            // Data
-0, 0,                            // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
-2,                             // ItemType::WoodenBarrier
-144, 1,                             // Position X
+2,                              // ItemType::WoodenBarrier
+144, 1,                         // Position X
 80,                             // Position Y
-0,                             // Frame
-0, 0,                            // Data
-0, 0,                            // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 12,                             // ItemType::Potion
-176, 0,                             // Position X
+176, 0,                         // Position X
 32,                             // Position Y
-0,                             // Frame
-0, 0,                             // Data
-0, 0,                            // Counter
+0,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 46,                             // ItemType::Lever_Portal_Open
-64, 1,                             // Position X
+64, 1,                          // Position X
 64,                             // Position Y
-9,                             // Frame
-0, 0,                             // Data
-0, 0,                             // Counter
+9,                              // Frame
+0, 0,                           // Data
+0, 0,                           // Counter
 
 63,                             // ItemType::Puff
-0, 0,                            // Position X
-0,                             // Position Y
-255,                             // Frame
+0, 0,                           // Position X
+0,                              // Position Y
+255,                            // Frame
 0, 0,                           // Data
-0, 0,                            // Counter
+0, 0,                           // Counter
 };
 
 uint8_t Level_07_Enemies[] = {
-1                            // EnemyType::Archer
-48, 1,                             // Position X
-0,                             // Position Y
-18, 4,                             // Stance::Enemy_Walk_Bow_LH_00
-12,                              // Health
+1                               // EnemyType::Archer
+48, 1,                          // Position X
+0,                              // Position Y
+18, 4,                          // Stance::Enemy_Walk_Bow_LH_00
+12,                             // Health
 0,                              // Sword Wound
 23,                             // Inventory ItemType::Arrow_LH_Hidden
-0, 0, 0, 0,                               // Padding
-26, 0,                              // Data
-0, 0,                             // Counter
-0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
+0, 0, 0, 0,                     // Padding
+26, 0,                          // Data
+0, 0,                           // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,          // Stack
 
-3                            // EnemyType::SwordFighter
-224, 1,                             // Position X
+3                               // EnemyType::SwordFighter
+224, 1,                         // Position X
 64,                             // Position Y
-49, 4,                             // Stance::Enemy_Sword_Stationary_LH
-12,                              // Health
+49, 4,                          // Stance::Enemy_Sword_Stationary_LH
+12,                             // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden
-0, 0, 0, 0,                               // Padding
-24, 0,                              // Data
-0, 0,                             // Counter
-0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
+0, 0, 0, 0,                     // Padding
+24, 0,                          // Data
+0, 0,                           // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,          // Stack
 
-1                            // EnemyType::Archer
-224, 0,                             // Position X
+1                               // EnemyType::Archer
+224, 0,                         // Position X
 64,                             // Position Y
-217, 3,                             // Stance::Enemy_Walk_Bow_RH_00
-12,                              // Health
+217, 3,                         // Stance::Enemy_Walk_Bow_RH_00
+12,                             // Health
 0,                              // Sword Wound
 25,                             // Inventory ItemType::Arrow_RH_Hidden
-0, 0, 0, 0,                               // Padding
-20, 0,                              // Data
-0, 0,                             // Counter
-0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,0,0,0, 0,0, 0,0, 0,0, 0,                            // Stack
+0, 0, 0, 0,                     // Padding
+20, 0,                          // Data
+0, 0,                           // Counter
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,0,
+0,0, 0,0, 0,0, 0,0, 0,          // Stack
 };
