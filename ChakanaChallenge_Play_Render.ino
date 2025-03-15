@@ -293,6 +293,7 @@ void renderWorld() {
     }
 
 
+
     // ____________________________________________________________________________________________________________________________________________________________________________________
     //
     // Render player ..
@@ -345,7 +346,11 @@ void renderWorld() {
         case Stance::Man_Sword_StandingJump_RH_01 ... Stance::Man_Sword_StandingJump_RH_07:
             {
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_RH));
+                #ifdef BIG_HEALTH
+                SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+                #else
                 renderPlayerAndHealth(stanceImg, 56 + x, yOffset - Constants::GroundY + player.getY(), player.getHealth());
+                #endif
             }
             break;
 
@@ -356,7 +361,11 @@ void renderWorld() {
         case Stance::Man_Sword_StandingJump_LH_01 ... Stance::Man_Sword_StandingJump_LH_07:
             {
                 uint8_t x = FX::readIndexedUInt8(Constants::SwordLunge_Player, static_cast<uint8_t>(stance) - static_cast<uint8_t>(Stance::Man_Sword_Stationary_LH));
+                #ifdef BIG_HEALTH
+                SpritesU::drawPlusMaskFX(56 + x, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
+                #else
                 renderPlayerAndHealth(stanceImg, 56 - x, yOffset - Constants::GroundY + player.getY(), player.getHealth());
+                #endif
             }
             break;
 
@@ -730,6 +739,15 @@ void renderWorld() {
 
     }
 
+    #ifdef BIG_HEALTH
+    {
+        uint8_t frame = player.getHealth();
+
+        if (frame > 0 && frame < 3 && world.getFrameCount() % 32 < 16) frame = 0;
+        SpritesU::drawPlusMaskFX(1, 1, Images::Health_Big, (frame * 3) + currentPlane);
+    }
+    #endif
+
     #ifdef DEBUG_SWORD
     a.drawRect(playerX, playerY, 16, 6);
     a.drawRect(enemyX, enemyY, 1, 1);
@@ -766,12 +784,14 @@ void renderItemCursor(uint8_t x, uint8_t y) {
 
 }
 
+#ifndef BIG_HEALTH
 void renderPlayerAndHealth(uint8_t stanceImg, uint8_t x, uint8_t y, uint8_t health) {
 
     SpritesU::drawPlusMaskFX(x, y, Images::Player, (stanceImg * 3) + currentPlane);
     SpritesU::drawPlusMaskFX(x - 1, y - 5, Images::Health, ((Constants::HealthMax - health) * 3) + currentPlane);
 
 }
+#endif
 
 void renderEnemyAndHealth(uint8_t stanceImg, int16_t x, uint8_t y, uint8_t health) {
 

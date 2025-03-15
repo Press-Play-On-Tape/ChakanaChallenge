@@ -185,11 +185,13 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed) {
                     else if (world.isVerticalVine_Upper(tile_U)) {
 
                         if ((pressed & LEFT_BUTTON) && world.isEmptyTile(tile_L)) {
+
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Vine_Exit_LH_01, Stance::Man_Vine_Exit_LH_08);
                         }
 
                         else if ((pressed & RIGHT_BUTTON) && world.isEmptyTile(tile_R2)) {
+
                             player.setFalls(0);
                             player.pushSequence(Stance::Man_Vine_Exit_RH_01, Stance::Man_Vine_Exit_RH_08);
                         }
@@ -1536,7 +1538,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                                             break;
 
-                                        case 3:
+                                        case 3 ... 4:
 
                                             if (world.getMiddleground() % 8 != 0) {
                                             
@@ -1714,7 +1716,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                         player.pushSequence(Stance::Man_Walk_FallLand_LH_01, Stance::Man_Walk_FallLand_LH_04); 
                                         break;
 
-                                    case 3:
+                                    case 3 ... 4:
                                         player.decHealth(2);
                                         player.pushSequence(Stance::Man_Walk_FallLand_LH_01_Puff, Stance::Man_Walk_FallLand_LH_04_Puff); 
                                         break;

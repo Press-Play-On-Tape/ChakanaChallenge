@@ -23,6 +23,9 @@
 
 	// Want to Keep !
 
+	// -54 bytes
+	#define BIG_HEALTH
+
 	// 48 bytes
 	#define SOUND_SIMPLE
 

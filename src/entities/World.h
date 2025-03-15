@@ -1198,7 +1198,7 @@ struct World {
                                         this->player.setWound(12);
                                         this->player.setEnemyIdx(0);
 
-                                        this->player.setHealth(this->player.getHealth() - 4);
+                                        this->player.decHealth(4);
 
                                     }
 
