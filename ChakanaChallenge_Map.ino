@@ -72,66 +72,36 @@ void map_Update() {
                 }
 
                 FX::readEnd();
+                
+                if (world.getNextPort() != Constants::NoPort) {
 
-                #ifndef SELECT_PORT
-                    
-                    if (world.getNextPort() != Constants::NoPort) {
+                    // If the first selection in a game is valid, tweak the ports around to make it work ..
 
-                        uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
-                        uint8_t toPort = world.getNextPort() + 1;
-
-                        if (toPort < fromPort) toPort = toPort + 14;
-                        if (toPort - fromPort > 6) fromPort = fromPort + 14 + (fromPort == 0 ? 1 : 0);
-
-                        FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
-                        world.setNextPortCost(FX::readPendingUInt8());
-                        FX::readEnd();
-
-                        world.setGameState(GameState::Map_ShowDialogue);
-                        world.setFrameCount(0);
-
-                        FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
-                        uint16_t left = FX::readPendingUInt16();
-                        FX::readEnd();
-
-                        leftDialogue = (left == 0);
-                        centreMap = false;
-
+                    if (world.getCurrentPort() == world.getNextPort() && !world.getPortVisited(world.getCurrentPort())) {
+                        world.setCurrentPort((world.getCurrentPort() + 1) % 14);
                     }
 
-                #else
+                    uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
+                    uint8_t toPort = world.getNextPort() + 1;
+
+                    if (toPort < fromPort) toPort = toPort + 14;
+                    if (toPort - fromPort > 6) fromPort = fromPort + 14 + (fromPort == 0 ? 1 : 0);
                     
-                    if (world.getNextPort() != Constants::NoPort) {
+                    FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
+                    world.setNextPortCost(FX::readPendingUInt8());
+                    FX::readEnd();
 
-                        // If the first selection in a game is valid, tweak the ports around to make it work ..
+                    world.setGameState(GameState::Map_ShowDialogue);
+                    world.setFrameCount(0);
 
-                        if (world.getCurrentPort() == world.getNextPort() && !world.getPortVisited(world.getCurrentPort())) {
-                            world.setCurrentPort((world.getCurrentPort() + 1) % 14);
-                        }
+                    FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
+                    uint16_t left = FX::readPendingUInt16();
+                    FX::readEnd();
 
-                        uint8_t fromPort = world.getCurrentPort() == 255 ? 0 : world.getCurrentPort() + 1;
-                        uint8_t toPort = world.getNextPort() + 1;
+                    leftDialogue = (left == 0);
+                    centreMap = false;
 
-                        if (toPort < fromPort) toPort = toPort + 14;
-                        if (toPort - fromPort > 6) fromPort = fromPort + 14 + (fromPort == 0 ? 1 : 0);
-                        
-                        FX::seekData(Constants::PortCosts + (fromPort * 29) + toPort);
-                        world.setNextPortCost(FX::readPendingUInt8());
-                        FX::readEnd();
-
-                        world.setGameState(GameState::Map_ShowDialogue);
-                        world.setFrameCount(0);
-
-                        FX::seekDataArray(Constants::BeachDetails, world.getNextPort(), 0, 6);
-                        uint16_t left = FX::readPendingUInt16();
-                        FX::readEnd();
-
-                        leftDialogue = (left == 0);
-                        centreMap = false;
-
-                    }
-
-                #endif
+                }
 
             }
 
@@ -389,6 +359,12 @@ void map(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
     SpritesU::drawPlusMaskFX(world.getXBoat() - world.getXMap(), world.getYBoat() - world.getYMap() - 1, Images::Boat_Small, (static_cast<uint8_t>(world.getBoatDirection()) * 3) + currentPlane);
 
+    {
+        uint8_t frame = player.getHealth();
+        frame = frame + ((player.getLives() - 1) * 15);
+        SpritesU::drawPlusMaskFX(0, 57, Images::Chakana_Count, (frame * 3) + currentPlane);
+        SpritesU::drawOverwriteFX(28, 57, Images::Numbers_5x3_3D_GB, (player.getChakanas() * 3) + currentPlane);
+    }
         
     switch (world.getGameState()) {
 

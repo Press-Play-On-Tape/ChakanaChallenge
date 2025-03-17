@@ -17,8 +17,6 @@
 #define _DEBUG_NO_MAIN_MENU
 #define _DEBUG_LOTS_OF_CHAKANAS
 
-#define SELECT_PORT
-
 #ifndef DEBUG
 
 	// Want to Keep !
@@ -42,7 +40,7 @@
 	#define MULTIPLE_ITEMS
 
 	// 102 bytes
-	#define SHOW_SIGN
+	#define _SHOW_SIGN
 
 	// 46 Bytes
 	#define RENDER_16X16

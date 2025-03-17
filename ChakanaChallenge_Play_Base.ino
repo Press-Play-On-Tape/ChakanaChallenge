@@ -1102,10 +1102,6 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                             player.setHealth(Constants::HealthMax);
                             player.setLives(player.getLives() - 1);
 
-                            for (uint8_t i = player.getItemCount(); i < Constants::ItemCount_Player; i++) {
-                                player.getItem(i).setItemType(ItemType::None);
-                            }
-
                         }
                         else {
 

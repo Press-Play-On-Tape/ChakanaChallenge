@@ -744,6 +744,7 @@ void renderWorld() {
         uint8_t frame = player.getHealth();
 
         if (frame > 0 && frame < 3 && world.getFrameCount() % 32 < 16) frame = 0;
+        frame = frame + ((player.getLives() - 1) * 15);
         SpritesU::drawPlusMaskFX(1, 1, Images::Health_Big, (frame * 3) + currentPlane);
     }
     #endif

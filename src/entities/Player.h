@@ -66,12 +66,11 @@ class Player {
             this->health = Constants::HealthMax;
             this->enemyIdx = Constants::NoEnemy;
             this->wound = 0;
-        
-            #ifdef SELECT_PORT
-                this->chakanas = 25;
-            #else
-                this->chakanas = 20;
-            #endif
+            this->chakanas = 25;
+
+            for (uint8_t i = this->getItemCount(); i < Constants::ItemCount_Player; i++) {
+                this->getItem(i).setItemType(ItemType::None);
+            }
 
         }
 
