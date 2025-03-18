@@ -164,6 +164,7 @@ void title_Update() {
             case GameState::Title_Intro_00:
             case GameState::Title_Intro_01:
             case GameState::Title_Intro_02:
+            case GameState::Title_Intro_03:
 
                 world.setGameState(GameState::Title_Port_01);
                 if (!cookie.hasPlayedBefore) {
