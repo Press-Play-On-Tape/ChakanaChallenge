@@ -119,10 +119,10 @@ void renderWorld() {
                 else if (tile00 == Tiles::Single_Stair_RH_Lower && tile11 == Tiles::Single_Stair_RH_Upper_TR)                                                               imgTile = Images::Crate_44;
                 else if (tile01 == Tiles::Single_Stair_LH_Lower && tile10 == Tiles::Single_Stair_LH_Upper_TL)                                                               imgTile = Images::Crate_45;
                 // else if (/*tile00 == Tiles::Blank && */tile01 == Tiles::Single_Stair_RH_Lower /*&& tile10 == Tiles::Blank && tile11 == Tiles::Blank*/)                      imgTile = Images::Crate_11;
-                else if (tile00 == Tiles::Single_Stair_LH_Lower)                                                                                                            imgTile = Images::Crate_11a;
-                else if (tile11 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Top;
+                // else if (tile00 == Tiles::Single_Stair_LH_Lower)                                                                                                            imgTile = Images::Crate_11a;
+                // else if (tile11 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Top;
                 else if (tile00 == Tiles::Spikes)                                                                                                                           imgTile = Images::Spikes_Bottom;
-                else if (tile00 == Tiles::Sign_01)                                                                                                                          imgTile = Images::Crate_52;
+                // else if (tile00 == Tiles::Sign_01)                                                                                                                          imgTile = Images::Crate_52;
 
 
 

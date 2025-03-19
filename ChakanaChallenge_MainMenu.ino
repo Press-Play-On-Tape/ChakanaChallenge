@@ -157,27 +157,27 @@ void title_Update() {
         }
 
     }
-    else if (justPressed & B_BUTTON) {
+    // else if (justPressed & B_BUTTON) {
 
-        switch (world.getGameState()) {
+    //     switch (world.getGameState()) {
 
-            case GameState::Title_Intro_00:
-            case GameState::Title_Intro_01:
-            case GameState::Title_Intro_02:
-            case GameState::Title_Intro_03:
+    //         case GameState::Title_Intro_00:
+    //         case GameState::Title_Intro_01:
+    //         case GameState::Title_Intro_02:
+    //         case GameState::Title_Intro_03:
 
-                world.setGameState(GameState::Title_Port_01);
-                if (!cookie.hasPlayedBefore) {
-                    title_StartNewGame();
-                }
+    //             world.setGameState(GameState::Title_Port_01);
+    //             if (!cookie.hasPlayedBefore) {
+    //                 title_StartNewGame();
+    //             }
 
-                break;
+    //             break;
 
-            default: break;
+    //         default: break;
 
-        }
+    //     }
 
-    }
+    // }
     else if (justPressed & DOWN_BUTTON) {
 
         switch (world.getGameState()) {
