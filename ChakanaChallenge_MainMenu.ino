@@ -157,35 +157,14 @@ void title_Update() {
         }
 
     }
-    // else if (justPressed & B_BUTTON) {
-
-    //     switch (world.getGameState()) {
-
-    //         case GameState::Title_Intro_00:
-    //         case GameState::Title_Intro_01:
-    //         case GameState::Title_Intro_02:
-    //         case GameState::Title_Intro_03:
-
-    //             world.setGameState(GameState::Title_Port_01);
-    //             if (!cookie.hasPlayedBefore) {
-    //                 title_StartNewGame();
-    //             }
-
-    //             break;
-
-    //         default: break;
-
-    //     }
-
-    // }
     else if (justPressed & DOWN_BUTTON) {
 
         switch (world.getGameState()) {
 
             case GameState::Title_OptPlay:
-            case GameState::Title_OptPlay2:
-            case GameState::Title_OptResume:
             case GameState::Title_OptSound:
+            case GameState::Title_OptResume:
+            case GameState::Title_OptPlay2:
             case GameState::Title_Port_01:
             case GameState::Title_Port_02:
             case GameState::Title_Port_03:
@@ -201,10 +180,10 @@ void title_Update() {
 
         switch (world.getGameState()) { 
 
-            case GameState::Title_OptPlay2:
             case GameState::Title_OptSound:
-            case GameState::Title_OptSound2:
             case GameState::Title_OptCredits:
+            case GameState::Title_OptPlay2:
+            case GameState::Title_OptSound2:
             case GameState::Title_Port_02:
             case GameState::Title_Port_03:
             case GameState::Title_Port_04:

@@ -86,7 +86,7 @@ uint8_t Level_00_Enemies[] = {
 5                               // EnemyType::Guard_LH
 0, 2,                           / Position X
 48,                             // Position Y
-125, 4,                         / Stance::Enemy_Sword_Stationary_LH
+136, 4,                         / Stance::Enemy_Sword_Stationary_LH
 12,                             // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden

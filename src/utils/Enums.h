@@ -334,6 +334,11 @@ enum Stance : uint16_t {
             Man_Walk_RH_07,
             Man_Walk_RH_08,
 
+            Man_WalkingJump_Small_RH_01,
+            Man_WalkingJump_Small_RH_02,
+            Man_WalkingJump_Small_RH_03,
+            Man_WalkingJump_Small_RH_04,
+
             Man_ClimbStairs_RH_01,
             Man_ClimbStairs_RH_02,
             Man_ClimbStairs_RH_03,
@@ -825,7 +830,11 @@ enum Stance : uint16_t {
             Man_StandingJump_FW_UP_05,
             Man_StandingJump_FW_UP_06,
 
-        Man_FW_End = Man_StandingJump_FW_UP_06,
+            Man_StandingJump_Small_FW_01,
+            Man_StandingJump_Small_FW_02,
+            Man_StandingJump_Small_FW_03,
+
+        Man_FW_End = Man_StandingJump_Small_FW_03,
         
         Man_LH_Start,
                 
@@ -838,6 +847,11 @@ enum Stance : uint16_t {
             Man_Walk_LH_06,
             Man_Walk_LH_07,
             Man_Walk_LH_08,
+
+            Man_WalkingJump_Small_LH_01,
+            Man_WalkingJump_Small_LH_02,
+            Man_WalkingJump_Small_LH_03,
+            Man_WalkingJump_Small_LH_04,
 
             Man_ClimbStairs_LH_01,
             Man_ClimbStairs_LH_02,

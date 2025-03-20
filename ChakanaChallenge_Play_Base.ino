@@ -237,46 +237,35 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed) {
                     uint16_t stanceFrom = 0;
                     uint8_t stanceCount = 0;
 
-                    // if (canClimbUp(tile, tile_F)) {
 
-                    //     if (middleGroundMod8Equals0) {
-                    //         player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_01) + stanceDiff), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_07) + stanceDiff));
-                    //     } 
-                    //     else {
-                    //         player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_More_BK_RH_UP_01) + stanceDiff), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_More_BK_RH_UP_04) + stanceDiff));
-                    //     }
-
-                    // }
-
-                    // else if (canClimb_Upper(tile_F, tile)) {
-
-                    //     player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_08) + stanceDiff), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_14) + stanceDiff));
-
-                    // }
                     if (canClimbUp(tile, tile_F)) {
 
                         if (middleGroundMod8Equals0) {
+
                             stanceFrom = static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_01) + stanceDiff;
                             stanceCount = 6;
-                            // player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_01) + stanceDiff), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_07) + stanceDiff));
+
                         } 
                         else {
+
                             stanceFrom = static_cast<uint16_t>(Stance::Man_ClimbLadder_More_BK_RH_UP_01) + stanceDiff;
                             stanceCount = 3;
-                            // player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_More_BK_RH_UP_01) + stanceDiff), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_More_BK_RH_UP_04) + stanceDiff));
+
                         }
 
                     }
 
                     else if (canClimb_Upper(tile_F, tile)) {
-                            stanceFrom = static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_08) + stanceDiff;
-                            stanceCount = 5;
-                        // player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_08) + stanceDiff), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_14) + stanceDiff));
+
+                        stanceFrom = static_cast<uint16_t>(Stance::Man_ClimbLadder_BK_RH_UP_08) + stanceDiff;
+                        stanceCount = 5;
 
                     }
 
                     if (stanceCount > 0) {
+
                         player.pushSequence(static_cast<Stance>(stanceFrom), static_cast<Stance>(stanceFrom + stanceCount));
+
                     }
 
                 }
@@ -390,53 +379,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed) {
                     uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
                     uint8_t tile_FD = world.getTile_RelativeToPlayer(dir == Direction::Right ? 1 : -1, -1);
                     uint8_t tile_BD = world.getTile_RelativeToPlayer(dir == Direction::Right ? -1 : 1, -1);
-
-//                     if (canClimb_Upper(tile_D, tile_FD)) {
-// Serial.println("b");
-
-//                         player.pushSequence(
-//                             (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
-//                             (dir == Direction::Right) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);
-
-//                     }
-
-//                     else if (canClimb_Upper(tile_D, tile_BD)) {
-// Serial.println("c");
-//                         player.pushSequence(
-//                             (dir == Direction::Left) ? Stance::Man_ClimbLadder_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_BK_LH_DOWN_01,
-//                             (dir == Direction::Left) ? Stance::Man_ClimbLadder_BK_RH_DOWN_07 : Stance::Man_ClimbLadder_BK_LH_DOWN_07);                       
-
-//                     }
-//                     else if (world.isLadderTile(tile_D) && world.isLadderTile(tile_RD)) {
-// Serial.println("d0");
-
-//                         if (middleGroundMod8Equals0) {
-// Serial.println("d1");
-//                            player.pushSequence(Stance::Man_ClimbLadder_BK_RH_DOWN_01, Stance::Man_ClimbLadder_BK_RH_DOWN_07);                            
-//                         } 
-//                         else {
-
-//                             player.pushSequence(
-//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_DOWN_01 : Stance::Man_ClimbLadder_More_BK_LH_DOWN_01,
-//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_RH_DOWN_04 : Stance::Man_ClimbLadder_More_BK_LH_DOWN_04);
-//                         }
-
-//                     }
-//                     else if (world.isLadderTile(tile_D) && world.isLadderTile(tile_LD)) {
-// Serial.println("e0");
-
-//                         if (middleGroundMod8Equals0) {
-// Serial.println("e1");
-//                            player.pushSequence(Stance::Man_ClimbLadder_BK_LH_DOWN_01, Stance::Man_ClimbLadder_BK_LH_DOWN_07);                            
-//                         } 
-//                         else {
-
-//                             player.pushSequence(
-//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_LH_DOWN_01 : Stance::Man_ClimbLadder_More_BK_RH_DOWN_01,
-//                                 (dir == Direction::Right) ? Stance::Man_ClimbLadder_More_BK_LH_DOWN_04 : Stance::Man_ClimbLadder_More_BK_RH_DOWN_04);
-//                         }
-
-//                     }
 
                     if (canClimb_Upper(tile_D, tile_FD)) {
 
@@ -620,7 +562,6 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed) {
                     uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
                     uint8_t tile_R2 = world.getTile_RelativeToPlayer(2, 0);
                     uint8_t tile_R2U = world.getTile_RelativeToPlayer(2, 1);
-                    // uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
 
                     if (!world.canWalkPastTile(tile_RU) && !world.isRopeTile(tile_RU) && world.isRopeTile(tile_U)) {
 
@@ -727,17 +668,38 @@ void playGame_HandleGamePlay(Player &player, uint8_t pressed) {
             case Direction::Forward:
                 {
                     uint8_t tile = world.getTile_RelativeToPlayer(0, 0);
+                    uint8_t tile_U2 = world.getTile_RelativeToPlayer(0, 2);
 
-                    if (tile == 0) {
+                    uint16_t stanceStart = 0;
+                    uint8_t stanceCount = 0;
 
-                        player.stageSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
+                    if (world.isEmptyTile(tile_U2)) {
+
+                        if (world.isEmptyTile(tile)) {
+
+                            stanceStart = static_cast<uint16_t>(Stance::Man_StandingJump_FW_01);
+                            stanceCount = 6;
+                            // player.stageSequence(Stance::Man_StandingJump_FW_01, Stance::Man_StandingJump_FW_07); 
+
+                        }
+                        else {
+
+                            stanceCount = static_cast<uint16_t>(Stance::Man_StandingJump_FW_UP_01);
+                            stanceCount = 5;
+                            // player.stageSequence(Stance::Man_StandingJump_FW_UP_01, Stance::Man_StandingJump_FW_UP_06); 
+
+                        }
 
                     }
                     else {
 
-                        player.stageSequence(Stance::Man_StandingJump_FW_UP_01, Stance::Man_StandingJump_FW_UP_06); 
-
+                        stanceCount = static_cast<uint16_t>(Stance::Man_StandingJump_Small_FW_01);
+                        stanceCount = 2;
+                        // player.stageSequence(Stance::Man_StandingJump_Small_FW_01, Stance::Man_StandingJump_Small_FW_03); 
+                    
                     }
+
+                    player.stageSequence(static_cast<Stance>(stanceStart), static_cast<Stance>(stanceStart + stanceCount)); 
 
                 }
                 break;
@@ -844,37 +806,48 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
         switch (stance) {
 
             case Stance::Man_Walk_RH_01:
+            case Stance::Man_Walk_LH_01:
                 {
+                    int8_t dir = (player.getDirection() == Direction::Left ? -1 : 1);
+                    const uint16_t stanceOffset = (dir == -1 ? Constants::Player_Stance_Offset : 0);
 
                     uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
-                    uint8_t tile_R = world.getTile_RelativeToPlayer(1, 0);
-                    // uint8_t tile_RU = world.getTile_RelativeToPlayer(1, 1);
-                    // uint8_t tile_RD = world.getTile_RelativeToPlayer(1, -1);
-                    uint8_t tile_R2D = world.getTile_RelativeToPlayer(2, -1);
+                    uint8_t tile_F = world.getTile_RelativeToPlayer(1 * dir, 0);
+                    uint8_t tile_M = world.getTile_RelativeToPlayer((player.getDirection() == Direction::Left ? 0 : 1), 0);
+                    uint8_t tile_F2D = world.getTile_RelativeToPlayer(2 * dir, -1);
+                    uint8_t tile_F2 = world.getTile_RelativeToPlayer(2 * dir, 0);
+                    uint8_t tile_U = world.getTile_RelativeToPlayer(0, 1);
+                    uint8_t tile_U2 = world.getTile_RelativeToPlayer(0, 2);
 
                     if (tile_D2 == Tiles::Water_Plain) {
 
                         // Do nothing ..
 
                     }
-                    else if (world.canJumpUpOntoTile(tile_R)) {
+                    else if (world.canJumpUpOntoTile(tile_M)) {
 
-                        player.pushSequence(Stance::Man_WalkingJump_RH_UP_01, Stance::Man_WalkingJump_RH_UP_05, true); 
+                        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_UP_01) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_UP_05) + stanceOffset), true);
 
                     }
-                    else if (world.isPunjiTile(tile_R) || world.isFlameTile(tile_R)) {
+                    else if (world.isPunjiTile(tile_F) || world.isFlameTile(tile_F)) {
 
-                        player.pushSequence(Stance::Man_WalkingJump_RH_25_02, Stance::Man_WalkingJump_RH_25_11, true); 
+                        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_25_02) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_25_11) + stanceOffset), true);
 
                     }     
-                    else if (world.canWalkPastTile(tile_R) && world.canWalkOnTile(tile_R2D)) {
+                    // else if (world.canWalkPastTile(tile_F) && world.canWalkOnTile(tile_F2D)) {
+                    else if (world.canWalkPastTile(tile_F) && world.canWalkOnTile(tile_F2)) {
 
-                        player.pushSequence(Stance::Man_WalkingJump_RH_2_02, Stance::Man_WalkingJump_RH_2_08, true); 
+                        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_2_02) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_2_08) + stanceOffset), true);
+
+                    }
+                    else if (world.isEmptyTile(tile_U2)) {
+
+                        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_02) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_RH_08) + stanceOffset), true);
 
                     }
                     else {
 
-                        player.pushSequence(Stance::Man_WalkingJump_RH_02, Stance::Man_WalkingJump_RH_08, true); 
+                        player.pushSequence(static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_Small_RH_02) + stanceOffset), static_cast<Stance>(static_cast<uint16_t>(Stance::Man_WalkingJump_Small_RH_04) + stanceOffset), true);
 
                     }
 
@@ -905,42 +878,6 @@ void playGame_HandleJump(Player &player, uint8_t pressed) {
                 }
                 break;
 
-            case Stance::Man_Walk_LH_01:
-                {                            
-                    uint8_t tile_D2 = world.getTile_RelativeToPlayer(0, -2);
-                    uint8_t tile_L = world.getTile_RelativeToPlayer(-1, 0);
-                    // uint8_t tile_LD = world.getTile_RelativeToPlayer(-1, -1);
-                    uint8_t tile_L2D = world.getTile_RelativeToPlayer(-2, -1);
-
-                    if (tile_D2 == Tiles::Water_Plain) {
-
-                        // Do nothing ..
-
-                    }
-                    else if (world.canJumpUpOntoTile(tile_L)) {
-
-                        player.pushSequence(Stance::Man_WalkingJump_LH_UP_01, Stance::Man_WalkingJump_LH_UP_05, true); 
-
-                    }
-                    else if (world.isPunjiTile(tile_L) || world.isFlameTile(tile_L)) {
-
-                        player.pushSequence(Stance::Man_WalkingJump_LH_25_02, Stance::Man_WalkingJump_LH_25_11, true); 
-
-                    }
-                    else if (world.canWalkPastTile(tile_L) && world.canWalkOnTile(tile_L2D)) {
-
-                        player.pushSequence(Stance::Man_WalkingJump_LH_2_02, Stance::Man_WalkingJump_LH_2_08, true); 
-
-                    }
-                    else {
-
-                        player.pushSequence(Stance::Man_WalkingJump_LH_02, Stance::Man_WalkingJump_LH_08, true); 
-
-                    }
-
-                }
-                
-                break;
 
             case Stance::Man_Rollers_LH_01:
             case Stance::Man_Rollers_Stand_LH_01:
@@ -1528,7 +1465,9 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 case Stance::Man_Walk_RH_08:
                 case Stance::Man_Walk_LH_08:
                 case Stance::Man_Walk_RH_04:
+                case Stance::Man_WalkingJump_Small_RH_04:
                 case Stance::Man_Walk_LH_04:
+                case Stance::Man_WalkingJump_Small_LH_04:
                 case Stance::Man_WalkingJump_LH_08:
                 case Stance::Man_WalkingJump_RH_08:
                 case Stance::Man_Rollers_RH_04:
@@ -1617,7 +1556,7 @@ void playGame_Update(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                                         case 0 ... 2:
 
                                             if (world.getMiddleground() % 8 != 0) {
-                                            
+                                         
                                                 player.pushSequence(Stance::Man_Walk_RH_03, Stance::Man_Walk_RH_04);
 
                                             }

@@ -114,7 +114,7 @@ uint8_t Level_09_Enemies[] = {
 3                               // EnemyType::SwordFighter
 192, 1,                         // Position X
 0,                              // Position Y
-49, 4,                          // Stance::Enemy_Sword_Stationary_LH
+60, 4,                          // Stance::Enemy_Sword_Stationary_LH
 12,                             // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden

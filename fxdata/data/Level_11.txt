@@ -121,7 +121,7 @@ uint8_t Level_11_Enemies[] = {
 1                               // EnemyType::Archer
 224, 1,                         // Position X
 112,                            // Position Y
-18, 4,                          // Stance::Enemy_Walk_Bow_LH_00
+29, 4,                          // Stance::Enemy_Walk_Bow_LH_00
 12,                             // Health
 0,                              // Sword Wound
 23,                             // Inventory ItemType::Arrow_LH_Hidden
@@ -135,7 +135,7 @@ uint8_t Level_11_Enemies[] = {
 1                               // EnemyType::Archer
 224, 1,                         // Position X
 48,                             // Position Y
-217, 3,                         // Stance::Enemy_Walk_Bow_RH_00
+228, 3,                         // Stance::Enemy_Walk_Bow_RH_00
 12,                             // Health
 0,                              // Sword Wound
 25,                             // Inventory ItemType::Arrow_RH_Hidden
@@ -149,7 +149,7 @@ uint8_t Level_11_Enemies[] = {
 3                               // EnemyType::SwordFighter
 16, 1,                          // Position X
 96,                             // Position Y
-49, 4,                          // Stance::Enemy_Sword_Stationary_LH
+60, 4,                          // Stance::Enemy_Sword_Stationary_LH
 12,                             // Health
 0,                              // Sword Wound
 50,                             // Inventory ItemType::Glint_Hidden

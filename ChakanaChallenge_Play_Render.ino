@@ -373,7 +373,7 @@ void renderWorld() {
             {
                
                 #ifdef RENDER_16X16
-                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), 16, 16, Images::Player, (stanceImg * 3) + currentPlane);
+                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
                 #else
                 SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
                 #endif

@@ -121,7 +121,7 @@ uint8_t Level_08_Enemies[] = {
 1                              // EnemyType::Archer
 16, 2,                         // Position X
 0,                             // Position Y
-18, 4,                         // Stance::Enemy_Walk_Bow_LH_00
+29, 4,                         // Stance::Enemy_Walk_Bow_LH_00
 12,                            // Health
 0,                             // Sword Wound
 23,                            // Inventory ItemType::Arrow_LH_Hidden
