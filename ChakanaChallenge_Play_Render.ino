@@ -370,15 +370,8 @@ void renderWorld() {
             break;
 
         default:
-            {
                
-                #ifdef RENDER_16X16
-                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
-                #else
-                SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
-                #endif
-
-            }
+            SpritesU::drawPlusMaskFX(56, yOffset - Constants::GroundY + player.getY(), Images::Player, (stanceImg * 3) + currentPlane);
             break;
         
     }
